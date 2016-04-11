@@ -32,5 +32,3 @@ gradlew.bat
 import-summary.txt
 local.properties
 settings.gradle
-./ExtraceIm/build.gradle
-./ExtraceIm/ExtraceIm-ExtraceIm.iml
