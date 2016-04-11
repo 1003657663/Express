@@ -1,0 +1,16 @@
+#忽略掉.开头的配置文件
+.gradle
+.idea
+#忽略掉工程创建的会即时变化的文件
+build
+gradle
+build.gradle
+ExtraceIm.iml
+gradlew
+gradlew.bat
+import-summary.txt
+local.properties
+settings.gradle
+./ExtraceIm/build
+./ExtraceIm/build.gradle
+./ExtraceIm/ExtraceIm-ExtraceIm.iml

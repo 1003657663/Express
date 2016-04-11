@@ -1,0 +1,21 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="extrace.android.ui.RegionSelectActivity" xmlns:android="http://schemas.android.com/apk/res/android">
+
+ 	<item android:id="@+id/action_reset"  
+ 	      android:icon="@android:drawable/ic_menu_view"
+          android:title="@string/action_reset"  
+          android:showAsAction="ifRoom" />
+ 	
+ 	<item android:id="@+id/action_ok"  
+          android:icon="@android:drawable/ic_menu_set_as"
+          android:title="@string/action_ok"  
+          android:showAsAction="ifRoom" />
+
+ 	<item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+
+</menu>

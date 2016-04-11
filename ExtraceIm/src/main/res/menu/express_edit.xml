@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="extrace.ui.domain.ExpressEditActivity" >
+
+    <item android:id="@+id/action_action"  
+          android:title="@string/action_refresh"  
+          app:showAsAction="ifRoom" android:visible="false"/>
+ 	
+    <item android:id="@+id/action_refresh"  
+          android:title="@string/action_refresh"  
+          android:icon="@android:drawable/ic_popup_sync"
+          app:showAsAction="ifRoom" />
+ 	
+ 	<item android:id="@+id/action_ok"  
+          android:title="@string/action_ok"  
+	      android:icon="@android:drawable/ic_menu_save"
+          app:showAsAction="ifRoom" />
+
+</menu>

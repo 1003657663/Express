@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="extrace.android.ui.CustomerEditActivity" >
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="android.widget.SearchView"
+        android:hint="搜索姓名和电话.."
+        android:title="@string/action_search"/>
+    <item
+        android:id="@+id/action_new"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_new"/>
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="always"
+        android:title="@string/action_edit"/>
+    
+    <item
+        android:id="@+id/action_ok"
+        android:icon="@android:drawable/ic_menu_set_as"
+        app:showAsAction="always"
+        android:title="@string/action_ok"/>
+
+</menu>
