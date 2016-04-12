@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.google.gson.annotations.Expose;
 
-//---chao---快件信息model
+//---chao---蹇欢淇℃伅model
 public class ExpressSheet implements Serializable {
 	/**
 	 * 

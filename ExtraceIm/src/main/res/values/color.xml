@@ -301,4 +301,9 @@
     <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
 
+    <!--*************************************-chao and liming set *******-->
+    <color name="edit_border">#808080</color>
+    <color name="button_light">#1E90FF</color>
+    <color name="top_bar_background">#4c5db8</color>
+
 </resources>
