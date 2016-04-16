@@ -13,7 +13,7 @@ import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;
 import extrace.net.JsonUtils;
-import extrace.ui.main.ExTraceApplication;
+import extrace.ui.temp.ExTraceApplication;
 //---chao---加载用户信息的loader
 public class CustomerListLoader extends HttpAsyncTask {
 

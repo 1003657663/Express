@@ -1,123 +1,74 @@
 package extrace.ui.main;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import extrace.ui.domain.ExpressEditActivity;
-import extrace.ui.misc.CustomerListActivity;
+import android.widget.Button;
+import android.widget.ImageButton;
 
-public class MainFragment  extends Fragment {
-	
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static MainFragment newInstance() {
-    	MainFragment fragment = new MainFragment();
-        Bundle args = new Bundle();
-        //args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+import extrace.ui.user.login.LoginFragment;
+import zxing.util.CaptureActivity;
+
+/**
+ * Created by songchao on 16/4/4.
+ */
+public class MainFragment extends Fragment {
+
+    private Button meButton;
+    private FragmentManager fm;
+    private ImageButton cameraButton;
+    private ImageButton messageButton;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.index_fragment,container,false);
+
+        cameraButton = (ImageButton) view.findViewById(R.id.index_top_bar_camera);
+        messageButton = (ImageButton) view.findViewById(R.id.index_top_bar_message);
+
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startCamera();
+            }
+        });
+
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+        fm = getFragmentManager();
+
+        meButton = (Button) view.findViewById(R.id.me_button);
+        meButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                LoginFragment loginFragment = new LoginFragment();
+                transaction.replace(R.id.fragment_container_layout, loginFragment);
+                transaction.addToBackStack("index");
+                transaction.commit();
+            }
+        });
+        return view;
     }
 
-    public MainFragment() {
+    private void startCamera(){
+        Intent intent = new Intent();
+        intent.putExtra("Action","Captrue");
+        intent.setClass(getActivity(), CaptureActivity.class);
+        startActivityForResult(intent, 100);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        //fragment_main中的操作激发
-        rootView.findViewById(R.id.action_ex_receive_icon).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartReceiveExpress();
-					}
-				});//快件揽收
-        rootView.findViewById(R.id.action_ex_receive).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartReceiveExpress();
-					}
-				});//快件揽收
-        rootView.findViewById(R.id.action_ex_transfer_icon).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartQueryExpress();
-					}
-				});//快件派送
-        rootView.findViewById(R.id.action_ex_transfer).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartQueryExpress();
-					}
-				});//快件派送
-
-
-        //包裹拆包和打包在这里
-
-        rootView.findViewById(R.id.action_cu_mng_icon).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartCustomerList();
-					}
-				});//客户管理
-        rootView.findViewById(R.id.action_cu_mng).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartCustomerList();
-					}
-				});//客户管理
-
-        rootView.findViewById(R.id.action_ex_qur_icon).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartQueryExpress();
-					}
-				});//快件查询
-        rootView.findViewById(R.id.action_ex_qur).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						StartQueryExpress();
-					}
-				});//快件查询
-
-        return rootView;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("");
     }
-    
-    void StartReceiveExpress()
-    {
-		Intent intent = new Intent();
-		intent.putExtra("Action","New");
-		intent.setClass(this.getActivity(), ExpressEditActivity.class);
-		startActivityForResult(intent, 0);  	
-    }
-
-    void StartQueryExpress()
-    {
-		Intent intent = new Intent();
-		intent.putExtra("Action","Query");
-		intent.setClass(this.getActivity(), ExpressEditActivity.class);
-		startActivityForResult(intent, 0);  	
-    }
-
-    void StartCustomerList()
-    {
-		Intent intent = new Intent();
-		intent.putExtra("Action","None");
-		intent.setClass(this.getActivity(), CustomerListActivity.class);
-		startActivityForResult(intent, 0);
-    }
-
 }

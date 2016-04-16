@@ -1,4 +1,4 @@
-package extrace.ui.main;
+package extrace.ui.temp;
 
 import extrace.misc.model.UserInfo;
 import android.app.Application;
@@ -12,7 +12,24 @@ public class ExTraceApplication extends Application {
 //	String mServerUrl;
 //	String mMiscService,mDomainService;
     UserInfo userInfo;
-    
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        settings = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+
+        //临时造一个用户----测试数据
+        if(userInfo == null) {
+            userInfo = new UserInfo();
+            userInfo.setID(12);
+            userInfo.setTelCode("15039985698");
+            /*userInfo.setReceivePackageID("1111112222");
+            userInfo.setTransPackageID("1111115555");
+            userInfo.setDelivePackageID("1111113333");*/
+        }
+    }
+
     public String getServerUrl() {  
         return settings.getString("ServerUrl", "");  
     }  
@@ -26,20 +43,6 @@ public class ExTraceApplication extends Application {
     public UserInfo getLoginUser(){
     	return userInfo;
     }
-    
-    @Override  
-    public void onCreate() {  
-        super.onCreate();  
-        settings = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        //SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
-		//临时造一个用户
-		userInfo = new UserInfo();
-		userInfo.setID(12);
-		userInfo.setReceivePackageID("1111112222");
-		userInfo.setTransPackageID("1111115555");
-		userInfo.setDelivePackageID("1111113333");
-    }  
       
     public void onTerminate() {  
         super.onTerminate();  

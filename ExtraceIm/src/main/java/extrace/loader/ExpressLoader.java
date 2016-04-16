@@ -5,17 +5,12 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.ParseException;
-
-import java.io.IOException;
-
 import extrace.misc.model.ExpressSheet;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;
 import extrace.net.JsonUtils;
-import extrace.ui.main.ExTraceApplication;
+import extrace.ui.temp.ExTraceApplication;
 
 public class ExpressLoader extends HttpAsyncTask {
 

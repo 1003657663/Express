@@ -1,4 +1,4 @@
-package extrace.ui.main;
+package extrace.ui.temp;
 
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -10,6 +10,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+
+import extrace.ui.main.R;
 
 public class SettingsActivity extends PreferenceActivity {
 	private static final String PREFS_NAME = "ExTrace.cfg";

@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import extrace.loader.ExpressListLoader;
 import extrace.misc.model.ExpressSheet;
-import extrace.ui.main.ExTraceApplication;
+import extrace.ui.temp.ExTraceApplication;
 
 /**
  * A fragment representing a list of Items.
