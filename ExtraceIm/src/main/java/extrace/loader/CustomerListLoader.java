@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import extrace.misc.model.CustomerInfo;
+import extrace.model.CustomerInfo;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;

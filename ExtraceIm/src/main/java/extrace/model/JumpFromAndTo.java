@@ -1,4 +1,4 @@
-package extrace.misc.model;
+package extrace.model;
 
 /**
  * Created by chao on 2016/4/15.

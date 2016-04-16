@@ -1,4 +1,4 @@
-package extrace.ui.user.login;
+package extrace.user.login;
 
 
 /**
@@ -26,7 +26,18 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void startLogin() {
-        loginModel.onStartLogin();
+    public void onLoginRepeat() {
+        loginFragmentView.showToast("登陆失败，此手机号已经注册，请登录");
+    }
+
+    @Override
+    public void startLogin(String tel, String password) {
+        loginModel.onStartLogin(tel,password);
+    }
+
+    @Override
+    public void startRegister(String tel,String password) {
+        loginModel.onStartRegister(tel, password);
     }
 }
+

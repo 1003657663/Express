@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import extrace.loader.CustomerEditLoader;
-import extrace.misc.model.CustomerInfo;
+import extrace.model.CustomerInfo;
 import extrace.net.IDataAdapter;
 import extrace.ui.main.*;
 

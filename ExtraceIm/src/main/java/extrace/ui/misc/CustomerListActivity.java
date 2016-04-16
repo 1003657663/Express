@@ -24,7 +24,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SearchView;
 import extrace.loader.CustomerListLoader;
-import extrace.misc.model.CustomerInfo;
+import extrace.model.CustomerInfo;
 import extrace.ui.main.*;
 
 public class CustomerListActivity extends ActionBarActivity {

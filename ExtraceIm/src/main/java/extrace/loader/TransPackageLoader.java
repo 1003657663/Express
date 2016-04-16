@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
-import extrace.misc.model.TransPackage;
+import extrace.model.TransPackage;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;

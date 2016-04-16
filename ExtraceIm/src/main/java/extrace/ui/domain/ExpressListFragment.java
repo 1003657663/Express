@@ -9,7 +9,7 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 import extrace.loader.ExpressListLoader;
-import extrace.misc.model.ExpressSheet;
+import extrace.model.ExpressSheet;
 import extrace.ui.temp.ExTraceApplication;
 
 /**

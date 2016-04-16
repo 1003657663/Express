@@ -1,4 +1,4 @@
-package extrace.misc.model;
+package extrace.model;
 
 import java.io.Serializable;
 import java.util.Date;

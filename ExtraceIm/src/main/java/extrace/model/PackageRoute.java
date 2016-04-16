@@ -11,22 +11,25 @@
  * Licensee: 
  * License Type: Evaluation
  */
-package extrace.misc.model;
-
+package extrace.model;
 import java.io.Serializable;
+import java.util.Date;
 
-public class UsersPackage implements Serializable {
+public class PackageRoute implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6753829022427770282L;
+	private static final long serialVersionUID = -120165903842914592L;
 
-	public UsersPackage() {
+	public PackageRoute() {
 	}
-		
+	
+	
 	private int SN;
-	private UserInfo userU;
 	private TransPackage pkg;
+	private float x;
+	private float y;
+	private Date tm;
 	
 	public void setSN(int value) {
 		this.SN = value;
@@ -40,12 +43,28 @@ public class UsersPackage implements Serializable {
 		return getSN();
 	}
 	
-	public void setUserU(UserInfo value) {
-		this.userU = value;
+	public void setX(float value) {
+		this.x = value;
 	}
 	
-	public UserInfo getUserU() {
-		return userU;
+	public float getX() {
+		return x;
+	}
+	
+	public void setY(float value) {
+		this.y = value;
+	}
+	
+	public float getY() {
+		return y;
+	}
+	
+	public void setTm(Date value) {
+		this.tm = value;
+	}
+	
+	public Date getTm() {
+		return tm;
 	}
 	
 	public void setPkg(TransPackage value) {
@@ -66,16 +85,15 @@ public class UsersPackage implements Serializable {
 		}
 		else {
 			StringBuffer sb = new StringBuffer();
-			sb.append("UsersPackage[ ");
+			sb.append("PackageRoute[ ");
 			sb.append("SN=").append(getSN()).append(" ");
-			if (getUserU() != null)
-				sb.append("UserU.Persist_ID=").append(getUserU().toString(true)).append(" ");
-			else
-				sb.append("UserU=null ");
 			if (getPkg() != null)
 				sb.append("Pkg.Persist_ID=").append(getPkg().toString(true)).append(" ");
 			else
 				sb.append("Pkg=null ");
+			sb.append("X=").append(getX()).append(" ");
+			sb.append("Y=").append(getY()).append(" ");
+			sb.append("Tm=").append(getTm()).append(" ");
 			sb.append("]");
 			return sb.toString();
 		}

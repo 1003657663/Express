@@ -7,7 +7,7 @@ import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 
-import extrace.misc.model.CodeNamePair;
+import extrace.model.CodeNamePair;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;

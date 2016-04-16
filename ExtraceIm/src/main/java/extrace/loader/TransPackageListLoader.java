@@ -3,7 +3,7 @@ package extrace.loader;
 import java.util.List;
 
 import android.app.Activity;
-import extrace.misc.model.TransPackage;
+import extrace.model.TransPackage;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam.RETURN_STATUS;
 import extrace.net.IDataAdapter;

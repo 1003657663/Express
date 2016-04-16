@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-import extrace.ui.user.login.LoginFragment;
+import extrace.user.login.LoginFragment;
 import zxing.util.CaptureActivity;
 
 /**

@@ -1,4 +1,4 @@
-package extrace.ui.user.info;
+package extrace.user.info;
 
 import android.app.Fragment;
 import android.os.Bundle;

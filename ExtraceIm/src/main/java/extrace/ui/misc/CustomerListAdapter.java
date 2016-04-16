@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import extrace.misc.model.CustomerInfo;
+import extrace.model.CustomerInfo;
 import extrace.net.IDataAdapter;
 import extrace.ui.main.*;
 

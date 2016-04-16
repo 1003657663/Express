@@ -1,4 +1,4 @@
-package extrace.misc.model;
+package extrace.model;
 
 public class CodeNamePair {
 

@@ -1,6 +1,6 @@
 package extrace.ui.temp;
 
-import extrace.misc.model.UserInfo;
+import extrace.model.UserInfo;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
