@@ -2,18 +2,13 @@ package extrace.ui.user.login;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import extrace.loader.LoginLoader;
-import extrace.model.UserApplication;
 import extrace.ui.main.R;
 
 /**
@@ -39,27 +34,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 onback();
                 break;
             case R.id.login_button:
-                //点击登陆按钮登陆----点击后执行
-                Handler handler = new Handler(){
-                    @Override
-                    public void handleMessage(Message msg) {
-                        if(msg.arg1 == 1) {
-                            loginPresenter.onLoginSuccess();
-                        }else {
-                            loginPresenter.onLoginFail();
-                        }
-                    }
-                };
-                LoginLoader loginLoader = new LoginLoader(getActivity(),handler);
-                loginLoader.sendLoginInfo();
+                loginPresenter.startLogin();
                 break;
         }
-    }
-
-
-
-    public void onLoginFail() {
-        Toast.makeText(getActivity(), "登陆失败，手机号或密码错误", Toast.LENGTH_SHORT).show();
     }
 
     @Override
