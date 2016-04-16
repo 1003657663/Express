@@ -12,7 +12,7 @@ import android.widget.Toast;
 import extrace.ui.main.R;
 
 /**
- * Created by chao on 2016/4/12.
+ * Created by chao on 2016/4/16.
  */
 public class LoginFragment extends Fragment implements LoginFragmentView,View.OnClickListener{
 
@@ -23,6 +23,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         TextView topText = (TextView) view.findViewById(R.id.top_bar_center_text);
         topText.setText("登陆");
         loginPresenter = new LoginPresenterImpl(this);
+
+        view.findViewById(R.id.login_button).setOnClickListener(this);
+        view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         return view;
     }
 

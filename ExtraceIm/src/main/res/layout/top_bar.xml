@@ -6,6 +6,7 @@
     android:background="@color/top_bar_background"
     android:id="@+id/top_bar">
     <ImageButton
+        
         android:id="@+id/top_bar_left_img"
         android:layout_width="30dp"
         android:layout_height="40dp"
