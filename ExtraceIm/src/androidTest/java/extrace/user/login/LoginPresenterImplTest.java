@@ -3,10 +3,9 @@ package extrace.user.login;
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import extrace.ui.main.MainActivity;
+import extrace.main.MainActivity;
 
 /**
  * Created by chao on 2016/4/16.

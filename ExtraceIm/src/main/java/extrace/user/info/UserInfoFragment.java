@@ -9,10 +9,15 @@ import android.view.ViewGroup;
 /**
  * Created by chao on 2016/4/16.
  */
-public class UserInfoFragment extends Fragment {
-
+public class UserInfoFragment extends Fragment implements UserInfoView,View.OnClickListener{
+    UserInfoPresenter userInfoPresenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return null;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

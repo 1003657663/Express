@@ -1,4 +1,4 @@
-package extrace.ui.main;
+package extrace.main;
 
 /**
  * Created by chao on 2016/4/16.

@@ -1,9 +1,11 @@
 package extrace.user.login;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
-import junit.framework.Assert;
-
+import extrace.main.MyApplication;
+import extrace.model.MD5;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam;
 
@@ -12,15 +14,35 @@ import extrace.net.HttpResponseParam;
  */
 public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
 
-    LoginPresenter loginPresenter;
+    private LoginPresenter loginPresenter;
+    private String loginUrl = "www.baidu.com";
+    private String registerUrl = "www.baidu.com";
+
+    private String mD5Tel;
+    private String mD5Password;
+    private Activity activity;
+    private MyApplication application;//保存用户登录状态到全局appliction中
+
+    private boolean isLogin;
     public LoginModelImpl(Activity activity,LoginPresenter loginPresenter) {
         super(activity);
+        application = (MyApplication) activity.getApplication();
+        this.activity = activity;
         this.loginPresenter = loginPresenter;
     }
 
     @Override
     public void onStartLogin(String tel,String password) {
-        String url = "http://www.baidu.com";
+        isLogin = true;
+        String url = loginUrl;
+        //加密传输
+        tel = MD5.getMD5(tel);
+        password = MD5.getMD5(password);
+
+
+        this.mD5Tel = tel;
+        this.mD5Password = password;
+
         String str_json = "{'tel':"+tel+",password:"+password+"}";
         try {
             execute(url, "POST",str_json);
@@ -32,7 +54,14 @@ public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
 
     @Override
     public void onStartRegister(String tel,String password) {
-        String url = "http:www.baidu.com";
+        isLogin = false;
+        String url = registerUrl;
+        //加密传输
+        tel = MD5.getMD5(tel);
+        password = MD5.getMD5(password);
+        this.mD5Tel = tel;
+        this.mD5Password = password;
+
         String str_json = "{'tel':"+tel+",password:"+password+"}";
         try {
             execute(url, "POST",str_json);
@@ -42,21 +71,50 @@ public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
         }
     }
 
+    @Override
+    public void onSaveUserInfo() {
+        SharedPreferences preferences =  PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("tel",mD5Tel);
+        editor.putString("password",mD5Password);
+        editor.apply();
+    }
+
 
     @Override
     public void onDataReceive(String class_name, String json_data) {
-        switch (json_data){
-            case "true":
-                loginPresenter.onLoginSuccess();
-                break;
-            case "false":
-                loginPresenter.onLoginFail();
-                break;
-            case "repeat":
-                loginPresenter.onLoginRepeat();
-                break;
-            default:
-                break;
+        if(isLogin) {
+            switch (json_data) {
+                case "true":
+                    onSaveUserInfo();
+                    application.getUserInfo().setLoginState(true);
+                    loginPresenter.onLoginSuccess();
+                    break;
+                case "false":
+                    application.getUserInfo().setLoginState(false);
+                    loginPresenter.onLoginFail();
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            switch (json_data) {
+                case "true":
+                    onSaveUserInfo();
+                    application.getUserInfo().setLoginState(true);
+                    loginPresenter.onRegisterSuccess();
+                    break;
+                case "false":
+                    application.getUserInfo().setLoginState(false);
+                    loginPresenter.onRegisterFail();
+                    break;
+                case "repeat":
+                    application.getUserInfo().setLoginState(false);
+                    loginPresenter.onRegisterRepeat();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

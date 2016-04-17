@@ -1,5 +1,8 @@
 package extrace.model;
 public class UserInfo{
+
+	private boolean loginState = false;
+
 	private int UID;
 	private String PWD;
 	private String name;
@@ -113,5 +116,12 @@ public class UserInfo{
 			return sb.toString();
 		}
 	}
-	
+
+	public boolean getLoginState() {
+		return loginState;
+	}
+
+	public void setLoginState(boolean loginState) {
+		this.loginState = loginState;
+	}
 }

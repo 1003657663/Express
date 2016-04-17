@@ -150,5 +150,12 @@
     <string name="title_activity_express_edit">快件信息</string>
     <string name="title_ex_edit1">基本信息</string>
     <string name="title_ex_edit2">扩展信息</string>
-    
+
+    <!--MyString********chao and liming-->
+    <string name="no_internet">你的网络有问题或者连接失败啦</string>
+    <string name="generic_server_down">服务器好像出问题了</string>
+    <string name="generic_error">网络异常啦，稍后，稍后哦</string>
+    <string name="throw_net_exception">出现异常请重试</string>
+    <string name="can_not_parse_json">the string can not parse to json</string>
+
 </resources>

@@ -26,8 +26,18 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void onLoginRepeat() {
-        loginFragmentView.showToast("登陆失败，此手机号已经注册，请登录");
+    public void onRegisterRepeat() {
+        loginFragmentView.onError(LoginFragment.TELERROR,"手机号已经存在，请登录");
+    }
+
+    @Override
+    public void onRegisterSuccess() {
+        loginFragmentView.showToast("注册成功");
+    }
+
+    @Override
+    public void onRegisterFail() {
+        loginFragmentView.showToast("注册失败请重试");
     }
 
     @Override

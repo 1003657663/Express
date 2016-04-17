@@ -1,4 +1,4 @@
-package extrace.ui.main;
+package extrace.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -6,7 +6,9 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
-public class MainActivity extends Activity implements MainView{
+import extrace.ui.main.R;
+
+public class MainActivity extends Activity implements MainView {
 
     FragmentManager fm;
     MainPresenter mainPresenter;

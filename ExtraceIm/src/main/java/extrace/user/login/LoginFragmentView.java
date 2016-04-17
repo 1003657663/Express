@@ -10,4 +10,5 @@ public interface LoginFragmentView {
     void showToast(String message);
     Activity getTheActivity();
     boolean checkInput();
+    void onError(int whereError,String errorInfo);
 }

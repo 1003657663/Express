@@ -7,7 +7,11 @@ package extrace.user.login;
 public interface LoginPresenter {
     void onLoginSuccess();
     void onLoginFail();
-    void onLoginRepeat();//登陆重复
+    void onRegisterRepeat();//登陆重复
+
+    void onRegisterSuccess();
+    void onRegisterFail();
+
     void startLogin(String tel,String password);//开始登陆
     void startRegister(String tel,String password);//开始注册
 }

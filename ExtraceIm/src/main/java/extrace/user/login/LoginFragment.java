@@ -20,6 +20,9 @@ import extrace.ui.main.R;
  */
 public class LoginFragment extends Fragment implements LoginFragmentView,View.OnClickListener{
 
+    public static final int TELERROR = 0;
+    public static final int PASSERROR = 1;
+
     private LoginPresenter loginPresenter;
     private EditText telEdit;
     private EditText passwordEdit;
@@ -83,7 +86,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         password = passwordEdit.getText().toString();
         Pattern pattern = Pattern.compile("^[0-9]+$");
         Matcher matcher = pattern.matcher(tel);
-        if(tel.length()!=11 || matcher.matches()) {
+        if(tel.length()!=11 || !matcher.matches()) {
             telEdit.setError("必须是电话号");
             return false;
         }
@@ -92,5 +95,17 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onError(int whereError, String errorInfo) {
+        switch (whereError){
+            case TELERROR:
+                telEdit.setError(errorInfo);
+                break;
+            case PASSERROR:
+                passwordEdit.setError(errorInfo);
+                break;
+        }
     }
 }
