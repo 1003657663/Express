@@ -1,28 +1,34 @@
-package extrace.Express.model;
+package extrace.Express.model.express_edit;
 
 import android.app.Activity;
 
+import extrace.model.ExpressSheet;
 import extrace.net.HttpAsyncTask;
 import extrace.net.HttpResponseParam;
-import extrace.Express.presenter.expressPresenter;
+import extrace.Express.presenter.expressPresenter.expressPresenter;
+import extrace.net.IDataAdapter;
+import extrace.ui.temp.ExTraceApplication;
 
 /**
  * Created by 黎明 on 2016/4/16.
  */
 public class expressModelImpl extends HttpAsyncTask implements expressModel
 {
-    String url="";
+    String url;
     expressPresenter expressPresenter;
-    public expressModelImpl(Activity activity,expressPresenter expressPresenter)
+    IDataAdapter<ExpressSheet> adapter;
+    public expressModelImpl(Activity activity, expressPresenter expressPresenter, IDataAdapter<ExpressSheet> adapter)
     {
         super(activity);
         this.expressPresenter=expressPresenter;
+        this.adapter=adapter;
+        url = ((ExTraceApplication)activity.getApplication()).getMiscServiceUrl();
     }
 
     @Override
     public void newExpress(int senderID, int receiveID)
     {
-         url+="newExpress/senderID=?"+senderID+"&receiveID=?"+receiveID;
+         url+="newExpress/senderID=?"+senderID+"&receiveID=?"+receiveID+"?_type=json";
         try {
             execute(url,"GET");
         } catch (Exception e) {
@@ -38,6 +44,7 @@ public class expressModelImpl extends HttpAsyncTask implements expressModel
     @Override
     public void onDataReceive(String class_name, String json_data) {
 
+        //返回值为true or false
         if(json_data.equals("true"))
         {
             expressPresenter.onSuccess();
@@ -46,8 +53,8 @@ public class expressModelImpl extends HttpAsyncTask implements expressModel
         {
             expressPresenter.onFail();
         }
-        else{
+        else
             expressPresenter.onFail();
-        }
+
     }
 }
