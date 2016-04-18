@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/wrap_layout"
+    android:orientation="vertical"
+    android:id="@+id/item"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- 上圆角-->
+            <LinearLayout style="@style/top_layout"
+                android:id="@+id/send_address"
+                android:orientation="horizontal"
+                android:layout_height="50dp">
+                <TextView
+                   android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="快递单号"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ID"
+                    />
+                <TextView
+                    android:layout_marginLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="类型"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/type"
+                    />
+        </LinearLayout>
+
+            <!-- 分割线 -->
+            <View style="@style/bg_line" />
+            <!-- 无圆角-->
+            <LinearLayout style="@style/top_layout"
+                android:orientation="horizontal"
+                android:layout_height="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="状态："
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status"
+                    />
+                <TextView
+                    android:layout_marginLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下单时间"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gettime"
+                    />
+            </LinearLayout>
+    </LinearLayout>
+
+
