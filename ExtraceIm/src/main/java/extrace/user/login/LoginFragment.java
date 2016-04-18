@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,16 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
 
     public static final int TELERROR = 0;
     public static final int PASSERROR = 1;
+    public static final int NAMEERROT = 2;
+
 
     private LoginPresenter loginPresenter;
     private EditText telEdit;
     private EditText passwordEdit;
+    private EditText nameEdit;
     private String tel;
     private String password;
+    private boolean hasUserNameEdit = false;
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_login,container,false);
@@ -56,8 +61,12 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 }
                 break;
             case R.id.register_button:
-                if(checkInput()) {
-                    loginPresenter.startRegister(tel,password);
+                if(hasUserNameEdit) {
+                    if (checkInput()) {
+                        loginPresenter.startRegister(tel, password);
+                    }
+                }else {
+                    addUserNameEdit();
                 }
                 break;
             default:
@@ -94,7 +103,27 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
             passwordEdit.setError("6-20个字符");
             return false;
         }
+        if(hasUserNameEdit){
+            if(nameEdit.getText().toString().equals("")){
+                onError(NAMEERROT,"请填写用户名");
+            }
+        }
         return true;
+    }
+
+    @Override
+    public void addUserNameEdit() {
+        LinearLayout linearLayout = (LinearLayout) getView().findViewById(R.id.user_login_center_content);
+        EditText nameEdit = new EditText(getActivity());
+        nameEdit.setBackground(getResources().getDrawable(R.drawable.edit_radio_width_border));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,40);
+        params.setMargins(0,0,0,20);
+        nameEdit.setLayoutParams(params);
+        nameEdit.setPadding(20,0,20,0);
+        nameEdit.setHint("用户名");
+        linearLayout.addView(nameEdit,2);
+        this.nameEdit = nameEdit;
+        hasUserNameEdit = true;
     }
 
     @Override
@@ -105,6 +134,11 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 break;
             case PASSERROR:
                 passwordEdit.setError(errorInfo);
+                break;
+            case NAMEERROT:
+                nameEdit.setError(errorInfo);
+                break;
+            default:
                 break;
         }
     }

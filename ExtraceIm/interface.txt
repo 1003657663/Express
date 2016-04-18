@@ -1,0 +1,6 @@
+用户登录
+    登录地址：http://182.254.214.97:8080/REST/Domain/login
+    发送参数：telphone(String),password(String)，接收：loginstate(boolean),name(String)
+用户注册
+    注册地址：http://182.254.214.97:8080/REST/Domain/register
+    注册参数：telphone(String),password(String),接收：registerstate(boolean)

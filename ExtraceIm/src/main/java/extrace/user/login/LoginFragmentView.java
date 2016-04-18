@@ -7,8 +7,14 @@ import android.app.Activity;
  */
 public interface LoginFragmentView {
     void onback();
+
     void showToast(String message);
+
     Activity getTheActivity();
+
     boolean checkInput();
-    void onError(int whereError,String errorInfo);
+
+    void addUserNameEdit();
+
+    void onError(int whereError, String errorInfo);
 }

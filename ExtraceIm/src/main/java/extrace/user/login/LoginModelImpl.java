@@ -4,19 +4,21 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import extrace.main.MyApplication;
 import extrace.model.MD5;
-import extrace.net.HttpAsyncTask;
-import extrace.net.HttpResponseParam;
+import extrace.net.VolleyHelper;
 
 /**
  * Created by chao on 2016/4/16.
  */
-public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
+public class LoginModelImpl extends VolleyHelper implements LoginModel{
 
     private LoginPresenter loginPresenter;
-    private String loginUrl = "www.baidu.com";
-    private String registerUrl = "www.baidu.com";
+    private String loginUrl = "http://182.254.214.97:8080/REST/Domain/login";
+    private String registerUrl = "http://182.254.214.97:8080/REST/Domain/register";
 
     private String mD5Tel;
     private String mD5Password;
@@ -36,16 +38,19 @@ public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
         isLogin = true;
         String url = loginUrl;
         //加密传输
-        tel = MD5.getMD5(tel);
-        password = MD5.getMD5(password);
-
+        //tel = MD5.getMD5(tel);
+        //password = MD5.getMD5(password);
 
         this.mD5Tel = tel;
         this.mD5Password = password;
 
-        String str_json = "{'tel':"+tel+",password:"+password+"}";
+        JSONObject jsonObject = new JSONObject();
         try {
-            execute(url, "POST",str_json);
+            jsonObject.put("telephone",tel);
+            jsonObject.put("password",password);
+
+            doJson(url,VolleyHelper.POST,jsonObject);
+
         } catch (Exception e) {
             e.printStackTrace();
             loginPresenter.onLoginFail();
@@ -62,12 +67,16 @@ public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
         this.mD5Tel = tel;
         this.mD5Password = password;
 
-        String str_json = "{'tel':"+tel+",password:"+password+"}";
+        JSONObject jsonObject = new JSONObject();
         try {
-            execute(url, "POST",str_json);
+            jsonObject.put("telephone",tel);
+            jsonObject.put("password",password);
+
+            doJson(url,VolleyHelper.POST,jsonObject);
+
         } catch (Exception e) {
             e.printStackTrace();
-            loginPresenter.onLoginFail();
+            loginPresenter.onRegisterFail();
         }
     }
 
@@ -80,45 +89,60 @@ public class LoginModelImpl extends HttpAsyncTask implements LoginModel{
         editor.apply();
     }
 
-
     @Override
-    public void onDataReceive(String class_name, String json_data) {
+    public void onDataReceive(JSONObject jsonObject) {
         if(isLogin) {
-            switch (json_data) {
-                case "true":
-                    onSaveUserInfo();
-                    application.getUserInfo().setLoginState(true);
-                    loginPresenter.onLoginSuccess();
-                    break;
-                case "false":
-                    application.getUserInfo().setLoginState(false);
-                    loginPresenter.onLoginFail();
-                    break;
-                default:
-                    break;
+            try {
+                String loginState = jsonObject.getString("loginstate");
+                switch (loginState) {
+                    case "true":
+                        onSaveUserInfo();
+                        application.getUserInfo().setName(jsonObject.getString("name"));
+                        application.getUserInfo().setLoginState(true);
+                        loginPresenter.onLoginSuccess();
+                        break;
+                    case "false":
+                        application.getUserInfo().setLoginState(false);
+                        loginPresenter.onLoginFail();
+                        break;
+                    default:
+                        loginPresenter.onLoginFail();
+                        break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                loginPresenter.onLoginFail();
             }
         }else{
-            switch (json_data) {
-                case "true":
-                    onSaveUserInfo();
-                    application.getUserInfo().setLoginState(true);
-                    loginPresenter.onRegisterSuccess();
-                    break;
-                case "false":
-                    application.getUserInfo().setLoginState(false);
-                    loginPresenter.onRegisterFail();
-                    break;
-                case "repeat":
-                    application.getUserInfo().setLoginState(false);
-                    loginPresenter.onRegisterRepeat();
-                    break;
-                default:
-                    break;
+            try {
+                String registerState = jsonObject.getString("registerstate");
+                switch (registerState) {
+                    case "true":
+                        onSaveUserInfo();
+                        application.getUserInfo().setName(jsonObject.getString("name"));
+                        application.getUserInfo().setLoginState(true);
+                        loginPresenter.onRegisterSuccess();
+                        break;
+                    case "false":
+                        application.getUserInfo().setLoginState(false);
+                        loginPresenter.onRegisterFail();
+                        break;
+                    case "repeat":
+                        application.getUserInfo().setLoginState(false);
+                        loginPresenter.onRegisterRepeat();
+                        break;
+                    default:
+                        break;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                loginPresenter.onRegisterFail();
             }
         }
     }
 
     @Override
-    public void onStatusNotify(HttpResponseParam.RETURN_STATUS status, String str_response) {
+    public void onError(String errorMessage) {
+
     }
 }
