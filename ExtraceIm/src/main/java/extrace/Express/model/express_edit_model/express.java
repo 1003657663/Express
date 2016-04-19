@@ -1,4 +1,4 @@
-package extrace.Express.model.express_edit;
+package extrace.Express.model.express_edit_model;
 
 import android.app.Activity;
 import android.util.Log;
@@ -6,18 +6,18 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import extrace.Express.presenter.expressPresenter.expressPresenter;
+import extrace.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.net.VolleyHelper;
 
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public class expressModelImpl extends VolleyHelper implements expressModel {
+public class express extends VolleyHelper implements express_edit_model {
 
     String url;
     expressPresenter expressPresenter;
 
-    public expressModelImpl(Activity activity, expressPresenter expressPresenter) {
+    public express(Activity activity, expressPresenter expressPresenter) {
         super(activity);
         this.expressPresenter = expressPresenter;
        // url = (() activity.getApplication()).getMiscServiceUrl();

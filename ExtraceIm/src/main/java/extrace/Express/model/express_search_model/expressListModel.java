@@ -1,4 +1,4 @@
-package extrace.Express.model.express_search;
+package extrace.Express.model.express_search_model;
 
 /**
  * Created by 黎明 on 2016/4/17.

@@ -1,11 +1,10 @@
-package extrace.Express.presenter.expressPresenter;
+package extrace.Express.presenter.express_edit_presenter;
 
 import android.util.Log;
-import android.widget.Toast;
 
-import extrace.Express.model.express_edit.expressModelImpl;
+import extrace.Express.model.express_edit_model.express;
 import extrace.Express.view.express_edit_view.express_edit_FragmentView;
-import extrace.Express.model.express_edit.expressModel;
+import extrace.Express.model.express_edit_model.express_edit_model;
 
 
 /**
@@ -14,18 +13,18 @@ import extrace.Express.model.express_edit.expressModel;
 public class expressPresenterImpl implements expressPresenter
 {
     express_edit_FragmentView express_edit_fragmentView;
-    expressModel expressModel;
+    express_edit_model express_edit_model;
     public expressPresenterImpl(express_edit_FragmentView express_edit_fragmentView)
     {
        this.express_edit_fragmentView=express_edit_fragmentView;
-        expressModel=new expressModelImpl(express_edit_fragmentView.getTheActivity(),this);
+        express_edit_model =new express(express_edit_fragmentView.getTheActivity(),this);
     }
 
 
     @Override
     public void doNewExpress(int send_ID, int receive_ID) {
         Log.i("tag","presenter");
-       expressModel.newExpress(send_ID,receive_ID);
+       express_edit_model.newExpress(send_ID,receive_ID);
     }
     @Override
     public void onSuccess(String ID) {

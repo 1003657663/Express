@@ -1,4 +1,4 @@
-package extrace.Express.model.express_search;
+package extrace.Express.model.express_search_model;
 
 import android.app.Activity;
 
@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import extrace.model.ExpressSheet;
 import extrace.net.IDataAdapter;
 import extrace.net.VolleyHelper;
-import extrace.Express.presenter.expressListPresenter.expressListPresenter;
+import extrace.Express.presenter.express_search_presenter.expressListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

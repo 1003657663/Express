@@ -9,15 +9,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.widget.ListView;
 
 import android.widget.Toast;
-import extrace.Express.presenter.expressListPresenter.expressListPresenter;
+import extrace.Express.presenter.express_search_presenter.expressListPresenter;
 
+import extrace.Express.view.express_info_view.express_info_fragment;
 import extrace.model.ExpressSheet;
 import extrace.net.IDataAdapter;
 import extrace.ui.main.R;
@@ -28,6 +28,7 @@ import java.util.List;
 
 /**
  * Created by 黎明 on 2016/4/17.
+ * 快件查询：由快件单号或者电话号码得到express的list或express
  */
 public class express_search_Fragment extends ListFragment implements express_search_FragmentView,IDataAdapter<List<ExpressSheet>>
 {
@@ -126,15 +127,14 @@ public class express_search_Fragment extends ListFragment implements express_sea
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
                  super.onListItemClick(l, v, position, id);
-                Fragment fragment = new ExpressFragment();
+                Fragment fragment = new express_info_fragment();
                 ExpressSheet expressSheet=(ExpressSheet) adp.getItem(position);
                 Bundle bundle=new Bundle();
                 bundle.putString("ID",expressSheet.getID());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-                //transaction.remove(express_search_Fragment.this);
-                transaction.replace(android.R.id.list,fragment);
+                transaction.replace(R.id.express_search,fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

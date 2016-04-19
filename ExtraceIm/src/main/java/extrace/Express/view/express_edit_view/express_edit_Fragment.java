@@ -11,16 +11,16 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 
-import extrace.Express.presenter.expressPresenter.expressPresenterImpl;
+import extrace.Express.presenter.express_edit_presenter.expressPresenterImpl;
 import extrace.model.ExpressSheet;
 import extrace.net.IDataAdapter;
 import extrace.ui.main.R;
-import extrace.Express.presenter.expressPresenter.expressPresenter;
+import extrace.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.user.address.AddressFragment;
 
 /**
  * Created by 黎明 on 2016/4/16.
- * 快件信息编辑
+ * 快件信息编辑：填入发件人收件人的地址信息
  */
 public class express_edit_Fragment extends Fragment implements View.OnClickListener, express_edit_FragmentView {
     private expressPresenter expressPresenter;
