@@ -35,14 +35,16 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="30dp"
                 android:background="#ffffff"
-                android:text="寄快递" />
+                android:text="寄快递"
+                android:id="@+id/send"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
                 android:background="#ffffff"
-                android:text="查快递" />
+                android:text="查快递"
+                android:id="@+id/search"/>
         </LinearLayout>
     </LinearLayout>
     <Button
