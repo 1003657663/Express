@@ -54,24 +54,27 @@ public class express_search_adapter extends BaseAdapter
             view=new viewHolder();
             convertView=mInflater.inflate(R.layout.express_item,null);
             view.ID=(TextView)convertView.findViewById(R.id.ID);
-            view.expresstype=(TextView)convertView.findViewById(R.id.type);
+            view.type=(TextView)convertView.findViewById(R.id.type);
             view.status=(TextView)convertView.findViewById(R.id.status);
-            view.gettime=(TextView)convertView.findViewById(R.id.gettime);
+            //view.gettime=(TextView)convertView.findViewById(R.id.gettime);
             convertView.setTag(view);
         }
         else
         {
             view=(viewHolder)convertView.getTag();
         }
-        view.ID.setText(elist.get(position).getID());
-        view.expresstype.setText(elist.get(position).getType());
-        view.status.setText(elist.get(position).getStatus());
-        view.gettime.setText(elist.get(position).getAccepteTime().toString());
+        view.ID.setText(elist.get(position).getID().toString());
+      //  view.type.setText(elist.get(position).getType());
+        view.status.setText(elist.get(position).getStatus().toString());
+       // view.gettime.setText(elist.get(position).getAccepteTime().toString());
+        convertView.setClickable(false);//  导致单击无效
+        convertView.setFocusable(false);
+        convertView.setFocusableInTouchMode(false);
         return convertView;
     }
     class viewHolder
     {
-        public TextView ID,status,expresstype,gettime;
+        public TextView ID,status,type;//gettime
     }
 }
 

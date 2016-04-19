@@ -7,7 +7,7 @@ import android.app.Activity;
  */
 public interface express_search_FragmentView
 {
-    public void onToastSuccess();
     public void onToastFail();
     public Activity getTheActivity();
+    public void onToastSuccess();
 }

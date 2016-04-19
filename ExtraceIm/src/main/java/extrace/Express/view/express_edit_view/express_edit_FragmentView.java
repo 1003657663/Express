@@ -7,7 +7,7 @@ import android.app.Activity;
  */
 public interface express_edit_FragmentView
 {
-    public void onToastSuccess();
+    public void onToastSuccess(String ID);
     public void onToastFail();
     public Activity getTheActivity();
 }
