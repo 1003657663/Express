@@ -65,7 +65,7 @@ public class express_info_fragment extends Fragment implements express_info_frag
             String id = getArguments().getString("ID");
             express_info_presenter.onfindInfoByID(id);
             expressSheet = adapter.getData();
-            ID.setText(expressSheet.getID().toString());
+            ID.setText(expressSheet.getID());
             //sname.setText(expressSheet.get);
             //全都setText
             target.setOnClickListener(new View.OnClickListener() {
