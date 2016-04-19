@@ -90,7 +90,8 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
     }
 
     @Override
-    public void onDataReceive(JSONObject jsonObject) {
+    public void onDataReceive(Object object) {
+        JSONObject jsonObject = (JSONObject) object;
         if(isLogin) {
             try {
                 String loginState = jsonObject.getString("loginstate");

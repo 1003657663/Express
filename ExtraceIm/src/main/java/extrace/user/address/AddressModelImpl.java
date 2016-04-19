@@ -2,6 +2,7 @@ package extrace.user.address;
 
 import android.app.Activity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +16,7 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
 
     AddressPresenter presenter;
     Activity activity;
-    String getAddressUrl = "http://www.baidu.com";
+    String getAddressUrl = "http://10.101.244.118:8080/address";
     public AddressModelImpl(Activity context,AddressPresenter presenter) {
         super(context);
         this.activity = context;
@@ -26,26 +27,32 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
     public void startGetAddress() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("getaddress",true);
-            doJson(getAddressUrl, VolleyHelper.POST,jsonObject);
+            jsonObject.put("getaddress","true");
+            doJsonArray(getAddressUrl,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
             presenter.onGetAddressFail(activity.getResources().getString(R.string.throw_net_exception));
         }
     }
 
-    /*@Override
-    public void onStatusNotify(HttpResponseParam.RETURN_STATUS status, String str_response) {
-
-    }*/
 
     @Override
-    public void onDataReceive(JSONObject jsonObject) {
-        String name = "chao";
-        String tel = "15029895623";
-        String address = "郑州市郑州大学新校区松园19楼508宿舍";
-        //如果请求成功这里
-        presenter.onGetAddressSuccess(name,tel,address,true);
+    public void onDataReceive(Object jsonOrArray) {
+        JSONArray jsonArray = (JSONArray) jsonOrArray;
+
+        try {
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject userObject = (JSONObject) jsonArray.get(i);
+                String name = userObject.getString("name");
+                String telephone = userObject.getString("telephone");
+                String address = userObject.getString("address");
+                int rank = userObject.getInt("rank");
+                //如果请求成功这里添加信息
+                presenter.onGetAddressSuccess(name,telephone,address,rank);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
