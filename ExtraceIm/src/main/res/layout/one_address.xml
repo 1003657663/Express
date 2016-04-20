@@ -41,8 +41,7 @@
         android:layout_below="@+id/user_name_textView"
         android:layout_toLeftOf="@+id/edit_address_button"
         android:layout_toRightOf="@+id/user_address_isDefault"
-        android:paddingTop="15dp"
-        android:text=""
+        android:layout_marginTop="15dp"
         android:textSize="12sp" />
 
     <ImageView

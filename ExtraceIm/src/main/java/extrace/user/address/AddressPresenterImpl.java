@@ -25,7 +25,11 @@ public class AddressPresenterImpl implements AddressPresenter{
     }
 
     @Override
-    public void onGetAddressSuccess(String name , String tel, String address, boolean isDefault) {
+    public void onGetAddressSuccess(String name , String tel, String address, Integer rank) {
+        boolean isDefault = false;
+        if(rank==0){
+            isDefault = true;
+        }
         addressView.addAddress(name ,tel,address,isDefault);
     }
 

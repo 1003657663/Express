@@ -1,6 +1,8 @@
 package extrace.user.address;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import extrace.ui.main.R;
+import extrace.user.address.addressEdit.AddressEditFragment;
 
 /**
  * Created by chao on 2016/4/17.
@@ -35,27 +38,36 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
             case R.id.top_bar_left_img:
                 getFragmentManager().popBackStack();
                 break;
-            case R.id.edit_address_button:
-                presenter.getAddress();
-                break;
             default:
                 break;
         }
     }
 
     @Override
-    public void addAddress(String name, String tel, String address, boolean isDefault) {
+    public void addAddress(String name, final String tel, String address, boolean isDefault) {
         ViewGroup viewGroup = (ViewGroup) getView();
         RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.one_address,viewGroup,false);
         ((TextView)relativeLayout.findViewById(R.id.user_name_textView)).setText(name);
         ((TextView)relativeLayout.findViewById(R.id.user_tel_textView)).setText(tel);
         ((TextView)relativeLayout.findViewById(R.id.user_address_textView)).setText(address);
-        relativeLayout.findViewById(R.id.edit_address_button).setOnClickListener(this);
         TextView defaultTextView = (TextView) relativeLayout.findViewById(R.id.user_address_isDefault);
         if(!isDefault){
-            relativeLayout.removeView(defaultTextView);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
+            params.setMargins(0,0,0,0);
+            defaultTextView.setLayoutParams(params);
+            defaultTextView.setPadding(0,0,0,0);
+            defaultTextView.setText("");
         }
-
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v.getId() == R.id.edit_address_button){
+                    String name = ((TextView) v.findViewById(R.id.user_name_textView)).getText().toString();
+                    String telephone = ((TextView)v.findViewById(R.id.user_tel_textView)).getText().toString();
+                    toEditFragment(name,telephone);
+                }
+            }
+        });
         if(viewGroup!=null) {
             viewGroup.addView(relativeLayout);
         }else {
@@ -66,5 +78,18 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     @Override
     public void onError(String errorMessage) {
         Toast.makeText(getActivity(),errorMessage,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void toEditFragment(String name,String telephone) {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Bundle bundle = new Bundle();
+        bundle.putString("name",name);
+        bundle.putString("telephone",telephone);
+        AddressEditFragment addressEditFragment = new AddressEditFragment();
+        addressEditFragment.setArguments(bundle);
+        ft.replace(R.id.fragment_container_layout,addressEditFragment).commit();
     }
 }

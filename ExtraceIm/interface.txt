@@ -1,6 +1,16 @@
 用户登录
     登录地址：http://182.254.214.97:8080/REST/Domain/login
-    发送参数：telphone(String),password(String)，接收：loginstate(boolean),name(String)
+    发送参数：telephone(String),password(String)，接收：loginstate(boolean),name(String)
 用户注册
     注册地址：http://182.254.214.97:8080/REST/Domain/register
-    注册参数：telphone(String),password(String),接收：registerstate(boolean)
+    注册参数：telephone(String),password(String),name(String),接收：registerstate(boolean)
+用户所有地址获取
+    url：
+    参数：可选（telephone（String））如果有session就不需要了,
+          接受：
+                [
+                    {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"1"},
+                    {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"2"},
+                    {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"3"},
+                    {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"4"}
+                ]
