@@ -23,7 +23,6 @@ public class expressPresenterImpl implements expressPresenter
 
     @Override
     public void doNewExpress(int send_ID, int receive_ID) {
-        Log.i("tag","presenter");
        express_edit_model.newExpress(send_ID,receive_ID);
     }
     @Override

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import extrace.Express.model.express_info_model.ExpressInfo;
 import extrace.model.ExpressSheet;
 import extrace.ui.main.R;
 
@@ -18,9 +20,9 @@ import java.util.List;
  */
 public class express_search_adapter extends BaseAdapter
 {
-    private List<ExpressSheet> elist;
+    private List<ExpressInfo> elist;
     private LayoutInflater mInflater;
-    public  express_search_adapter(Context context, List<ExpressSheet> data)
+    public  express_search_adapter(Context context, List<ExpressInfo> data)
     {
         elist=data;
         mInflater=LayoutInflater.from(context);
@@ -54,8 +56,9 @@ public class express_search_adapter extends BaseAdapter
             view=new viewHolder();
             convertView=mInflater.inflate(R.layout.express_item,null);
             view.ID=(TextView)convertView.findViewById(R.id.ID);
-            view.type=(TextView)convertView.findViewById(R.id.type);
-            view.status=(TextView)convertView.findViewById(R.id.status);
+            view.rname=(TextView)convertView.findViewById(R.id.rname);
+            view.sname=(TextView)convertView.findViewById(R.id.sname);
+            view.GetTime=(TextView)convertView.findViewById(R.id.GetTime);
             //view.gettime=(TextView)convertView.findViewById(R.id.gettime);
             convertView.setTag(view);
         }
@@ -63,18 +66,15 @@ public class express_search_adapter extends BaseAdapter
         {
             view=(viewHolder)convertView.getTag();
         }
-        view.ID.setText(elist.get(position).getID().toString());
-      //  view.type.setText(elist.get(position).getType());
-        view.status.setText(elist.get(position).getStatus().toString());
-       // view.gettime.setText(elist.get(position).getAccepteTime().toString());
-        convertView.setClickable(false);//  导致单击无效
-        convertView.setFocusable(false);
-        convertView.setFocusableInTouchMode(false);
+        view.ID.setText(elist.get(position).getID());
+        view.sname.setText(elist.get(position).getSname());
+        view.rname.setText(elist.get(position).getRname());
+        view.GetTime.setText(elist.get(position).getGetTime());
         return convertView;
     }
     class viewHolder
     {
-        public TextView ID,status,type;//gettime
+        public TextView ID,sname,rname,GetTime;//gettime
     }
 }
 
