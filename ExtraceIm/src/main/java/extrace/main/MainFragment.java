@@ -10,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import extrace.Express.view.express_edit_view.express_edit_Fragment;
 import extrace.Express.view.express_search_view.express_search_Fragment;
 import extrace.ui.main.R;
-import extrace.user.address.AddressFragment;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
 import zxing.util.CaptureActivity;
@@ -55,6 +53,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 express_search_Fragment fragment = new express_search_Fragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack("index");
                 transaction.commit();
@@ -95,6 +94,7 @@ public class MainFragment extends Fragment {
     private void toMeFragment(){
         MeFragment meFragment = new MeFragment();
         transaction.replace(R.id.fragment_container_layout, meFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack("index");
         transaction.commit();
     }
@@ -102,6 +102,7 @@ public class MainFragment extends Fragment {
     private void toLoginFragment(){
         LoginFragment loginFragment = new LoginFragment();
         transaction.replace(R.id.fragment_container_layout, loginFragment);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack("index");
         transaction.commit();
     }

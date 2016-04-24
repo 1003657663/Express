@@ -10,9 +10,8 @@
 # Generated files
 bin/
 gen/
-
-# Gradle files
 .gradle/
+# Gradle files
 build/
 /*/build/
 
@@ -25,10 +24,8 @@ proguard/
 .idea
 
 gradle
-build.gradle
 ExtraceIm.iml
 gradlew
 gradlew.bat
-import-summary.txt
 local.properties
 settings.gradle

@@ -48,6 +48,7 @@ public abstract class VolleyHelper {
     }
 
     public void doJsonArray(String url,JSONObject jsonObject){
+        showProgressDialog();
         MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(POST,url,jsonObject,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {

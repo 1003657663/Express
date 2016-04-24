@@ -32,7 +32,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
     private EditText nameEdit;
     private String tel;
     private String password;
-    private boolean hasUserNameEdit = false;
+    private String name;
+    private boolean hasUserNameEdit = false;//用户名输入框是否存在
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_login,container,false);
@@ -63,7 +64,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
             case R.id.register_button:
                 if(hasUserNameEdit) {
                     if (checkInput()) {
-                        loginPresenter.startRegister(tel, password);
+                        loginPresenter.startRegister(tel, password,name);
                     }
                 }else {
                     addUserNameEdit();
@@ -106,6 +107,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         if(hasUserNameEdit){
             if(nameEdit.getText().toString().equals("")){
                 onError(NAMEERROT,"请填写用户名");
+            }else {
+                name = nameEdit.getText().toString();
             }
         }
         return true;

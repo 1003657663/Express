@@ -158,4 +158,12 @@
     <string name="throw_net_exception">出现异常请重试</string>
     <string name="can_not_parse_json">the string can not parse to json</string>
 
+
+    <!--软件中所有的请求的url-->
+    <string name="base_url">http://182.254.214.97:8080</string>
+
+    <string name="login_send">/REST/Domain/login</string>
+    <string name="register_send">/REST/Domain/register</string>
+    <string name="address_get_send">/REST/Misc/getSendAddress/customertel/</string><!--get方法，后面跟手机号-->
+    <string name="address_get_get">/REST/Misc/getAccAddress/customertel/</string><!--get方法，后面跟手机号-->
 </resources>

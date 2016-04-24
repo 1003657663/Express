@@ -1,9 +1,24 @@
 用户登录
     登录地址：http://182.254.214.97:8080/REST/Domain/login
     发送参数：telephone(String),password(String)，接收：loginstate(boolean),name(String)
+
+    发送数据格式：{"telephone":12369751263, "password":12346}
+    返回：登陆成功：{"name":"echo", "loginstate":"true"}
+          登陆失败：{"loginstate":"false"}
+
+
+
 用户注册
     注册地址：http://182.254.214.97:8080/REST/Domain/register
     注册参数：telephone(String),password(String),name(String),接收：registerstate(boolean)
+
+    发送数据格式：{"telephone":"12345678912", "password":123456, "name":"ech"}
+    注册成功：{"registerstate":"true"}
+    注册失败：手机号已经注册过：{"registerstate":"deny"}
+              其他失败:{"registerstate":"false"}
+
+
+
 用户所有地址获取
     url：
     参数：可选（telephone（String））如果有session就不需要了,
@@ -14,3 +29,15 @@
                     {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"3"},
                     {"name":"XXXXX","telephone":"11155566677","address":"郑州市郑州大学新校区松园XXX","rank":"4"}
                 ]
+
+    获得所有发货地址：
+         get请求
+         url:http://182.254.214.97:8080/REST/Misc/getSendAddress/customertel/{tel}
+         返回数据格式：返回不为空[{"address":"zhengzhouuniversity","aid":0,"city":"ç³å®¶åºå¸","customerid":1,"name":"violet","province":"æ²³åç","rank":0,"region":"æ ¾åå¿","telephone":1223434523},{"address":"nicai","aid":1,"city":"ä¿å®å¸","customerid":1,"name":"echo","province":"æ²³åç","rank":1,"region":"éå¹³å¿","telephone":2345324423}]
+                       返回为空：[]
+
+    获得所有收货地址：
+         get请求
+         url:http://182.254.214.97:8080/REST/Misc/getAccAddress/customertel/{tel}
+         返回数据格式：返回不为空[{"address":"zhengzhouuniversity","aid":0,"city":"ç³å®¶åºå¸","customerid":1,"name":"violet","province":"æ²³åç","rank":0,"region":"æ ¾åå¿","telephone":1223434523},{"address":"nicai","aid":1,"city":"ä¿å®å¸","customerid":1,"name":"echo","province":"æ²³åç","rank":1,"region":"éå¹³å¿","telephone":2345324423}]
+                       返回为空：[]

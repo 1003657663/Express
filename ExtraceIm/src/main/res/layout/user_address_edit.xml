@@ -9,8 +9,45 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="收件人"
+            android:textColor="@color/dimgray"/>
+        <EditText
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:id="@+id/user_address_edit_name"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dimgray"
+            android:text="电话号码"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_address_edit_telephone"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/dimgray"
+            android:text="详细地址"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/user_address_edit_address"
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </LinearLayout>

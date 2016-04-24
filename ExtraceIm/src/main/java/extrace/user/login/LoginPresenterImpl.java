@@ -33,6 +33,7 @@ public class LoginPresenterImpl implements LoginPresenter {
     @Override
     public void onRegisterSuccess() {
         loginFragmentView.showToast("注册成功");
+        loginFragmentView.onback();
     }
 
     @Override
@@ -46,8 +47,8 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
-    public void startRegister(String tel,String password) {
-        loginModel.onStartRegister(tel, password);
+    public void startRegister(String tel,String password,String name) {
+        loginModel.onStartRegister(tel, password,name);
     }
 }
 

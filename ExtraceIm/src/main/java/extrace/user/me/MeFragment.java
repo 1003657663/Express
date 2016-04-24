@@ -3,19 +3,24 @@ package extrace.user.me;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.backup.SharedPreferencesBackupHelper;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import extrace.main.MyApplication;
 import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
 
 /**
  * Created by chao on 2016/4/17.
  */
-public class MeFragment extends Fragment implements View.OnClickListener{
+public class MeFragment extends Fragment implements MeView,View.OnClickListener{
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
@@ -59,23 +64,39 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
-    private void toUserReceiveAddress(){
+
+    @Override
+    public void toUserReceiveAddress(){
         transaction.replace(R.id.fragment_container_layout,new AddressFragment());
         transaction.addToBackStack("mefragment");
         transaction.commit();
     }
-    private void toUserInfoFragment(){
+
+    @Override
+    public void loginOut() {
+        ((MyApplication)getActivity().getApplication()).setUserInfo(null);
+        SharedPreferences sf = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sf.edit();
+    }
+
+    @Override
+    public void toUserInfoFragment(){
 
     }
 
-    private void toSendRecordFragment(){
+    @Override
+    public void toSendRecordFragment(){
 
     }
 
-    private void toAboutSoftFragment(){
+    @Override
+    public void toAboutSoftFragment(){
 
     }
-    private void toMyComplaint(){
+
+    @Override
+    public void toMyComplaint(){
 
     }
+
 }

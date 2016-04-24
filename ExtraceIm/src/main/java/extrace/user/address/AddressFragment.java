@@ -27,6 +27,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
         this.inflater = inflater;
         this.viewGroup = container;
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("管理地址信息");
         presenter = new AddressPresenterImpl(getActivity(),this);
         presenter.getAddress();
         return view;
@@ -46,7 +47,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     @Override
     public void addAddress(String name, final String tel, String address, boolean isDefault) {
         ViewGroup viewGroup = (ViewGroup) getView();
-        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.one_address,viewGroup,false);
+        final RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.user_address_one,viewGroup,false);
         ((TextView)relativeLayout.findViewById(R.id.user_name_textView)).setText(name);
         ((TextView)relativeLayout.findViewById(R.id.user_tel_textView)).setText(tel);
         ((TextView)relativeLayout.findViewById(R.id.user_address_textView)).setText(address);
@@ -58,14 +59,13 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
             defaultTextView.setPadding(0,0,0,0);
             defaultTextView.setText("");
         }
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
+        relativeLayout.findViewById(R.id.edit_address_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId() == R.id.edit_address_button){
-                    String name = ((TextView) v.findViewById(R.id.user_name_textView)).getText().toString();
-                    String telephone = ((TextView)v.findViewById(R.id.user_tel_textView)).getText().toString();
-                    toEditFragment(name,telephone);
-                }
+                RelativeLayout thisLayout = (RelativeLayout) v.getParent();
+                String name = ((TextView) thisLayout.findViewById(R.id.user_name_textView)).getText().toString();
+                String telephone = ((TextView)thisLayout.findViewById(R.id.user_tel_textView)).getText().toString();
+                toEditFragment(name,telephone);
             }
         });
         if(viewGroup!=null) {
@@ -90,6 +90,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
         bundle.putString("telephone",telephone);
         AddressEditFragment addressEditFragment = new AddressEditFragment();
         addressEditFragment.setArguments(bundle);
+        ft.addToBackStack("address");
         ft.replace(R.id.fragment_container_layout,addressEditFragment).commit();
     }
 }

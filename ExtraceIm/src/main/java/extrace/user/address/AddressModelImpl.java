@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import extrace.main.MyApplication;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -16,11 +17,13 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
 
     AddressPresenter presenter;
     Activity activity;
-    String getAddressUrl = "http://10.101.244.118:8080/address";
+    String getAddressUrl;
     public AddressModelImpl(Activity context,AddressPresenter presenter) {
         super(context);
         this.activity = context;
         this.presenter = presenter;
+        String telephone = ((MyApplication)context.getApplication()).getUserInfo().getTelephone();
+        getAddressUrl = context.getResources().getString(R.string.address_get_send) + telephone;
     }
 
     @Override

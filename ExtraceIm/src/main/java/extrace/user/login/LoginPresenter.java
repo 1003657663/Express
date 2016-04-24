@@ -13,5 +13,5 @@ public interface LoginPresenter {
     void onRegisterFail();
 
     void startLogin(String tel,String password);//开始登陆
-    void startRegister(String tel,String password);//开始注册
+    void startRegister(String tel,String password,String name);//开始注册
 }

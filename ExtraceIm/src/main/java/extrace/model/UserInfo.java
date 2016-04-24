@@ -1,127 +1,97 @@
 package extrace.model;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 public class UserInfo{
 
 	private boolean loginState = false;
-
-	private int UID;
-	private String PWD;
+	private String password;
 	private String name;
-	private int URull;
-	private String telCode;
-	private int status;
-	private String dptID;
-	private String receivePackageID;
-	private String delivePackageID;
-	private String transPackageID;
+	private String telephone;
 
-	public int getUID() {
-		return UID;
+    private SharedPreferences spf;
+    private Activity context;
+
+    public UserInfo(Activity context){
+        this.context = context;
+        spf = PreferenceManager.getDefaultSharedPreferences(context);
+    }
+
+
+	
+	public void setPassword(String value) {
+		this.password = value;
 	}
 	
-	public int setID(int id) {
-		return UID = id;
+	public String getPassword() {
+		return password;
 	}
-	
-	public void setPWD(String value) {
-		this.PWD = value;
-	}
-	
-	public String getPWD() {
-		return PWD;
-	}
+
+    public String getPasswordFromPreference(){
+        return spf.getString("password",password);
+    }
 	
 	public void setName(String value) {
+        SharedPreferences.Editor editor = spf.edit();
+        editor.putString("name",value);
+        editor.apply();
 		this.name = value;
 	}
 	
 	public String getName() {
 		return name;
 	}
-	
-	public void setURull(int value) {
-		this.URull = value;
-	}
-	
-	public int getURull() {
-		return URull;
-	}
-	
-	public void setTelCode(String value) {
-		this.telCode = value;
-	}
-	
-	public String getTelCode() {
-		return telCode;
-	}
-	
-	public void setStatus(int value) {
-		this.status = value;
-	}
-	
-	public int getStatus() {
-		return status;
-	}
-	
-	public void setDptID(String value) {
-		this.dptID = value;
-	}
-	
-	public String getDptID() {
-		return dptID;
-	}
-	
-	public void setReceivePackageID(String value) {
-		this.receivePackageID = value;
-	}
-	
-	public String getReceivePackageID() {
-		return receivePackageID;
-	}
-	
-	public void setDelivePackageID(String value) {
-		this.delivePackageID = value;
-	}
-	
-	public String getDelivePackageID() {
-		return delivePackageID;
-	}
-	
-	public void setTransPackageID(String value) {
-		this.transPackageID = value;
-	}
-	
-	public String geTransPackageID() {
-		return transPackageID;
-	}
-	
-	public String toString() {
-		return toString(false);
-	}
-	
-	public String toString(boolean idOnly) {
-		if (idOnly) {
-			return String.valueOf(getUID());
-		}
-		else {
-			StringBuffer sb = new StringBuffer();
-			sb.append("UserInfo[ ");
-			sb.append("UID=").append(getUID()).append(" ");
-			sb.append("PWD=").append(getPWD()).append(" ");
-			sb.append("Name=").append(getName()).append(" ");
-			sb.append("URull=").append(getURull()).append(" ");
-			sb.append("TelCode=").append(getTelCode()).append(" ");
-			sb.append("Status=").append(getStatus()).append(" ");
-			sb.append("DptID=").append(getDptID()).append(" ");
-			sb.append("]");
-			return sb.toString();
-		}
-	}
+
+    public String getNameFromPreference(){
+        return spf.getString("name","");
+    }
 
 	public boolean getLoginState() {
 		return loginState;
 	}
 
+    public boolean getLoginStateFromPreference(){
+        return spf.getBoolean("loginState",false);
+    }
+
 	public void setLoginState(boolean loginState) {
+        SharedPreferences.Editor editor;
+        if(!loginState){
+            editor = spf.edit();
+            editor.putBoolean("loginState",false);
+            editor.apply();
+        }
 		this.loginState = loginState;
 	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+    public String getTelephoneFromPreference(){
+        return spf.getString("telephone","");
+    }
+
+	public void setTelephone(String telephone) {
+        SharedPreferences.Editor editor = spf.edit();
+        editor.putString("telephone",telephone);
+        editor.apply();
+		this.telephone = telephone;
+	}
+
+
+    public String toString(boolean idOnly) {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("UserInfo[ ");
+        sb.append("password=").append(getPassword()).append(" ");
+        sb.append("Name=").append(getName()).append(" ");
+        sb.append("TelCode=").append(getTelephone()).append(" ");
+        sb.append("]");
+        return sb.toString();
+    }
+
+    
 }

@@ -49,7 +49,7 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
                     list.add(expressInfo);
                 }
             }
-            // adapter.setData(list);//将list放入adapter
+
             expressListPresenter.onSuccess(list);
         }
         catch (JSONException e) {

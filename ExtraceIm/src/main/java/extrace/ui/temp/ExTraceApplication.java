@@ -1,9 +1,10 @@
 package extrace.ui.temp;
 
-import extrace.model.UserInfo;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
+import extrace.model.UserInfo;
 //---chao---从本地存储，键值对中读取所需的url，用户和设置信息等
 
 public class ExTraceApplication extends Application {
@@ -23,7 +24,7 @@ public class ExTraceApplication extends Application {
         if(userInfo == null) {
             userInfo = new UserInfo();
             userInfo.setID(12);
-            userInfo.setTelCode("15039985698");
+            userInfo.setTelephone("15039985698");
             /*userInfo.setReceivePackageID("1111112222");
             userInfo.setTransPackageID("1111115555");
             userInfo.setDelivePackageID("1111113333");*/
