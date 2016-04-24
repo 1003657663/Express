@@ -8,6 +8,7 @@ public interface MeView {
     void toSendRecordFragment();
     void toAboutSoftFragment();
     void toMyComplaint();
+    void toUserSendAddress();
     void toUserReceiveAddress();
     void loginOut();
 }

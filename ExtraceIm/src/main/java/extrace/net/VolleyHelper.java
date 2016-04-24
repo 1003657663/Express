@@ -47,9 +47,9 @@ public abstract class VolleyHelper {
         requestQueue.add(objectRequest);
     }
 
-    public void doJsonArray(String url,JSONObject jsonObject){
+    public void doJsonArray(String url,Integer postOrGet,JSONObject jsonObject){
         showProgressDialog();
-        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(POST,url,jsonObject,new Response.Listener<JSONArray>() {
+        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonObject,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 hideProgressDialog();

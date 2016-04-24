@@ -6,7 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 import extrace.main.MyApplication;
+import extrace.model.UserAddress;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -17,45 +20,70 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
 
     AddressPresenter presenter;
     Activity activity;
+    String sendAddressUrl;
     String getAddressUrl;
     public AddressModelImpl(Activity context,AddressPresenter presenter) {
         super(context);
         this.activity = context;
         this.presenter = presenter;
         String telephone = ((MyApplication)context.getApplication()).getUserInfo().getTelephone();
-        getAddressUrl = context.getResources().getString(R.string.address_get_send) + telephone;
+        sendAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_send) + telephone;
+        getAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_get) + telephone;
+
     }
 
     @Override
-    public void startGetAddress() {
-        JSONObject jsonObject = new JSONObject();
+    public void startGetSendAddress() {
         try {
-            jsonObject.put("getaddress","true");
-            doJsonArray(getAddressUrl,jsonObject);
-        } catch (JSONException e) {
+            doJsonArray(sendAddressUrl,VolleyHelper.GET,null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            presenter.onGetAddressFail(activity.getResources().getString(R.string.throw_net_exception));
+        }
+    }
+
+    @Override
+    public void startGetReceiveAddress() {
+        try {
+            doJsonArray(getAddressUrl,VolleyHelper.GET,null);
+        } catch (Exception e) {
             e.printStackTrace();
             presenter.onGetAddressFail(activity.getResources().getString(R.string.throw_net_exception));
         }
     }
 
 
+    /**
+     * 收到用户地址信息后，取出每一个信息，存入
+     * @param jsonOrArray
+     */
     @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
-
+        HashMap<Integer,UserAddress> addressMap = new HashMap<>();
         try {
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject userObject = (JSONObject) jsonArray.get(i);
-                String name = userObject.getString("name");
-                String telephone = userObject.getString("telephone");
-                String address = userObject.getString("address");
-                int rank = userObject.getInt("rank");
-                //如果请求成功这里添加信息
-                presenter.onGetAddressSuccess(name,telephone,address,rank);
+                Integer rank = userObject.getInt("aid");
+                UserAddress userAddress = new UserAddress();
+
+                userAddress.setAid(userObject.getInt("aid"));
+                userAddress.setCustomerid(userObject.getInt("customerid"));
+                userAddress.setRank(userObject.getInt("rank"));
+                userAddress.setProvince(userObject.getString("province"));
+                userAddress.setCity(userObject.getString("city"));
+                userAddress.setRegion(userObject.getString("region"));
+                userAddress.setAddress(userObject.getString("address"));
+                userAddress.setTelephone(userObject.getString("telephone"));
+                userAddress.setName(userObject.getString("name"));
+
+                addressMap.put(rank,userAddress);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //如果请求成功这里添加信息
+        presenter.onGetAddressSuccess(addressMap);
     }
 
     @Override

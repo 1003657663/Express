@@ -1,6 +1,7 @@
 package extrace.model;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -12,9 +13,9 @@ public class UserInfo{
 	private String telephone;
 
     private SharedPreferences spf;
-    private Activity context;
+    private Context context;
 
-    public UserInfo(Activity context){
+    public UserInfo(Context context){
         this.context = context;
         spf = PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -61,6 +62,9 @@ public class UserInfo{
         if(!loginState){
             editor = spf.edit();
             editor.putBoolean("loginState",false);
+            editor.remove("name");
+            editor.remove("telephone");
+            editor.remove("password");
             editor.apply();
         }
 		this.loginState = loginState;
@@ -93,5 +97,5 @@ public class UserInfo{
         return sb.toString();
     }
 
-    
+
 }

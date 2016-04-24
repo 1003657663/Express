@@ -15,7 +15,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        userInfo = new UserInfo();
+        userInfo = new UserInfo(getApplicationContext());
         //---!!!---先把用户登录状态设为true测试
         //userInfo.setLoginState(true);
     }
@@ -24,7 +24,7 @@ public class MyApplication extends Application {
         if(userInfo!=null) {
             return userInfo;
         }else {
-            userInfo = new UserInfo();
+            userInfo = new UserInfo(getApplicationContext());
             return userInfo;
         }
     }
