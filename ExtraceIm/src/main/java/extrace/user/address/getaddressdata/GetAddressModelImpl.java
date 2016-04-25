@@ -2,8 +2,14 @@ package extrace.user.address.getaddressdata;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.ArrayMap;
+import android.util.SparseArray;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.regex.Matcher;
 
 import extrace.main.MyApplication;
 import extrace.model.address.City;
@@ -16,9 +22,9 @@ import extrace.ui.main.R;
  * Created by chao on 2016/4/25.
  */
 public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel {
-    final int GETPRO = 0;
-    final int GETCITY = 1;
-    final int GETREGION = 2;
+    public static final int GETPRO = 0;
+    public static final int GETCITY = 1;
+    public static final int GETREGION = 2;
     GetAddressPresenter presenter;
     private String getProUrl;
     private String getCityUrl;
@@ -40,31 +46,85 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
-
-
-        String[] data = new String[jsonArray.length()];
-        presenter.onDataPresenterReceive(data);
+        SparseArray<Object> sparseArray = null;
+        switch (whichGet){
+            case GETPRO:
+                sparseArray = jsonToProvince(jsonArray);
+                break;
+            case GETCITY:
+                sparseArray = jsonTocity(jsonArray);
+                break;
+            case GETREGION:
+                sparseArray = jsonTocity(jsonArray);
+                break;
+            default:
+                break;
+        }
+        presenter.onDataPresenterReceive(sparseArray,whichGet);
     }
 
-    private Province jsonToProvince(JSONArray jsonArray){
-        Province province = new Province();
+    /**
+     * json转成相应的类model的SparseArray
+     * @param jsonArray
+     * @return
+     */
+    private SparseArray<Object> jsonToProvince(JSONArray jsonArray){
 
+        SparseArray<Object> provinceSparseArray = new SparseArray<>();
+        try {
+            for(int i=0;i<jsonArray.length();i++){
+                Province province = new Province();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                province.setPid(jsonObject.getInt("pid"));
+                province.setPname(jsonObject.getString("pname"));
+                provinceSparseArray.put(province.getPid(),province);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-
-        return province;
+        return provinceSparseArray;
     }
 
-    private City jsonTocity(JSONArray jsonArray){
-        City city = new City();
-
-        return city;
+    private SparseArray<Object> jsonTocity(JSONArray jsonArray){
+        SparseArray<Object> citySparseArray = new SparseArray<>();
+        try{
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                City city = new City();
+                city.setPid(jsonObject.getInt("pid"));
+                city.setCid(jsonObject.getInt("cid"));
+                city.setCode(jsonObject.getString("code"));
+                city.setName(jsonObject.getString("name"));
+                citySparseArray.put(city.getCid(),city);
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+        return citySparseArray;
     }
-    private Region jsonToRegion(JSONArray jsonArray){
-        Region region = new Region();
+    private SparseArray<Object> jsonToRegion(JSONArray jsonArray){
+        SparseArray<Object> regionSparseArray = new SparseArray<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Region region = new Region();
+                region.setArea(jsonObject.getString("area"));
+                region.setCityId(jsonObject.getInt("cityId"));
+                region.setId(jsonObject.getInt("id"));
+                regionSparseArray.put(region.getId(),region);
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
 
-        return region;
+        return regionSparseArray;
     }
 
+    /**
+     * 错误处理方法
+     * @param errorMessage
+     */
     @Override
     public void onError(String errorMessage) {
 
@@ -89,6 +149,9 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
 
     }
 
+    /**
+     * get相应信息的方法
+     */
     @Override
     public void getProvince() {
         whichGet = GETPRO;
