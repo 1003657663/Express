@@ -15,11 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import android.widget.Toast;
+
+import extrace.Express.model.express_info_model.ExpressInfo;
 import extrace.Express.presenter.express_search_presenter.expressListPresenter;
 
+import extrace.Express.presenter.express_search_presenter.expressListPresenterImpl;
 import extrace.Express.view.express_info_view.express_info_fragment;
 import extrace.model.ExpressSheet;
-import extrace.net.IDataAdapter;
 import extrace.ui.main.R;
 
 import java.util.ArrayList;
@@ -30,23 +32,9 @@ import java.util.List;
  * Created by 黎明 on 2016/4/17.
  * 快件查询：由快件单号或者电话号码得到express的list或express
  */
-public class express_search_Fragment extends ListFragment implements express_search_FragmentView,IDataAdapter<List<ExpressSheet>>
+public class express_search_Fragment extends ListFragment implements express_search_FragmentView
 {
-    @Override
-    public List<ExpressSheet> getData() {
-        return list;
-    }
-    @Override
-    public void setData(List<ExpressSheet> data) {
-    list=data;
-    }
-    @Override
-    public void notifyDataSetChanged() {
-
-    }
-
    private expressListPresenter expressListPresenter;
-   IDataAdapter<List<ExpressSheet>> adapter;
     express_search_adapter adp;
     List<ExpressSheet> list;
     private ListView expresslist;
@@ -59,7 +47,8 @@ public class express_search_Fragment extends ListFragment implements express_sea
         back=(ImageButton)view.findViewById(R.id.back);
         enter=(ImageButton)view.findViewById(R.id.enter);
         text=(EditText)view.findViewById(R.id.index_top_bar_input);
-        list=new ArrayList<ExpressSheet>();
+        list=new ArrayList<>();
+        expressListPresenter=new expressListPresenterImpl(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,23 +60,6 @@ public class express_search_Fragment extends ListFragment implements express_sea
                 @Override
                 public void onClick(View v) {
                     expressListPresenter.doSearchExpress(text.getText().toString());
-                    list = adapter.getData();
-                  /* ExpressSheet expressSheet=new ExpressSheet();
-                    expressSheet.setType(1);
-                    expressSheet.setID("123");
-                    expressSheet.setStatus(1);
-                    list.add(expressSheet);
-                    ExpressSheet expressSheet2=new ExpressSheet();
-                    expressSheet2.setType(1);
-                    expressSheet2.setID("234");
-                    expressSheet2.setStatus(2);
-                    list.add(expressSheet2);
-                    */
-                    adp=new express_search_adapter(getActivity(),list);
-                   // setListAdapter(adp);
-                    //new出显示list的adapter
-                   // setListAdapter(adp);
-                    expresslist.setAdapter(adp);
                 }
 
             });
@@ -98,12 +70,6 @@ public class express_search_Fragment extends ListFragment implements express_sea
             String ID=getArguments().getString("ID");
             //获得ID 调用presenter通过presenter调用model 实现根据ID查询快件 并将list放入adapter
             expressListPresenter.doSearchExpress(ID);
-            list=adapter.getData();
-            adp=new express_search_adapter(getActivity(),list);
-            // setListAdapter(adp);
-            //new出显示list的adapter
-            // setListAdapter(adp);
-            expresslist.setAdapter(adp);
         }
        // expressListPresenter=new expressListPresenterImpl(this,adapter);
 
@@ -120,17 +86,19 @@ public class express_search_Fragment extends ListFragment implements express_sea
     }
 
     @Override
-    public void onToastSuccess() {
-
+    public void onToastSuccess(List<ExpressInfo> list)
+    {
+        adp=new express_search_adapter(getActivity(),list);
+        expresslist.setAdapter(adp);
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
                  super.onListItemClick(l, v, position, id);
                 Fragment fragment = new express_info_fragment();
-                ExpressSheet expressSheet=(ExpressSheet) adp.getItem(position);
+                ExpressInfo expressInfo=(ExpressInfo)adp.getItem(position);
                 Bundle bundle=new Bundle();
-                bundle.putString("ID",expressSheet.getID());
+                bundle.putString("ID",expressInfo.getID());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

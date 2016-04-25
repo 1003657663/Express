@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
+import extrace.model.UserAddress;
 import extrace.ui.main.R;
 import extrace.user.address.addressEdit.AddressEditFragment;
+import extrace.user.me.MeFragment;
 
 /**
  * Created by chao on 2016/4/17.
@@ -21,14 +25,27 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     AddressPresenter presenter;
     LayoutInflater inflater;
     ViewGroup viewGroup;
+    ListView listView;
+    Integer receiveOrSend;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_address_fragment,container,false);
         this.inflater = inflater;
         this.viewGroup = container;
+        Bundle bundle = getArguments();
+        receiveOrSend = bundle.getInt("receiveOrSend");//获取上个页面传的发送或者接受地址的标志
+
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        listView = (ListView) view.findViewById(R.id.user_address_list);
         presenter = new AddressPresenterImpl(getActivity(),this);
-        presenter.getAddress();
+
+        if(receiveOrSend == MeFragment.SEND) {
+            ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
+            presenter.getSendAddress();
+        }else {
+            ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
+            presenter.getReceiveAddress();
+        }
         return view;
     }
 
@@ -45,34 +62,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
 
     @Override
     public void addAddress(String name, final String tel, String address, boolean isDefault) {
-        ViewGroup viewGroup = (ViewGroup) getView();
-        RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.one_address,viewGroup,false);
-        ((TextView)relativeLayout.findViewById(R.id.user_name_textView)).setText(name);
-        ((TextView)relativeLayout.findViewById(R.id.user_tel_textView)).setText(tel);
-        ((TextView)relativeLayout.findViewById(R.id.user_address_textView)).setText(address);
-        TextView defaultTextView = (TextView) relativeLayout.findViewById(R.id.user_address_isDefault);
-        if(!isDefault){
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
-            params.setMargins(0,0,0,0);
-            defaultTextView.setLayoutParams(params);
-            defaultTextView.setPadding(0,0,0,0);
-            defaultTextView.setText("");
-        }
-        relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v.getId() == R.id.edit_address_button){
-                    String name = ((TextView) v.findViewById(R.id.user_name_textView)).getText().toString();
-                    String telephone = ((TextView)v.findViewById(R.id.user_tel_textView)).getText().toString();
-                    toEditFragment(name,telephone);
-                }
-            }
-        });
-        if(viewGroup!=null) {
-            viewGroup.addView(relativeLayout);
-        }else {
-            System.err.println("addressFragment getView to viewGroup is Error");
-        }
+
     }
 
     @Override
@@ -81,15 +71,23 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     }
 
     @Override
-    public void toEditFragment(String name,String telephone) {
+    public void toEditFragment(UserAddress userAddress) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         Bundle bundle = new Bundle();
-        bundle.putString("name",name);
-        bundle.putString("telephone",telephone);
+        bundle.putParcelable("userAddress",userAddress);
+
         AddressEditFragment addressEditFragment = new AddressEditFragment();
         addressEditFragment.setArguments(bundle);
+        ft.addToBackStack("address");
         ft.replace(R.id.fragment_container_layout,addressEditFragment).commit();
+    }
+
+    @Override
+    public void refreshAddress(HashMap<Integer,UserAddress> addressMap) {
+        //地址获取成功后，加载到list通过adapter
+        AddressListApapter listApapter = new AddressListApapter(this,addressMap);
+        listView.setAdapter(listApapter);
     }
 }

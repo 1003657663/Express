@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:text="提醒"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/mydialog_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="10sp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="网络有问题哦，你可以尝试注销校卡重新登陆一下哦"
+        android:textColor="@color/dimgray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:gravity="end"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/mydialog_no_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@color/transparent"
+            android:text="取消"
+            android:textColor="@color/top_bar_background" />
+        <Button
+            android:id="@+id/mydialog_sure_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/transparent"
+            android:text="确定"
+            android:textColor="@color/top_bar_background" />
+    </LinearLayout>
+</LinearLayout>

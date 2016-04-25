@@ -6,7 +6,7 @@ package extrace.user.login;
 public interface LoginModel {
     void onStartLogin(String tel, String password);
 
-    void onStartRegister(String tel, String password);
+    void onStartRegister(String tel, String password,String name);
 
     void onSaveUserInfo();//存储登陆或者注册成功的用户信息
 }

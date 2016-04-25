@@ -5,8 +5,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="extrace.ui.misc.CustomerEditActivity$PlaceholderFragment" >
+    android:paddingTop="@dimen/activity_vertical_margin">
 
     <TextView
         android:id="@+id/textView1"
@@ -65,7 +64,7 @@
         android:layout_alignLeft="@+id/textView3"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="14dp"
-        android:layout_toLeftOf="@+id/btGetRegion" />
+        />
 
     <ImageButton
         android:id="@+id/btnGetRegion"

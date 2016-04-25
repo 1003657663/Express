@@ -3,25 +3,29 @@ package extrace.user.me;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import extrace.main.MyApplication;
 import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
+import extrace.user.login.LoginFragment;
 
 /**
  * Created by chao on 2016/4/17.
  */
-public class MeFragment extends Fragment implements View.OnClickListener{
+public class MeFragment extends Fragment implements MeView,View.OnClickListener{
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.me_fragment,container,false);
+        View view = inflater.inflate(R.layout.user_me_fragment,container,false);
         TextView textView = (TextView) view.findViewById(R.id.top_bar_center_text);
         textView.setText("我");
         fragmentManager = getFragmentManager();
@@ -35,6 +39,8 @@ public class MeFragment extends Fragment implements View.OnClickListener{
         view.findViewById(R.id.send_record).setOnClickListener(this);
         view.findViewById(R.id.about_soft).setOnClickListener(this);
         view.findViewById(R.id.my_complaint).setOnClickListener(this);
+        view.findViewById(R.id.user_send_address).setOnClickListener(this);
+        view.findViewById(R.id.user_me_login_out).setOnClickListener(this);
         return view;
     }
 
@@ -47,6 +53,9 @@ public class MeFragment extends Fragment implements View.OnClickListener{
             case R.id.user_receive_address:
                 toUserReceiveAddress();
                 break;
+            case R.id.user_send_address:
+                toUserSendAddress();
+                break;
             case R.id.user_tel:
                 break;
             case R.id.user_password:
@@ -57,25 +66,67 @@ public class MeFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.my_complaint:
                 break;
+            case R.id.user_me_login_out:
+                loginOut();
+                break;
         }
     }
-    private void toUserReceiveAddress(){
-        transaction.replace(R.id.fragment_container_layout,new AddressFragment());
+
+    public final static int RECEIVE = 1;
+    public final static int SEND = 0;
+    @Override
+    public void toUserReceiveAddress(){
+        AddressFragment addressFragment = new AddressFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("receiveOrSend", RECEIVE);
+        addressFragment.setArguments(bundle);
+
+        transaction.replace(R.id.fragment_container_layout,addressFragment);
         transaction.addToBackStack("mefragment");
         transaction.commit();
     }
-    private void toUserInfoFragment(){
+
+    @Override
+    public void toUserSendAddress() {
+        AddressFragment addressFragment = new AddressFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("receiveOrSend", SEND);
+        addressFragment.setArguments(bundle);
+
+        transaction.replace(R.id.fragment_container_layout,addressFragment);
+        transaction.addToBackStack("mefragment");
+        transaction.commit();
+    }
+
+    //注销登录
+    @Override
+    public void loginOut() {
+        ((MyApplication)getActivity().getApplication()).getUserInfo().setLoginState(false);
+        LoginFragment loginFragment = new LoginFragment();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentManager.popBackStack();
+        transaction.add(R.id.fragment_container_layout,loginFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void toUserInfoFragment(){
 
     }
 
-    private void toSendRecordFragment(){
+    @Override
+    public void toSendRecordFragment(){
 
     }
 
-    private void toAboutSoftFragment(){
+    @Override
+    public void toAboutSoftFragment(){
 
     }
-    private void toMyComplaint(){
+
+    @Override
+    public void toMyComplaint(){
 
     }
+
 }

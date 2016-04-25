@@ -5,8 +5,8 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import extrace.model.ExpressSheet;
-import extrace.net.IDataAdapter;
+
+import extrace.Express.model.express_info_model.ExpressInfo;
 import extrace.net.VolleyHelper;
 import extrace.Express.presenter.express_search_presenter.expressListPresenter;
 
@@ -19,46 +19,45 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
 {
     String url;
     private expressListPresenter expressListPresenter;
-    IDataAdapter<List<ExpressSheet>> adapter;
     @Override
     public void onError(String errorMessage) {
 
     }
 
-    public expressListModelImpl(Activity activity, expressListPresenter expressListPresenter, IDataAdapter<List<ExpressSheet>> adapter) {
+    public expressListModelImpl(Activity activity, expressListPresenter expressListPresenter) {
     super(activity);
-    this.adapter=adapter;
     this.expressListPresenter = expressListPresenter;
        // url = ((ExTraceApplication)activity.getApplication()).getMiscServiceUrl();
 }
 
     @Override
-    public void onDataReceive(JSONObject jsonObject) {
+    public void onDataReceive(Object jsonOrArray) {
+        JSONArray jsonArray=(JSONArray)jsonOrArray;
         try {
-            if (jsonObject.getString("state").equals("true")) {
-                JSONArray array = jsonObject.getJSONArray("express");
-                List<ExpressSheet> list = new ArrayList<ExpressSheet>();
+            List<ExpressInfo> list = new ArrayList<ExpressInfo>();
 
-                for (int i = 0; i < array.length(); i++) {
-                    JSONObject object = (JSONObject) array.get(i);
-                    ExpressSheet expressSheet = new ExpressSheet();
-                    //json转换为List<Express>
-                    expressSheet.setID(object.getString("ID"));
-                    expressSheet.setStatus(object.getInt("status"));
-                    //expressSheet.setAccepteTime(object.getString("AcceptTime"));
-                    expressSheet.setType(object.getInt("type"));
-                    if (expressSheet != null) {
-                        list.add(expressSheet);
-                    }
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = (JSONObject) jsonArray.get(i);
+                ExpressInfo expressInfo = new ExpressInfo();
+                //json转换为List<Express>
+                expressInfo.setID(object.getString("ID"));
+                expressInfo.setSname(object.getString("sname"));
+                expressInfo.setRname(object.getString("rname"));
+                expressInfo.setGetTime(object.getString("GetTime"));
+
+                if (expressInfo != null) {
+                    list.add(expressInfo);
                 }
-                    adapter.setData(list);//将list放入adapter
-                    expressListPresenter.onSuccess();
             }
-        } catch (JSONException e) {
+
+            expressListPresenter.onSuccess(list);
+        }
+        catch (JSONException e) {
             e.printStackTrace();
-            expressListPresenter.onFail();//失败则调用presenter
+            expressListPresenter.onFail();//失败则调用presenter Fail
         }
     }
+
     @Override
     public void searchExpressList(String ID)
     {

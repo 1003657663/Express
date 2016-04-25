@@ -29,6 +29,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/top_bar_right_img"
         android:layout_gravity="end|center_vertical"
-        android:layout_marginRight="10dp"
-        android:src="@mipmap/delete"/>
+        android:layout_marginRight="10dp" />
 </FrameLayout>

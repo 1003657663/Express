@@ -2,7 +2,10 @@ package extrace.user.address;
 
 import android.app.Activity;
 
+import java.util.HashMap;
+
 import extrace.main.MyApplication;
+import extrace.model.UserAddress;
 
 /**
  * Created by chao on 2016/4/17.
@@ -20,17 +23,18 @@ public class AddressPresenterImpl implements AddressPresenter{
     }
 
     @Override
-    public void getAddress() {
-        addressModel.startGetAddress();
+    public void getSendAddress() {
+        addressModel.startGetSendAddress();
     }
 
     @Override
-    public void onGetAddressSuccess(String name , String tel, String address, Integer rank) {
-        boolean isDefault = false;
-        if(rank==0){
-            isDefault = true;
-        }
-        addressView.addAddress(name ,tel,address,isDefault);
+    public void getReceiveAddress() {
+        addressModel.startGetReceiveAddress();
+    }
+
+    @Override
+    public void onGetAddressSuccess(HashMap<Integer,UserAddress> addressMap) {
+        addressView.refreshAddress(addressMap);
     }
 
     @Override

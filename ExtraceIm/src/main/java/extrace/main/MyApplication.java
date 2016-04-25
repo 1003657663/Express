@@ -15,16 +15,17 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        userInfo = new UserInfo();
+        userInfo = new UserInfo(getApplicationContext());
         //---!!!---先把用户登录状态设为true测试
-        userInfo.setLoginState(true);
+        //userInfo.setLoginState(true);
     }
 
     public UserInfo getUserInfo() {
         if(userInfo!=null) {
             return userInfo;
         }else {
-            return new UserInfo();
+            userInfo = new UserInfo(getApplicationContext());
+            return userInfo;
         }
     }
 
