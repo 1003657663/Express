@@ -8,6 +8,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -17,11 +18,13 @@ import org.json.JSONObject;
  * Created by chao on 2016/4/17.
  */
 public abstract class VolleyHelper {
-    RequestQueue requestQueue;
+    private RequestQueue requestQueue;
     public static final int POST = JsonObjectRequest.Method.POST;
     public static final int GET = JsonObjectRequest.Method.GET;
-    Context context;
-    ProgressDialog dialog;
+    private Context context;
+    private ProgressDialog dialog;
+    private Boolean isShowProgress = true;
+
     public VolleyHelper(Activity context){
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
@@ -67,20 +70,33 @@ public abstract class VolleyHelper {
 
 
     private void showProgressDialog(){
-        if(dialog == null){
-            dialog = new ProgressDialog(context);
-            dialog.setMessage("请稍后..");
-            dialog.show();
-        }else {
-            dialog.show();
+        if(isShowProgress) {
+            if (dialog == null) {
+                dialog = new ProgressDialog(context);
+                dialog.setMessage("请稍后..");
+                dialog.show();
+            } else {
+                dialog.show();
+            }
         }
     }
     private void hideProgressDialog(){
-        if(dialog!=null){
-            dialog.hide();
+        if(isShowProgress) {
+            if (dialog != null) {
+                dialog.hide();
+            }
         }
     }
 
     public abstract void onDataReceive(Object jsonOrArray);
     public abstract void onError(String errorMessage);
+
+
+    public Boolean getShowProgress() {
+        return isShowProgress;
+    }
+
+    public void setShowProgress(Boolean showProgress) {
+        isShowProgress = showProgress;
+    }
 }

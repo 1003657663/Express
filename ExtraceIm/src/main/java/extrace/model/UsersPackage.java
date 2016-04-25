@@ -15,10 +15,11 @@ package extrace.model;
 
 import java.io.Serializable;
 
+/**
+ *
+ */
 public class UsersPackage implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -6753829022427770282L;
 
 	public UsersPackage() {

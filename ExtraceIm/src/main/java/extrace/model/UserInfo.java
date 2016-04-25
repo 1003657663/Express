@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+/**
+ * create by chao
+ * 用户信息model
+ */
 public class UserInfo{
 
 	private boolean loginState = false;
