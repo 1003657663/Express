@@ -7,4 +7,5 @@
     <dimen name="half_padding">4dip</dimen>
 
     <dimen name="edit_left_and_right_padding">20dp</dimen>
+    <dimen name="address_edit_spinner_width">60dp</dimen>
 </resources>

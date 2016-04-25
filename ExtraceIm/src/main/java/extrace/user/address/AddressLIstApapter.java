@@ -87,7 +87,7 @@ public class AddressListApapter extends BaseAdapter{
                 addressFragment.toEditFragment(userAddress);
             }
         });
-        if(userAddress.getRank()==0){
+        if(userAddress.getRank()!=0){
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
             params.setMargins(0,0,0,0);
             viewHolder.isDefaultText.setLayoutParams(params);

@@ -166,4 +166,7 @@
     <string name="register_send">/REST/Domain/register</string>
     <string name="address_get_send">/REST/Misc/getSendAddress/customertel/</string><!--get方法，后面跟手机号-->
     <string name="address_get_get">/REST/Misc/getAccAddress/customertel/</string><!--get方法，后面跟手机号-->
+    <string name="address_get_province">/REST/Misc/getAllProvince</string><!--获取全国省份-->
+    <string name="address_get_city">/REST/Misc/getCityList/</string><!--获取省份城市-->
+    <string name="address_get_region">/REST/Misc/getRegionList/</string><!--获取城市区域-->
 </resources>

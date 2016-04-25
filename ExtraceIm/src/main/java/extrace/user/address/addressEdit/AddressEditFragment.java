@@ -7,22 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import extrace.model.UserAddress;
 import extrace.myelement.MyDialog;
 import extrace.ui.main.R;
+import extrace.user.address.getaddressdata.GetAddressModelImpl;
+import extrace.user.address.getaddressdata.GetAddressPresenter;
 
 /**
  * Created by chao on 2016/4/19.
  * 编辑地址部分
  */
-public class AddressEditFragment extends Fragment implements View.OnClickListener,AddressEditView,MyDialog.SureButton{
+public class AddressEditFragment extends Fragment implements GetAddressPresenter,View.OnClickListener,AddressEditView,MyDialog.SureButton{
     UserAddress userAddress;
     EditText nameEdit,telephoneEdit,addressEdit;
-    TextView provinceText,cityText,regionText;
+    Spinner provinceText,cityText,regionText;
     MyDialog myDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,21 +65,26 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
         nameEdit = (EditText) v.findViewById(R.id.user_address_edit_name);
         telephoneEdit = (EditText) v.findViewById(R.id.user_address_edit_telephone);
         addressEdit = (EditText) v.findViewById(R.id.user_address_edit_address);
-        provinceText = (TextView) v.findViewById(R.id.user_address_edit_province);
-        cityText = (TextView) v.findViewById(R.id.user_address_edit_city);
-        regionText = (TextView) v.findViewById(R.id.user_address_edit_region);
+        provinceText = (Spinner) v.findViewById(R.id.user_address_spinner_province);
+        cityText = (Spinner) v.findViewById(R.id.user_address_spinner_city);
+        regionText = (Spinner) v.findViewById(R.id.user_address_spinner_region);
 
         nameEdit.setText(userAddress.getName());
         telephoneEdit.setText(userAddress.getTelephone());
         addressEdit.setText(userAddress.getAddress());
-        provinceText.setText(userAddress.getProvince());
-        cityText.setText(userAddress.getCity());
-        regionText.setText(userAddress.getRegion());
+
+        GetAddressModelImpl getAddressModel = new GetAddressModelImpl(getActivity(),this);
+        getAddressModel.getProvince();
     }
 
     @Override
     public void sureButtonDo() {
         //删除地址代码---------
         myDialog.hideProgressDialog();
+    }
+
+    @Override
+    public void onDataPresenterReceive(String[] data) {
+
     }
 }
