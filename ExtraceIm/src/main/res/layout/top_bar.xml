@@ -22,7 +22,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="待填"
-        android:textColor="@color/wheat"
+        android:textColor="@color/white"
         android:textSize="16dp"/>
     <ImageView
         android:layout_width="wrap_content"

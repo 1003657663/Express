@@ -57,9 +57,14 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 onback();
                 break;
             case R.id.login_button:
-                if(checkInput()) {
+                //--------------
+                tel = "12345678909";
+                password = "123456";
+                //------------------
+
+                //if(checkInput()) {
                     loginPresenter.startLogin(tel,password);
-                }
+                //}
                 break;
             case R.id.register_button:
                 if(hasUserNameEdit) {

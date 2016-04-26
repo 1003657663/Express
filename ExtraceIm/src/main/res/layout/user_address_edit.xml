@@ -101,5 +101,17 @@
             android:background="@color/transparent"
             android:layout_weight="1" />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/button_light"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/user_address_edit_submit_button"
+        android:text="提交"
+        android:textColor="@color/white"/>
 </LinearLayout>

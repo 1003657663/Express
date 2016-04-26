@@ -169,4 +169,6 @@
     <string name="address_get_province">/REST/Misc/getAllProvince</string><!--获取全国省份-->
     <string name="address_get_city">/REST/Misc/getCityList/</string><!--获取省份城市-->
     <string name="address_get_region">/REST/Misc/getRegionList/</string><!--获取城市区域-->
+    <string name="address_submit_update">/REST/Misc/updateAddress</string><!--发货或者收货地址修改后提交地址-->
+    <string name="address_submit_new">/REST/Misc/newAddress</string><!--新增的收货或者发货地址-->
 </resources>

@@ -72,13 +72,11 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         }
     }
 
-    public final static int RECEIVE = 1;
-    public final static int SEND = 0;
     @Override
     public void toUserReceiveAddress(){
         AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("receiveOrSend", RECEIVE);
+        bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
         addressFragment.setArguments(bundle);
 
         transaction.replace(R.id.fragment_container_layout,addressFragment);
@@ -90,7 +88,7 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
     public void toUserSendAddress() {
         AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("receiveOrSend", SEND);
+        bundle.putInt("receiveOrSend", AddressFragment.SEND);
         addressFragment.setArguments(bundle);
 
         transaction.replace(R.id.fragment_container_layout,addressFragment);

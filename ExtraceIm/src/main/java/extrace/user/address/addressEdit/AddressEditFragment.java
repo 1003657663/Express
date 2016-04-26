@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import extrace.main.MyApplication;
 import extrace.model.UserAddress;
@@ -21,30 +23,66 @@ import extrace.model.address.Region;
 import extrace.myelement.MyDialog;
 import extrace.ui.main.R;
 import extrace.user.address.getaddressdata.GetAddressModelImpl;
-import extrace.user.address.getaddressdata.GetAddressPresenter;
 
 /**
  * Created by chao on 2016/4/19.
  * 编辑地址部分
  */
-public class AddressEditFragment extends Fragment implements GetAddressPresenter,View.OnClickListener,AddressEditView,MyDialog.SureButton{
-    UserAddress userAddress;
-    EditText nameEdit,telephoneEdit,addressEdit;
-    Spinner provinceSpinner, citySpinner, regionSpinner;
-    MyDialog myDialog;
-    MyApplication myApplication;
-    GetAddressModelImpl getAddressModel;
+public class AddressEditFragment extends Fragment implements View.OnClickListener,AddressEditView,MyDialog.SureButton{
+    public static final int ADDRESS_UPDATE_SEND = 0;//发货地址更新
+    public static final int ADDRESS_UPDATE_RECEIVE = 1;//收货地址更新
+    public static final int ADDRESS_NEW_SEND = 2;//新增发货地址更新
+    public static final int ADDRESS_NEW_RECEIVE = 3;//新增收货地址更新
+
+    private int editWhat;
+
+    private UserAddress userAddress;
+    private EditText nameEdit,telephoneEdit,addressEdit;
+    private Spinner provinceSpinner, citySpinner, regionSpinner;
+    private MyDialog myDialog;
+    private MyApplication myApplication;
+    private GetAddressModelImpl getAddressModel;
+    private SparseArray<Object> provinceSparseArray;//存储临时地址数据
+    private SparseArray<Object> citySparseArray;
+    private SparseArray<Object> regionSparseArray;
+
+    private Integer provincePosition = 0;//存放用户选中地址所在spinner的position
+    private Integer cityPosition = 0;
+    private Integer regionPosition = 0;
+    private Boolean isdefault = true;//判断用户是否修改了地址spinner
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_address_edit,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        view.findViewById(R.id.user_address_edit_submit_button).setOnClickListener(this);
         myApplication = (MyApplication) getActivity().getApplication();
         getAddressModel = new GetAddressModelImpl(getActivity(),this);
 
-        setRightDelIcon(view);//设置右边的删除按钮
-        ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("修改地址");
         Bundle bundle = getArguments();//获取地址信息
         userAddress = bundle.getParcelable("userAddress");
+        editWhat = bundle.getInt("editWhat");
+        //判断如果是新增地址，那么设置标题，同时默认加载北京市信息
+        if(userAddress == null) {
+            if(editWhat == ADDRESS_NEW_RECEIVE) {
+                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("新增收货地址");
+            }else if(editWhat == ADDRESS_NEW_SEND){
+                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("新增发货地址");
+            }
+            //设置初始省份地址，北京
+            userAddress = new UserAddress();
+            userAddress.setProvince("北京市");
+        }else {
+            if(editWhat == ADDRESS_UPDATE_RECEIVE) {
+                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改收货地址");
+            }else {
+                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改发货地址");
+            }
+            setRightDelIcon(view);//如果不是新增地址，那么设置右边的删除按钮
+        }
+
+
+
         setAddressInfo(view);//设置初始信息
         myDialog = new MyDialog(getActivity());
         return view;
@@ -60,11 +98,34 @@ public class AddressEditFragment extends Fragment implements GetAddressPresenter
                 //删除当前地址,弹出警告框
                 myDialog.showDialogWithSureAndNo("确认删除此地址？","确定","取消");
                 break;
+            case R.id.user_address_edit_submit_button:
+                //提交修改的地址
+                submitChangeAddress();
+                break;
             default:
                 break;
         }
     }
+    /**
+     * 提交新地址
+     */
+    private void submitChangeAddress(){
+        UserAddress userAddress = new UserAddress();
+        userAddress.setName(nameEdit.getText().toString());
+        userAddress.setTelephone(telephoneEdit.getText().toString());
+        userAddress.setRank(this.userAddress.getRank());
+        userAddress.setAid(this.userAddress.getAid());
+        userAddress.setCustomerid(this.userAddress.getCustomerid());
+        userAddress.setProvinceid(((Province)provinceSparseArray.valueAt(provincePosition)).getPid());
+        userAddress.setCityid(((City)citySparseArray.valueAt(cityPosition)).getCid());
+        userAddress.setRegionid(((Region)regionSparseArray.valueAt(regionPosition)).getId());
 
+        if(editWhat == ADDRESS_UPDATE_SEND){
+            getAddressModel.submitUpdateSendAddress(userAddress);
+        }else {
+            getAddressModel.submitUpdateReceiveAddress(userAddress);
+        }
+    }
     /**
      * 设置右边的删除按钮的图片和样式
      * @param v
@@ -90,51 +151,94 @@ public class AddressEditFragment extends Fragment implements GetAddressPresenter
         telephoneEdit.setText(userAddress.getTelephone());
         addressEdit.setText(userAddress.getAddress());
 
-        String[] prodefault = {userAddress.getProvince()};
-        String[] citydefault = {userAddress.getCity()};
-        String[] regiondefault = {userAddress.getRegion()};
-
-        //设置每项的默认值
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,prodefault);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        provinceSpinner.setAdapter(arrayAdapter);
-        arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,citydefault);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        citySpinner.setAdapter(arrayAdapter);
-        arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,regiondefault);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        regionSpinner.setAdapter(arrayAdapter);
-
-        setListener();
-
         //获取省份地址信息
-        //getAddressModel.getProvince();
+        getAddressModel.getProvince();
+        //设置开始监听事件
+        setFirstListener();
     }
 
     /**
      * 设置spinner监听
      */
-    private void setListener(){
-        provinceSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getAddressModel.getProvince();
-                provinceSpinner.setOnClickListener(null);
-            }
-        });
-        provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    private void setListener(Integer whichListener){
+        switch (whichListener) {
+            case GetAddressModelImpl.GETPRO:
+                provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        getAddressModel.getCityByPro(((Province) provinceSparseArray.valueAt(position)).getPid());
+                        provincePosition = position;
+                    }
 
-            }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                    }
+                });
+                break;
+            case GetAddressModelImpl.GETCITY:
+                citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        getAddressModel.getRegionByCity(((City) citySparseArray.valueAt(position)).getCid());
+                        cityPosition = position;
+                    }
 
-            }
-        });
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                break;
+            case GetAddressModelImpl.GETREGION:
+                regionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        regionPosition = position;
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+                break;
+            default:
+                break;
+        }
     }
 
+    private void setFirstListener(){
+        provinceSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                isdefault = false;
+                provinceSpinner.setOnTouchListener(null);
+                return false;
+            }
+        });
+        citySpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                isdefault = false;
+                citySpinner.setOnTouchListener(null);
+                return false;
+            }
+        });
+        regionSpinner.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                isdefault = false;
+                regionSpinner.setOnTouchListener(null);
+                return false;
+            }
+        });
+        setListener(GetAddressModelImpl.GETREGION);//设置区域部分的监听函数
+    }
+
+    /**
+     * 点击确认删除按钮执行删除操作
+     */
     @Override
     public void sureButtonDo() {
         //删除地址代码---------
@@ -147,39 +251,82 @@ public class AddressEditFragment extends Fragment implements GetAddressPresenter
      * @param whichGet
      */
     @Override
-    public void onDataPresenterReceive(SparseArray<Object> dataArray,Integer whichGet) {
+    public void onDataReceive(SparseArray<Object> dataArray,Integer whichGet) {
         String[] datas = new String[dataArray.size()];
         ArrayAdapter<String> arrayAdapter = null;
         switch (whichGet){
             case GetAddressModelImpl.GETPRO:
+                provinceSparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     Province province = (Province) dataArray.valueAt(i);
                     datas[i] = province.getPname();
+                    if(isdefault) {
+                        if (datas[i].equals(userAddress.getProvince())) {
+                            provincePosition = i;
+                        }
+                    }
                 }
                 arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,datas);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 provinceSpinner.setAdapter(arrayAdapter);
+                if(isdefault) {
+                    provinceSpinner.setSelection(provincePosition);
+                }
+                setListener(whichGet);
                 break;
             case GetAddressModelImpl.GETCITY:
+                citySparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     City city = (City) dataArray.valueAt(i);
-                    datas[i] = city.getName();
+                    datas[i] = city.getCname();
+                    if(isdefault) {
+                        if (datas[i].equals(userAddress.getCity())) {
+                            cityPosition = i;
+                        }
+                    }
                 }
                 arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,datas);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 citySpinner.setAdapter(arrayAdapter);
+                if(isdefault) {
+                    citySpinner.setSelection(cityPosition);
+                }
+                setListener(whichGet);
                 break;
             case GetAddressModelImpl.GETREGION:
+                regionSparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     Region region = (Region) dataArray.valueAt(i);
                     datas[i] = region.getArea();
+                    if(isdefault) {
+                        if (datas[i].equals(userAddress.getRegion())) {
+                            regionPosition = i;
+                        }
+                    }
                 }
                 arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,datas);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 regionSpinner.setAdapter(arrayAdapter);
+                if(isdefault) {
+                    regionSpinner.setSelection(regionPosition);
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 获取数据成功后回调
+     */
+    @Override
+    public void onSubmitSuccess() {
+        Toast.makeText(getActivity(),"提交成功",Toast.LENGTH_SHORT).show();
+        getFragmentManager().popBackStack();
     }
 }

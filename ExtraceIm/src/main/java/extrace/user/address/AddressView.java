@@ -12,6 +12,6 @@ import extrace.model.UserInfo;
 public interface AddressView {
     void addAddress(String name ,String tel,String address,boolean isDefault);//从下层获取地址然后添加到view层
     void onError(String errorMessage);
-    void toEditFragment(UserAddress userAddress);
+    void toEditFragment(UserAddress userAddress,Integer sendOrReceive);
     void refreshAddress(HashMap<Integer,UserAddress> addressMap);
 }

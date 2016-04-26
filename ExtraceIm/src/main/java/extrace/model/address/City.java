@@ -7,7 +7,7 @@ package extrace.model.address;
 public class City {
     private Integer cid;
     private Integer pid;
-    private String name;
+    private String cname;
     private String code;
 
     public Integer getCid() {
@@ -26,12 +26,12 @@ public class City {
         this.pid = pid;
     }
 
-    public String getName() {
-        return name;
+    public String getCname() {
+        return cname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCname(String cname) {
+        this.cname = cname;
     }
 
     public String getCode() {

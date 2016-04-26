@@ -1,5 +1,6 @@
 package extrace.user.address.addressEdit;
 
+import android.util.SparseArray;
 import android.view.View;
 
 /**
@@ -8,4 +9,7 @@ import android.view.View;
 public interface AddressEditView {
     void setRightDelIcon(View v);//设置topbar右边的按钮作为删除按钮
     void setAddressInfo(View v);
+    void onDataReceive(SparseArray<Object> dataArray, Integer whichGet);
+    void onError(String message);
+    void onSubmitSuccess();
 }

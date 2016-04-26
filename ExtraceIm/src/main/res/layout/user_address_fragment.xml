@@ -24,7 +24,8 @@
             android:textSize="14sp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textColor="@color/whitesmoke"
+            android:textColor="@color/white"
+            android:id="@+id/user_addres_add_new"
             android:background="@drawable/button_radio_with_background_color"
             android:text="添加新的收货地址"/>
     </LinearLayout>

@@ -22,6 +22,9 @@ import extrace.user.me.MeFragment;
  * Created by chao on 2016/4/17.
  */
 public class AddressFragment extends Fragment implements AddressView,View.OnClickListener {
+    public static final int SEND = 0;
+    public static final int RECEIVE = 1;
+
     AddressPresenter presenter;
     LayoutInflater inflater;
     ViewGroup viewGroup;
@@ -36,13 +39,14 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
         receiveOrSend = bundle.getInt("receiveOrSend");//获取上个页面传的发送或者接受地址的标志
 
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        view.findViewById(R.id.user_addres_add_new).setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.user_address_list);
         presenter = new AddressPresenterImpl(getActivity(),this);
 
-        if(receiveOrSend == MeFragment.SEND) {
+        if(receiveOrSend == SEND) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
             presenter.getSendAddress();
-        }else {
+        }else if(receiveOrSend == RECEIVE){
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
             presenter.getReceiveAddress();
         }
@@ -54,6 +58,13 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
         switch (v.getId()){
             case R.id.top_bar_left_img:
                 getFragmentManager().popBackStack();
+                break;
+            case R.id.user_addres_add_new:
+                if(receiveOrSend == SEND){
+                    toEditFragment(null,AddressEditFragment.ADDRESS_NEW_SEND);
+                }else if(receiveOrSend == RECEIVE){
+                    toEditFragment(null,AddressEditFragment.ADDRESS_NEW_RECEIVE);
+                }
                 break;
             default:
                 break;
@@ -71,12 +82,13 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     }
 
     @Override
-    public void toEditFragment(UserAddress userAddress) {
+    public void toEditFragment(UserAddress userAddress,Integer receiveOrSend) {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         Bundle bundle = new Bundle();
         bundle.putParcelable("userAddress",userAddress);
+        bundle.putInt("editWhat",receiveOrSend);
 
         AddressEditFragment addressEditFragment = new AddressEditFragment();
         addressEditFragment.setArguments(bundle);
@@ -87,7 +99,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     @Override
     public void refreshAddress(HashMap<Integer,UserAddress> addressMap) {
         //地址获取成功后，加载到list通过adapter
-        AddressListApapter listApapter = new AddressListApapter(this,addressMap);
+        AddressListApapter listApapter = new AddressListApapter(this,addressMap,receiveOrSend);
         listView.setAdapter(listApapter);
     }
 }

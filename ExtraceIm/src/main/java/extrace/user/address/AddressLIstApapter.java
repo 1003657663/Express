@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import extrace.model.UserAddress;
 import extrace.ui.main.R;
+import extrace.user.address.addressEdit.AddressEditFragment;
 
 /**
  * 用户地址部分的适配器
@@ -21,10 +22,13 @@ public class AddressListApapter extends BaseAdapter{
     Context context;
     HashMap<Integer,UserAddress> addressMap;
     AddressFragment addressFragment;
-    public AddressListApapter(AddressFragment addressFragment, HashMap<Integer,UserAddress> addressMap){
+    Integer sendOrReceive;
+
+    public AddressListApapter(AddressFragment addressFragment, HashMap<Integer,UserAddress> addressMap,Integer sendOrReceive){
         this.context = addressFragment.getActivity();
         this.addressMap = addressMap;
         this.addressFragment = addressFragment;
+        this.sendOrReceive = sendOrReceive;
     }
 
     @Override
@@ -84,15 +88,15 @@ public class AddressListApapter extends BaseAdapter{
         viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addressFragment.toEditFragment(userAddress);
+                addressFragment.toEditFragment(userAddress,sendOrReceive==AddressFragment.SEND? AddressEditFragment.ADDRESS_UPDATE_SEND:AddressEditFragment.ADDRESS_UPDATE_RECEIVE);
             }
         });
         if(userAddress.getRank()!=0){
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
             params.setMargins(0,0,0,0);
+            viewHolder.isDefaultText.setText("");
             viewHolder.isDefaultText.setLayoutParams(params);
             viewHolder.isDefaultText.setPadding(0,0,0,0);
-            viewHolder.isDefaultText.setText("");
         }
         return convertView;
     }

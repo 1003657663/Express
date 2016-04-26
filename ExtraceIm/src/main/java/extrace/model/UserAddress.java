@@ -16,6 +16,9 @@ public class UserAddress implements Parcelable{
         rank = in.readInt();
         aid = in.readInt();
         customerid = in.readInt();
+        provinceid = in.readInt();
+        cityid = in.readInt();
+        regionid = in.readInt();
 
         province = in.readString();
         city = in.readString();
@@ -44,6 +47,13 @@ public class UserAddress implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(rank);
+        dest.writeInt(aid);
+        dest.writeInt(customerid);
+        dest.writeInt(provinceid);
+        dest.writeInt(cityid);
+        dest.writeInt(regionid);
+
         dest.writeString(province);
         dest.writeString(city);
         dest.writeString(region);
@@ -55,6 +65,10 @@ public class UserAddress implements Parcelable{
     private Integer rank;
     private Integer aid;
     private Integer customerid;
+
+    private Integer provinceid;
+    private Integer cityid;
+    private Integer regionid;
 
     private String province;
     private String city;
@@ -134,5 +148,29 @@ public class UserAddress implements Parcelable{
 
     public void setCustomerid(Integer customerid) {
         this.customerid = customerid;
+    }
+
+    public Integer getProvinceid() {
+        return provinceid;
+    }
+
+    public void setProvinceid(Integer provinceid) {
+        this.provinceid = provinceid;
+    }
+
+    public Integer getCityid() {
+        return cityid;
+    }
+
+    public void setCityid(Integer cityid) {
+        this.cityid = cityid;
+    }
+
+    public Integer getRegionid() {
+        return regionid;
+    }
+
+    public void setRegionid(Integer regionid) {
+        this.regionid = regionid;
     }
 }
