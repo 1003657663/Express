@@ -27,7 +27,7 @@ public class LoginPresenterImpl implements LoginPresenter {
 
     @Override
     public void onRegisterRepeat() {
-        loginFragmentView.onError(LoginFragment.TELERROR,"手机号已经存在，请登录");
+        loginFragmentView.onError(LoginFragment.TEL_ERROR,"手机号已经存在，请登录");
     }
 
     @Override

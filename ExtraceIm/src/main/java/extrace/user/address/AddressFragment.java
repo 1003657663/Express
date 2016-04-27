@@ -16,7 +16,6 @@ import java.util.HashMap;
 import extrace.model.UserAddress;
 import extrace.ui.main.R;
 import extrace.user.address.addressEdit.AddressEditFragment;
-import extrace.user.me.MeFragment;
 
 /**
  * Created by chao on 2016/4/17.
@@ -99,7 +98,7 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     @Override
     public void refreshAddress(HashMap<Integer,UserAddress> addressMap) {
         //地址获取成功后，加载到list通过adapter
-        AddressListApapter listApapter = new AddressListApapter(this,addressMap,receiveOrSend);
+        AddressLIstApapter listApapter = new AddressLIstApapter(this,addressMap,receiveOrSend);
         listView.setAdapter(listApapter);
     }
 }

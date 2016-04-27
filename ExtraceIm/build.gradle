@@ -25,12 +25,21 @@ android {
     }
 }
 
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.android.support:support-v4:19.1.0'
     compile files('libs/Gson/gson-2.2.4.jar')
     compile files('libs/ZXing/core-3.0.0.jar')
     compile files('libs/ZXing/javase-3.0.0.jar')
+    compile name: 'SMSSDK-2.0.2', ext: 'aar'
     testCompile 'junit:junit:4.9'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile files('libs/MobTools-2016.0303.1229.jar')
+    compile files('libs/MobCommons-2016.0303.1229.jar')
 }

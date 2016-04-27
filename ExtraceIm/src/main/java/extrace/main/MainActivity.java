@@ -6,6 +6,8 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
 import extrace.ui.main.R;
 
 public class MainActivity extends Activity implements MainView {
@@ -21,7 +23,6 @@ public class MainActivity extends Activity implements MainView {
         fm = getFragmentManager();
         setDefaultFragment();//设置第一个主布局的fragment
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

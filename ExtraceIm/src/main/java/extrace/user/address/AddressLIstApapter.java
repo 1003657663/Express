@@ -17,14 +17,14 @@ import extrace.user.address.addressEdit.AddressEditFragment;
  * 用户地址部分的适配器
  * Created by songchao on 16/4/24.
  */
-public class AddressListApapter extends BaseAdapter{
+public class AddressLIstApapter extends BaseAdapter{
 
     Context context;
     HashMap<Integer,UserAddress> addressMap;
     AddressFragment addressFragment;
     Integer sendOrReceive;
 
-    public AddressListApapter(AddressFragment addressFragment, HashMap<Integer,UserAddress> addressMap,Integer sendOrReceive){
+    public AddressLIstApapter(AddressFragment addressFragment, HashMap<Integer,UserAddress> addressMap, Integer sendOrReceive){
         this.context = addressFragment.getActivity();
         this.addressMap = addressMap;
         this.addressFragment = addressFragment;

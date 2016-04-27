@@ -33,8 +33,12 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
     public static final int ADDRESS_UPDATE_RECEIVE = 1;//收货地址更新
     public static final int ADDRESS_NEW_SEND = 2;//新增发货地址更新
     public static final int ADDRESS_NEW_RECEIVE = 3;//新增收货地址更新
+    public static final int GETPRO = 4;//获取省份
+    public static final int GETCITY = 5;//获取城市
+    public static final int GETREGION = 6;//获取区域
+    public static final int ADDRESS_DELETE = 7;
 
-    private int editWhat;
+    private int editWhat;//标志上面状态的标志位
 
     private UserAddress userAddress;
     private EditText nameEdit,telephoneEdit,addressEdit;
@@ -122,8 +126,12 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
 
         if(editWhat == ADDRESS_UPDATE_SEND){
             getAddressModel.submitUpdateSendAddress(userAddress);
-        }else {
+        }else if(editWhat == ADDRESS_UPDATE_RECEIVE){
             getAddressModel.submitUpdateReceiveAddress(userAddress);
+        }else if(editWhat == ADDRESS_NEW_SEND){
+            getAddressModel.submitNewSendAddress(userAddress);
+        }else if(editWhat == ADDRESS_NEW_RECEIVE){
+            getAddressModel.submitNewReceiveAddress(userAddress);
         }
     }
     /**
@@ -162,7 +170,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
      */
     private void setListener(Integer whichListener){
         switch (whichListener) {
-            case GetAddressModelImpl.GETPRO:
+            case GETPRO:
                 provinceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -176,7 +184,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                     }
                 });
                 break;
-            case GetAddressModelImpl.GETCITY:
+            case GETCITY:
                 citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -190,7 +198,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                     }
                 });
                 break;
-            case GetAddressModelImpl.GETREGION:
+            case GETREGION:
                 regionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -233,7 +241,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 return false;
             }
         });
-        setListener(GetAddressModelImpl.GETREGION);//设置区域部分的监听函数
+        setListener(GETREGION);//设置区域部分的监听函数
     }
 
     /**
@@ -242,6 +250,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
     @Override
     public void sureButtonDo() {
         //删除地址代码---------
+        getAddressModel.addressDelete(userAddress);
         myDialog.hideProgressDialog();
     }
 
@@ -255,7 +264,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
         String[] datas = new String[dataArray.size()];
         ArrayAdapter<String> arrayAdapter = null;
         switch (whichGet){
-            case GetAddressModelImpl.GETPRO:
+            case GETPRO:
                 provinceSparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     Province province = (Province) dataArray.valueAt(i);
@@ -274,7 +283,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 }
                 setListener(whichGet);
                 break;
-            case GetAddressModelImpl.GETCITY:
+            case GETCITY:
                 citySparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     City city = (City) dataArray.valueAt(i);
@@ -293,7 +302,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 }
                 setListener(whichGet);
                 break;
-            case GetAddressModelImpl.GETREGION:
+            case GETREGION:
                 regionSparseArray = dataArray;
                 for(int i=0;i<dataArray.size();i++){
                     Region region = (Region) dataArray.valueAt(i);

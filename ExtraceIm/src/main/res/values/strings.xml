@@ -171,4 +171,5 @@
     <string name="address_get_region">/REST/Misc/getRegionList/</string><!--获取城市区域-->
     <string name="address_submit_update">/REST/Misc/updateAddress</string><!--发货或者收货地址修改后提交地址-->
     <string name="address_submit_new">/REST/Misc/newAddress</string><!--新增的收货或者发货地址-->
+    <string name="address_delete"></string><!--删除地址url-->
 </resources>

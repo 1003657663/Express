@@ -2,6 +2,7 @@ package extrace.main;
 
 import android.app.Application;
 
+import cn.smssdk.SMSSDK;
 import extrace.model.UserInfo;
 
 /**
@@ -16,8 +17,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         userInfo = new UserInfo(getApplicationContext());
-        //---!!!---先把用户登录状态设为true测试
-        //userInfo.setLoginState(true);
+        SMSSDK.initSDK(this, "12282c18097fb", "55a709db05d0213647f5bd05e29c24f6");//初始化短信发送sdk
+        
     }
 
     public UserInfo getUserInfo() {
