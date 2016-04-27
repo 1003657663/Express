@@ -108,8 +108,7 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     }
 
     /**
-     * json转成相应的类model的SparseArray
-     *
+     * json转成Provice类数据
      * @param jsonArray
      * @return
      */
@@ -132,6 +131,11 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
         return provinceSparseArray;
     }
 
+    /**
+     * jsonObject转成City类数据
+     * @param jsonArray
+     * @return
+     */
     private SparseArray<Object> jsonTocity(JSONArray jsonArray) {
         SparseArray<Object> citySparseArray = new SparseArray<>();
         try {
@@ -151,6 +155,11 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
         return citySparseArray;
     }
 
+    /**
+     * jsonObject转成Region类
+     * @param jsonArray
+     * @return
+     */
     private SparseArray<Object> jsonToRegion(JSONArray jsonArray) {
         SparseArray<Object> regionSparseArray = new SparseArray<>();
         try {
@@ -181,6 +190,10 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     }
 
 
+    /**
+     * 开始获取省份，城市，区域 数据
+     * @param id
+     */
     @Override
     public void startGet(Integer id) {
         switch (whichGet) {
@@ -229,83 +242,65 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     @Override
     public void submitUpdateSendAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_UPDATE_SEND;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", userAddress.getAid());
-            jsonObject.put("regionid", userAddress.getRegionid());
-            jsonObject.put("address", userAddress.getAddress());
-            jsonObject.put("customerid", userAddress.getCustomerid());
-            jsonObject.put("name", userAddress.getName());
-            jsonObject.put("telephone", userAddress.getTelephone());
-            jsonObject.put("rank", userAddress.getRank());
-            jsonObject.put("status", SEND);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            onError("提交地址错误，请重试");
+        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        if(jsonObject!=null) {
+            doJson(submitUpdateUrl, VolleyHelper.POST, jsonObject);
         }
-
-        doJson(submitUpdateUrl, VolleyHelper.POST, jsonObject);
     }
 
     @Override
     public void submitUpdateReceiveAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_UPDATE_RECEIVE;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", userAddress.getAid());
-            jsonObject.put("regionid", userAddress.getRegionid());
-            jsonObject.put("address", userAddress.getAddress());
-            jsonObject.put("customerid", userAddress.getCustomerid());
-            jsonObject.put("name", userAddress.getName());
-            jsonObject.put("telephone", userAddress.getTelephone());
-            jsonObject.put("rank", userAddress.getRank());
-            jsonObject.put("status", RECEIVE);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            onError("提交地址错误，请重试");
+        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        if(jsonObject!=null) {
+            doJson(submitUpdateUrl, VolleyHelper.POST, jsonObject);
         }
-        doJson(submitUpdateUrl, VolleyHelper.POST, jsonObject);
     }
 
     @Override
     public void submitNewSendAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_NEW_SEND;
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("id", userAddress.getAid());
-            jsonObject.put("regionid", userAddress.getRegionid());
-            jsonObject.put("address", userAddress.getAddress());
-            jsonObject.put("customerid", userAddress.getCustomerid());
-            jsonObject.put("name", userAddress.getName());
-            jsonObject.put("telephone", userAddress.getTelephone());
-            jsonObject.put("rank", userAddress.getRank());
-            jsonObject.put("status", SEND);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            onError("提交地址错误，请重试");
+        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        if(jsonObject!=null) {
+            doJson(submitNewUrl, VolleyHelper.POST, jsonObject);
         }
-        doJson(submitNewUrl, VolleyHelper.POST, jsonObject);
     }
 
     @Override
     public void submitNewReceiveAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_NEW_RECEIVE;
+        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        if(jsonObject!=null) {
+            doJson(submitNewUrl, VolleyHelper.POST, jsonObject);
+        }
+    }
+
+    /**
+     * UserAddress类中的数据，转成JsonObject中的数据
+     * @param userAddress
+     * @param status
+     * @return
+     */
+    private JSONObject addressTojson(UserAddress userAddress,Integer status){
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("id", userAddress.getAid());
-            jsonObject.put("regionid", userAddress.getRegionid());
+            if(whichGet == AddressEditFragment.ADDRESS_UPDATE_RECEIVE || whichGet == AddressEditFragment.ADDRESS_UPDATE_SEND) {
+                jsonObject.put("id", userAddress.getAid());
+            }
+            jsonObject.put("regionId", userAddress.getRegionid());
             jsonObject.put("address", userAddress.getAddress());
-            jsonObject.put("customerid", userAddress.getCustomerid());
+            jsonObject.put("customerId", userAddress.getCustomerid());
             jsonObject.put("name", userAddress.getName());
             jsonObject.put("telephone", userAddress.getTelephone());
             jsonObject.put("rank", userAddress.getRank());
-            jsonObject.put("status", RECEIVE);
-        } catch (JSONException e) {
+            jsonObject.put("status", status);
+
+            return jsonObject;
+        }catch (JSONException e){
             e.printStackTrace();
             onError("提交地址错误，请重试");
+            return null;
         }
-        doJson(submitNewUrl, VolleyHelper.POST, jsonObject);
     }
 
     @Override

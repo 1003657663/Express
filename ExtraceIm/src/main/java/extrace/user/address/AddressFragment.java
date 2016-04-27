@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import extrace.model.UserAddress;
@@ -71,11 +72,6 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     }
 
     @Override
-    public void addAddress(String name, final String tel, String address, boolean isDefault) {
-
-    }
-
-    @Override
     public void onError(String errorMessage) {
         Toast.makeText(getActivity(),errorMessage,Toast.LENGTH_LONG).show();
     }
@@ -96,9 +92,9 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     }
 
     @Override
-    public void refreshAddress(HashMap<Integer,UserAddress> addressMap) {
+    public void refreshAddress(ArrayList<UserAddress> addressList) {
         //地址获取成功后，加载到list通过adapter
-        AddressLIstApapter listApapter = new AddressLIstApapter(this,addressMap,receiveOrSend);
+        AddressLIstApapter listApapter = new AddressLIstApapter(this,addressList,receiveOrSend);
         listView.setAdapter(listApapter);
     }
 }

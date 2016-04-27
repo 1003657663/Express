@@ -44,7 +44,8 @@ public class VolleyErrorHelper {
             return context.getResources().getString(
                     R.string.generic_server_down);
         } else if (isServerProblem(error)) {
-            return handleServerError(error, context);
+            String stateCode = ((ServerError)error).networkResponse.statusCode+"错误";
+            return handleServerError(stateCode, context);
         } else if (isNetworkProblem(error)) {
             return context.getResources().getString(R.string.no_internet);
         }else if(error instanceof ParseError){

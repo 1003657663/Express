@@ -302,8 +302,10 @@
     <color name="viewfinder_mask">#60000000</color>
 
     <!--*************************************-chao and liming set *******-->
-    <color name="edit_border">#808080</color>
-    <color name="button_light">#1E90FF</color>
-    <color name="top_bar_background">#4c5db8</color>
+    <color name="edit_border">#808080</color><!--界面布局中的全宽度边框或者边界的颜色-->
+    <color name="button_light">#25d491</color><!--buttong的比较亮的颜色-->
+    <color name="top_bar_background">#6cafe9</color><!--顶部标题栏的背景颜色-->
+    <color name="alert">#d66346</color><!--提醒的颜色-->
+    <color name="warning">#d13e27</color><!--警告或者报警的颜色-->
 
 </resources>

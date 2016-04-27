@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import extrace.main.MyApplication;
@@ -60,11 +61,10 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
     @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
-        HashMap<Integer,UserAddress> addressMap = new HashMap<>();
+        ArrayList<UserAddress> addressList = new ArrayList<>();
         try {
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject userObject = (JSONObject) jsonArray.get(i);
-                Integer rank = userObject.getInt("aid");
                 UserAddress userAddress = new UserAddress();
 
                 userAddress.setAid(userObject.getInt("aid"));
@@ -77,13 +77,13 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
                 userAddress.setTelephone(userObject.getString("telephone"));
                 userAddress.setName(userObject.getString("name"));
 
-                addressMap.put(rank,userAddress);
+                addressList.add(userAddress);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
         //如果请求成功这里添加信息
-        presenter.onGetAddressSuccess(addressMap);
+        presenter.onGetAddressSuccess(addressList);
     }
 
     @Override

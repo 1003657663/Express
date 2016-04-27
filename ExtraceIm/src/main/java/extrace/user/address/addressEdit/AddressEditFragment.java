@@ -73,9 +73,11 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
             }else if(editWhat == ADDRESS_NEW_SEND){
                 ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("新增发货地址");
             }
-            //设置初始省份地址，北京
+            //设置初始省份地址，北京，初始字段设置
             userAddress = new UserAddress();
             userAddress.setProvince("北京市");
+            //-------!!!
+            //userAddress.setCustomerid(myApplication.getUserInfo());
         }else {
             if(editWhat == ADDRESS_UPDATE_RECEIVE) {
                 ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改收货地址");
@@ -120,6 +122,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
         userAddress.setRank(this.userAddress.getRank());
         userAddress.setAid(this.userAddress.getAid());
         userAddress.setCustomerid(this.userAddress.getCustomerid());
+        userAddress.setAddress(addressEdit.getText().toString());
         userAddress.setProvinceid(((Province)provinceSparseArray.valueAt(provincePosition)).getPid());
         userAddress.setCityid(((City)citySparseArray.valueAt(cityPosition)).getCid());
         userAddress.setRegionid(((Region)regionSparseArray.valueAt(regionPosition)).getId());

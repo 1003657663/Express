@@ -2,6 +2,7 @@ package extrace.user.address;
 
 import android.app.Activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import extrace.main.MyApplication;
@@ -33,8 +34,8 @@ public class AddressPresenterImpl implements AddressPresenter{
     }
 
     @Override
-    public void onGetAddressSuccess(HashMap<Integer,UserAddress> addressMap) {
-        addressView.refreshAddress(addressMap);
+    public void onGetAddressSuccess(ArrayList<UserAddress> addressList) {
+        addressView.refreshAddress(addressList);
     }
 
     @Override

@@ -7,6 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import extrace.model.UserAddress;
@@ -20,20 +24,20 @@ import extrace.user.address.addressEdit.AddressEditFragment;
 public class AddressLIstApapter extends BaseAdapter{
 
     Context context;
-    HashMap<Integer,UserAddress> addressMap;
+    ArrayList<UserAddress> addressList;
     AddressFragment addressFragment;
     Integer sendOrReceive;
 
-    public AddressLIstApapter(AddressFragment addressFragment, HashMap<Integer,UserAddress> addressMap, Integer sendOrReceive){
+    public AddressLIstApapter(AddressFragment addressFragment, ArrayList<UserAddress> addressList, Integer sendOrReceive){
         this.context = addressFragment.getActivity();
-        this.addressMap = addressMap;
+        this.addressList = addressList;
         this.addressFragment = addressFragment;
         this.sendOrReceive = sendOrReceive;
     }
 
     @Override
     public int getCount() {
-        return addressMap.size();
+        return addressList.size();
     }
 
     @Override
@@ -77,7 +81,7 @@ public class AddressLIstApapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         System.err.println("position:"+position);
-        final UserAddress userAddress = addressMap.get(position);
+        final UserAddress userAddress = addressList.get(position);
         viewHolder.nameText.setText(userAddress.getName());
         viewHolder.telephoneText.setText(userAddress.getTelephone());
         viewHolder.provinceText.setText(userAddress.getProvince());
@@ -91,12 +95,11 @@ public class AddressLIstApapter extends BaseAdapter{
                 addressFragment.toEditFragment(userAddress,sendOrReceive==AddressFragment.SEND? AddressEditFragment.ADDRESS_UPDATE_SEND:AddressEditFragment.ADDRESS_UPDATE_RECEIVE);
             }
         });
+
         if(userAddress.getRank()!=0){
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(0,0);
-            params.setMargins(0,0,0,0);
-            viewHolder.isDefaultText.setText("");
-            viewHolder.isDefaultText.setLayoutParams(params);
-            viewHolder.isDefaultText.setPadding(0,0,0,0);
+            viewHolder.isDefaultText.setVisibility(TextView.GONE);
+        }else{
+            viewHolder.isDefaultText.setVisibility(TextView.VISIBLE);
         }
         return convertView;
     }

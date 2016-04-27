@@ -1,5 +1,6 @@
 package extrace.user.address;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import extrace.model.UserAddress;
@@ -10,6 +11,6 @@ import extrace.model.UserAddress;
 public interface AddressPresenter {
     void getSendAddress();
     void getReceiveAddress();
-    void onGetAddressSuccess(HashMap<Integer,UserAddress> addressMap);
+    void onGetAddressSuccess(ArrayList<UserAddress> addressList);
     void onGetAddressFail(String errorMessage);
 }
