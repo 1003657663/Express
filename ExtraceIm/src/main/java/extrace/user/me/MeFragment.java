@@ -15,6 +15,8 @@ import extrace.main.MyApplication;
 import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
 import extrace.user.login.LoginFragment;
+import extrace.user.password.ChangePasswordFragment;
+import extrace.user.telephone.ChangeTelFragment;
 
 /**
  * Created by chao on 2016/4/17.
@@ -57,14 +59,19 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
                 toUserSendAddress();
                 break;
             case R.id.user_tel:
+                toTelChange();
                 break;
             case R.id.user_password:
+                toPasswordChange();
                 break;
             case R.id.send_record:
+                toSendRecordFragment();
                 break;
             case R.id.about_soft:
+                toAboutSoftFragment();
                 break;
             case R.id.my_complaint:
+                toMyComplaint();
                 break;
             case R.id.user_me_login_out:
                 loginOut();
@@ -72,6 +79,9 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         }
     }
 
+    /**
+     * 跳转到收货地址
+     */
     @Override
     public void toUserReceiveAddress(){
         AddressFragment addressFragment = new AddressFragment();
@@ -84,6 +94,33 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         transaction.commit();
     }
 
+    /**
+     * 修改手机号
+     */
+    @Override
+    public void toTelChange() {
+        ChangeTelFragment changeTelFragment = new ChangeTelFragment();
+
+        transaction.replace(R.id.fragment_container_layout,changeTelFragment);
+        transaction.addToBackStack("mefragment");
+        transaction.commit();
+    }
+
+    /**
+     * 修改密码
+     */
+    @Override
+    public void toPasswordChange() {
+        ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
+
+        transaction.replace(R.id.fragment_container_layout,changePasswordFragment);
+        transaction.addToBackStack("mefragment");
+        transaction.commit();
+    }
+
+    /**
+     * 用户发货地址
+     */
     @Override
     public void toUserSendAddress() {
         AddressFragment addressFragment = new AddressFragment();
@@ -96,7 +133,9 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         transaction.commit();
     }
 
-    //注销登录
+    /**
+     * 注销登陆
+     */
     @Override
     public void loginOut() {
         ((MyApplication)getActivity().getApplication()).getUserInfo().setLoginState(false);
@@ -107,21 +146,24 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         transaction.commit();
     }
 
-    @Override
-    public void toUserInfoFragment(){
 
-    }
 
     @Override
     public void toSendRecordFragment(){
 
     }
 
+    /**
+     *关于软件
+     */
     @Override
     public void toAboutSoftFragment(){
 
     }
 
+    /**
+     * 我的投诉
+     */
     @Override
     public void toMyComplaint(){
 

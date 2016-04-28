@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+import extrace.ToolBox.CheckInput;
+import extrace.ToolBox.CountDown;
 import extrace.ui.main.R;
 
 /**
@@ -60,7 +62,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         view.findViewById(R.id.login_button).setOnClickListener(this);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.register_button).setOnClickListener(this);
+
         initSMS();
+
         return view;
     }
 
@@ -97,9 +101,12 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 }
                 break;
             case R.id.login_tel_verify_button:
-                if(checkTel()) {
+                tel = telEdit.getText().toString();
+                if(CheckInput.checkTel(tel)) {
                     SMSSDK.getVerificationCode(COUNTRY_CODE, tel);
                     setVerifyButton();
+                }else{
+                    telEdit.setError("手机号错误");
                 }
                 break;
             default:
@@ -110,45 +117,14 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
     /**
      * 获取验证码后，验证码按钮显示倒计时，倒计时完毕，显示重新获取
      */
-    AsyncTask asyncTask;
+    CountDown countDown;
     private void setVerifyButton(){
+
         verifyCodeButton.setClickable(false);
         verifyCodeButton.setBackground(getActivity().getResources().getDrawable(R.drawable.button_radio_grey_background));
         //创建一个循环计时异步线程用来更新主线程
-        asyncTask = new AsyncTask() {
-            @Override
-            protected void onPreExecute() {
-                verifyCodeButton.setText("60");
-            }
-
-            @Override
-            protected Object doInBackground(Object[] params) {
-                int time = 60;
-                while (time>0){
-                    time--;
-                    publishProgress(time+"");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Object[] values) {
-                verifyCodeButton.setText(((String)values[0]));
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                verifyCodeButton.setText("重新获取验证码");
-                verifyCodeButton.setClickable(true);
-                verifyCodeButton.setBackground(getActivity().getResources().getDrawable(R.drawable.button_radio_with_background_color));
-            }
-        };
-        asyncTask.execute();
+        countDown = new CountDown(getActivity(),verifyCodeButton,60,"重新获取验证码");
+        countDown.execute(60);
     }
 
 
@@ -158,8 +134,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
     @Override
     public void onDestroy() {
         SMSSDK.unregisterEventHandler(eh);
-        if(asyncTask!=null && asyncTask.getStatus() != AsyncTask.Status.FINISHED){
-            asyncTask.cancel(true);
+        if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
+            countDown.cancel(true);
         }
         super.onDestroy();
     }
@@ -168,7 +144,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
      * 注册短信sdk的回调函数
      */
     private EventHandler eh;
-    private final String COUNTRY_CODE = "86";
+    public final static String COUNTRY_CODE = "86";
     private Handler smsHandler;
     private void initSMS(){
         smsHandler = new Handler(){//创建一个回调handler控制UI线程
@@ -246,21 +222,6 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         }
         if(verifyCode.equals("")){
             onError(VERIFY_ERROR,"请填写验证码");
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * 只用来检测手机号的正确性
-     * @return
-     */
-    public boolean checkTel(){
-        tel = telEdit.getText().toString();
-        Pattern pattern = Pattern.compile("^[0-9]+$");
-        Matcher matcher = pattern.matcher(tel);
-        if(tel.length()!=11 || !matcher.matches()) {
-            telEdit.setError("必须是电话号");
             return false;
         }
         return true;

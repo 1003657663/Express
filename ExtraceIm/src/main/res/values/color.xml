@@ -308,4 +308,6 @@
     <color name="alert">#d66346</color><!--提醒的颜色-->
     <color name="warning">#d13e27</color><!--警告或者报警的颜色-->
 
+    <color name="font_color_light">#ffffff</color><!--偏白色文字颜色-->
+
 </resources>

@@ -17,6 +17,9 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         userInfo = new UserInfo(getApplicationContext());
+        //--------------------------------test
+        userInfo.setLoginState(true);
+        //------------------------------------
         SMSSDK.initSDK(this, "12282c18097fb", "55a709db05d0213647f5bd05e29c24f6");//初始化短信发送sdk
         
     }
