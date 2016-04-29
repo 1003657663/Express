@@ -47,8 +47,6 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
         saddress = (TextView) view.findViewById(R.id.sadd);
         saddressinfo = (TextView) view.findViewById(R.id.saddressinfo);
         rname = (TextView) view.findViewById(R.id.rname);
-
-
         rtel = (TextView) view.findViewById(R.id.rtel);
         raddress = (TextView) view.findViewById(R.id.radd);
         raddressinfo = (TextView) view.findViewById(R.id.raddressinfo);
@@ -90,7 +88,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                 bundle.putString("type", "send");
                 fragment.setArguments(bundle);
                 transaction.hide(express_edit_Fragment.this);
-                transaction.add(R.id.fragment_container_layout, fragment);//id随便写了一个
+                transaction.add(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
@@ -118,8 +116,8 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getActivity(), "您未同意本公司协议", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getUID();
-                    expressPresenter.doNewExpress(customerId,send_id, receive_id);
+                    //int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getTelephone();
+                    //expressPresenter.doNewExpress(customerId,send_id, receive_id);
                 }
                 break;
             default:

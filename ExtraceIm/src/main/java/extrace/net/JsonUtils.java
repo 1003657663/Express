@@ -360,7 +360,7 @@ public class JsonUtils {
                 result = gson.toJson(target, targetType);
             }
         } catch (Exception ex) {
-            Log.w("目标对象 " + target.getClass().getName() + " 转换 JSON 字符串时，发生异常！", ex.getMessage());
+            Log.w("目标对象 " + target.getClass().getName() + " 转换 JSON 字符串时发生异常！", ex.getMessage());
             if (target instanceof Collection<?> || target instanceof Iterator<?> || target instanceof Enumeration<?>
                     || target.getClass().isArray()) {
                 result = EMPTY_JSON_ARRAY;

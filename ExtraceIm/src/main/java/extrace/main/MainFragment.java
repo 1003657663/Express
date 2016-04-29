@@ -10,13 +10,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.app.Activity;
+import android.widget.Toast;
 
-import extrace.Express.view.express_edit_view.express_edit_Fragment;
-import extrace.Express.view.express_search_view.express_search_Fragment;
+
+import com.xys.libzxing.zxing.activity.CaptureActivity;
+
+import extrace.Customer.Express.view.express_edit_view.express_edit_Fragment;
+import extrace.Customer.Express.view.express_search_view.express_search_Fragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
-import zxing.util.CaptureActivity;
+
 
 /**
  * Created by songchao on 16/4/4.
@@ -53,7 +58,6 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 express_search_Fragment fragment = new express_search_Fragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack("index");
                 transaction.commit();
@@ -71,6 +75,7 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
             }
         });
+
 
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
@@ -94,7 +99,6 @@ public class MainFragment extends Fragment {
     private void toMeFragment(){
         MeFragment meFragment = new MeFragment();
         transaction.replace(R.id.fragment_container_layout, meFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack("index");
         transaction.commit();
     }
@@ -102,20 +106,29 @@ public class MainFragment extends Fragment {
     private void toLoginFragment(){
         LoginFragment loginFragment = new LoginFragment();
         transaction.replace(R.id.fragment_container_layout, loginFragment);
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack("index");
         transaction.commit();
     }
 
     private void startCamera(){
-        Intent intent = new Intent();
-        intent.putExtra("Action","Captrue");
-        intent.setClass(getActivity(), CaptureActivity.class);
-        startActivityForResult(intent, 100);
+        startActivityForResult(new Intent(getActivity(),CaptureActivity.class),0);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("");
+        if(resultCode==Activity.RESULT_OK)
+        {
+            Bundle bundle=data.getExtras();
+            String result=bundle.getString("result");
+            Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
+            express_search_Fragment fragment=new express_search_Fragment();
+            Bundle bundle1=new Bundle();
+            bundle1.putString("ID",result);
+            fragment.setArguments(bundle1);
+            transaction.replace(R.id.fragment_container_layout, fragment);
+            transaction.addToBackStack("index");
+            transaction.commit();
+        }
     }
+
 }

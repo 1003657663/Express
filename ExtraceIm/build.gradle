@@ -32,7 +32,7 @@ repositories{
 }
 
 dependencies {
-    compile fileTree(dir: 'libs',include:['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.android.support:support-v4:19.1.0'
     compile files('libs/Gson/gson-2.2.4.jar')
@@ -43,4 +43,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile files('libs/MobTools-2016.0303.1229.jar')
     compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile project(':libzxing')
 }
