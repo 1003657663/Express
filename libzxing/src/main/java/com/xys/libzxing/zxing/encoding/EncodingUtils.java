@@ -33,7 +33,7 @@ public class EncodingUtils {
                 return null;
             }
             // 配置参数
-            Map<EncodeHintType, Object> hints = new HashMap<>();
+            Map<EncodeHintType, Object> hints = new HashMap<EncodeHintType, Object>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
             // 容错级别
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);

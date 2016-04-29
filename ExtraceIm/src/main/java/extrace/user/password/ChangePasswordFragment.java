@@ -18,16 +18,18 @@ import extrace.ui.main.R;
 public class ChangePasswordFragment extends Fragment implements ChangePasswordView,View.OnClickListener {
 
     private EditText passwordEdit;
+    private EditText passwordEdit2;
     String password;
+    String password2;
     ChangePassworPresenter changePassworPresenter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_change_telephone,container,false);
+        View view = inflater.inflate(R.layout.user_change_password,container,false);
         ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("密码修改");
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_change_password_submit).setOnClickListener(this);
         passwordEdit = (EditText) view.findViewById(R.id.user_change_password);
-
+        passwordEdit2 = (EditText) view.findViewById(R.id.user_change_password_again);
         changePassworPresenter = new ChangePassworPresenterImpl(getActivity(),this);
         return view;
     }
@@ -66,10 +68,22 @@ public class ChangePasswordFragment extends Fragment implements ChangePasswordVi
     @Override
     public void submit() {
         password = passwordEdit.getText().toString();
+        password2 = passwordEdit2.getText().toString();
+
+        if(password2.equals("")){
+            passwordEdit2.setError("不能为空");
+            return;
+        }
         if(password.equals("") || password.length()<6){
             passwordEdit.setError("密码长度不能小于6位");
-        }else {
-            changePassworPresenter.onSubmit(password);
+            return;
         }
+        if(!password2.equals(password)){
+            passwordEdit.setError("两次输入密码不一致");
+            return;
+        }
+
+        changePassworPresenter.onSubmit(password);
+
     }
 }

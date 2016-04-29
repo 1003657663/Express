@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import cn.smssdk.EventHandler;
@@ -103,6 +104,7 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
             countDown.cancel(true);
         }
@@ -117,17 +119,25 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
         smsHandler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
-                String mess = (String) msg.obj;
-                if(msg.what == 1){
-                    //提交
-                    ArrayList<Map<String,String>> data = (ArrayList<Map<String, String>>) msg.obj;
-                    if(true){//检测返回数据是否准确
-                        submit();
-                    }else {
-                        showToast("验证码验证失败，请重试");
-                    }
+
+                switch (msg.what) {
+                    case LoginFragment.TEST_VERIFY_OK :
+                        HashMap<String, String> data = (HashMap<String, String>) msg.obj;
+                        if (data.get("phone").equals(tel)) {
+                            submit();
+                        } else {
+                            showToast("验证失败，请重新获取验证码");
+                        }
+                        break;
+                    case LoginFragment.TEST_VERIFY_NO:
+                        showToast("验证码校验失败，请重新获取");
+                        break;
+                    case LoginFragment.REQ_VERIFY_OK :
+                        showToast("验证码发送成功，注意查收");
+                        break;
+                    case LoginFragment.REQ_VERIFY_NO:
+                        showToast("验证码发送失败，请重新获取");
                 }
-                showToast(mess);
             }
         };
         eh=new EventHandler(){
@@ -137,15 +147,25 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(1,data));
+                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_OK,data));
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(0,"发送验证码成功，请查收"));
+                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_OK));
                     }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
                     }
                 }else{
                     ((Throwable)data).printStackTrace();
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码失败
+                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_NO));
+                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                        //获取验证码失败
+                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_NO));
+                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                        //返回支持发送验证码的国家列表
+                    }
                 }
             }
         };

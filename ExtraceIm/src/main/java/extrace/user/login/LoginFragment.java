@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,20 +146,38 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
      */
     private EventHandler eh;
     public final static String COUNTRY_CODE = "86";
+    public final static int REQ_VERIFY_OK = 1;//请求验证码成功
+    public final static int REQ_VERIFY_NO = -1;//请求验证码失败
+    public final static int TEST_VERIFY_OK = 2;//校验验证码成功
+    public final static int TEST_VERIFY_NO = -2;//校验验证码失败
+
     private Handler smsHandler;
     private void initSMS(){
         smsHandler = new Handler(){//创建一个回调handler控制UI线程
             @Override
             public void handleMessage(Message msg) {
-                String mess = (String) msg.obj;
-                if(msg.what == 1){
-                    if(isLogin){//判断是注册还是登录通过用户姓名输入框的存在性
-                        loginPresenter.startLogin(tel, password);
-                    }else {
-                        loginPresenter.startRegister(tel, password,name);
-                    }
+                switch (msg.what) {
+                    case TEST_VERIFY_OK :
+                        HashMap<String, String> data = (HashMap<String, String>) msg.obj;
+                        if (data.get("phone").equals(tel)) {
+                            if (isLogin) {//判断是注册还是登录通过用户姓名输入框的存在性
+                                loginPresenter.startLogin(tel, password);
+                            } else {
+                                loginPresenter.startRegister(tel, password, name);
+                            }
+                        } else {
+                            showToast("验证失败，请重新获取验证码");
+                        }
+                        break;
+                    case TEST_VERIFY_NO:
+                        showToast("验证码校验失败，请重新获取");
+                        break;
+                    case REQ_VERIFY_OK :
+                        showToast("验证码发送成功，注意查收");
+                        break;
+                    case REQ_VERIFY_NO:
+                        showToast("验证码发送失败，请重新获取");
                 }
-                showToast(mess);
             }
         };
         eh=new EventHandler(){
@@ -168,15 +187,25 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(1,"验证成功"));
+                        smsHandler.sendMessage(smsHandler.obtainMessage(TEST_VERIFY_OK,data));
                     }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(0,"发送验证码成功，请查收"));
+                        smsHandler.sendMessage(smsHandler.obtainMessage(REQ_VERIFY_OK));
                     }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
                     }
                 }else{
                     ((Throwable)data).printStackTrace();
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码失败
+                        smsHandler.sendMessage(smsHandler.obtainMessage(TEST_VERIFY_NO));
+                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                        //获取验证码失败
+                        smsHandler.sendMessage(smsHandler.obtainMessage(REQ_VERIFY_NO));
+                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                        //返回支持发送验证码的国家列表
+                    }
                 }
             }
         };

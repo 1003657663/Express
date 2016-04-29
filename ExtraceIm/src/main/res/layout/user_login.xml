@@ -71,7 +71,7 @@
             android:id="@+id/login_username_edit"
             android:visibility="gone"
             android:hint="用户名"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:paddingLeft="@dimen/edit_left_and_right_padding"
             android:paddingRight="@dimen/edit_left_and_right_padding" />
 
