@@ -116,7 +116,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getActivity(), "您未同意本公司协议", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    //int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getTelephone();
+                    //int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().get
                     //expressPresenter.doNewExpress(customerId,send_id, receive_id);
                 }
                 break;
