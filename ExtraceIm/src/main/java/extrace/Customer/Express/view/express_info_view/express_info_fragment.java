@@ -112,7 +112,8 @@ public class express_info_fragment extends Fragment implements express_info_frag
         TranFee.setText(String.valueOf(expressInfo.getTranFee()));
         InsuFee.setText(String.valueOf(expressInfo.getInsuFee()));
 
-        target.setOnClickListener(new View.OnClickListener() {
+        //显示路径信息
+        /*target.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 express_target_Fragment fragment=new express_target_Fragment();
@@ -124,7 +125,7 @@ public class express_info_fragment extends Fragment implements express_info_frag
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
-        });
+        });*/
 
     }
 }

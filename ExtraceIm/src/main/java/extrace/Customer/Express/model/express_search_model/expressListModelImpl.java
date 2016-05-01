@@ -9,18 +9,18 @@ import org.json.JSONObject;
 import extrace.model.ExpressInfo;
 import extrace.net.VolleyHelper;
 import extrace.Customer.Express.presenter.express_search_presenter.expressListPresenter;
+import extrace.ui.main.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by 黎明 on 2016/4/17.
  */
 public class expressListModelImpl extends VolleyHelper implements expressListModel
 {
-    String url;
     private expressListPresenter expressListPresenter;
+    private String searchByIDurl,searchByCIDurl,searchByTelurl;
     @Override
     public void onError(String errorMessage) {
 
@@ -29,12 +29,15 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
     public expressListModelImpl(Activity activity, expressListPresenter expressListPresenter) {
     super(activity);
     this.expressListPresenter = expressListPresenter;
-       // url = ((ExTraceApplication)activity.getApplication()).getMiscServiceUrl();
+     searchByIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoById);
+        searchByCIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoByCustomerId);
+        searchByTelurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoByTel);
+
 }
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-        JSONObject object=(JSONObject)jsonOrArray;
+     /*   JSONObject object=(JSONObject)jsonOrArray;
         List<ExpressInfo> list = new ArrayList<ExpressInfo>();
         for (int i = 0; i < 20; i++)
         { ExpressInfo expressInfo = new ExpressInfo();
@@ -45,7 +48,8 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
         expressInfo.setGetTime("4");
         list.add(expressInfo);}
             expressListPresenter.onSuccess(list);
-       /* JSONArray jsonArray=(JSONArray)jsonOrArray;
+       */
+        JSONArray jsonArray=(JSONArray)jsonOrArray;
         try {
             List<ExpressInfo> list = new ArrayList<ExpressInfo>();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -65,33 +69,27 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
         catch (JSONException e) {
             e.printStackTrace();
             expressListPresenter.onFail();//失败则调用presenter Fail
-        }*/
+        }
     }
 
     @Override
     public void searchByID(String ID)
     {
-        JSONObject object=new JSONObject();
-        onDataReceive(object);
-       /* Object object=new Object();
-        url += "";
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("ID",ID);
-            doJson(url,VolleyHelper.POST,jsonObject);
+            doJson(searchByIDurl,VolleyHelper.POST,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     @Override
     public void searchByTel(String ID) {
-        Object object=new Object();
-        url += "";
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("ID",ID);
-            doJson(url,VolleyHelper.POST,jsonObject);
+            doJson(searchByTelurl,VolleyHelper.POST,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -99,12 +97,10 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
 
     @Override
     public void searchByCID(String ID) {
-        Object object=new Object();
-        url += "";
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("ID",ID);
-            doJson(url,VolleyHelper.POST,jsonObject);
+            doJson(searchByCIDurl,VolleyHelper.POST,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
