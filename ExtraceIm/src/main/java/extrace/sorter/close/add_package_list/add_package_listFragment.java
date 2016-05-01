@@ -57,7 +57,7 @@ public class add_package_listFragment extends ListFragment implements add_packag
                         "请选择快件或包裹").setPositiveButton("快件", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                      
+
                         startActivityForResult(new Intent(getActivity(),CaptureActivity.class),0);
                     }
                 }).setNegativeButton("包裹", new DialogInterface.OnClickListener() {

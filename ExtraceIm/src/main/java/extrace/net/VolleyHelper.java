@@ -50,7 +50,7 @@ public abstract class VolleyHelper {
         requestQueue.add(objectRequest);
     }
 
-    public void doJsonArray(String url,Integer postOrGet,JSONObject jsonObject){
+    public void doJsonArray(String url,Integer postOrGet,JSONArray jsonObject){
         showProgressDialog();
         MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonObject,new Response.Listener<JSONArray>() {
             @Override

@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
  * Created by chao on 2016/4/19.
  */
 public class MyJsonArrayRequest extends JsonArrayRequest {
-    public MyJsonArrayRequest(int method, String url, JSONObject jsonRequest, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
+    public MyJsonArrayRequest(int method, String url, JSONArray jsonRequest, Response.Listener<JSONArray> listener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
     }
 
