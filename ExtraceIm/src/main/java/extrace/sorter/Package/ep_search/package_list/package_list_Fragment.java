@@ -2,8 +2,11 @@ package extrace.sorter.Package.ep_search.package_list;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.media.Image;
 import android.os.Bundle;
 
@@ -25,6 +28,7 @@ import extrace.model.Package;
 
 import extrace.sorter.Package.ep_search.express_list.express_list_fragment;
 import extrace.sorter.Sorter_Index_Fragment;
+import extrace.sorter.close.add_package_list.add_package_listFragment;
 import extrace.ui.main.R;
 
 /**
@@ -103,11 +107,20 @@ public class package_list_Fragment extends Fragment implements package_list_Frag
 
     @Override
     public void Success() {
-        Toast.makeText(getActivity(),"拆包成功",Toast.LENGTH_LONG).show();
-        Sorter_Index_Fragment fragment=new Sorter_Index_Fragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container_layout, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        //Toast.makeText(getActivity(),"拆包成功",Toast.LENGTH_LONG).show();
+        Dialog dialog1 = new AlertDialog.Builder(getActivity()).setIcon(
+                android.R.drawable.btn_star).setTitle("确认").setMessage(
+                "拆包成功").setPositiveButton("确认",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Sorter_Index_Fragment fragment=new Sorter_Index_Fragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        }).create();
+        dialog1.show();
+
     }
 }

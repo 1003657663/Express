@@ -18,6 +18,8 @@ import com.xys.libzxing.zxing.activity.CaptureActivity;
 import extrace.sorter.Package.ep_search.package_list.package_list_Fragment;
 import extrace.sorter.Package.package_search.package_search_Fragment;
 import extrace.main.MyApplication;
+import extrace.sorter.close.add_package_list.add_package_listFragment;
+import extrace.sorter.close.new_package_info.new_package_info_fragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
@@ -43,9 +45,8 @@ public class Sorter_Index_Fragment extends Fragment
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),1);
+              startCamera();
                 //1为拆包动作 此时需调用zxing执行扫码 扫码完毕后会返回一个packageID
-                //由此packageID会获得其所含的快件list 显示list信息
                 //拆包就是扫码-显示包裹信息-查看快件信息-确认拆包
             }
         });
@@ -53,10 +54,11 @@ public class Sorter_Index_Fragment extends Fragment
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(),CaptureActivity.class),2);
                 //2为打包
-                //扫一堆快件码-显示所扫快件信息list-打包-输入新包裹的信息-打包成功
-                //
+                new_package_info_fragment fragment = new new_package_info_fragment();
+                transaction.replace(R.id.fragment_container_layout, fragment);
+                transaction.addToBackStack("sindex");
+                transaction.commit();
             }
         });
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -110,39 +112,10 @@ public class Sorter_Index_Fragment extends Fragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode== Activity.RESULT_OK)
         {
-            if(requestCode==0) {
                 Bundle bundle = data.getExtras();
                 String result = bundle.getString("result");
-
                 //Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
                 package_search_Fragment fragment = new package_search_Fragment();
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("ID", result);
-                fragment.setArguments(bundle1);
-                transaction.replace(R.id.fragment_container_layout, fragment);
-                transaction.addToBackStack("sindex");
-                transaction.commit();
-            }
-            if(requestCode==1) {
-                Bundle bundle = data.getExtras();
-                String packageID = bundle.getString("result");
-               // Toast.makeText(getActivity(), packageID, Toast.LENGTH_LONG).show();
-                //这是一个packageID，由此ID去search页面显示其expressinfo
-                package_search_Fragment fragment = new package_search_Fragment();
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("packageID", packageID);
-                fragment.setArguments(bundle1);
-                transaction.remove(Sorter_Index_Fragment.this);
-                transaction.add(R.id.fragment_container_layout,fragment);
-               //transaction.replace(R.id.fragment_container_layout, fragment);
-                transaction.addToBackStack("sindex");
-                transaction.commit();
-            }
-            if(requestCode==2) {
-                Bundle bundle = data.getExtras();
-                String result = bundle.getString("result");
-               // Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-                package_list_Fragment fragment = new package_list_Fragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("ID", result);
                 fragment.setArguments(bundle1);
@@ -153,4 +126,4 @@ public class Sorter_Index_Fragment extends Fragment
 
         }
     }
-}
+

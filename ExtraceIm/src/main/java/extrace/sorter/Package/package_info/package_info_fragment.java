@@ -15,7 +15,7 @@ public class package_info_fragment extends Fragment
 {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.packageinfo_edit,container,false);
+        View view=inflater.inflate(R.layout.packageinfo,container,false);
         return view;
     }
 }

@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import extrace.model.packageInfo;
 import extrace.sorter.Package.ep_search.package_list.package_list_Fragment;
 import extrace.ui.main.R;
+import extrace.user.address.AddressFragment;
 
 /**
  * Created by 黎明 on 2016/4/25.
@@ -66,6 +68,7 @@ public class package_search_Fragment extends Fragment implements package_search_
             package_search_presenter=new package_search_presenterImpl(this);
             package_search_presenter.onopenPackage(packageID);
         }
+
         return view;
     }
 

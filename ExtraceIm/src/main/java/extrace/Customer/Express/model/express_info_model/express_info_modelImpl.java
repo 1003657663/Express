@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import extrace.Customer.Express.presenter.express_info_presenter.express_info_presenter;
 import extrace.model.ExpressInfo;
 import extrace.net.VolleyHelper;
+import extrace.ui.main.R;
 
 /**
  * Created by 黎明 on 2016/4/19.
@@ -13,11 +14,12 @@ import extrace.net.VolleyHelper;
 public class express_info_modelImpl extends VolleyHelper implements express_info_model
 {
     private express_info_presenter express_info_presenter;
-    String url="";
+    private String url;
     public express_info_modelImpl(Activity activity, express_info_presenter express_info_presenter)
     {
         super(activity);
         this.express_info_presenter=express_info_presenter;
+        url =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoById);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class express_info_modelImpl extends VolleyHelper implements express_info
     @Override
     public void findInfoByID(String ID)
     {
-        url+="";
+
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("ID",ID);
