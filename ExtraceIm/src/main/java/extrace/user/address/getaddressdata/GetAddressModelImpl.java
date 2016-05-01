@@ -182,7 +182,7 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Region region = new Region();
                 region.setArea(jsonObject.getString("area"));
-                region.setCityId(jsonObject.getInt("cityId"));
+                region.setCityId(jsonObject.getInt("cityid"));
                 region.setId(jsonObject.getInt("id"));
                 regionSparseArray.put(region.getId(), region);
             }

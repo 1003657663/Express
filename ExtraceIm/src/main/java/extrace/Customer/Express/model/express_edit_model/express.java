@@ -5,6 +5,7 @@ import android.app.Activity;
 import org.json.JSONObject;
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.net.VolleyHelper;
+import extrace.ui.main.R;
 
 
 /**
@@ -17,7 +18,6 @@ public class express extends VolleyHelper implements express_edit_model {
     public express(Activity activity, expressPresenter expressPresenter) {
         super(activity);
         this.expressPresenter = expressPresenter;
-      // url =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.SendExpress);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class express extends VolleyHelper implements express_edit_model {
     }
     @Override
     public void onError(String errorMessage) {
-        expressPresenter.onFail("error");
+        expressPresenter.onFail();
     }
 
 }
