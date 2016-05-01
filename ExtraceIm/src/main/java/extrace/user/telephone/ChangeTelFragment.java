@@ -13,14 +13,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import extrace.ToolBox.CheckInput;
-import extrace.ToolBox.CountDown;
+import extrace.toolbox.CheckInput;
+import extrace.toolbox.CountDown;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 
@@ -94,8 +92,9 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
     public void getVerify() {
         tel = telEdit.getText().toString();
         if(CheckInput.checkTel(tel)){
+            verifyGetButton.setBackground(getActivity().getResources().getDrawable(R.color.button_grey));
             SMSSDK.getVerificationCode(LoginFragment.COUNTRY_CODE, tel);
-            countDown = new CountDown(getActivity(),verifySubmitButton,60,"重新获取验证码");
+            countDown = new CountDown(getActivity(),verifyGetButton,60,"重新获取验证码",getActivity().getResources().getDrawable(R.color.button_light));
             countDown.execute(60);
         }else {
             telEdit.setError("手机号错误");
@@ -103,7 +102,7 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         super.onDestroy();
         if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
             countDown.cancel(true);

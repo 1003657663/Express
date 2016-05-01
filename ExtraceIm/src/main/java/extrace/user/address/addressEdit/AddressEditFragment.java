@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -44,6 +45,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
     private EditText nameEdit,telephoneEdit,addressEdit;
     private Spinner provinceSpinner, citySpinner, regionSpinner;
     private MyDialog myDialog;
+    private Button setDefaultButton;
     private MyApplication myApplication;
     private GetAddressModelImpl getAddressModel;
     private SparseArray<Object> provinceSparseArray;//存储临时地址数据
@@ -60,6 +62,8 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
         View view = inflater.inflate(R.layout.user_address_edit,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_address_edit_submit_button).setOnClickListener(this);
+        setDefaultButton = (Button) view.findViewById(R.id.user_address_setdefault);
+        setDefaultButton.setOnClickListener(this);
         myApplication = (MyApplication) getActivity().getApplication();
         getAddressModel = new GetAddressModelImpl(getActivity(),this);
 
@@ -75,6 +79,8 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
             }
             //设置初始省份地址，北京，初始字段设置
             userAddress = new UserAddress();
+            userAddress.setRank(1);
+            userAddress.setCustomerid(myApplication.getUserInfo().getId());
             userAddress.setProvince("北京市");
             //-------!!!
             //userAddress.setCustomerid(myApplication.getUserInfo());
@@ -85,12 +91,19 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改发货地址");
             }
             setRightDelIcon(view);//如果不是新增地址，那么设置右边的删除按钮
+            preRank = userAddress.getRank();//存储rank数据
+            if(preRank == 0){
+                setDefaultButton.setText("默认");
+            }else {
+                setDefaultButton.setText("设为默认地址");
+            }
         }
 
 
 
         setAddressInfo(view);//设置初始信息
         myDialog = new MyDialog(getActivity());
+        myDialog.setSureButton(this);
         return view;
     }
 
@@ -108,8 +121,25 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 //提交修改的地址
                 submitChangeAddress();
                 break;
+            case R.id.user_address_setdefault:
+                setDefault();
+                break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * 设为默认 按钮 被点击后调用
+     */
+    private int preRank;
+    private void setDefault(){
+        if(userAddress.getRank() == 0){
+            setDefaultButton.setText("设为默认地址");
+            userAddress.setRank(preRank);
+        }else {
+            setDefaultButton.setText("默认");
+            userAddress.setRank(0);
         }
     }
     /**
@@ -339,6 +369,12 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
     @Override
     public void onSubmitSuccess() {
         Toast.makeText(getActivity(),"提交成功",Toast.LENGTH_SHORT).show();
+        getFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+        Toast.makeText(getActivity(),"删除地址成功",Toast.LENGTH_SHORT).show();
         getFragmentManager().popBackStack();
     }
 }

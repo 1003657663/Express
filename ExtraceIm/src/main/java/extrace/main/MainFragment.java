@@ -26,7 +26,7 @@ import extrace.user.me.MeFragment;
 /**
  * Created by songchao on 16/4/4.
  */
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements View.OnClickListener{
 
     private Button meButton;
     private FragmentManager fm;
@@ -79,21 +79,24 @@ public class MainFragment extends Fragment {
 
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         meButton = (Button) view.findViewById(R.id.me_button);
-        meButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        meButton.setOnClickListener(this);
+        return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.me_button:
                 if(!myApplication.getUserInfo().getLoginState()) {//没有登陆跳转登陆界面
                     toLoginFragment();
                 }else {
-                    //登陆后跳转"我"界面
-                    toMeFragment();
+                    toMeFragment();//登陆后跳转"我"界面
                 }
-            }
-        });
-        return view;
+                break;
+        }
     }
 
     private void toMeFragment(){
@@ -130,5 +133,4 @@ public class MainFragment extends Fragment {
             transaction.commit();
         }
     }
-
 }

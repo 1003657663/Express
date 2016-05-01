@@ -23,6 +23,7 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
     private String telephone;
     private String mD5Password;
     private String name;
+    private Integer userID;
     private Activity activity;
     private MyApplication application;//保存用户登录状态到全局appliction中
 
@@ -105,6 +106,7 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                     case "true":
                         onSaveUserInfo();
                         this.name = jsonObject.getString("name");//登陆成功后存储必要用户信息
+                        application.getUserInfo().setId(jsonObject.getInt("id"));
                         application.getUserInfo().setName(this.name);
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setPassword(mD5Password);
@@ -112,7 +114,6 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                         loginPresenter.onLoginSuccess();
                         break;
                     case "false":
-                        application.getUserInfo().setLoginState(false);
                         application.getUserInfo().setLoginState(false);
                         loginPresenter.onLoginFail();
                         break;
@@ -132,6 +133,10 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                     case "true":
                         onSaveUserInfo();
                         application.getUserInfo().setLoginState(true);
+                        application.getUserInfo().setName(name);
+                        application.getUserInfo().setPassword(mD5Password);
+                        application.getUserInfo().setTelephone(telephone);
+                        application.getUserInfo().setId(jsonObject.getInt("id"));//---!!!
                         loginPresenter.onRegisterSuccess();
                         break;
                     case "false":

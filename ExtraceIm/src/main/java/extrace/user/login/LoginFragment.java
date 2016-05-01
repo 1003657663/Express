@@ -20,8 +20,8 @@ import java.util.regex.Pattern;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import extrace.ToolBox.CheckInput;
-import extrace.ToolBox.CountDown;
+import extrace.toolbox.CheckInput;
+import extrace.toolbox.CountDown;
 import extrace.ui.main.R;
 
 /**
@@ -87,7 +87,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 }else {
                     //------------------------test
                     if(checkInput()) {
-                        SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        //---test
+                        loginPresenter.startLogin(tel,password);
                     }
                 }
                 break;
@@ -95,7 +97,8 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 if(hasUserNameEdit) {
                     isLogin = false;
                     if (checkInput()) {
-                        SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        loginPresenter.startRegister(tel,password,name);
                     }
                 }else {
                     addUserNameEdit();
@@ -124,7 +127,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         verifyCodeButton.setClickable(false);
         verifyCodeButton.setBackground(getActivity().getResources().getDrawable(R.drawable.button_radio_grey_background));
         //创建一个循环计时异步线程用来更新主线程
-        countDown = new CountDown(getActivity(),verifyCodeButton,60,"重新获取验证码");
+        countDown = new CountDown(getActivity(),verifyCodeButton,60,"重新获取验证码",getActivity().getResources().getDrawable(R.drawable.button_radio_with_background_color));
         countDown.execute(60);
     }
 
@@ -133,7 +136,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
      * 销毁fragment时候，销毁短信回调,销毁异步任务
      */
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         SMSSDK.unregisterEventHandler(eh);
         if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
             countDown.cancel(true);

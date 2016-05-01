@@ -1,6 +1,7 @@
-package extrace.ToolBox;
+package extrace.toolbox;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.Button;
 
@@ -15,11 +16,13 @@ public class CountDown extends AsyncTask<Integer,String,Void>{
     Integer time;
     Activity activity;
     String lastText;
-    public CountDown(Activity activity,Button button, Integer time,String lastText){
+    Drawable lastDrawable;
+    public CountDown(Activity activity,Button button, Integer time,String lastText,Drawable lastDrawable){
         this.button = button;
         this.time = time;
         this.activity = activity;
         this.lastText = lastText;
+        this.lastDrawable = lastDrawable;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class CountDown extends AsyncTask<Integer,String,Void>{
 
     @Override
     protected void onPreExecute() {
+        button.setClickable(false);
         button.setText(time+"");
     }
 
@@ -51,6 +55,6 @@ public class CountDown extends AsyncTask<Integer,String,Void>{
     protected void onPostExecute(Void aVoid) {
         button.setText("重新获取验证码");
         button.setClickable(true);
-        button.setBackground(activity.getResources().getDrawable(R.drawable.button_radio_with_background_color));
+        button.setBackground(lastDrawable);
     }
 }

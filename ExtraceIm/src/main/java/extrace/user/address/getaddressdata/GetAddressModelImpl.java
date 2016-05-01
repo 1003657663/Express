@@ -70,19 +70,19 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
                 addressEditView.onDataReceive(sparseArray, whichGet);
                 break;
             case AddressEditFragment.ADDRESS_NEW_SEND:
-                checkState(jsonOrArray);
+                checkState(jsonOrArray,"newAddstate");
                 break;
             case AddressEditFragment.ADDRESS_NEW_RECEIVE:
-                checkState(jsonOrArray);
+                checkState(jsonOrArray,"newAddstate");
                 break;
             case AddressEditFragment.ADDRESS_UPDATE_RECEIVE:
-                checkState(jsonOrArray);
+                checkState(jsonOrArray,"updateAddstate");
                 break;
             case AddressEditFragment.ADDRESS_UPDATE_SEND:
-                checkState(jsonOrArray);
+                checkState(jsonOrArray,"updateAddstate");
                 break;
             case AddressEditFragment.ADDRESS_DELETE:
-                checkState(jsonOrArray);
+                checkDel(jsonOrArray);
                 break;
             default:
                 break;
@@ -90,13 +90,28 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     }
 
     /**
+     * 判断删除状态
+     */
+    private void checkDel(Object jsonOrArray){
+        JSONObject jsonObject = (JSONObject) jsonOrArray;
+        try {
+            if(jsonObject.getString("deleteAddress").equals("true")){
+                addressEditView.onDeleteSuccess();
+            }else {
+                addressEditView.onError("删除地址失败，请重试");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
      * 判断是否获取数据成功
      */
-    public void checkState(Object jsonOrArray) {
+    public void checkState(Object jsonOrArray,String signStr) {
         JSONObject jsonObject = (JSONObject) jsonOrArray;
         String state = "false";
         try {
-            state = jsonObject.getString("updateAddstate");
+            state = jsonObject.getString(signStr);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -242,7 +257,7 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     @Override
     public void submitUpdateSendAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_UPDATE_SEND;
-        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        JSONObject jsonObject = addressTojson(userAddress,SEND);
         if(jsonObject!=null) {
             doJson(submitUpdateUrl, VolleyHelper.POST, jsonObject);
         }
@@ -260,7 +275,7 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
     @Override
     public void submitNewSendAddress(UserAddress userAddress) {
         whichGet = AddressEditFragment.ADDRESS_NEW_SEND;
-        JSONObject jsonObject = addressTojson(userAddress,RECEIVE);
+        JSONObject jsonObject = addressTojson(userAddress,SEND);
         if(jsonObject!=null) {
             doJson(submitNewUrl, VolleyHelper.POST, jsonObject);
         }
@@ -309,4 +324,12 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
         delAddressUrl += userAddress.getAid();
         doJson(delAddressUrl,VolleyHelper.GET,null);
     }
+
+    /**
+     * 1. 出错信息，修改地址的时候，如果地址信息没有任何改变，就变成了新增地址。
+     * 2. 删除地址的时候，上面说的新增的地址之后，有些地址提示删除失败。
+     * 3. 我-还没有对地址为空的情况进行判断
+     * 4. 修改时改成默认，然后好像不生效----先睡觉
+     *
+     */
 }

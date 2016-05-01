@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements MainView {
         FragmentTransaction transaction = fm.beginTransaction();
 
         MainFragment indexFragment = new MainFragment();
-        transaction.replace(R.id.fragment_container_layout,indexFragment);
+        transaction.add(R.id.fragment_container_layout,indexFragment);
         transaction.commit();
     }
 }

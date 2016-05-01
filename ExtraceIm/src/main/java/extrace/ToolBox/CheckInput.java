@@ -1,4 +1,4 @@
-package extrace.ToolBox;
+package extrace.toolbox;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

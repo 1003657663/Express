@@ -23,19 +23,21 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
     Activity activity;
     String sendAddressUrl;
     String getAddressUrl;
+    String telephone;
     public AddressModelImpl(Activity context,AddressPresenter presenter) {
         super(context);
         this.activity = context;
         this.presenter = presenter;
-        String telephone = ((MyApplication)context.getApplication()).getUserInfo().getTelephone();
-        sendAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_send) + telephone;
-        getAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_get) + telephone;
+        telephone = ((MyApplication)context.getApplication()).getUserInfo().getTelephone();
+        sendAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_send);
+        getAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_get);
 
     }
 
     @Override
     public void startGetSendAddress() {
         try {
+            sendAddressUrl = sendAddressUrl.replace("{tel}",telephone);
             doJsonArray(sendAddressUrl,VolleyHelper.GET,null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +48,7 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
     @Override
     public void startGetReceiveAddress() {
         try {
+            getAddressUrl = getAddressUrl.replace("{tel}",telephone);
             doJsonArray(getAddressUrl,VolleyHelper.GET,null);
         } catch (Exception e) {
             e.printStackTrace();

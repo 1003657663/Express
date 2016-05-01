@@ -139,10 +139,10 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
     @Override
     public void loginOut() {
         ((MyApplication)getActivity().getApplication()).getUserInfo().setLoginState(false);
-        LoginFragment loginFragment = new LoginFragment();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentManager.popBackStack();
-        transaction.add(R.id.fragment_container_layout,loginFragment);
+        //LoginFragment loginFragment = new LoginFragment();
+        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        //transaction.replace(R.id.fragment_container_layout,loginFragment);
+        getFragmentManager().popBackStack();
         transaction.commit();
     }
 
