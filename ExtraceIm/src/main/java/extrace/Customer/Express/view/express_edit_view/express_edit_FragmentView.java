@@ -8,6 +8,6 @@ import android.app.Activity;
 public interface express_edit_FragmentView
 {
     void onToastSuccess(String ID);
-    void onToastFail();
+    void onToastFail(String string);
     Activity getTheActivity();
 }
