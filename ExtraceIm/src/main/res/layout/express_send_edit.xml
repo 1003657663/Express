@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/express_send_edit"
+    android:background="@color/whitesmoke"
     >
     <include
         android:id="@+id/express_send"
@@ -16,98 +16,113 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请填写寄件人信息"
-            android:layout_marginLeft="20sp"
+            android:text="请选择寄件人信息"
       />
-        <LinearLayout style="@style/wrap_layout">
-            <!-- 上圆角-->
-            <LinearLayout style="@style/top_layout"
-                android:id="@+id/send_address"
-                android:orientation="horizontal"
-                android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:id="@id/send_address"
+            android:background="@color/white"
+            android:orientation="horizontal">
                 <TextView
-                style="@style/usertext"
-                android:text="寄件人姓名"
+                    android:paddingLeft="20sp"
+                   android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="寄件人姓名:"
+                    android:gravity="center"
+                   android:textColor="@color/gray"
                    />
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:id="@+id/sname"
-                   android:textColor="@color/dimgrey"
+                    android:textColor="@color/gray"
                     />
-                <ImageView style="@style/img_arrow" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@mipmap/right"/>
             </LinearLayout>
 
             <!-- 分割线 -->
             <View style="@style/bg_line" />
             <!-- 无圆角-->
-            <LinearLayout style="@style/mid_layout"
-
-                android:orientation="horizontal"
-                android:layout_height="50dp">
-
-                <TextView
-                    style="@style/usertext"
-                    android:text="寄件人电话"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:id="@+id/stel"
-                    android:textColor="@color/dimgrey"
-                    />
-            </LinearLayout>
-            <!-- 分割线 -->
-            <View style="@style/bg_line"
-                 />
-            <!-- 无圆角-->
-
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-            <LinearLayout style="@style/mid_layout"
-
-                android:layout_height="50dp">
-
-                <TextView
-                    style="@style/usertext"
-                    android:text="寄件人省市区"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:id="@+id/saddress"
-                    android:textColor="@color/dimgrey"
-                    />
-
-            </LinearLayout>
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-
-            <LinearLayout style="@style/single_layout"
-
-                android:layout_height="50dp">
-
-                <TextView
-                    style="@style/usertext"
-                    android:text="寄件人详细地址"
-                    />
-                <TextView
-                    android:id="@+id/saddressinfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/dimgrey"
-                    />
-
-            </LinearLayout>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="寄件人电话:"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/stel"
+                android:textColor="@color/gray"
+                />
         </LinearLayout>
-    </LinearLayout>
+
+        <View style="@style/bg_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="寄件人省市区:"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/sadd"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+            <!-- 分割线 -->
+            <View style="@style/bg_line" />
+            <!-- 无圆角-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="寄件人详细地址:"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/saddressinfo"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,97 +131,113 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20sp"
-            android:text="请填写收件人信息"
-        />
-        <LinearLayout style="@style/wrap_layout">
-            <!-- 上圆角-->
-            <LinearLayout style="@style/top_layout"
-              android:id="@+id/receive_address"
-                android:orientation="horizontal"
-                android:layout_height="50dp">
-                <TextView
-                    style="@style/usertext"
-                    android:text="收件人姓名"
-                    android:layout_width="20dp"/>
-                <TextView
-                    android:id="@+id/rname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/dimgrey"
-                    />
-                <ImageView style="@style/img_arrow" />
-            </LinearLayout>
-
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-            <LinearLayout style="@style/mid_layout"
-
-                android:orientation="horizontal"
-                android:layout_height="50dp">
-
-                <TextView
-                    style="@style/usertext"
-                    android:text="收件人电话"
-                    />
-                <TextView
-                    android:id="@+id/rtel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/dimgrey"
-                    />
-
-            </LinearLayout>
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-            <LinearLayout style="@style/mid_layout"
-
-                android:layout_height="50dp">
-
-                <TextView
-                    style="@style/usertext"
-                    android:text="收件人省市区"
-                    />
-                <TextView
-                    android:id="@+id/raddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/dimgrey"
-                    />
-
-            </LinearLayout>
-            <!-- 分割线 -->
-            <View style="@style/bg_line" />
-            <!-- 无圆角-->
-
-            <LinearLayout style="@style/single_layout"
-
-                android:layout_height="50dp">
-                <TextView
-                    style="@style/usertext"
-
-                    android:text="收件人详细地址"
-                    />
-                <TextView
-                    android:id="@+id/raddressinfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:textColor="@color/dimgrey"
-                    />
-                <ImageView style="@style/img_arrow" />
-            </LinearLayout>
-        </LinearLayout>
+            android:text="请选择收件人信息"
+            />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:id="@+id/receive_address"
+        android:orientation="horizontal">
+        <TextView
+            android:paddingLeft="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="收件人姓名:"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rname"
+            android:textColor="@color/gray"
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/right"/>
     </LinearLayout>
+
+    <!-- 分割线 -->
+    <View style="@style/bg_line" />
+    <!-- 无圆角-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:paddingLeft="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="收件人电话:"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/rtel"
+            android:textColor="@color/gray"
+            />
+    </LinearLayout>
+
+    <View style="@style/bg_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:paddingLeft="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="收件人省市区:"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/radd"
+            android:textColor="@color/gray"
+            />
+    </LinearLayout>
+    <!-- 分割线 -->
+    <View style="@style/bg_line" />
+    <!-- 无圆角-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:paddingLeft="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="收件人详细地址:"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/raddressinfo"
+            android:textColor="@color/gray"
+            />
+    </LinearLayout>
+        <View style="@style/bg_line" />
+</LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -218,17 +249,19 @@
             android:id="@+id/check"
             android:text="同意本公司协议"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
         android:gravity="center_horizontal">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/submit"
             android:textColor="@color/white"
           android:background="@color/edit_border"
-            style="@drawable/button_style1"
+            style="@drawable/button_style"
             android:text="提交"/>
     </LinearLayout>
 </LinearLayout>
