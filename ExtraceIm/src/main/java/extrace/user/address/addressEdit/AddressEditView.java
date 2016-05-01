@@ -12,4 +12,5 @@ public interface AddressEditView {
     void onDataReceive(SparseArray<Object> dataArray, Integer whichGet);
     void onError(String message);
     void onSubmitSuccess();
+    void onDeleteSuccess();
 }

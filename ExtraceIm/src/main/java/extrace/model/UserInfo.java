@@ -12,7 +12,8 @@ import android.preference.PreferenceManager;
 public class UserInfo{
 
 	private boolean loginState = false;
-	private String password;
+    private Integer id;
+    private String password;
 	private String name;
 	private String telephone;
 
@@ -102,4 +103,11 @@ public class UserInfo{
     }
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

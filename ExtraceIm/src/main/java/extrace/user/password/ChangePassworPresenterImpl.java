@@ -5,6 +5,8 @@ import android.app.Activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import extrace.main.MyApplication;
+import extrace.model.UserInfo;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -13,11 +15,16 @@ import extrace.ui.main.R;
  */
 public class ChangePassworPresenterImpl extends VolleyHelper implements ChangePassworPresenter{
     ChangePasswordView changePasswordView;
-    String changePassworeUrl;
+    String changePasswordUrl;
+    UserInfo userInfo;
+    MyApplication application;
+    String password;
     public ChangePassworPresenterImpl(Activity context,ChangePasswordView changePasswordView) {
         super(context);
+        application = (MyApplication)context.getApplication();
+        userInfo = application.getUserInfo();
         this.changePasswordView = changePasswordView;
-        changePassworeUrl = context.getResources().getString(R.string.base_url)+
+        changePasswordUrl = context.getResources().getString(R.string.base_url)+
                 context.getResources().getString(R.string.user_change_password);
     }
 
@@ -25,11 +32,15 @@ public class ChangePassworPresenterImpl extends VolleyHelper implements ChangePa
     public void onDataReceive(Object jsonOrArray) {
         JSONObject jsonObject = (JSONObject) jsonOrArray;
         try {
-            if(jsonObject.getString("state").equals("true")){
+            if(jsonObject.getString("changepwd").equals("true")){
+                application.getUserInfo().setPassword(password);
                 changePasswordView.onSubmitSuccess();
+            }{
+                onError("修改密码失败，请重试");
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            onError("修改密码出错，请重试");
         }
     }
 
@@ -40,6 +51,10 @@ public class ChangePassworPresenterImpl extends VolleyHelper implements ChangePa
 
     @Override
     public void onSubmit(String password) {
-        doJson(changePassworeUrl,VolleyHelper.GET,null);
+        this.password = password;
+        changePasswordUrl = changePasswordUrl.replace("{pwdold}",userInfo.getPassword());
+        changePasswordUrl = changePasswordUrl.replace("{pwdnew}",password);
+        changePasswordUrl = changePasswordUrl.replace("{tel}",userInfo.getTelephone());
+        doJson(changePasswordUrl,VolleyHelper.GET,null);
     }
 }
