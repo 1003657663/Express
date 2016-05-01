@@ -12,11 +12,12 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
 
     private SearchExpressView searchExpressView;
     private String searchUrl;
+
     public SearchExpressPresenterImpl(Activity context,SearchExpressView searchExpressView) {
         super(context);
         this.searchExpressView = searchExpressView;
         String baseUrl = context.getResources().getString(R.string.base_url);
-        searchUrl =
+        //searchUrl =
     }
 
     @Override

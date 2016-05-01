@@ -175,4 +175,12 @@
     <string name="user_change_tel">/REST/Domain/changeTel/old/{oldtel}/new/{newtel}</string><!--修改用户手机号url-->
     <string name="user_change_password">/REST/Domain/changePwd/tel/{tel}/{pwdold}/{pwdnew}</string><!--修改用户密码-->
     <string name="express_search_one">/REST/Domain/getExpressInfoById/{id}</string><!--查询相应id的快递的信息-->
+
+    <string name="getExpressInfoByTel">/getExpressInfoByTel/{tel}</string>
+    <string name="getExpressInfoById">/getExpressInfoById/{id}</string>
+    <string name="SendExpress">/prepareSendExpress/customerId/{customerId}/sendAddressId/{sendAddressId}/recAddressId/{recAddressId}</string>
+    <string name="getExpressInfoByCustomerId">/getExpressInfoByCustomerId/{CustomerId}</string>
+    <string name="getPackageInfoById">/getPackageInfoById/{packageId}</string>
+    <string name="searchPackageInPackageById">/searchPackageInPackageById/{packageId}</string>
+    <string name="searchExpressInPackageById">/searchExpressInPackageById/{packageId}</string><!--修改用户密码-->
 </resources>
