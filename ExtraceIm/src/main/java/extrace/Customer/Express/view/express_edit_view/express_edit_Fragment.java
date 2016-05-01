@@ -31,7 +31,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
     private expressPresenter expressPresenter;
     private LinearLayout send_address, receive_address;
     private Button submit;
-    public static int send_id=0, receive_id=0;
+    public static int send_id=17, receive_id=18;
     private TextView title, sname, stel, saddress, saddressinfo, rname, rtel, raddress, raddressinfo;
     private ImageView back;
     private CheckBox check;
@@ -122,7 +122,8 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getActivity(), "您未同意本公司协议", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
+                   // int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
+                   int customerId=1;
                     expressPresenter.doNewExpress(customerId,send_id, receive_id);
                 }
                 break;
@@ -141,8 +142,8 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onToastFail() {
-        Toast.makeText(getActivity(), "sorry,submit fail", Toast.LENGTH_SHORT).show();
+    public void onToastFail(String string) {
+        Toast.makeText(getActivity(), "sorry,submit fail"+string, Toast.LENGTH_SHORT).show();
     }
 
     @Override
