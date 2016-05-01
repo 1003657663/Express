@@ -1,13 +1,7 @@
 package extrace.Customer.Express.model.express_edit_model;
-
 import android.app.Activity;
-
-import org.json.JSONObject;
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.net.VolleyHelper;
-import extrace.ui.main.R;
-
-
 /**
  * Created by 黎明 on 2016/4/16.
  */
