@@ -23,7 +23,7 @@ public class expressListPresenterImpl implements expressListPresenter
     }
 
     @Override
-    public void doSearchByCID(String ID) {
+    public void doSearchByCID(int ID) {
         expressListModel.searchByCID(ID);
     }
     @Override

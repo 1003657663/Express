@@ -23,32 +23,21 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
     private String searchByIDurl,searchByCIDurl,searchByTelurl;
     @Override
     public void onError(String errorMessage) {
+        expressListPresenter.onFail();
 
     }
 
     public expressListModelImpl(Activity activity, expressListPresenter expressListPresenter) {
     super(activity);
     this.expressListPresenter = expressListPresenter;
-     searchByIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoById);
-        searchByCIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoByCustomerId);
-        searchByTelurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoByTel);
+     searchByIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ById);
+        searchByCIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ByCustomerId);
+        searchByTelurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ByTel);
 
 }
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-     /*   JSONObject object=(JSONObject)jsonOrArray;
-        List<ExpressInfo> list = new ArrayList<ExpressInfo>();
-        for (int i = 0; i < 20; i++)
-        { ExpressInfo expressInfo = new ExpressInfo();
-        //json转换为List<Express>
-        expressInfo.setID("1");
-        expressInfo.setSname("2");
-        expressInfo.setRname("3");
-        expressInfo.setGetTime("4");
-        list.add(expressInfo);}
-            expressListPresenter.onSuccess(list);
-       */
         JSONArray jsonArray=(JSONArray)jsonOrArray;
         try {
             List<ExpressInfo> list = new ArrayList<ExpressInfo>();
@@ -75,33 +64,32 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
     @Override
     public void searchByID(String ID)
     {
-        JSONObject jsonObject=new JSONObject();
+        searchByIDurl+=ID;
         try {
-            jsonObject.put("ID",ID);
-            doJson(searchByIDurl,VolleyHelper.POST,jsonObject);
-        } catch (JSONException e) {
+            doJson(searchByIDurl,VolleyHelper.GET,null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
     public void searchByTel(String ID) {
-        JSONObject jsonObject=new JSONObject();
+        searchByTelurl+=ID;
         try {
-            jsonObject.put("ID",ID);
-            doJson(searchByTelurl,VolleyHelper.POST,jsonObject);
-        } catch (JSONException e) {
+            doJson(searchByTelurl,VolleyHelper.GET,null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
-    public void searchByCID(String ID) {
-        JSONObject jsonObject=new JSONObject();
+    public void searchByCID(int ID) {
+        searchByCIDurl+=ID;
         try {
-            jsonObject.put("ID",ID);
-            doJson(searchByCIDurl,VolleyHelper.POST,jsonObject);
-        } catch (JSONException e) {
+            doJson(searchByCIDurl,VolleyHelper.GET,null);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

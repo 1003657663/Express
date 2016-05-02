@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/express_item_info"
+    android:background="@color/whitesmoke"
     android:orientation="vertical">
     <include layout="@layout/top_bar"/>
     <LinearLayout
@@ -28,7 +29,9 @@
                 android:gravity="center"
                 android:id="@+id/ID"
                 />
+
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +47,9 @@
                 android:gravity="center"
                 android:id="@+id/sname"
                 />
+
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +66,7 @@
                 android:id="@+id/stel"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,6 +83,7 @@
                 android:id="@+id/sadd"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,6 +100,7 @@
                 android:id="@+id/saddinfo"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,6 +117,7 @@
                 android:id="@+id/rname"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,6 +134,7 @@
                 android:id="@+id/rtel"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,6 +151,7 @@
                 android:id="@+id/radd"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,6 +168,7 @@
                 android:id="@+id/raddinfo"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -167,12 +179,13 @@
                 android:gravity="center"
                 android:text="重量：      "/>
             <TextView
-                android:layout_height="40sp"
+                android:layout_height="30sp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:id="@+id/weight"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,7 +202,7 @@
                 android:id="@+id/InsuFee"
                 />
         </LinearLayout>
-
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -206,6 +219,7 @@
                 android:id="@+id/TranFee"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -222,6 +236,7 @@
                 android:id="@+id/GetTime"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -238,6 +253,7 @@
                 android:id="@+id/OutTime"
                 />
         </LinearLayout>
+        <View style="@style/bg_line" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -258,7 +274,6 @@
                     android:textColor="@color/blue"
                     android:id="@+id/Acc2"
                     android:text="附件二"/>
-
         </LinearLayout>
         </LinearLayout>
 

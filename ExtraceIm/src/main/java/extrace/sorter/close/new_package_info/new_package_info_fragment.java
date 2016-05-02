@@ -53,11 +53,11 @@ public class new_package_info_fragment extends Fragment implements new_package_i
             }
         });
         title.setText("请选取目的地地址");
-        employeesID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId();
-        employeesId.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId());
-        fromID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getOutletsId();
+      //  employeesID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId();
+       // employeesId.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId());
+       // fromID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getOutletsId();
         from.setText(fromID);
-        employeesname.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getName());
+       // employeesname.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getName());
         //从myapplication拿取employees登录信息 ，得到 employeesID employeesname并填入
         //
         toaddress.setOnClickListener(new View.OnClickListener() {

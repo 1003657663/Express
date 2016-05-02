@@ -19,7 +19,7 @@ public class express_info_modelImpl extends VolleyHelper implements express_info
     {
         super(activity);
         this.express_info_presenter=express_info_presenter;
-        url =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfoById);
+        url =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ById);
     }
 
     @Override
@@ -56,14 +56,11 @@ public class express_info_modelImpl extends VolleyHelper implements express_info
     @Override
     public void findInfoByID(String ID)
     {
-
-        JSONObject jsonObject=new JSONObject();
+        url+=ID;
         try {
-            jsonObject.put("ID",ID);
-            doJson(url,VolleyHelper.POST,jsonObject);
-        } catch (JSONException e) {
+            doJson(url,VolleyHelper.GET,null);
+        } catch (Exception e) {
             e.printStackTrace();
-            express_info_presenter.Fail();
         }
     }
 }

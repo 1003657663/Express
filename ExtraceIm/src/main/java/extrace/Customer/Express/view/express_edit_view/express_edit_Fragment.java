@@ -13,8 +13,6 @@ import android.widget.*;
 
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenterImpl;
 import extrace.main.MyApplication;
-import extrace.model.ExpressSheet;
-import extrace.net.IDataAdapter;
 import extrace.ui.main.R;
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.user.address.AddressFragment;
