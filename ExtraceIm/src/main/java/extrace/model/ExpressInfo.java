@@ -16,19 +16,19 @@ public class ExpressInfo
     public String raddinfo;
     public String GetTime;
     public String OutTime;
-    public float weight;
-    public float TranFee;
-    public float InsuFee;
+    public double weight;
+    public double TranFee;
+    public double InsuFee;
     public String Acc1;
     public String Acc2;
 
     public ExpressInfo(){}
 
-    public float getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 
@@ -64,11 +64,11 @@ public class ExpressInfo
         Acc2 = acc2;
     }
 
-    public float getInsuFee() {
+    public double getInsuFee() {
         return InsuFee;
     }
 
-    public void setInsuFee(float insuFee) {
+    public void setInsuFee(double insuFee) {
         InsuFee = insuFee;
     }
 
@@ -144,11 +144,11 @@ public class ExpressInfo
         this.stel = stel;
     }
 
-    public float getTranFee() {
+    public double getTranFee() {
         return TranFee;
     }
 
-    public void setTranFee(float tranFee) {
+    public void setTranFee(double tranFee) {
         TranFee = tranFee;
     }
 }
