@@ -1,5 +1,10 @@
 package extrace.Customer.Express.model.express_edit_model;
 import android.app.Activity;
+
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.net.VolleyHelper;
 /**
@@ -16,9 +21,10 @@ public class express extends VolleyHelper implements express_edit_model {
 
     @Override
     public void newExpress(int customerId,int senderID, int receiverID) {
+        JSONObject j=new JSONObject();
         url="http://182.254.214.97:8080/REST/Domain/prepareSendExpress/customerId/"+customerId+"/sendAddressId/"+senderID+"/recAddressId/"+receiverID;
         try {
-            doJson(url, VolleyHelper.GET, null);
+            doJson(url, VolleyHelper.GET, j);
         } catch (Exception e) {
             e.printStackTrace();
         }

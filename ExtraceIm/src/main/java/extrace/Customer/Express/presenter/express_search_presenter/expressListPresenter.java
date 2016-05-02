@@ -12,7 +12,7 @@ public interface expressListPresenter
     void onSuccess(List<ExpressInfo> list);
     void onFail();
     void doSearchByTel(String ID);
-    void doSearchByCID(String ID);
+    void doSearchByCID(int ID);
     void doSearchByID(String ID);
 
 }

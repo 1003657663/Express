@@ -13,8 +13,6 @@ import android.widget.*;
 
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenterImpl;
 import extrace.main.MyApplication;
-import extrace.model.ExpressSheet;
-import extrace.net.IDataAdapter;
 import extrace.ui.main.R;
 import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.user.address.AddressFragment;
@@ -122,8 +120,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getActivity(), "您未同意本公司协议", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                   // int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
-                   int customerId=1;
+                    int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
                     expressPresenter.doNewExpress(customerId,send_id, receive_id);
                 }
                 break;
@@ -142,8 +139,8 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
     }
 
     @Override
-    public void onToastFail(String string) {
-        Toast.makeText(getActivity(), "sorry,submit fail"+string, Toast.LENGTH_SHORT).show();
+    public void onToastFail() {
+        Toast.makeText(getActivity(), "sorry,submit fail", Toast.LENGTH_SHORT).show();
     }
 
     @Override

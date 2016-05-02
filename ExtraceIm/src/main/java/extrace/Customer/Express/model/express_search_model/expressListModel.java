@@ -7,7 +7,7 @@ public interface expressListModel
 {
     void searchByTel(String ID);
     //根据 手机号查询express-list
-    void searchByCID(String ID);
+    void searchByCID(int ID);
     //根据 customerID查询express-list
     void searchByID(String ID);
     //根据 ID查询expressinfo

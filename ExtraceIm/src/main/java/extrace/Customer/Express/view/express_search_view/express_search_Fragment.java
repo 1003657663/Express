@@ -43,6 +43,7 @@ public class express_search_Fragment extends ListFragment implements express_sea
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.express_search,container,false);
+        Toast.makeText(getActivity(),"express_search_fragment",Toast.LENGTH_LONG).show();
         expresslist=(ListView)view.findViewById(android.R.id.list);
         back=(ImageButton)view.findViewById(R.id.back);
         enter=(ImageButton)view.findViewById(R.id.enter);
@@ -65,14 +66,16 @@ public class express_search_Fragment extends ListFragment implements express_sea
         }
         if(getArguments()!=null)
         {
-            if(getArguments().getString("ID")!=null) {
+           if(getArguments().getString("ID")!=null) {
                 String ID = getArguments().getString("ID");
-                expressListPresenter.doSearchByID(ID);
+                Toast.makeText(getActivity(),"diyi",Toast.LENGTH_LONG).show();
+               // expressListPresenter.doSearchByID(ID);
             }
             //从上个页面传参ID
-          else if (getArguments().getString("CID")!=null) {
-                String CID = getArguments().getString("CID");
-                expressListPresenter.doSearchByCID(CID);
+          else if ((getArguments().getInt("CustomerID"))!=0) {
+                int CID = getArguments().getInt("CustomerID");
+
+              expressListPresenter.doSearchByCID(CID);
             }
             else if (getArguments().getString("Tel")!=null) {
                 String Tel = getArguments().getString("Tel");
