@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import extrace.main.MyApplication;
+import extrace.model.EmployeesEntity;
 import extrace.model.packageInfo;
 import extrace.sorter.close.add_package_list.add_package_listFragment;
 import extrace.ui.main.R;
@@ -23,29 +24,29 @@ import extrace.user.address.AddressFragment;
 /**
  * Created by 黎明 on 2016/4/28.
  */
-public class new_package_info_fragment extends Fragment implements new_package_info_fragmentView
-{
+public class new_package_info_fragment extends Fragment implements new_package_info_fragmentView {
     private ImageButton back;
     private ImageView toaddress;
-    private TextView title,from,to,ID,employeesId,time,employeesname;
+    private TextView title, from, to, ID, employeesId, time, employeesname;
     private Button open;
-    private new_package_info_presenter new_package_info_presenter;
-    private static int toID,fromID,employeesID;
+    private new_package_info_presenter presenter1;
+    private static int fromID, toID, EmployeesID;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.packageinfo,container,false);
+        View view = inflater.inflate(R.layout.packageinfo, container, false);
         back=(ImageButton)view.findViewById(R.id.top_bar_left_img);
         title=(TextView)view.findViewById(R.id.top_bar_center_text);
-        from=(TextView)view.findViewById(R.id.from);
-        toaddress=(ImageView)view.findViewById(R.id.toaddress);
-        to=(TextView)view.findViewById(R.id.to);
+        from=(TextView)view.findViewById(R.id.package_from);
+        toaddress = (ImageView) view.findViewById(R.id.toaddress);
+        to=(TextView)view.findViewById(R.id.package_to);
         open=(Button)view.findViewById(R.id.open);
         open.setText("创建");
         employeesId=(TextView)view.findViewById(R.id.EmployeesID);
         employeesname=(TextView)view.findViewById(R.id.EmployeesName);
-        time=(TextView)view.findViewById(R.id.time);
-        ID=(TextView)view.findViewById(R.id.closetime);
-        new_package_info_presenter=new new_package_info_presenterImpl(getActivity(),this);
+        time=(TextView)view.findViewById(R.id.closetime);
+        ID=(TextView)view.findViewById(R.id.ID);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,36 +54,40 @@ public class new_package_info_fragment extends Fragment implements new_package_i
             }
         });
         title.setText("请选取目的地地址");
-      //  employeesID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId();
-       // employeesId.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getId());
-       // fromID=((MyApplication)getActivity().getApplication()).getEmployeesInfo().getOutletsId();
-        from.setText(fromID);
-       // employeesname.setText(((MyApplication)getActivity().getApplication()).getEmployeesInfo().getName());
-        //从myapplication拿取employees登录信息 ，得到 employeesID employeesname并填入
-        //
+        EmployeesEntity employeesEntity = ((MyApplication)getActivity().getApplication()).getEmployeesInfo();
+        fromID=employeesEntity.getOutletsId();
+        from.setText(String.valueOf(employeesEntity.getOutletsId()));
+        employeesname.setText(employeesEntity.getName());
+        employeesId.setText(String.valueOf(employeesEntity.getId()));
+        EmployeesID=employeesEntity.getId();
+
         toaddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddressFragment fragment=new AddressFragment();
+               toID=2;
+                to.setText(String.valueOf(toID));
+              /*  AddressFragment fragment=new AddressFragment();
                 //去address选取一个目的地地址并返回ID和address
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.hide(new_package_info_fragment.this);
                 transaction.add(R.id.fragment_container_layout,fragment);
                 transaction.addToBackStack("new_package_info_fragment");
-                transaction.commit();
+                transaction.commit();*/
             }
         });
+        /*
         if(getArguments()!=null)
         {
            toID=getArguments().getInt("ID");
             to.setText(toID);
-        }
-        open.setOnClickListener(new View.OnClickListener() {
+        }*/
+        presenter1=new new_package_info_presenterImpl(getActivity(),this);
+       open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (to.getText()!=null)
                 {
-                    new_package_info_presenter.newPackage(fromID,toID,employeesID);
+                    presenter1.newPackage(fromID,toID,EmployeesID);
                 }
                 else
                     Toast.makeText(getActivity(),"请选择目的地地址",Toast.LENGTH_LONG).show();

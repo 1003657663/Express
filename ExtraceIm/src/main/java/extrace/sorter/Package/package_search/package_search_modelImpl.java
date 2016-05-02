@@ -1,14 +1,10 @@
 package extrace.sorter.Package.package_search;
 
 import android.app.Activity;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import extrace.model.packageInfo;
 import extrace.net.VolleyHelper;
-
 /**
  * Created by 黎明 on 2016/4/25.
  */
@@ -24,13 +20,11 @@ public class package_search_modelImpl  extends VolleyHelper implements package_s
 
     @Override
     public void openPackage(String packageID) {
-        JSONObject object=new JSONObject();
-       url+="";
+       url+=packageID;
         JSONObject jsonObject=new JSONObject();
         try {
-            jsonObject.put("packageID",packageID);
             doJson(url, VolleyHelper.POST,jsonObject);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             package_search_presenter.onFail();
         }
@@ -56,7 +50,6 @@ public class package_search_modelImpl  extends VolleyHelper implements package_s
 
     @Override
     public void onError(String errorMessage) {
-
         package_search_presenter.onFail();
     }
 }

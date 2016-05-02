@@ -9,14 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
 import extrace.model.packageInfo;
 import extrace.sorter.Package.ep_search.package_list.package_list_Fragment;
 import extrace.ui.main.R;
-import extrace.user.address.AddressFragment;
+
 
 /**
  * Created by 黎明 on 2016/4/25.
@@ -31,7 +31,7 @@ public class package_search_Fragment extends Fragment implements package_search_
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.packageinfo,container,false);
         package_from=(TextView)view.findViewById(R.id.package_from);
-        package_to=(TextView)view.findViewById(R.id.packageto);
+        package_to=(TextView)view.findViewById(R.id.package_to);
         EmployeesID=(TextView)view.findViewById(R.id.EmployeesID);
         EmployeesName=(TextView)view.findViewById(R.id.EmployeesName);
         closetime=(TextView)view.findViewById(R.id.closetime);
@@ -63,7 +63,7 @@ public class package_search_Fragment extends Fragment implements package_search_
         });
         if(getArguments()!=null)
         {
-            String packageID=getArguments().getString("packageID");
+            String packageID=getArguments().getString("ID");
            // Toast.makeText(getActivity(),packageID,Toast.LENGTH_LONG).show();
             package_search_presenter=new package_search_presenterImpl(this);
             package_search_presenter.onopenPackage(packageID);

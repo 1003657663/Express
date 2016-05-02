@@ -11,14 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-
-
 import com.xys.libzxing.zxing.activity.CaptureActivity;
-
-import extrace.sorter.Package.ep_search.package_list.package_list_Fragment;
 import extrace.sorter.Package.package_search.package_search_Fragment;
 import extrace.main.MyApplication;
-import extrace.sorter.close.add_package_list.add_package_listFragment;
 import extrace.sorter.close.new_package_info.new_package_info_fragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;

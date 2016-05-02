@@ -13,17 +13,26 @@ import extrace.net.VolleyHelper;
  */
 public class new_package_info_presenterImpl extends VolleyHelper implements new_package_info_presenter
 {
-    private new_package_info_fragmentView fragmentView;
+     private new_package_info_fragmentView fragmentView1;
     String url;
-    public new_package_info_presenterImpl(Activity activity,new_package_info_fragmentView new_package_info_fragmentView)
+    public new_package_info_presenterImpl(Activity activity,new_package_info_fragmentView fragmentView2)
     {
         super(activity);
-        this.fragmentView =new_package_info_fragmentView;
+        this.fragmentView1 =fragmentView2;
     }
 
     @Override
     public void newPackage(int fromID, int toID, int employeesId) {
-        url+="";
+       packageInfo packageInfo=new packageInfo("1234","123","123","123",1,"1234");
+        String a="123";
+        try {
+            JSONObject object=new JSONObject(a);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        onDataReceive(packageInfo);
+        /* url+="";
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("fromID", fromID);
@@ -33,12 +42,12 @@ public class new_package_info_presenterImpl extends VolleyHelper implements new_
         } catch (JSONException e) {
             e.printStackTrace();
            fragmentView.onFail();
-        }
+        }*/
     }
 
     @Override
     public void onError(String errorMessage) {
-        fragmentView.onFail();
+        fragmentView1.onFail();
     }
 
     @Override
@@ -48,7 +57,7 @@ public class new_package_info_presenterImpl extends VolleyHelper implements new_
         try {
             packageInfo.setID(jsonObject.getString("ID"));
             packageInfo.setClosetime(jsonObject.getString("closetime"));
-           fragmentView.onSuccess(packageInfo);
+           fragmentView1.onSuccess(packageInfo);
         } catch (JSONException e) {
             e.printStackTrace();
         }
