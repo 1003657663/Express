@@ -11,7 +11,7 @@ import extrace.model.Package;
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public interface express_list_fragmentView {
+public interface Express_list_fragmentView {
     Activity getTheActivity();
     void onSuccess(List<ExpressInfo> list);
     void onFail();

@@ -3,7 +3,7 @@ package extrace.Customer.Express.model.express_info_model;
 import android.app.Activity;
 import org.json.JSONException;
 import org.json.JSONObject;
-import extrace.Customer.Express.presenter.express_info_presenter.express_info_presenter;
+import extrace.Customer.Express.presenter.express_info_presenter.Express_info_presenter;
 import extrace.model.ExpressInfo;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
@@ -11,14 +11,14 @@ import extrace.ui.main.R;
 /**
  * Created by 黎明 on 2016/4/19.
  */
-public class express_info_modelImpl extends VolleyHelper implements express_info_model
+public class Express_info_modelImpl extends VolleyHelper implements Express_info_model
 {
-    private express_info_presenter express_info_presenter;
+    private Express_info_presenter Express_info_presenter;
     private String url;
-    public express_info_modelImpl(Activity activity, express_info_presenter express_info_presenter)
+    public Express_info_modelImpl(Activity activity, Express_info_presenter express_info_presenter)
     {
         super(activity);
-        this.express_info_presenter=express_info_presenter;
+        this.Express_info_presenter =express_info_presenter;
         url =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ById);
     }
 
@@ -42,7 +42,7 @@ public class express_info_modelImpl extends VolleyHelper implements express_info
             expressInfo.setOutTime(jsonObject.getString("OutTime"));
             expressInfo.setTranFee((float) jsonObject.getDouble("TranFee"));
             expressInfo.setInsuFee((float) jsonObject.getDouble("InsuFee"));
-            express_info_presenter.Success(expressInfo);
+            Express_info_presenter.Success(expressInfo);
         } catch (JSONException e) {
             e.printStackTrace();
         }

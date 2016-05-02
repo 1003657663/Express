@@ -6,9 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import extrace.Customer.Express.presenter.express_search_presenter.Express_List_Presenter;
 import extrace.model.ExpressInfo;
 import extrace.net.VolleyHelper;
-import extrace.Customer.Express.presenter.express_search_presenter.expressListPresenter;
 import extrace.ui.main.R;
 
 import java.util.ArrayList;
@@ -17,19 +17,19 @@ import java.util.List;
 /**
  * Created by 黎明 on 2016/4/17.
  */
-public class expressListModelImpl extends VolleyHelper implements expressListModel
+public class Express_list_modelImpl extends VolleyHelper implements Express_list_model
 {
-    private expressListPresenter expressListPresenter;
+    private Express_List_Presenter Express_List_Presenter;
     private String searchByIDurl,searchByCIDurl,searchByTelurl;
     @Override
     public void onError(String errorMessage) {
-        expressListPresenter.onFail();
+        Express_List_Presenter.onFail();
 
     }
 
-    public expressListModelImpl(Activity activity, expressListPresenter expressListPresenter) {
+    public Express_list_modelImpl(Activity activity, Express_List_Presenter expressListPresenter) {
     super(activity);
-    this.expressListPresenter = expressListPresenter;
+    this.Express_List_Presenter = expressListPresenter;
      searchByIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ById);
         searchByCIDurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ByCustomerId);
         searchByTelurl =activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getExpressInfo_ByTel);
@@ -53,31 +53,32 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
                     list.add(expressInfo);
                 }
             }
-            expressListPresenter.onSuccess(list);
+            Express_List_Presenter.onSuccess(list);
         }
         catch (JSONException e) {
             e.printStackTrace();
-            expressListPresenter.onFail();//失败则调用presenter Fail
+            Express_List_Presenter.onFail();//失败则调用presenter Fail
         }
     }
 
     @Override
     public void searchByID(String ID)
     {
+        JSONObject object=new JSONObject();
         searchByIDurl+=ID;
         try {
-            doJson(searchByIDurl,VolleyHelper.GET,null);
+            doJson(searchByIDurl,VolleyHelper.GET,object);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void searchByTel(String ID) {
+        JSONArray jsonArray=new JSONArray();
         searchByTelurl+=ID;
         try {
-            doJson(searchByTelurl,VolleyHelper.GET,null);
+            doJsonArray(searchByTelurl,VolleyHelper.GET,jsonArray);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,9 +87,10 @@ public class expressListModelImpl extends VolleyHelper implements expressListMod
 
     @Override
     public void searchByCID(int ID) {
+        JSONObject object=new JSONObject();
         searchByCIDurl+=ID;
         try {
-            doJson(searchByCIDurl,VolleyHelper.GET,null);
+            doJson(searchByCIDurl,VolleyHelper.GET,object);
         } catch (Exception e) {
             e.printStackTrace();
         }

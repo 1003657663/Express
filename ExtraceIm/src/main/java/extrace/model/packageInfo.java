@@ -10,8 +10,16 @@ public class packageInfo {
     public String EmployeesName;
     public int EmployeesID;
     public String closetime;//打包时间
-
-    public packageInfo(){}
+public  packageInfo(){}
+    public packageInfo(String ID,String packagefrom,String packageto,String EmployeesName,
+                       int EmployeesID,String closetime){
+        this.ID=ID;
+        this.packagefrom=packagefrom;
+        this.packageto=packageto;
+        this.EmployeesName=EmployeesName;
+        this.EmployeesID=EmployeesID;
+        this.closetime=closetime;
+    }
     public String getClosetime() {
         return closetime;
     }

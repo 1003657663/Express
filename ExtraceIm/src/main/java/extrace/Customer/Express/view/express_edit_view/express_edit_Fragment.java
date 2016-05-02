@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 
-import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenterImpl;
-import extrace.main.MyApplication;
+import extrace.Customer.Express.presenter.express_edit_presenter.ExpresspresenterImpl;
 import extrace.ui.main.R;
-import extrace.Customer.Express.presenter.express_edit_presenter.expressPresenter;
 import extrace.user.address.AddressFragment;
 /**
  * Created by 黎明 on 2016/4/16.
@@ -25,8 +23,8 @@ import extrace.user.address.AddressFragment;
  * 确认寄件，向后台发送int UserID，int sendID，int receiveID
  * 接收 expressID
  */
-public class express_edit_Fragment extends Fragment implements View.OnClickListener, express_edit_FragmentView {
-    private expressPresenter expressPresenter;
+public class Express_edit_Fragment extends Fragment implements View.OnClickListener, Express_edit_FragmentView {
+    private extrace.Customer.Express.presenter.express_edit_presenter.Expresspresenter Expresspresenter;
     private LinearLayout send_address, receive_address;
     private Button submit;
     public static int send_id=17, receive_id=18;
@@ -41,7 +39,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.express_send_edit, container, false);
         title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("快件信息");
-        expressPresenter = new expressPresenterImpl(this);
+        Expresspresenter = new ExpresspresenterImpl(this);
         send_address = (LinearLayout) view.findViewById(R.id.send_address);
         receive_address = (LinearLayout) view.findViewById(R.id.receive_address);
         submit = (Button) view.findViewById(R.id.submit);
@@ -91,7 +89,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                 Bundle bundle = new Bundle();
                 bundle.putInt("receiveOrSend", SEND);
                 fragment.setArguments(bundle);
-                transaction.hide(express_edit_Fragment.this);
+                transaction.hide(Express_edit_Fragment.this);
                 transaction.add(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -104,7 +102,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                 Bundle bundle1 = new Bundle();
                 bundle1.putInt("receiveOrSend", RECEIVE);
                 fragment1.setArguments(bundle1);
-                transaction1.hide(express_edit_Fragment.this);
+                transaction1.hide(Express_edit_Fragment.this);
                 transaction1.add(R.id.fragment_container_layout, fragment1);
                 transaction1.addToBackStack(null);
                 transaction1.commit();
@@ -122,7 +120,7 @@ public class express_edit_Fragment extends Fragment implements View.OnClickListe
                 else {
                     int customerId=1;
                   //  int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
-                    expressPresenter.doNewExpress(customerId,send_id, receive_id);
+                    Expresspresenter.doNewExpress(customerId,send_id, receive_id);
                 }
                 break;
             default:

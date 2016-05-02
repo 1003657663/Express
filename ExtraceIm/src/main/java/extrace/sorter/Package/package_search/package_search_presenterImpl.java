@@ -5,18 +5,18 @@ import extrace.model.packageInfo;
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class package_search_presenterImpl implements package_search_presenter
+public class Package_search_presenterImpl implements Package_search_presenter
 {
-    private package_search_FragmentView package_search_fragmentView;
-    private package_search_model package_search_model;
-    public package_search_presenterImpl(package_search_FragmentView package_search_fragmentView)
+    private Package_search_FragmentView package_search_fragmentView;
+    private Package_search_model Package_search_model;
+    public Package_search_presenterImpl(Package_search_FragmentView package_search_fragmentView)
     {
         this.package_search_fragmentView=package_search_fragmentView;
-        package_search_model=new package_search_modelImpl(package_search_fragmentView.getTheActivity(),this);
+        Package_search_model =new Package_search_modelImpl(package_search_fragmentView.getTheActivity(),this);
     }
     @Override
     public void onopenPackage(String packageID) {
-        package_search_model.openPackage(packageID);
+        Package_search_model.openPackage(packageID);
     }
 
     @Override

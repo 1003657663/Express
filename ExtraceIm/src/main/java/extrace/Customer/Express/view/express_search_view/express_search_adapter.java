@@ -18,11 +18,11 @@ import java.util.List;
  * 显示express-search-list的适配器
  *
  */
-public class express_search_adapter extends BaseAdapter
+public class Express_search_adapter extends BaseAdapter
 {
     private List<ExpressInfo> elist;
     private LayoutInflater mInflater;
-    public  express_search_adapter(Context context, List<ExpressInfo> data)
+    public Express_search_adapter(Context context, List<ExpressInfo> data)
     {
         elist=data;
         mInflater=LayoutInflater.from(context);

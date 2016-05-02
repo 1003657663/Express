@@ -2,24 +2,24 @@ package extrace.Customer.Express.presenter.express_search_presenter;
 
 
 import extrace.model.ExpressInfo;
-import extrace.Customer.Express.model.express_search_model.expressListModelImpl;
-import extrace.Customer.Express.view.express_search_view.express_search_FragmentView;
+import extrace.Customer.Express.model.express_search_model.Express_list_modelImpl;
+import extrace.Customer.Express.view.express_search_view.Express_search_FragmentView;
 
-import extrace.Customer.Express.model.express_search_model.expressListModel;
+import extrace.Customer.Express.model.express_search_model.Express_list_model;
 import java.util.List;
 
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public class expressListPresenterImpl implements expressListPresenter
+public class Express_List_PresenterImpl implements Express_List_Presenter
 {
-    express_search_FragmentView express_search_fragmentView;
-    expressListModel expressListModel;
+    Express_search_FragmentView express_search_fragmentView;
+    Express_list_model expressListModel;
 
-    public expressListPresenterImpl(express_search_FragmentView express_search_fragmentView)
+    public Express_List_PresenterImpl(Express_search_FragmentView express_search_fragmentView)
     {
        this.express_search_fragmentView=express_search_fragmentView;
-        expressListModel=new expressListModelImpl(express_search_fragmentView.getTheActivity(),this);
+        expressListModel=new Express_list_modelImpl(express_search_fragmentView.getTheActivity(),this);
     }
 
     @Override

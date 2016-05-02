@@ -5,9 +5,9 @@ import android.app.Activity;
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public interface express_edit_FragmentView
+public interface Express_edit_FragmentView
 {
     void onToastSuccess(String ID);
-    void onToastFail(String string);
+    void onToastFail();
     Activity getTheActivity();
 }

@@ -8,14 +8,14 @@ import extrace.net.VolleyHelper;
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class package_search_modelImpl  extends VolleyHelper implements package_search_model
+public class Package_search_modelImpl extends VolleyHelper implements Package_search_model
 {
-   private package_search_presenter package_search_presenter;
+   private Package_search_presenter Package_search_presenter;
     String url="";
-    public package_search_modelImpl(Activity activity, package_search_presenter package_search_presenter)
+    public Package_search_modelImpl(Activity activity, Package_search_presenter Package_search_presenter)
     {
         super(activity);
-      this.package_search_presenter=package_search_presenter;
+      this.Package_search_presenter = Package_search_presenter;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class package_search_modelImpl  extends VolleyHelper implements package_s
             doJson(url, VolleyHelper.POST,jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
-            package_search_presenter.onFail();
+            Package_search_presenter.onFail();
         }
     }
 
@@ -41,15 +41,15 @@ public class package_search_modelImpl  extends VolleyHelper implements package_s
                packageInfo.setEmployeesID(Integer.parseInt(jsonObject.getString("EmployeesID")));
                packageInfo.setEmployeesName(jsonObject.getString("ExployeesName"));
                packageInfo.setID(jsonObject.getString("ID"));
-               package_search_presenter.onSuccess(packageInfo);
+               Package_search_presenter.onSuccess(packageInfo);
         } catch (JSONException e) {
             e.printStackTrace();
-           package_search_presenter.onFail();
+           Package_search_presenter.onFail();
         }
     }
 
     @Override
     public void onError(String errorMessage) {
-        package_search_presenter.onFail();
+        Package_search_presenter.onFail();
     }
 }

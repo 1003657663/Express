@@ -12,19 +12,16 @@ import android.widget.ImageButton;
 
 import android.widget.TextView;
 import android.widget.Toast;
-
 import extrace.model.packageInfo;
-import extrace.sorter.Package.ep_search.package_list.package_list_Fragment;
+import extrace.sorter.Package.ep_search.package_list.Package_list_Fragment;
 import extrace.ui.main.R;
-
-
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class package_search_Fragment extends Fragment implements package_search_FragmentView
+public class Package_search_Fragment extends Fragment implements Package_search_FragmentView
 {
     private TextView title,package_from,package_to,EmployeesID,EmployeesName,closetime,ID;
-    private package_search_presenter package_search_presenter;
+    private Package_search_presenter Package_search_presenter;
     private Button open;
     private ImageButton back;
     @Override
@@ -50,14 +47,14 @@ public class package_search_Fragment extends Fragment implements package_search_
             @Override
             public void onClick(View v) {
                 //跳转到eplist页面
-                package_list_Fragment fragment = new package_list_Fragment();
+                Package_list_Fragment fragment = new Package_list_Fragment();
                 Bundle bundle = new Bundle();
                // Toast.makeText(getActivity(),ID.getText().toString(),Toast.LENGTH_LONG).show();
                 bundle.putString("packageID",ID.getText().toString());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_layout, fragment);
-                transaction.addToBackStack("package_search_Fragment");
+                transaction.addToBackStack("Package_search_Fragment");
                transaction.commit();
             }
         });
@@ -65,10 +62,9 @@ public class package_search_Fragment extends Fragment implements package_search_
         {
             String packageID=getArguments().getString("ID");
            // Toast.makeText(getActivity(),packageID,Toast.LENGTH_LONG).show();
-            package_search_presenter=new package_search_presenterImpl(this);
-            package_search_presenter.onopenPackage(packageID);
+            Package_search_presenter =new Package_search_presenterImpl(this);
+            Package_search_presenter.onopenPackage(packageID);
         }
-
         return view;
     }
 

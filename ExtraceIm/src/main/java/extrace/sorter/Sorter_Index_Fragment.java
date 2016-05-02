@@ -12,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
-import extrace.sorter.Package.package_search.package_search_Fragment;
+import extrace.sorter.Package.package_search.Package_search_Fragment;
 import extrace.main.MyApplication;
-import extrace.sorter.close.new_package_info.new_package_info_fragment;
+import extrace.sorter.close.new_package_info.New_package_info_fragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
@@ -50,7 +50,7 @@ public class Sorter_Index_Fragment extends Fragment
             @Override
             public void onClick(View v) {
                 //2为打包
-                new_package_info_fragment fragment = new new_package_info_fragment();
+                New_package_info_fragment fragment = new New_package_info_fragment();
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack("sindex");
                 transaction.commit();
@@ -110,7 +110,7 @@ public class Sorter_Index_Fragment extends Fragment
                 Bundle bundle = data.getExtras();
                 String result = bundle.getString("result");
                 //Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-                package_search_Fragment fragment = new package_search_Fragment();
+                Package_search_Fragment fragment = new Package_search_Fragment();
                 Bundle bundle1 = new Bundle();
                 bundle1.putString("ID", result);
                 fragment.setArguments(bundle1);

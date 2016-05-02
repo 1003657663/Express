@@ -9,7 +9,7 @@ import extrace.model.ExpressInfo;
 /**
  * Created by 黎明 on 2016/4/17.
  */
-public interface express_search_FragmentView
+public interface Express_search_FragmentView
 {
     void onToastFail();
     Activity getTheActivity();

@@ -17,11 +17,11 @@ import extrace.ui.main.R;
  * 显示express-search-list的适配器
  *
  */
-public class package_list_adapter extends BaseAdapter
+public class Package_list_adapter extends BaseAdapter
 {
     private List<Package> elist;
     private LayoutInflater mInflater;
-    public package_list_adapter(Context context, List<Package> data)
+    public Package_list_adapter(Context context, List<Package> data)
     {
         elist=data;
         mInflater=LayoutInflater.from(context);

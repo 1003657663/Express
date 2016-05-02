@@ -17,10 +17,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import extrace.model.ExpressInfo;
-import extrace.Customer.Express.presenter.express_search_presenter.expressListPresenter;
+import extrace.Customer.Express.presenter.express_search_presenter.Express_List_Presenter;
 
-import extrace.Customer.Express.presenter.express_search_presenter.expressListPresenterImpl;
-import extrace.Customer.Express.view.express_info_view.express_info_fragment;
+import extrace.Customer.Express.presenter.express_search_presenter.Express_List_PresenterImpl;
+import extrace.Customer.Express.view.express_info_view.Express_info_fragment;
 import extrace.model.ExpressSheet;
 import extrace.ui.main.R;
 
@@ -32,10 +32,10 @@ import java.util.List;
  * Created by 黎明 on 2016/4/17.
  * 快件查询：由快件单号或者电话号码得到express的list或express
  */
-public class express_search_Fragment extends ListFragment implements express_search_FragmentView
+public class Express_search_Fragment extends ListFragment implements Express_search_FragmentView
 {
-   private expressListPresenter expressListPresenter;
-    express_search_adapter adp;
+   private Express_List_Presenter Express_List_Presenter;
+    Express_search_adapter adp;
     List<ExpressSheet> list;
     private ListView expresslist;
     private ImageButton back,enter;
@@ -49,7 +49,7 @@ public class express_search_Fragment extends ListFragment implements express_sea
         enter=(ImageButton)view.findViewById(R.id.enter);
         text=(EditText)view.findViewById(R.id.index_top_bar_input);
         list=new ArrayList<>();
-        expressListPresenter=new expressListPresenterImpl(this);
+        Express_List_Presenter =new Express_List_PresenterImpl(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +60,7 @@ public class express_search_Fragment extends ListFragment implements express_sea
             enter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    expressListPresenter.doSearchByID(text.getText().toString());
+                    Express_List_Presenter.doSearchByID(text.getText().toString());
                 }
             });
         }
@@ -69,17 +69,17 @@ public class express_search_Fragment extends ListFragment implements express_sea
            if(getArguments().getString("ID")!=null) {
                 String ID = getArguments().getString("ID");
                 Toast.makeText(getActivity(),"diyi",Toast.LENGTH_LONG).show();
-               // expressListPresenter.doSearchByID(ID);
+               // Express_List_Presenter.doSearchByID(ID);
             }
             //从上个页面传参ID
           else if ((getArguments().getInt("CustomerID"))!=0) {
                 int CID = getArguments().getInt("CustomerID");
 
-              expressListPresenter.doSearchByCID(CID);
+              Express_List_Presenter.doSearchByCID(CID);
             }
             else if (getArguments().getString("Tel")!=null) {
                 String Tel = getArguments().getString("Tel");
-                expressListPresenter.doSearchByTel(Tel);
+                Express_List_Presenter.doSearchByTel(Tel);
             }
             //获得ID 调用presenter通过presenter调用model 实现根据ID查询快件 并将list放入adapter
            // Toast.makeText(getActivity(),ID,Toast.LENGTH_LONG).show();
@@ -102,11 +102,11 @@ public class express_search_Fragment extends ListFragment implements express_sea
     public void onToastSuccess(List<ExpressInfo> list)
     {
         if(list.size()>1)
-        {adp=new express_search_adapter(getActivity(),list);
+        {adp=new Express_search_adapter(getActivity(),list);
         expresslist.setAdapter(adp);}
         else
         {
-            Fragment fragment = new express_info_fragment();
+            Fragment fragment = new Express_info_fragment();
             Bundle bundle = new Bundle();
             bundle.putString("ID",list.get(0).getID());
             fragment.setArguments(bundle);
@@ -120,7 +120,7 @@ public class express_search_Fragment extends ListFragment implements express_sea
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
                  super.onListItemClick(l, v, position, id);
-                Fragment fragment = new express_info_fragment();
+                Fragment fragment = new Express_info_fragment();
                 ExpressInfo expressInfo=(ExpressInfo)adp.getItem(position);
                 Bundle bundle=new Bundle();
                 bundle.putString("ID",expressInfo.getID());

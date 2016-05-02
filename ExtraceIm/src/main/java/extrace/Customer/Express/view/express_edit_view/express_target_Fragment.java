@@ -14,7 +14,7 @@ import extrace.ui.main.R;
  * Created by 黎明 on 2016/4/19.
  * 快件追踪信息：地图+转运站点
  */
-public class express_target_Fragment extends Fragment implements express_target_FragmentView
+public class Express_target_Fragment extends Fragment implements Express_target_FragmentView
 {
     private ImageButton back;
     private TextView title;

@@ -4,7 +4,7 @@ import java.util.List;
 /**
  * Created by 黎明 on 2016/4/30.
  */
-public interface add_package_listPresenter
+public interface Add_package_listPresenter
 {
    // void onSearchPackage(String packageID);
     void addExpress(List list);

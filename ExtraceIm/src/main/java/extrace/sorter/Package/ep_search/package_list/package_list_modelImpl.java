@@ -16,14 +16,14 @@ import extrace.net.VolleyHelper;
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public class package_list_modelImpl extends VolleyHelper implements package_list_model
+public class Package_list_modelImpl extends VolleyHelper implements Package_list_model
 {
-    private package_list_presenter package_list_presenter;
+    private Package_list_presenter Package_list_presenter;
     String url="";
-    public package_list_modelImpl(Activity activity, package_list_presenter package_list_presenter)
+    public Package_list_modelImpl(Activity activity, Package_list_presenter Package_list_presenter)
     {
         super(activity);
-        this.package_list_presenter=package_list_presenter;
+        this.Package_list_presenter = Package_list_presenter;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class package_list_modelImpl extends VolleyHelper implements package_list
             doJson(url, VolleyHelper.POST,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-             package_list_presenter.onFail();
+             Package_list_presenter.onFail();
         }
     }
 
@@ -49,13 +49,13 @@ public class package_list_modelImpl extends VolleyHelper implements package_list
             doJson(url, VolleyHelper.POST,jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-            package_list_presenter.onFail();
+            Package_list_presenter.onFail();
         }
     }
 
    // @Override
     public void onError(String errorMessage) {
-        package_list_presenter.onFail();
+        Package_list_presenter.onFail();
     }
 
     @Override
@@ -64,11 +64,11 @@ public class package_list_modelImpl extends VolleyHelper implements package_list
             JSONObject object=(JSONObject)jsonOrArray;
             if(object.getInt("state")==0)
             {
-                package_list_presenter.onSuccess();
+                Package_list_presenter.onSuccess();
             }
             else if(object.getInt("state")==1)
             {
-                package_list_presenter.onFail();
+                Package_list_presenter.onFail();
             }
             else
             {
@@ -78,11 +78,11 @@ public class package_list_modelImpl extends VolleyHelper implements package_list
                     Package p = (Package) jsonArray.get(i);
                     list.add(p);
                 }
-                package_list_presenter.onSuccess(list);
+                Package_list_presenter.onSuccess(list);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            package_list_presenter.onFail();
+            Package_list_presenter.onFail();
         }
     }
 }

@@ -10,7 +10,7 @@ import extrace.model.Package;
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public interface package_list_FragmentView {
+public interface Package_list_FragmentView {
     Activity getTheActivity();
     void onSuccess(List<Package> list);
     void onFail();

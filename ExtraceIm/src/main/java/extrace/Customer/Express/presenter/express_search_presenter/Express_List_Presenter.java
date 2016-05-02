@@ -7,7 +7,7 @@ import extrace.model.ExpressInfo;
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public interface expressListPresenter
+public interface Express_List_Presenter
 {
     void onSuccess(List<ExpressInfo> list);
     void onFail();

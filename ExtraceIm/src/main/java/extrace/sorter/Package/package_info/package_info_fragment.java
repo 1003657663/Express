@@ -11,7 +11,7 @@ import extrace.ui.main.R;
 /**
  * Created by 黎明 on 2016/4/28.
  */
-public class package_info_fragment extends Fragment
+public class Package_info_fragment extends Fragment
 {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -16,13 +16,13 @@ import extrace.net.VolleyHelper;
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public class express_list_modelImpl extends VolleyHelper implements express_list_model {
-    private express_list_presenter express_list_presenter;
+public class Express_list_modelImpl extends VolleyHelper implements Express_list_model {
+    private Express_list_presenter Express_list_presenter;
     String url = "";
 
-    public express_list_modelImpl(Activity activity, express_list_presenter express_list_presenter) {
+    public Express_list_modelImpl(Activity activity, Express_list_presenter Express_list_presenter) {
         super(activity);
-        this.express_list_presenter = express_list_presenter;
+        this.Express_list_presenter = Express_list_presenter;
     }
 
 
@@ -36,13 +36,13 @@ public class express_list_modelImpl extends VolleyHelper implements express_list
             doJson(url, VolleyHelper.POST, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-            express_list_presenter.onFail();
+            Express_list_presenter.onFail();
         }
     }
 
     @Override
     public void onError(String errorMessage) {
-        express_list_presenter.onFail();
+        Express_list_presenter.onFail();
     }
 
     @Override
@@ -50,7 +50,7 @@ public class express_list_modelImpl extends VolleyHelper implements express_list
         try {
             JSONObject jsonObject = (JSONObject) jsonOrArray;
             if (jsonObject.getInt("state") == 1) {
-                express_list_presenter.onSuccess();
+                Express_list_presenter.onSuccess();
             } else {
                 JSONArray jsonArray = (JSONArray) jsonOrArray;
                 try {
@@ -64,15 +64,15 @@ public class express_list_modelImpl extends VolleyHelper implements express_list
                         p.setRadd(object.getString("radd"));
                         list.add(p);
                     }
-                    express_list_presenter.onSuccess(list);
+                    Express_list_presenter.onSuccess(list);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    express_list_presenter.onFail();
+                    Express_list_presenter.onFail();
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            express_list_presenter.onFail();
+            Express_list_presenter.onFail();
         }
     }
 
@@ -85,7 +85,7 @@ public class express_list_modelImpl extends VolleyHelper implements express_list
             doJson(url, VolleyHelper.POST, jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-            express_list_presenter.onFail();
+            Express_list_presenter.onFail();
         }
     }
 }

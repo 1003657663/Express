@@ -11,11 +11,11 @@ import extrace.net.VolleyHelper;
 /**
  * Created by 黎明 on 2016/4/28.
  */
-public class new_package_info_presenterImpl extends VolleyHelper implements new_package_info_presenter
+public class New_package_info_presenterImpl extends VolleyHelper implements New_package_info_presenter
 {
-     private new_package_info_fragmentView fragmentView1;
+     private New_package_info_fragmentView fragmentView1;
     String url;
-    public new_package_info_presenterImpl(Activity activity,new_package_info_fragmentView fragmentView2)
+    public New_package_info_presenterImpl(Activity activity, New_package_info_fragmentView fragmentView2)
     {
         super(activity);
         this.fragmentView1 =fragmentView2;
@@ -23,15 +23,16 @@ public class new_package_info_presenterImpl extends VolleyHelper implements new_
 
     @Override
     public void newPackage(int fromID, int toID, int employeesId) {
-       packageInfo packageInfo=new packageInfo("1234","123","123","123",1,"1234");
-        String a="123";
+      // packageInfo packageInfo=new packageInfo("1234","123","123","123",1,"1234");
+        String a="{\"ID\":\"1234\",\"closetime\":\"time\"}";
         try {
             JSONObject object=new JSONObject(a);
+            onDataReceive(object);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        onDataReceive(packageInfo);
+
         /* url+="";
         JSONObject jsonObject = new JSONObject();
         try {

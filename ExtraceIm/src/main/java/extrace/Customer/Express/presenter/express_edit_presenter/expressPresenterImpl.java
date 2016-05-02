@@ -1,21 +1,21 @@
 package extrace.Customer.Express.presenter.express_edit_presenter;
 
-import extrace.Customer.Express.model.express_edit_model.express;
-import extrace.Customer.Express.view.express_edit_view.express_edit_FragmentView;
-import extrace.Customer.Express.model.express_edit_model.express_edit_model;
+import extrace.Customer.Express.model.express_edit_model.Express_edit_modelImpl;
+import extrace.Customer.Express.view.express_edit_view.Express_edit_FragmentView;
+import extrace.Customer.Express.model.express_edit_model.Express_edit_model;
 
 
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public class expressPresenterImpl implements expressPresenter
+public class ExpresspresenterImpl implements Expresspresenter
 {
-    express_edit_FragmentView express_edit_fragmentView;
-    express_edit_model express_edit_model;
-    public expressPresenterImpl(express_edit_FragmentView express_edit_fragmentView)
+    Express_edit_FragmentView express_edit_fragmentView;
+    Express_edit_model express_edit_model;
+    public ExpresspresenterImpl(Express_edit_FragmentView express_edit_fragmentView)
     {
        this.express_edit_fragmentView=express_edit_fragmentView;
-        express_edit_model =new express(express_edit_fragmentView.getTheActivity(),this);
+        express_edit_model =new Express_edit_modelImpl(express_edit_fragmentView.getTheActivity(),this);
     }
 
 

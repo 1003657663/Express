@@ -7,7 +7,6 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
 
 
@@ -15,34 +14,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import java.util.List;
 
 import extrace.model.Package;
 
-import extrace.sorter.Package.ep_search.express_list.express_list_fragment;
+import extrace.sorter.Package.ep_search.express_list.Express_list_fragment;
 import extrace.sorter.Sorter_Index_Fragment;
-import extrace.sorter.close.add_package_list.add_package_listFragment;
 import extrace.ui.main.R;
 
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public class package_list_Fragment extends Fragment implements package_list_FragmentView
+public class Package_list_Fragment extends Fragment implements Package_list_FragmentView
 {
     private TextView choose_package,choose_express;
     private ListView listView;
     private TextView title,save;
     private ImageButton back;
     private static String packageID="";
-    private package_list_presenter package_list_presenter;
-    private package_list_adapter adp;
+    private Package_list_presenter Package_list_presenter;
+    private Package_list_adapter adp;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.ep_fragment,container,false);
@@ -56,18 +52,18 @@ public class package_list_Fragment extends Fragment implements package_list_Frag
                 getFragmentManager().popBackStack();
             }
         });
-        package_list_presenter=new package_list_presenterImpl(this);
+        Package_list_presenter =new Package_list_presenterImpl(this);
         save=(TextView)view.findViewById(R.id.top_bar_right_text);
         if(getArguments()!=null) {
             packageID=getArguments().getString("packageID");
             //Toast.makeText(getActivity(),packageID,Toast.LENGTH_LONG).show();
-            package_list_presenter.onSearchPByPackageID(packageID);
+            Package_list_presenter.onSearchPByPackageID(packageID);
         }
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //点击save 确认拆包
-               package_list_presenter.onOpen(packageID);
+               Package_list_presenter.onOpen(packageID);
             }
         });
         choose_express=(TextView) view.findViewById(R.id.choose_express);
@@ -76,13 +72,13 @@ public class package_list_Fragment extends Fragment implements package_list_Frag
        choose_express.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    express_list_fragment fragment1=new express_list_fragment();
+                    Express_list_fragment fragment1=new Express_list_fragment();
                     Bundle bundle = new Bundle();
                     bundle.putString("packageID",packageID);
                 fragment1.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                  transaction.replace(R.id.fragment_container_layout,fragment1);
-                transaction.addToBackStack("package_list_Fragment");
+                transaction.addToBackStack("Package_list_Fragment");
                 transaction.commit();
             }
         });
@@ -101,7 +97,7 @@ public class package_list_Fragment extends Fragment implements package_list_Frag
 
     @Override
     public void onSuccess(List<Package> list) {
-        adp=new package_list_adapter(getActivity(),list);
+        adp=new Package_list_adapter(getActivity(),list);
         listView.setAdapter(adp);
     }
 

@@ -3,7 +3,6 @@ package extrace.sorter.close.add_package_list;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.DialogInterface;
@@ -28,17 +27,17 @@ import extrace.ui.main.R;
 /**
  * Created by 黎明 on 2016/4/30.
  */
-public class add_package_listFragment extends ListFragment implements add_package_listFragmentView
+public class Add_package_listFragment extends ListFragment implements Add_package_listFragmentView
 {
-    private add_package_listPresenter presenter;
+    private Add_package_listPresenter presenter;
     private ListView listView;
-    private ArrayList plist=new ArrayList();
+    private ArrayList plist=new ArrayList<String>();
     private ArrayList elist=new ArrayList();
     private static String DpackageID;
    private ArrayList list=new ArrayList();
     private ImageButton scan,search;
     private EditText input;
-    private add_package_list_adapter adapter;
+    private Add_package_list_adapter adapter;
     private Button closebutton;
     private TextView delete;
 
@@ -46,9 +45,9 @@ public class add_package_listFragment extends ListFragment implements add_packag
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.add_package_list,container,false);
         listView=(ListView)view.findViewById(android.R.id.list);
-        scan=(ImageButton)view.findViewById(R.id.top_bar_left_img);
-        adapter=new add_package_list_adapter(getActivity(),list);
-        presenter=new add_package_listPresenterImpl(getActivity(),this);
+        scan=(ImageButton)view.findViewById(R.id.index_top_bar_camera);
+        adapter=new Add_package_list_adapter(getActivity(),list);
+        presenter=new Add_package_listPresenterImpl(getActivity(),this);
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,8 +69,7 @@ public class add_package_listFragment extends ListFragment implements add_packag
                 dialog.show();
             }
         });
-        presenter=new add_package_listPresenterImpl(getActivity(),this);
-       if(getArguments().getString("packageID")!=null)
+       if(getArguments()!=null)
         {
             DpackageID=getArguments().getString("packageID");
             elist.add(DpackageID);
@@ -81,7 +79,12 @@ public class add_package_listFragment extends ListFragment implements add_packag
         closebutton .setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               presenter.addPackage(plist);
+                if(elist.size()>1)
+                    presenter.addExpress(elist);
+                else if(plist.size()>1)
+                    presenter.addPackage(plist);
+                else
+                    Toast.makeText(getActivity(),"请扫码或输入单号",Toast.LENGTH_LONG).show();
             }
         });
         search=(ImageButton)view.findViewById(R.id.enter);
@@ -123,7 +126,7 @@ public class add_package_listFragment extends ListFragment implements add_packag
     }
     @Override
     public void Success() {
-        presenter.addExpress(elist);
+        presenter.addPackage(elist);
     }
     public void pSuccess()
     {
@@ -141,7 +144,6 @@ public class add_package_listFragment extends ListFragment implements add_packag
             }
         }).create();
         dialog1.show();
-
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -153,7 +155,6 @@ public class add_package_listFragment extends ListFragment implements add_packag
                 plist.add(result);
                 list.add(result);
                 listView.setAdapter(adapter);
-
             }
             else if(requestCode==0)
             {

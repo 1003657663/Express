@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
-import extrace.Customer.Express.view.express_edit_view.express_edit_Fragment;
-import extrace.Customer.Express.view.express_search_view.express_search_Fragment;
+import extrace.Customer.Express.view.express_edit_view.Express_edit_Fragment;
+import extrace.Customer.Express.view.express_search_view.Express_search_Fragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
@@ -26,7 +26,7 @@ import extrace.user.me.MeFragment;
 /**
  * Created by songchao on 16/4/4.
  */
-public class MainFragment extends Fragment implements View.OnClickListener{
+public class MainFragment extends Fragment {
 
     private Button meButton;
     private FragmentManager fm;
@@ -45,7 +45,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                express_edit_Fragment fragment = new express_edit_Fragment();
+                Express_edit_Fragment fragment = new Express_edit_Fragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack("index");
@@ -56,7 +56,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                express_search_Fragment fragment = new express_search_Fragment();
+                Express_search_Fragment fragment = new Express_search_Fragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack("index");
@@ -79,24 +79,21 @@ public class MainFragment extends Fragment implements View.OnClickListener{
 
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        FragmentTransaction transaction = fm.beginTransaction();
 
         meButton = (Button) view.findViewById(R.id.me_button);
-        meButton.setOnClickListener(this);
-        return view;
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.me_button:
+        meButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if(!myApplication.getUserInfo().getLoginState()) {//没有登陆跳转登陆界面
                     toLoginFragment();
                 }else {
-                    toMeFragment();//登陆后跳转"我"界面
+                    //登陆后跳转"我"界面
+                    toMeFragment();
                 }
-                break;
-        }
+            }
+        });
+        return view;
     }
 
     private void toMeFragment(){
@@ -124,7 +121,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             Bundle bundle=data.getExtras();
             String result=bundle.getString("result");
             Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
-            express_search_Fragment fragment=new express_search_Fragment();
+            Express_search_Fragment fragment=new Express_search_Fragment();
             Bundle bundle1=new Bundle();
             bundle1.putString("ID",result);
             fragment.setArguments(bundle1);
@@ -133,4 +130,5 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             transaction.commit();
         }
     }
+
 }

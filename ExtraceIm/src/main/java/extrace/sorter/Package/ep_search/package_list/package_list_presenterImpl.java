@@ -5,13 +5,13 @@ import extrace.model.Package;
 /**
  * Created by 黎明 on 2016/4/26.
  */
-public class package_list_presenterImpl implements package_list_presenter {
-    private package_list_FragmentView fragmentView;
-    private package_list_model model;
-    public  package_list_presenterImpl(package_list_FragmentView package_list_fragmentView)
+public class Package_list_presenterImpl implements Package_list_presenter {
+    private Package_list_FragmentView fragmentView;
+    private Package_list_model model;
+    public Package_list_presenterImpl(Package_list_FragmentView package_list_fragmentView)
     {
         this.fragmentView=package_list_fragmentView;
-        model=new package_list_modelImpl(fragmentView.getTheActivity(),this);
+        model=new Package_list_modelImpl(fragmentView.getTheActivity(),this);
     }
 
     @Override
