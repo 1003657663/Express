@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -36,7 +35,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_express_search,container,false);
-        searchText = (TextView) view.findViewById(R.id.express_search_id);
+        searchText = (TextView) view.findViewById(R.id.express_search_result_id);
         leftArrow = (ImageView) view.findViewById(R.id.express_search_left_image);
         leftContain = (RelativeLayout) view.findViewById(R.id.express_search_arrow);
         searchContain = (LinearLayout) view.findViewById(R.id.express_search_containt);
@@ -45,6 +44,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
         topbarRight.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.map));
 
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        view.findViewById(R.id.express_search_result_tomap).setOnClickListener(this);
         expressPresenter = new SearchExpressPresenterImpl(getActivity(),this);
 
         getBundle();
@@ -61,10 +61,19 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
                 getFragmentManager().popBackStack();
                 break;
             case R.id.top_bar_right_img:
+                toBaiduMap();
                 break;
-            case R.id.top_bar_right_text:
+            case R.id.express_search_result_tomap:
+                toBaiduMap();
                 break;
         }
+    }
+
+    /**
+     * 跳转到百度地图位置实时监测
+     */
+    private void toBaiduMap(){
+
     }
 
     /**
