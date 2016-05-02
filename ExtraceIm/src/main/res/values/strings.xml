@@ -174,13 +174,11 @@
     <string name="address_delete">/REST/Misc/deleteAddress/</string><!--删除地址url，后面加上用户id-->
     <string name="user_change_tel">/REST/Domain/changeTel/old/{oldtel}/new/{newtel}</string><!--修改用户手机号url-->
     <string name="user_change_password">/REST/Domain/changePwd/tel/{tel}/{pwdold}/{pwdnew}</string><!--修改用户密码-->
-    <string name="express_search_one">/REST/Domain/getExpressInfoById/{id}</string><!--查询相应id的快递的信息-->
-
-    <string name="getExpressInfoByTel">/getExpressInfoByTel/{tel}</string>
-    <string name="getExpressInfoById">/getExpressInfoById/{id}</string>
-    <string name="SendExpress">/prepareSendExpress/customerId/{customerId}/sendAddressId/{sendAddressId}/recAddressId/{recAddressId}</string>
-    <string name="getExpressInfoByCustomerId">/getExpressInfoByCustomerId/{CustomerId}</string>
-    <string name="getPackageInfoById">/getPackageInfoById/{packageId}</string>
-    <string name="searchPackageInPackageById">/searchPackageInPackageById/{packageId}</string>
-    <string name="searchExpressInPackageById">/searchExpressInPackageById/{packageId}</string><!--修改用户密码-->
+    <string name="getExpressInfo_ByTel">/REST/Domain/getExpressInfoByTel/</string>
+    <string name="getExpressInfo_ById">/REST/Domain/getExpressInfoById/</string><!--根据快递单号查询快件-->
+    <string name="SendExpress">/REST/Domain/prepareSendExpress/customerId/{customerId}/sendAddressId/{sendAddressId}/recAddressId/{recAddressId}</string><!--新建快件-->
+    <string name="getExpressInfo_ByCustomerId">/REST/Domain/getExpressInfoByCustomerId/</string><!--根据customerID查询express list-->
+    <string name="getPackageInfo_ById">/REST/Domain/getPackageInfoById/</string><!--根据包裹单号查询包裹信息-->
+    <string name="searchPackageInPackage_ById">/REST/Domain/searchPackageInPackageById/</string><!--查询包裹中的包裹-->
+    <string name="searchExpressInPackage_ById">/REST/Domain/searchExpressInPackageById/</string><!--查询包裹中的快件-->
 </resources>

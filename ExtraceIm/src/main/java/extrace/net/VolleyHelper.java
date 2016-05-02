@@ -38,7 +38,6 @@ public abstract class VolleyHelper {
                 hideProgressDialog();
                 onDataReceive(jsonObject);
             }
-
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
@@ -46,7 +45,6 @@ public abstract class VolleyHelper {
                 onError(VolleyErrorHelper.getMessage(volleyError,context));
             }
         });
-
         requestQueue.add(objectRequest);
     }
 

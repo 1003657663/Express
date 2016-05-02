@@ -2,18 +2,12 @@ package extrace.sorter.close.add_package_list;
 
 import android.app.Activity;
 
-import com.google.gson.JsonObject;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import extrace.model.packageInfo;
 import extrace.net.VolleyHelper;
 
 /**
@@ -31,19 +25,19 @@ public class add_package_listPresenterImpl extends VolleyHelper implements add_p
 
     @Override
     public void addPackage(List list) {
+
         url += "";
         JSONArray jsonArray=new JSONArray();
         for(int i=0;i<list.size();i++)
         {
             try {
                 jsonArray.put(i,list.get(i));
-               // jsonObject.put("ID"+i,list.get(i));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+
         doJsonArray(url,VolleyHelper.POST,jsonArray);
-      //  doJson(url, VolleyHelper.POST,null);
     }
 
     @Override
