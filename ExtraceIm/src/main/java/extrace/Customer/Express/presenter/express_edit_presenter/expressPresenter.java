@@ -7,7 +7,7 @@ package extrace.Customer.Express.presenter.express_edit_presenter;
 public interface expressPresenter
 {
      void onSuccess(String ID);
-     void onFail();
+     void onFail(String message);
      void doNewExpress(int customerId, int send_ID, int receive_ID);
 
 }

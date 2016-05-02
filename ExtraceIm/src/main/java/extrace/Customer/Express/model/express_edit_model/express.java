@@ -32,7 +32,7 @@ public class express extends VolleyHelper implements express_edit_model {
     }
     @Override
     public void onError(String errorMessage) {
-        expressPresenter.onFail();
+        expressPresenter.onFail(errorMessage);
     }
 
 }

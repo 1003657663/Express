@@ -29,8 +29,8 @@ public class expressPresenterImpl implements expressPresenter
     }
 
     @Override
-    public void onFail() {
-        express_edit_fragmentView.onToastFail();
+    public void onFail(String message) {
+        express_edit_fragmentView.onToastFail(message);
     }
 
 

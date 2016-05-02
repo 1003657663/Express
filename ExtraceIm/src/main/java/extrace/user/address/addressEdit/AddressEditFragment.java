@@ -83,7 +83,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
             userAddress.setCustomerid(myApplication.getUserInfo().getId());
             userAddress.setProvince("北京市");
             //-------!!!
-            //userAddress.setCustomerid(myApplication.getUserInfo());
+            userAddress.setCustomerid(myApplication.getUserInfo().getId());
         }else {
             if(editWhat == ADDRESS_UPDATE_RECEIVE) {
                 ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改收货地址");
@@ -135,8 +135,8 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
     private int preRank;
     private void setDefault(){
         if(userAddress.getRank() == 0){
-            setDefaultButton.setText("设为默认地址");
-            userAddress.setRank(preRank);
+            MyDialog myDialog = new MyDialog(getActivity());
+            myDialog.showDialogWithSure("已经是默认地址，您可以选择其它地址设为默认地址","好的");
         }else {
             setDefaultButton.setText("默认");
             userAddress.setRank(0);
