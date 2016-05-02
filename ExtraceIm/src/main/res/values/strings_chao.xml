@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="express_search_one">/REST/Domain/getExpressInfoById/{id}</string>
+</resources>
