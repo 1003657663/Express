@@ -27,7 +27,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
     private ImageView leftArrow;
     private LinearLayout searchContain;
     private RelativeLayout leftContain;
-    private Text topbarTitle;
+    private TextView topbarTitle;
     private ImageView topbarRight;
 
     private SearchExpressPresenter expressPresenter;
@@ -39,7 +39,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
         leftArrow = (ImageView) view.findViewById(R.id.express_search_left_image);
         leftContain = (RelativeLayout) view.findViewById(R.id.express_search_arrow);
         searchContain = (LinearLayout) view.findViewById(R.id.express_search_containt);
-        topbarTitle = (Text) view.findViewById(R.id.top_bar_center_text);
+        topbarTitle = (TextView) view.findViewById(R.id.top_bar_center_text);
         topbarRight = (ImageView) view.findViewById(R.id.top_bar_right_img);
         topbarRight.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.map));
 
@@ -90,7 +90,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
     @Override
     public void init() {
         searchText.setText(searchID);
-        topbarTitle.setTextContent(searchID+"物流信息");
+        topbarTitle.setText(searchID+"物流信息");
     }
 
     @Override

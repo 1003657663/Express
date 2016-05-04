@@ -41,5 +41,5 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile files('libs/MobTools-2016.0303.1229.jar')
     compile files('libs/MobCommons-2016.0303.1229.jar')
-    compile project(':libzxing')
+    compile project(":libzxing")
 }

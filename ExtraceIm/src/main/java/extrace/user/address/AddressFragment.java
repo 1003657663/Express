@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import extrace.ui.main.R;
 import extrace.user.address.addressEdit.AddressEditFragment;
 
 /**
+ * 用户地址界面
  * Created by chao on 2016/4/17.
  */
 public class AddressFragment extends Fragment implements AddressView,View.OnClickListener {
@@ -55,15 +57,15 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.top_bar_left_img:
                 getFragmentManager().popBackStack();
                 break;
             case R.id.user_addres_add_new:
-                if(receiveOrSend == SEND){
-                    toEditFragment(null,AddressEditFragment.ADDRESS_NEW_SEND);
-                }else if(receiveOrSend == RECEIVE){
-                    toEditFragment(null,AddressEditFragment.ADDRESS_NEW_RECEIVE);
+                if (receiveOrSend == SEND) {
+                    toEditFragment(null, AddressEditFragment.ADDRESS_NEW_SEND);
+                } else if (receiveOrSend == RECEIVE) {
+                    toEditFragment(null, AddressEditFragment.ADDRESS_NEW_RECEIVE);
                 }
                 break;
             default:
@@ -92,9 +94,35 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
     }
 
     @Override
-    public void refreshAddress(ArrayList<UserAddress> addressList) {
+    public void refreshAddress(final ArrayList<UserAddress> addressList) {
         //地址获取成功后，加载到list通过adapter
         AddressLIstApapter listApapter = new AddressLIstApapter(this,addressList,receiveOrSend);
         listView.setAdapter(listApapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getActivity(),position+"",Toast.LENGTH_SHORT).show();
+                toExpress(addressList.get(position));
+            }
+        });
+    }
+
+    /**
+     * 返回去寄快递界面并且传参
+     */
+    private void toExpress(UserAddress userAddress){
+        Bundle bundle = new Bundle();
+        if(receiveOrSend == RECEIVE) {
+            bundle.putInt("receiveOrSend",RECEIVE);
+            bundle.putParcelable("expressaddress",userAddress);
+        }else if(receiveOrSend == SEND){
+            bundle.putInt("receiveOrSend",SEND);
+            bundle.putParcelable("expressaddress",userAddress);
+        }
+        FragmentManager fm = getFragmentManager();
+        Fragment fragment = fm.findFragmentByTag("expressedit");
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.show(fragment);
     }
 }

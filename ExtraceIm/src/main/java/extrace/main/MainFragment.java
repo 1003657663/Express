@@ -72,6 +72,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
                 startCamera();
                 break;
             case R.id.index_top_bar_message:
+                toSearchResult();
                 break;
             case R.id.send:
                 toSendFragment();
