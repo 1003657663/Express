@@ -6,40 +6,9 @@
     android:background="@color/whitesmoke"
     android:weightSum="1">
     <include layout="@layout/top_bar"/>
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:gravity="center_horizontal"
-      >
-       <TextView
-           android:layout_width="100sp"
-           android:layout_height="60sp"
-           android:id="@+id/package_from"
-           android:gravity="center"
-           android:textSize="10sp"/>
-       <ImageView
-           android:layout_width="100sp"
-           android:layout_height="60sp"
-           android:src="@mipmap/to"
-           android:scaleType="fitXY"
-           />
-       <TextView
-           android:layout_width="100sp"
-           android:layout_height="60sp"
-           android:id="@+id/package_to"
-           android:hint="请选取地址"
-           android:gravity="center"
-           android:textSize="10sp"/>
-       <ImageView
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:id="@+id/toaddress"
-           android:src="@mipmap/right"/>
-   </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,12 +20,12 @@
                 android:layout_height="30sp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:text="包裹单号:"/>
+                android:text="姓名:"/>
             <TextView
                 android:layout_height="30sp"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:id="@+id/ID"
+                android:id="@+id/receiver_info_name"
 
                 />
 
@@ -73,13 +42,13 @@
                 android:layout_height="30sp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:text="负责人:"/>
+                android:text="住址:"/>
 
             <TextView
                 android:layout_height="30sp"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:id="@+id/EmployeesName"
+                android:id="@+id/receiver_info_add"
                 />
 
         </LinearLayout>
@@ -95,13 +64,13 @@
                 android:layout_height="30sp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:text="负责人ID:"/>
+                android:text="街道:"/>
 
             <TextView
                 android:layout_height="30sp"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:id="@+id/EmployeesID"
+                android:id="@+id/receiver_info_addinfo"
                 />
         </LinearLayout>
         <View style="@style/bg_line" />
@@ -116,12 +85,12 @@
                 android:layout_height="30sp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
-                android:text="打包时间:"/>
+                android:text="电话:"/>
             <TextView
                 android:layout_height="30sp"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:id="@+id/closetime"
+                android:id="@+id/receiver_info_tel"
                 />
         </LinearLayout>
         <View style="@style/bg_line" />
@@ -131,7 +100,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/open"
+        android:id="@+id/receiver_info_send"
         style="@drawable/button_style"
-        android:text="拆包" />
+        android:text="签收" />
 </LinearLayout>
