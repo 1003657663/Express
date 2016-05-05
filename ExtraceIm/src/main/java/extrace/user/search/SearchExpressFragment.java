@@ -15,12 +15,24 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+import extrace.model.ExpressSearchInfo;
 import extrace.ui.main.R;
 
 /**
  * Created by songchao on 16/5/1.
+ *
  */
 public class SearchExpressFragment extends Fragment implements View.OnClickListener,SearchExpressView{
+
+    //1 未揽收,2 揽收,3 派送,4 寄送,5 签收
+    private final int NO_TAKE = 1;
+    private final int HAS_TAKEv= 2;
+    private final int IS_SEND = 3;
+
+    private final int HAS_RECEIVE = 5;
+
 
     private String searchID;
     private TextView searchText;
@@ -49,7 +61,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
 
         getBundle();
 
-        onRequestSuccess();
+        //onRequestSuccess();
         return view;
     }
 
@@ -110,15 +122,20 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
      * 请求服务器返回的数据
      */
     @Override
-    public void onRequestSuccess() {
-        int i=10;
-        for(i = 10;i>0;i--) {//循环读取每一条数据
+    public void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos) {
+        int size = expressSearchInfos.size();
+        for(int i=0;i<size;i++) {//循环读取每一条数据
             RelativeLayout relativeLayout = (RelativeLayout) LinearLayout.inflate(getActivity(), R.layout.user_express_search_item, null);
             TextView pointText = (TextView) relativeLayout.findViewById(R.id.express_address_point);
             TextView timeText = (TextView) relativeLayout.findViewById(R.id.express_point_date);
 
-
-
+            ExpressSearchInfo expressSearchInfo = expressSearchInfos.get(i);
+            pointText.setText(expressSearchInfo.getInfo());
+            timeText.setText(expressSearchInfo.getTime());
+            if(i==size-1) {
+                pointText.setTextColor(getResources().getColor(R.color.black));
+                timeText.setTextColor(getResources().getColor(R.color.black));
+            }
             searchContain.addView(relativeLayout);
         }
 
@@ -169,9 +186,5 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
             leftArrow.getLayoutParams().height = height;
             leftArrow.requestLayout();
         }
-    }
-
-    private void arrowAnimation(){
-
     }
 }

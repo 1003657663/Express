@@ -2,10 +2,14 @@ package extrace.user.search;
 
 import android.app.Activity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import extrace.model.ExpressInfo;
+import extrace.model.ExpressSearchInfo;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -27,38 +31,32 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
     @Override
     public void startGetExpressInfo(String expressID) {
         searchUrl = searchUrl.replace("{id}",expressID);
-        doJson(searchUrl,VolleyHelper.GET,null);
+        doJsonArray(searchUrl,VolleyHelper.GET,null);
     }
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-        JSONObject jsonObject = (JSONObject) jsonOrArray;
-        ExpressInfo expressInfo = new ExpressInfo();
+        JSONArray jsonArray = (JSONArray) jsonOrArray;
+        ArrayList<ExpressSearchInfo> expressSearchInfos = new ArrayList<>();
         try {
-            expressInfo.setAcc1(jsonObject.getString("acc1"));
-            expressInfo.setAcc2(jsonObject.getString("acc2"));
-            expressInfo.setGetTime(jsonObject.getString("getTime"));
-            expressInfo.setID(jsonObject.getString("ID"));
-            expressInfo.setInsuFee(jsonObject.getDouble("insuFee"));
-            expressInfo.setOutTime(jsonObject.getString("outTime"));
-            expressInfo.setRadd(jsonObject.getString("sadd"));
-            expressInfo.setRaddinfo(jsonObject.getString("raddinfo"));
-            expressInfo.setSadd(jsonObject.getString("sadd"));
-            expressInfo.setSaddinfo(jsonObject.getString("saddinfo"));
-            expressInfo.setRname(jsonObject.getString("rname"));
-            expressInfo.setSname(jsonObject.getString("sname"));
-            expressInfo.setRtel(jsonObject.getString("rtel"));
-            expressInfo.setStel(jsonObject.getString("stel"));
-            expressInfo.setWeight(jsonObject.getDouble("weight"));
-
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                ExpressSearchInfo expressSearchInfo = new ExpressSearchInfo();
+                expressSearchInfo.setInfo(jsonObject.getString("info"));
+                expressSearchInfo.setState(jsonObject.getInt("state"));
+                expressSearchInfo.setTime(jsonObject.getString("time"));
+                expressSearchInfos.add(expressSearchInfo);
+            }
+            searchExpressView.onRequestSuccess(expressSearchInfos);
         } catch (JSONException e) {
             e.printStackTrace();
+            searchExpressView.onError("快递状态出错");
         }
 
     }
 
     @Override
     public void onError(String errorMessage) {
-
+        searchExpressView.onError(errorMessage);
     }
 }
