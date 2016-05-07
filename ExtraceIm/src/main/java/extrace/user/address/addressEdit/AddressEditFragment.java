@@ -134,12 +134,17 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
      */
     private int preRank;
     private void setDefault(){
-        if(userAddress.getRank() == 0){
-            MyDialog myDialog = new MyDialog(getActivity());
+        MyDialog myDialog = new MyDialog(getActivity());
+        if(preRank == 0){
             myDialog.showDialogWithSure("已经是默认地址，您可以选择其它地址设为默认地址","好的");
-        }else {
-            setDefaultButton.setText("默认");
-            userAddress.setRank(0);
+        }else{
+            if(userAddress.getRank() == 0){
+                setDefaultButton.setText("设为默认地址");
+                userAddress.setRank(1);
+            }else {
+                setDefaultButton.setText("默认");
+                userAddress.setRank(0);
+            }
         }
     }
     /**
