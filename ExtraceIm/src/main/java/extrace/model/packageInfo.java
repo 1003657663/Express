@@ -1,62 +1,87 @@
 package extrace.model;
 
+import java.io.Serializable;
+
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class packageInfo {
-    public String ID;//包裹ID
-    public String packagefrom;//从哪里来
-    public String packageto;//到哪里去
-    public String EmployeesName;
-    public int EmployeesID;
-    public String closetime;//打包时间
+public class PackageInfo implements Serializable {
+    private String id;//包裹ID
+    private String packageFrom;//从哪里来
+    private String packageTo;//到哪里去
+    private String employeesName;
+    private Integer employeesID;
+    private String closeTime;//打包时间
 
-    public packageInfo(){}
-    public String getClosetime() {
-        return closetime;
+    public PackageInfo() {
     }
 
-    public String getID() {
-        return ID;
+    public PackageInfo(String id, String packageFrom, String packageTo, String employeesName, Integer employeesID, String closeTime) {
+        this.id = id;
+        this.packageFrom = packageFrom;
+        this.packageTo = packageTo;
+        this.employeesName = employeesName;
+        this.employeesID = employeesID;
+        this.closeTime = closeTime;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
+    public String getId() {
+        return id;
     }
 
-    public void setClosetime(String closetime) {
-        this.closetime = closetime;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPackageFrom() {
+        return packageFrom;
+    }
+
+    public void setPackageFrom(String packageFrom) {
+        this.packageFrom = packageFrom;
+    }
+
+    public String getPackageTo() {
+        return packageTo;
+    }
+
+    public void setPackageTo(String packageTo) {
+        this.packageTo = packageTo;
     }
 
     public String getEmployeesName() {
-        return EmployeesName;
+        return employeesName;
     }
 
     public void setEmployeesName(String employeesName) {
-        EmployeesName = employeesName;
+        this.employeesName = employeesName;
     }
 
-    public int getEmployeesID() {
-        return EmployeesID;
+    public Integer getEmployeesID() {
+        return employeesID;
     }
 
-    public void setEmployeesID(int employeesID) {
-        EmployeesID = employeesID;
+    public void setEmployeesID(Integer employeesID) {
+        this.employeesID = employeesID;
     }
 
-    public String getPackagefrom() {
-        return packagefrom;
+    public String getCloseTime() {
+        return closeTime;
     }
 
-    public void setPackagefrom(String packagefrom) {
-        this.packagefrom = packagefrom;
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
     }
 
-    public String getPackageto() {
-        return packageto;
-    }
-
-    public void setPackageto(String packageto) {
-        this.packageto = packageto;
+    @Override
+    public String toString() {
+        return "PackageInfo{" +
+                "id='" + id + '\'' +
+                ", packageFrom='" + packageFrom + '\'' +
+                ", packageTo='" + packageTo + '\'' +
+                ", employeesName='" + employeesName + '\'' +
+                ", employeesID=" + employeesID +
+                ", closeTime='" + closeTime + '\'' +
+                '}';
     }
 }
