@@ -25,9 +25,9 @@ public class ExpressListPresenterImpl implements ExpressListPresenter {
 
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onExpressListFail(String errorMessage) {
 
-        fragmentView.onFail(errorMessage);
+        fragmentView.onExpressListFail(errorMessage);
     }
 
     @Override
@@ -35,13 +35,4 @@ public class ExpressListPresenterImpl implements ExpressListPresenter {
         fragmentView.onSuccess(list);
     }
 
-    @Override
-    public void onSuccess() {
-        fragmentView.Success();
-    }
-
-    @Override
-    public void onOpen(String packageID) {
-        model.onOpen(packageID);
-    }
 }

@@ -16,12 +16,12 @@ public class AddPackageListPresenterImpl extends VolleyHelper implements AddPack
     {
         super(activity);
         this.add_packageListFragmentView = AddPackageListFragmentView;
-       // url=activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.);
+       url=activity.getResources().getString(R.string.base_url);
     }
 
     @Override
     public void loadIntoPackage(String packageID,String ID,int isPackage) {
-        url+="REST/Domain/loadIntoPackage/packageId/"+packageID+"/id/"+ID+"/isPackage/"+isPackage;
+        url+="/REST/Domain/loadIntoPackage/packageId/"+packageID+"/id/"+ID+"/isPackage/"+isPackage;
         JSONObject object=new JSONObject();
         try {
             doJson(url,VolleyHelper.GET,object);
@@ -33,22 +33,18 @@ public class AddPackageListPresenterImpl extends VolleyHelper implements AddPack
     @Override
     public void onDataReceive(Object jsonOrArray)
     {
-        add_packageListFragmentView.Success();
+       JSONObject jsonObject=(JSONObject)jsonOrArray;
+        try {
+            if(jsonObject.getInt("state")==1)
+                add_packageListFragmentView.Success();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
-
     @Override
     public void onError(String errorMessage) {
         add_packageListFragmentView.Fail(errorMessage);
     }
 
-    public void onOpen(String packageID)
-    {
-        url+=packageID;
-        try {
-            doJson(url,VolleyHelper.GET,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 }

@@ -53,7 +53,6 @@ public class PackageSearchFragment extends Fragment implements PackageSearchFrag
                 //跳转到eplist页面
                 PackageListFragment fragment = new PackageListFragment();
                 Bundle bundle = new Bundle();
-               // Toast.makeText(getActivity(),ID.getText().toString(),Toast.LENGTH_LONG).show();
                 bundle.putString("packageID",ID.getText().toString());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

@@ -18,7 +18,7 @@ public class AddPackageListAdapter extends BaseAdapter
 {
     private List elist;
     private LayoutInflater mInflater;
-    public AddPackageListAdapter(Context context, List<PackageInfo> data)
+    public AddPackageListAdapter(Context context, List data)
     {
         elist=data;
         mInflater=LayoutInflater.from(context);

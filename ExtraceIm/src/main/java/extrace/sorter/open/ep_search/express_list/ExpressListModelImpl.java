@@ -8,9 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import extrace.model.ExpressInfo;
-
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -42,45 +40,33 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
 
     @Override
     public void onError(String errorMessage) {
-        ExpressListPresenter.onFail(errorMessage);
+        ExpressListPresenter.onExpressListFail(errorMessage);
     }
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-        JSONObject object = (JSONObject) jsonOrArray;
-        try {
-            int state = object.getInt("state");
-            if (state == 1) {
-                ExpressListPresenter.onSuccess();}
-        } catch (Exception e1) {
             JSONArray jsonArray = (JSONArray) jsonOrArray;
             List<ExpressInfo> list = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 ExpressInfo p = new ExpressInfo();
                 try {
                     JSONObject object1 = (JSONObject) jsonArray.get(i);
-                    p.setGetTime(object1.getString("gettime"));
-                    p.setSadd(object1.getString("sadd"));
-                    p.setRadd(object1.getString("radd"));
+                    p.setID(object1.getString("id"));
+                   /* p.setRname(object1.getString("rname"));
+                    p.setRtel(object1.getString("rtel"));
+                    p.setRaddinfo(object1.getString("raddinfo"));*/
+                   /* p.setRadd(object1.getString("accAddressId"));*/
+                   String gettime=object1.getString("getTime").substring(0,10);
+                    p.setGetTime(gettime);
                     list.add(p);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    ExpressListPresenter.onFail("error");
+                    ExpressListPresenter.onExpressListFail("error");
                 }
 
             }
             ExpressListPresenter.onSuccess(list);
         }
-    }
 
-    @Override
-    public void onOpen(String packageID) {
-        onOpenurl += packageID;
-        try {
-            doJson(onOpenurl, VolleyHelper.GET, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-    }
 }

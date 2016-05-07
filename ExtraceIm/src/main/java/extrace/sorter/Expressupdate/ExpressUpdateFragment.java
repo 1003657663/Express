@@ -39,7 +39,7 @@ public class ExpressUpdateFragment extends Fragment implements ExpressUpdateFrag
         if (getArguments().getString("ID") != null) {
             ID = getArguments().getString("ID");
             presenter.getExpressInfoByID(ID);
-        }
+        }else getFragmentManager().popBackStack();
         View view = inflater.inflate(R.layout.express_send_edit, container, false);
         title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("快件信息");

@@ -54,7 +54,6 @@ public class NewPackageInfoFragment extends Fragment implements NewPackageInfoFr
         employeesname=(TextView)view.findViewById(R.id.EmployeesName);
         time=(TextView)view.findViewById(R.id.closetime);
         ID=(TextView)view.findViewById(R.id.ID);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

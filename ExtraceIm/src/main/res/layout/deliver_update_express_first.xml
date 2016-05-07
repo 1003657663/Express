@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+
     android:background="@color/whitesmoke"
     >
     <include
@@ -122,7 +123,7 @@
          android:id="@+id/submit_deliver"
          android:layout_gravity="bottom"
          android:textColor="@color/white"
-         android:background="@color/edit_border"
+         android:background="@drawable/button_radio_with_background_color"
          style="@drawable/button_style"
          android:text="提交"/>
  </LinearLayout>

@@ -3,7 +3,8 @@ package extrace.sorter.close.add_package_list;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,56 +15,130 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import extrace.model.ExpressInfo;
+import extrace.model.Package;
+import extrace.sorter.SorterIndex.SorterIndexFragment;
+import extrace.sorter.open.ep_search.express_list.ExpressListFragmentView;
+import extrace.sorter.open.ep_search.express_list.ExpressListPresenter;
+import extrace.sorter.open.ep_search.express_list.ExpressListPresenterImpl;
+import extrace.sorter.open.ep_search.package_list.OpenPackagePresenter;
+import extrace.sorter.open.ep_search.package_list.OpenPackagePresenterImpl;
+import extrace.sorter.open.ep_search.package_list.PackageListFragmentView;
+import extrace.sorter.open.ep_search.package_list.PackageListPresenter;
+import extrace.sorter.open.ep_search.package_list.PackageListPresenterImpl;
 import extrace.ui.main.R;
-
 /**
  * Created by 黎明 on 2016/4/30.
+ * 查看包裹然后
  * 向包裹中添加包裹或快件
  * 接收参数为packageID
  */
-public class AddPackageListFragment extends ListFragment implements AddPackageListFragmentView, View.OnClickListener {
-    private AddPackageListPresenter presenter;
-    private ListView listView;                   //listView显示内容list
-    private static String DpackageID;            //default包裹ID
-    private ArrayList list = new ArrayList();      //内容list
-    private ImageButton scan, search;
-    private EditText input;
-    private Button open;
-    private LinearLayout item;
-    private TextView IDtext;
-    private AddPackageListAdapter adapter;    //适配器
+public class AddPackageListFragment extends Fragment implements PackageListFragmentView,ExpressListFragmentView,AddPackageListFragmentView, View.OnClickListener {
+    private AddPackageListPresenter presenter;      //调用其load
+    private ListView listView;                      //listView显示内容list
+    private static String DpackageID;               //default包裹ID
+    private static List IDlist=new ArrayList();     //IDlist
+    private ImageButton scan, search;               //扫码查询
+    private EditText input;                         //输入
+    private Button open;                            //拆包
+    private AddPackageListAdapter adapter;         //适配器
     private static int PACKAGE = 1, EXPRESS = 0;
+
+    private PackageListPresenter PackageListPresenter;  //searchPackagebypackageid
+    private ExpressListPresenter ExpressListPresenter;  //searchExpressBypackageid
+    private OpenPackagePresenter OpenPackagePresenter;  //openpackage
+
+    @Override
+    public void OpenSuccess() {
+        //拆包成功的通知
+        Dialog dialog1 = new AlertDialog.Builder(getActivity()).setIcon(
+                android.R.drawable.btn_star).setTitle("确认").setMessage(
+                "拆包成功").setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SorterIndexFragment fragment = new SorterIndexFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.replace(R.id.fragment_container_layout, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        }).create();
+        dialog1.show();
+    }
+
+    @Override
+    public void onExpressListFail(String errorMessage) {
+        Toast.makeText(getActivity(),errorMessage,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSuccess(List<ExpressInfo> list) {
+        //获取expresslist成功的通知
+        for (int i = 0; i < list.size(); i++)
+        {
+            String expressID = list.get(i).getID();
+            IDlist.add(expressID);
+            adapter=new AddPackageListAdapter(getActivity(),IDlist);
+            listView.setAdapter(adapter);
+        }
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+        //onpackagefail的话
+        ExpressListPresenter.onSearchEByPackageID(DpackageID);
+        Toast.makeText(getActivity(),errorMessage,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPackageSuccess(List<Package> list) {
+        //获取packagelist成功的通知
+        for (int i = 0; i < list.size(); i++)
+        {
+            String packageID = list.get(i).getId();
+            IDlist.add(packageID);
+            adapter=new AddPackageListAdapter(getActivity(),IDlist);
+            listView.setAdapter(adapter);
+        }
+        ExpressListPresenter.onSearchEByPackageID(DpackageID);
+    }
+    @Override
+    public Activity getTheActivity() {
+        return getActivity();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.add_package_list, container, false);
+        IDlist.clear();
+        PackageListPresenter=new PackageListPresenterImpl(this);
+        ExpressListPresenter=new ExpressListPresenterImpl(this);
+        OpenPackagePresenter=new OpenPackagePresenterImpl(getActivity(),this);
+        presenter = new AddPackageListPresenterImpl(getActivity(), this);
+        if (getArguments() != null) {
+            //拿到参数packageID 根据此Id拿到packagelist显示 再根据此id拿到expresslist显示
+            DpackageID = getArguments().getString("packageID");
+            PackageListPresenter.onSearchPByPackageID(DpackageID);
+        }
+
         listView = (ListView) view.findViewById(android.R.id.list);
         scan = (ImageButton) view.findViewById(R.id.index_top_bar_camera);
         search = (ImageButton) view.findViewById(R.id.index_top_bar_message);
         input = (EditText) view.findViewById(R.id.index_top_bar_input);
-        item=(LinearLayout)view.findViewById(R.id.item);
-        IDtext=(TextView)view.findViewById(R.id.id);
         open = (Button) view.findViewById(R.id.add_open);
-        item.setOnClickListener(this);
-        IDtext.setOnClickListener(this);
         scan.setOnClickListener(this);
+        search.setImageResource(R.mipmap.search);
         search.setOnClickListener(this);
         open.setOnClickListener(this);
-        adapter = new AddPackageListAdapter(getActivity(), list);
-        listView.setAdapter(adapter);
-        presenter = new AddPackageListPresenterImpl(getActivity(), this);
-        if (getArguments() != null) {
-            DpackageID = getArguments().getString("packageID");
-        }
         return view;
     }
 
@@ -72,19 +147,20 @@ public class AddPackageListFragment extends ListFragment implements AddPackageLi
         switch (v.getId()) {
             case R.id.index_top_bar_message:
                 if (input.getText() != null) {
+                    //根据输入查询
                     Dialog dialog1 = new AlertDialog.Builder(getActivity()).setIcon(
                             android.R.drawable.btn_star).setTitle("添加类型").setMessage(
                             "请选择快件或包裹").setPositiveButton("快件", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            list.add(input.getText().toString());
+                            IDlist.add(input.getText().toString());
                             listView.setAdapter(adapter);
                             presenter.loadIntoPackage(DpackageID, input.getText().toString(), EXPRESS);//调用presenter
                         }
                     }).setNegativeButton("包裹", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            list.add(input.getText().toString());
+                            IDlist.add(input.getText().toString());
                             listView.setAdapter(adapter);
                             presenter.loadIntoPackage(DpackageID, input.getText().toString(), PACKAGE);//调用presenter
                         }
@@ -114,7 +190,8 @@ public class AddPackageListFragment extends ListFragment implements AddPackageLi
                         "确认拆包？").setPositiveButton("确认", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        presenter.onOpen(DpackageID);
+
+                        OpenPackagePresenter.onOpenPackage(DpackageID);
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -123,23 +200,18 @@ public class AddPackageListFragment extends ListFragment implements AddPackageLi
                 }).create();
                 dialog.show();
                 break;
-            case R.id.item:
-            {
-                String ID=IDtext.getText().toString();
-                Toast.makeText(getActivity(),ID,Toast.LENGTH_SHORT).show();
-            }
-
         }
     }
 
     @Override
     public void Fail(String errorMessage) {
-        if (list.size() == 0)
+        if (IDlist.size() == 0)
             Toast.makeText(getActivity(), "此包为空", Toast.LENGTH_SHORT).show();
         else {
-            list.remove(list.size() - 1);
-            listView.setAdapter(adapter);
             Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+            IDlist.remove(IDlist.size() - 1);
+            adapter=new AddPackageListAdapter(getActivity(),IDlist);
+            listView.setAdapter(adapter);
         }
     }
 
@@ -156,7 +228,7 @@ public class AddPackageListFragment extends ListFragment implements AddPackageLi
                 Bundle bundle = data.getExtras();
                 String result = bundle.getString("result");
                 //调用presenter
-                list.add(result);
+                IDlist.add(result);
                 listView.setAdapter(adapter);
                 presenter.loadIntoPackage(DpackageID, result, EXPRESS);//调用presenter
             } else if (requestCode == 1) {
@@ -164,7 +236,7 @@ public class AddPackageListFragment extends ListFragment implements AddPackageLi
                 Bundle bundle = data.getExtras();
                 String result = bundle.getString("result");
                 //调用presenter
-                list.add(result);
+               IDlist.add(result);
                 listView.setAdapter(adapter);
                 presenter.loadIntoPackage(DpackageID, result, PACKAGE);//调用presenter
             }

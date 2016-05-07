@@ -28,7 +28,7 @@ public class PackageListModelImpl extends VolleyHelper implements PackageListMod
        // onOpenurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getPackageInfo_ById);
     }
 
-    @Override
+    /*@Override
     public void onOpen(String packageID) {
         onOpenurl += "";
         JSONObject jsonObject = new JSONObject();
@@ -39,7 +39,7 @@ public class PackageListModelImpl extends VolleyHelper implements PackageListMod
             e.printStackTrace();
             PackageListPresenter.onFail();
         }
-    }
+    }*/
 
     @Override
     public void onSearchPByPackageID(String packageID) {
@@ -55,21 +55,21 @@ public class PackageListModelImpl extends VolleyHelper implements PackageListMod
 
     // @Override
     public void onError(String errorMessage) {
-        PackageListPresenter.onFail();
+        PackageListPresenter.onFail(errorMessage);
     }
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-
+       /* JSONObject object = (JSONObject) jsonOrArray;
         try {
-            JSONObject object = (JSONObject) jsonOrArray;
+
             int state = object.getInt("state");
             if (state == 0) {
                 PackageListPresenter.onSuccess();
             } else if (state == 1) {
                 PackageListPresenter.onFail();
             }
-        } catch (Exception e1) {
+        } catch (Exception e1) {*/
             JSONArray jsonArray = (JSONArray) jsonOrArray;
             List<Package> list = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -81,9 +81,9 @@ public class PackageListModelImpl extends VolleyHelper implements PackageListMod
                 }
                 list.add(p);
             }
-            PackageListPresenter.onSuccess(list);
+            PackageListPresenter.onPackageSuccess(list);
         }
     }
-}
+//}
 
 

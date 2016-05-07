@@ -10,8 +10,8 @@ import extrace.model.Package;
 public interface PackageListPresenter
 {
     void onSearchPByPackageID(String packageID);
-    void onSuccess(List<Package> list);
-     void onFail();
-    void onOpen(String packageID);
-    void onSuccess();
+    void onPackageSuccess(List<Package> list);
+     void onFail(String errorMessage);
+    //void onOpen(String packageID);
+    //void onSuccess();
 }

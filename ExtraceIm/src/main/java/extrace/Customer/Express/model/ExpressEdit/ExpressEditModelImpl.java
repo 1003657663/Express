@@ -42,7 +42,6 @@ public class ExpressEditModelImpl extends VolleyHelper implements ExpressEditMod
         try {
             //返回值 参数名待定
             String ID=jsonObject.getString("state");
-            if(ID!=null)
                 ExpressPresenter.onSuccess(ID);
         } catch (JSONException e) {
             e.printStackTrace();

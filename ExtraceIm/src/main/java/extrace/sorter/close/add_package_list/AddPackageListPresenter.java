@@ -7,5 +7,4 @@ package extrace.sorter.close.add_package_list;
 public interface AddPackageListPresenter
 {
     void loadIntoPackage(String packageID,String ID,int isPackage);
-    void onOpen(String packageID);
 }

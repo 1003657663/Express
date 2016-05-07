@@ -20,7 +20,7 @@ public class DeliverUpdateExpressPresenterImpl extends VolleyHelper implements D
     {
         super(activity);
         this.fragmentView=fragmentView;
-       // turl="http://192.168.1.113:8080"+activity.getResources().getString(R.string.createPackage);
+        turl=activity.getResources().getString(R.string.base_url)+"REST/Domain/updateExpressFree";
         url=turl;
     }
 
@@ -43,7 +43,6 @@ public class DeliverUpdateExpressPresenterImpl extends VolleyHelper implements D
 
     @Override
     public void updateExpress(ExpressEntity express) {
-        url+="";
         JSONObject jsonObject=new JSONObject();
         try {
             jsonObject.put("id", express.getId());

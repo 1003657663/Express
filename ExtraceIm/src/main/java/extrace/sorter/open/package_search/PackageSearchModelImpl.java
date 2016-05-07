@@ -24,7 +24,8 @@ public class PackageSearchModelImpl extends VolleyHelper implements PackageSearc
 
     @Override
     public void openPackage(String packageID) {
-         url+=packageID;
+        // url+=packageID;
+        url+=packageID;
         JSONObject jsonObject=new JSONObject();
         try {
             doJson(url, VolleyHelper.GET,jsonObject);
@@ -38,12 +39,12 @@ public class PackageSearchModelImpl extends VolleyHelper implements PackageSearc
         JSONObject jsonObject=(JSONObject)jsonOrArray;
        try {
             PackageInfo packageInfo=new PackageInfo();
-               packageInfo.setCloseTime(jsonObject.getString("closetime"));
-               packageInfo.setPackageFrom(jsonObject.getString("packagefrom"));
-               packageInfo.setPackageTo(jsonObject.getString("packageto"));
-               packageInfo.setId(jsonObject.getString("ID"));
-               packageInfo.setEmployeesID(Integer.parseInt(jsonObject.getString("EmployeesID")));
-               packageInfo.setEmployeesName(jsonObject.getString("EmployeesName"));
+               packageInfo.setCloseTime(jsonObject.getString("closeTime"));
+               packageInfo.setPackageFrom(jsonObject.getString("packageFrom"));
+               packageInfo.setPackageTo(jsonObject.getString("packageTo"));
+               packageInfo.setId(jsonObject.getString("id"));
+               packageInfo.setEmployeesID(Integer.parseInt(jsonObject.getString("employeesID")));
+               packageInfo.setEmployeesName(jsonObject.getString("employeesName"));
 
                package_searchPresenter.onSuccess(packageInfo);
         } catch (JSONException e) {

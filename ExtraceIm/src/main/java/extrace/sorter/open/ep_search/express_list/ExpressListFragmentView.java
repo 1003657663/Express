@@ -13,6 +13,5 @@ import extrace.model.ExpressInfo;
 public interface ExpressListFragmentView {
     Activity getTheActivity();
     void onSuccess(List<ExpressInfo> list);
-    void onFail(String errorMessage);
-    void Success();
+    void onExpressListFail(String errorMessage);
 }

@@ -24,7 +24,6 @@ import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
 
 /**
- * 与address的交互-------暂未解决
  * Created by 黎明 on 2016/4/16.
  * 快件信息编辑：新建express
  * 向address页面传参 int receiveorSend（SEND:0，RECEIVE:1）
@@ -40,7 +39,6 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
     public static int send_id = 0, receive_id = 0;
     private TextView title, sname, stel, saddress, saddressinfo, rname, rtel, raddress, raddressinfo;
     private ImageView back;
-    private CheckBox check;
     public static final int SEND = 0;
     public static final int RECEIVE = 1;
     private static FragmentTransaction transaction;

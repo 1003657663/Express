@@ -14,8 +14,8 @@ public class ExpressEntity implements Serializable {
     private Float weight;
     private int sendAddressId;
     private int accAddressId;
-    private Timestamp getTime;
-    private Timestamp outTime;
+    private String getTime;
+    private String outTime;
     private Float tranFee;
     private Float insuFee;
     private String acc1;
@@ -24,7 +24,7 @@ public class ExpressEntity implements Serializable {
     public ExpressEntity() {
     }
 
-    public ExpressEntity(String id, int customerId, Integer isPackage, Float weight, int sendAddressId, int accAddressId, Timestamp getTime, Timestamp outTime, Float tranFee, Float insuFee, String acc1, String acc2) {
+    public ExpressEntity(String id, int customerId, Integer isPackage, Float weight, int sendAddressId, int accAddressId, String getTime, String outTime, Float tranFee, Float insuFee, String acc1, String acc2) {
         this.id = id;
         this.customerId = customerId;
         this.isPackage = isPackage;
@@ -87,19 +87,19 @@ public class ExpressEntity implements Serializable {
         this.accAddressId = accAddressId;
     }
 
-    public Timestamp getGetTime() {
+    public String getGetTime() {
         return getTime;
     }
 
-    public void setGetTime(Timestamp getTime) {
+    public void setGetTime(String getTime) {
         this.getTime = getTime;
     }
 
-    public Timestamp getOutTime() {
+    public String getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Timestamp outTime) {
+    public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
 

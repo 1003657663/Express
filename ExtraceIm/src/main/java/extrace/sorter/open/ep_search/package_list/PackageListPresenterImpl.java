@@ -14,31 +14,31 @@ public class PackageListPresenterImpl implements PackageListPresenter {
         model=new PackageListModelImpl(fragmentView.getTheActivity(),this);
     }
 
-    @Override
+    /*@Override
     public void onOpen(String packageID) {
 
         model.onOpen(packageID);
     }
-
+*/
     @Override
     public void onSearchPByPackageID(String packageID) {
 
         model.onSearchPByPackageID(packageID);
     }
 
-    @Override
+   /* @Override
     public void onSuccess() {
         fragmentView.Success();
     }
-
+*/
     @Override
-    public void onFail() {
+    public void onFail(String errorMessage) {
 
-        fragmentView.onFail();
+        fragmentView.onFail(errorMessage);
     }
 
     @Override
-    public void onSuccess(List<Package> list) {
-        fragmentView.onSuccess(list);
+    public void onPackageSuccess(List<Package> list) {
+        fragmentView.onPackageSuccess(list);
     }
 }

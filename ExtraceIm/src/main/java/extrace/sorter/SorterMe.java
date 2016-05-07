@@ -1,5 +1,4 @@
 package extrace.sorter;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import extrace.main.MyApplication;
 import extrace.sorter.close.add_package_list.AddPackageListFragment;
-import extrace.sorter.open.ep_search.package_list.PackageListFragment;
+import extrace.sorter.work.SearchWorkFragment;
 import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
 import extrace.user.password.ChangePasswordFragment;
@@ -154,7 +153,8 @@ public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnCl
     public void toSendRecordFragment() {
       AddPackageListFragment fragment = new AddPackageListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getSendPackageId());
+        bundle.putString("packageID","69026465584374");
+       // bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getSendPackageId());
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);
@@ -180,14 +180,20 @@ public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnCl
 //工作量查询
     @Override
     public void toWorklog() {
-
+       SearchWorkFragment fragment = new SearchWorkFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.replace(R.id.fragment_container_layout, fragment);
+        transaction.addToBackStack("SorterMe");
+        transaction.commit();
     }
 
     @Override
     public void toReceiveRecordFragment() {
         AddPackageListFragment fragment = new AddPackageListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getRecvPackageId());
+        bundle.putString("packageID","69026465584374");
+        // bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getRecvPackageId());
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);

@@ -39,7 +39,7 @@ public class DeliverUpdateExpressFragment extends Fragment implements DeliverUpd
         if (getArguments()!=null)
         {
             ID.setText(getArguments().getString("ID").toString());
-        }
+        }else getFragmentManager().popBackStack();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

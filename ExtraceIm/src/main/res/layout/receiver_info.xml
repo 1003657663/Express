@@ -99,8 +99,8 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/receiver_info_send"
-        style="@drawable/button_style"
+        android:background="@drawable/button_radio_with_background_color"
         android:text="签收" />
 </LinearLayout>

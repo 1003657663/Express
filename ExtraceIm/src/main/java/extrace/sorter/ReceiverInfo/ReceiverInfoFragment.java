@@ -40,13 +40,15 @@ public class ReceiverInfoFragment extends Fragment implements ReceiverInfoFragme
         receiver_info_send.setOnClickListener(this);
         if(getArguments()!=null)
         {
-            ExpressInfo expressInfo=(ExpressInfo) getArguments().getSerializable("expressinfo");
-           receiver_info_add.setText(expressInfo.getRadd());
+            ExpressInfo expressInfo=(ExpressInfo) getArguments().getSerializable("express");
+            receiver_info_add.setText(expressInfo.getRadd());
             receiver_info_addinfo.setText(expressInfo.getRaddinfo());
             receiver_info_name.setText(expressInfo.getRname());
             receiver_info_tel.setText(expressInfo.getRtel());
             ID=expressInfo.getID();
         }
+        else
+            getFragmentManager().popBackStack();
         return view;
     }
 

@@ -5,5 +5,5 @@ package extrace.sorter.open.ep_search.package_list;
  */
 public interface PackageListModel {
     void onSearchPByPackageID(String packageID);
-    void onOpen(String packageID);
+    //void onOpen(String packageID);
 }

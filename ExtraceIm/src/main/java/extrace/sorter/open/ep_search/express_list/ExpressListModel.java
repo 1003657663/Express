@@ -5,5 +5,4 @@ package extrace.sorter.open.ep_search.express_list;
  */
 public interface ExpressListModel {
     void onSearchEByPackageID(String packageID);
-    void onOpen(String packageID);
 }

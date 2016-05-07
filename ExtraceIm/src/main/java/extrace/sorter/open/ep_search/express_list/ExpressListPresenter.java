@@ -13,7 +13,5 @@ public interface ExpressListPresenter
 {
     void onSearchEByPackageID(String packageID);
     void onSuccess(List<ExpressInfo> list);
-    void onFail(String errorMessage);
-    void onOpen(String packageID);
-    void onSuccess();
+    void onExpressListFail(String errorMessage);
 }
