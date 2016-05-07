@@ -2,6 +2,10 @@ package extrace.sorter.Expressupdate;
 
 import android.app.Activity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import extrace.model.ExpressInfo;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
@@ -22,6 +26,22 @@ public class ExpressUpdatePresenterImpl extends VolleyHelper implements ExpressU
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
+        JSONObject jsonObject=(JSONObject)jsonOrArray;
+        ExpressInfo expressInfo=new ExpressInfo();
+        try {
+            expressInfo.setRname(jsonObject.getString("rname"));
+            expressInfo.setRtel(jsonObject.getString("rtel"));
+            expressInfo.setRaddinfo(jsonObject.getString("raddinfo"));
+            expressInfo.setRadd(jsonObject.getString("radd"));
+            expressInfo.setSname(jsonObject.getString("sname"));
+            expressInfo.setStel(jsonObject.getString("stel"));
+            expressInfo.setSaddinfo(jsonObject.getString("saddinfo"));
+            expressInfo.setSadd(jsonObject.getString("sadd"));
+            fragmentView.onSuccess(expressInfo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -34,7 +54,8 @@ public class ExpressUpdatePresenterImpl extends VolleyHelper implements ExpressU
     public void getExpressInfoByID(String ID) {
         url+=ID;
         try {
-            doJson(url,VolleyHelper.GET,null);
+            JSONObject jsonObject=new JSONObject();
+            doJson(url,VolleyHelper.GET,jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
         }

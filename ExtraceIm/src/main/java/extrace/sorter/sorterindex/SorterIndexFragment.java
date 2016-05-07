@@ -155,7 +155,7 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 0) {
-                Bundle bundle = data.getExtras();
+                final Bundle bundle = data.getExtras();
                 result = bundle.getString("result");
                 Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
                         android.R.drawable.btn_star).setTitle("用户类型").setMessage(
@@ -165,7 +165,8 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
                             public void onClick(DialogInterface dialog, int which) {
                                 PackageSearchFragment fragment = new PackageSearchFragment();
                                 Bundle bundle1 = new Bundle();
-                                bundle1.putString("ID", result);
+                               bundle1.putString("ID", result);
+                                //bundle1.putString("ID",);
                                 fragment.setArguments(bundle1);
                                 transaction.replace(R.id.fragment_container_layout, fragment);
                                 transaction.addToBackStack("null");
@@ -225,9 +226,8 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
 
     public void sendToPackageFragment(String input)
     {
-      ExpressUpdateFragment fragment = new ExpressUpdateFragment();
+       ExpressUpdateFragment fragment = new ExpressUpdateFragment();
         transaction = getFragmentManager().beginTransaction();
-        // ExpressUpdateFragment fragment = new ExpressUpdateFragment();
         Bundle bundle = new Bundle();
         bundle.putString("ID",input);
         fragment.setArguments(bundle);
