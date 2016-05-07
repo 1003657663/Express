@@ -80,7 +80,6 @@ public class AddressLIstApapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        System.err.println("position:"+position);
         final UserAddress userAddress = addressList.get(position);
         viewHolder.nameText.setText(userAddress.getName());
         viewHolder.telephoneText.setText(userAddress.getTelephone());

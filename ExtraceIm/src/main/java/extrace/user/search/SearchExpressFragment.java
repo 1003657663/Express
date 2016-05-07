@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -16,19 +15,31 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+import extrace.model.ExpressSearchInfo;
 import extrace.ui.main.R;
 
 /**
  * Created by songchao on 16/5/1.
+ *
  */
 public class SearchExpressFragment extends Fragment implements View.OnClickListener,SearchExpressView{
+
+    //1 未揽收,2 揽收,3 派送,4 寄送,5 签收
+    private final int NO_TAKE = 1;
+    private final int HAS_TAKEv= 2;
+    private final int IS_SEND = 3;
+
+    private final int HAS_RECEIVE = 5;
+
 
     private String searchID;
     private TextView searchText;
     private ImageView leftArrow;
     private LinearLayout searchContain;
     private RelativeLayout leftContain;
-    private Text topbarTitle;
+    private TextView topbarTitle;
     private ImageView topbarRight;
 
     private SearchExpressPresenter expressPresenter;
@@ -36,20 +47,21 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_express_search,container,false);
-        searchText = (TextView) view.findViewById(R.id.express_search_id);
+        searchText = (TextView) view.findViewById(R.id.express_search_result_id);
         leftArrow = (ImageView) view.findViewById(R.id.express_search_left_image);
         leftContain = (RelativeLayout) view.findViewById(R.id.express_search_arrow);
         searchContain = (LinearLayout) view.findViewById(R.id.express_search_containt);
-        topbarTitle = (Text) view.findViewById(R.id.top_bar_center_text);
+        topbarTitle = (TextView) view.findViewById(R.id.top_bar_center_text);
         topbarRight = (ImageView) view.findViewById(R.id.top_bar_right_img);
         topbarRight.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.map));
 
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
+        view.findViewById(R.id.express_search_result_tomap).setOnClickListener(this);
         expressPresenter = new SearchExpressPresenterImpl(getActivity(),this);
 
         getBundle();
 
-        onRequestSuccess();
+        //onRequestSuccess();
         return view;
     }
 
@@ -61,10 +73,19 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
                 getFragmentManager().popBackStack();
                 break;
             case R.id.top_bar_right_img:
+                toBaiduMap();
                 break;
-            case R.id.top_bar_right_text:
+            case R.id.express_search_result_tomap:
+                toBaiduMap();
                 break;
         }
+    }
+
+    /**
+     * 跳转到百度地图位置实时监测
+     */
+    private void toBaiduMap(){
+
     }
 
     /**
@@ -81,7 +102,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
     @Override
     public void init() {
         searchText.setText(searchID);
-        topbarTitle.setTextContent(searchID+"物流信息");
+        topbarTitle.setText(searchID+"物流信息");
     }
 
     @Override
@@ -101,15 +122,20 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
      * 请求服务器返回的数据
      */
     @Override
-    public void onRequestSuccess() {
-        int i=10;
-        for(i = 10;i>0;i--) {//循环读取每一条数据
+    public void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos) {
+        int size = expressSearchInfos.size();
+        for(int i=0;i<size;i++) {//循环读取每一条数据
             RelativeLayout relativeLayout = (RelativeLayout) LinearLayout.inflate(getActivity(), R.layout.user_express_search_item, null);
             TextView pointText = (TextView) relativeLayout.findViewById(R.id.express_address_point);
             TextView timeText = (TextView) relativeLayout.findViewById(R.id.express_point_date);
 
-
-
+            ExpressSearchInfo expressSearchInfo = expressSearchInfos.get(i);
+            pointText.setText(expressSearchInfo.getInfo());
+            timeText.setText(expressSearchInfo.getTime());
+            if(i==size-1) {
+                pointText.setTextColor(getResources().getColor(R.color.black));
+                timeText.setTextColor(getResources().getColor(R.color.black));
+            }
             searchContain.addView(relativeLayout);
         }
 
@@ -160,9 +186,5 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
             leftArrow.getLayoutParams().height = height;
             leftArrow.requestLayout();
         }
-    }
-
-    private void arrowAnimation(){
-
     }
 }
