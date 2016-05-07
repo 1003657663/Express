@@ -1,4 +1,5 @@
 package extrace.sorter;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -19,7 +20,7 @@ import extrace.user.telephone.ChangeTelFragment;
 /**
  * Created by 黎明 on 2016/5/4.
  */
-public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnClickListener{
+public class SorterMe extends Fragment implements SorterMeFragmentView, View.OnClickListener {
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -151,10 +152,10 @@ public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnCl
 
     @Override
     public void toSendRecordFragment() {
-      AddPackageListFragment fragment = new AddPackageListFragment();
+        AddPackageListFragment fragment = new AddPackageListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("packageID","69026465584374");
-       // bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getSendPackageId());
+        // bundle.putString("packageID", "69026465584374");
+        bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getSendPackageId());
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);
@@ -177,10 +178,11 @@ public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnCl
     public void toMyComplaint() {
 
     }
-//工作量查询
+
+    //工作量查询
     @Override
     public void toWorklog() {
-       SearchWorkFragment fragment = new SearchWorkFragment();
+        SearchWorkFragment fragment = new SearchWorkFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.replace(R.id.fragment_container_layout, fragment);
@@ -192,8 +194,8 @@ public class SorterMe extends Fragment implements SorterMeFragmentView,View.OnCl
     public void toReceiveRecordFragment() {
         AddPackageListFragment fragment = new AddPackageListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("packageID","69026465584374");
-        // bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getRecvPackageId());
+        //  bundle.putString("packageID", "69026465584374");
+        bundle.putString("packageID", ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getRecvPackageId());
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);

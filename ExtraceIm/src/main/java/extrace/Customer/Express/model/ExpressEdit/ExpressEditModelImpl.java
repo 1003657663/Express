@@ -1,36 +1,40 @@
 package extrace.Customer.Express.model.ExpressEdit;
+
 import android.app.Activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import extrace.Customer.Express.presenter.express_edit_presenter.ExpressPresenter;
+import extrace.main.MyApplication;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 
 /**
  * Created by 黎明 on 2016/4/16.
- * 通过三个参数寄快递
- *
+ * 用户寄快递
  */
 public class ExpressEditModelImpl extends VolleyHelper implements ExpressEditModel {
 
     ExpressPresenter ExpressPresenter;
-    String url="";
+    String url = "";
     String turl;
+    String token;
+
     public ExpressEditModelImpl(Activity activity, ExpressPresenter ExpressPresenter) {
         super(activity);
+        token = ((MyApplication) activity.getApplication()).getToken();
         this.ExpressPresenter = ExpressPresenter;
-        turl=activity.getResources().getString(R.string.base_url);
+        turl = activity.getResources().getString(R.string.base_url);
         url = turl;
     }
 
     @Override
-    public void newExpress(int customerId,int senderID, int receiverID) {
-      url+="/REST/Domain/prepareSendExpress/customerId/"+customerId+"/sendAddressId/"+senderID+"/recAddressId/"+receiverID;
+    public void newExpress(int customerId, int senderID, int receiverID) {
+        url += "/REST/Domain/prepareSendExpress/customerId/" + customerId + "/sendAddressId/" + senderID + "/recAddressId/" + receiverID + "/" + token;
         try {
-            JSONObject object=new JSONObject();
-            doJson(url, VolleyHelper.GET,object);
+            JSONObject object = new JSONObject();
+            doJson(url, VolleyHelper.GET, object);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,17 +44,16 @@ public class ExpressEditModelImpl extends VolleyHelper implements ExpressEditMod
     public void onDataReceive(Object jsonOrArray) {
         JSONObject jsonObject = (JSONObject) jsonOrArray;
         try {
-            //返回值 参数名待定
-            String ID=jsonObject.getString("state");
-                ExpressPresenter.onSuccess(ID);
+            String ID = jsonObject.getString("state");
+            ExpressPresenter.onSuccess(ID);
         } catch (JSONException e) {
             e.printStackTrace();
             ExpressPresenter.onFail("error");
-        }finally {
+        } finally {
             url = turl;
         }
-
     }
+
     @Override
     public void onError(String errorMessage) {
         ExpressPresenter.onFail(errorMessage);

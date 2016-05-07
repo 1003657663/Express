@@ -9,7 +9,9 @@ import extrace.model.PackageInfo;
  */
 public interface PackageSearchFragmentView {
     Activity getTheActivity();
+
     void Success(PackageInfo packageInfo);
+
     void Fail(String errorMessage);
 
 }

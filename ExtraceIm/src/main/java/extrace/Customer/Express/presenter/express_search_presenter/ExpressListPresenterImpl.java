@@ -6,30 +6,31 @@ import extrace.Customer.Express.model.ExpressSearchModel.ExpressListModelImpl;
 import extrace.Customer.Express.view.express_search_view.ExpressSearchFragmentView;
 
 import extrace.Customer.Express.model.ExpressSearchModel.ExpressListModel;
+
 import java.util.List;
 
 /**
  * Created by 黎明 on 2016/4/16.
  */
-public class ExpressListPresenterImpl implements ExpressListPresenter
-{
+public class ExpressListPresenterImpl implements ExpressListPresenter {
     ExpressSearchFragmentView express_search_fragmentView;
     ExpressListModel expressListModel;
 
-    public ExpressListPresenterImpl(ExpressSearchFragmentView express_search_fragmentView)
-    {
-       this.express_search_fragmentView=express_search_fragmentView;
-        expressListModel=new ExpressListModelImpl(express_search_fragmentView.getTheActivity(),this);
+    public ExpressListPresenterImpl(ExpressSearchFragmentView express_search_fragmentView) {
+        this.express_search_fragmentView = express_search_fragmentView;
+        expressListModel = new ExpressListModelImpl(express_search_fragmentView.getTheActivity(), this);
     }
 
     @Override
     public void doSearchByCID(int ID) {
         expressListModel.searchByCID(ID);
     }
+
     @Override
     public void doSearchByID(String ID) {
         expressListModel.searchByID(ID);
     }
+
     @Override
     public void doSearchByTel(String ID) {
         expressListModel.searchByTel(ID);

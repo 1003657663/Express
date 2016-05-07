@@ -7,9 +7,10 @@ import extrace.model.ExpressInfo;
 /**
  * Created by 黎明 on 2016/4/19.
  */
-public interface ExpressInfoFragmentView
-{
+public interface ExpressInfoFragmentView {
     Activity getTheActivity();
+
     void onFail();
+
     void onSuccess(ExpressInfo expressInfo);
 }

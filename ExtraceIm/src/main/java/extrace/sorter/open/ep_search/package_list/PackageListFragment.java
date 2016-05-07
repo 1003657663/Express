@@ -1,4 +1,5 @@
 package extrace.sorter.open.ep_search.package_list;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,7 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.List;
+
 import extrace.model.Package;
 import extrace.sorter.open.ep_search.express_list.ExpressListFragment;
 import extrace.sorter.SorterIndex.SorterIndexFragment;
@@ -26,13 +29,13 @@ import extrace.ui.main.R;
  * Created by 黎明 on 2016/4/26.
  * 查看此包裹中的packagelist
  */
-public class PackageListFragment extends Fragment implements PackageListFragmentView{
+public class PackageListFragment extends Fragment implements PackageListFragmentView {
     private TextView choose_package, choose_express;
     private ListView listView;
     private ImageButton back;
     private TextView title;
     private Button save;
-    private static String packageID ;
+    private static String packageID;
     private PackageListPresenter PackageListPresenter;
     private OpenPackagePresenter OpenPackagePresenter;
     private PackageListAdapter adp;
@@ -54,8 +57,8 @@ public class PackageListFragment extends Fragment implements PackageListFragment
             }
         });
         PackageListPresenter = new PackageListPresenterImpl(this);
-        OpenPackagePresenter=new OpenPackagePresenterImpl(getActivity(),this);
-        save =(Button) view.findViewById(R.id.chai);
+        OpenPackagePresenter = new OpenPackagePresenterImpl(getActivity(), this);
+        save = (Button) view.findViewById(R.id.chai);
         save.setVisibility(View.VISIBLE);
         save.setText("拆包");
         if (getArguments() != null) {
@@ -70,7 +73,7 @@ public class PackageListFragment extends Fragment implements PackageListFragment
             }
         });
 
-      choose_express.setOnClickListener (new View.OnClickListener() {
+        choose_express.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choose_package.setBackgroundColor(getResources().getColor(R.color.whitesmoke));
@@ -79,8 +82,8 @@ public class PackageListFragment extends Fragment implements PackageListFragment
                 bundle.putString("packageID", packageID);
                 fragment1.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-               // transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.replace(R.id.fragment_container_layout,fragment1);
+                // transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.replace(R.id.fragment_container_layout, fragment1);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
@@ -92,11 +95,13 @@ public class PackageListFragment extends Fragment implements PackageListFragment
     public Activity getTheActivity() {
         return getActivity();
     }
+
     @Override
     public void onPackageSuccess(List<Package> list) {
         adp = new PackageListAdapter(getActivity(), list);
         listView.setAdapter(adp);
     }
+
     @Override
     public void OpenSuccess() {
         Dialog dialog1 = new AlertDialog.Builder(getActivity()).setIcon(
@@ -117,17 +122,18 @@ public class PackageListFragment extends Fragment implements PackageListFragment
 
     @Override
     public void onFail(String errorMessage) {
-        Toast.makeText(getActivity(),errorMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
-    public class PackageListAdapter extends BaseAdapter
-    {
+
+    public class PackageListAdapter extends BaseAdapter {
         private List<Package> elist;
         private LayoutInflater mInflater;
-        public PackageListAdapter(Context context, List<Package> data)
-        {
-            elist=data;
-            mInflater=LayoutInflater.from(context);
+
+        public PackageListAdapter(Context context, List<Package> data) {
+            elist = data;
+            mInflater = LayoutInflater.from(context);
         }
+
         @Override
         public int getCount() {
 
@@ -137,33 +143,30 @@ public class PackageListFragment extends Fragment implements PackageListFragment
 
         @Override
         public Object getItem(int position) {
-            if(elist!=null)
+            if (elist != null)
                 return elist.get(position);
             else return null;
         }
 
         @Override
         public long getItemId(int position) {
-            if(elist!=null)
+            if (elist != null)
                 return position;
             return 0;
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            viewHolder view=null;
-            if(convertView==null)
-            {
-                view=new viewHolder();
-                convertView=mInflater.inflate(R.layout.package_item,null);
-                view.ID=(TextView)convertView.findViewById(R.id.id);
-                view.EmployeesID=(TextView)convertView.findViewById(R.id.EmployeesID);
-                view.info=(ImageButton)convertView.findViewById(R.id.info);
+            viewHolder view = null;
+            if (convertView == null) {
+                view = new viewHolder();
+                convertView = mInflater.inflate(R.layout.package_item, null);
+                view.ID = (TextView) convertView.findViewById(R.id.id);
+                view.EmployeesID = (TextView) convertView.findViewById(R.id.EmployeesID);
+                view.info = (ImageButton) convertView.findViewById(R.id.info);
                 convertView.setTag(view);
-            }
-            else
-            {
-                view=(viewHolder)convertView.getTag();
+            } else {
+                view = (viewHolder) convertView.getTag();
             }
             view.ID.setText(elist.get(position).getId());
             view.EmployeesID.setText(String.valueOf(elist.get(position).getEmployeesId()));
@@ -184,9 +187,9 @@ public class PackageListFragment extends Fragment implements PackageListFragment
             });
             return convertView;
         }
-        class viewHolder
-        {
-            public TextView ID,EmployeesID;
+
+        class viewHolder {
+            public TextView ID, EmployeesID;
             public ImageButton info;
         }
 

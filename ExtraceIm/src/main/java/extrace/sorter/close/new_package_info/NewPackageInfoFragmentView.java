@@ -8,6 +8,7 @@ import extrace.model.PackageInfo;
  */
 public interface NewPackageInfoFragmentView {
     void onFail();
+
     void onSuccess(PackageInfo packageInfo);
 
 }

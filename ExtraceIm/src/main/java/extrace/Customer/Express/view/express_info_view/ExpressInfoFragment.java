@@ -19,39 +19,38 @@ import extrace.ui.main.R;
 /**
  * Created by 黎明 on 2016/4/19.
  * 用户查询出的list，点击后显示的快件详细信息
- *
  */
-public class ExpressInfoFragment extends Fragment implements ExpressInfoFragmentView
-{
+public class ExpressInfoFragment extends Fragment implements ExpressInfoFragmentView {
     private ImageButton back;
     private TextView title;
     private ExpressInfoPresenter ExpressInfoPresenter;
     private Button target;
-    private TextView ID,sname,stel,sadd,saddinfo,rname,rtel,radd,raddinfo,weight;
-    private TextView Acc1,Acc2,GetTime,OutTime,InsuFee,TranFee;
+    private TextView ID, sname, stel, sadd, saddinfo, rname, rtel, radd, raddinfo, weight;
+    private TextView Acc1, Acc2, GetTime, OutTime, InsuFee, TranFee;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.express_item_info,container,false);
-        back=(ImageButton)view.findViewById(R.id.top_bar_left_img);
-        title=(TextView)view.findViewById(R.id.top_bar_center_text);
-        ID=(TextView)view.findViewById(R.id.ID);
-        sname=(TextView)view.findViewById(R.id.sname);
-        stel=(TextView)view.findViewById(R.id.stel);
-        sadd=(TextView)view.findViewById(R.id.sadd);
-        saddinfo=(TextView)view.findViewById(R.id.saddinfo);
-        rname=(TextView)view.findViewById(R.id.rname);
-        rtel=(TextView)view.findViewById(R.id.rtel);
-        radd=(TextView)view.findViewById(R.id.radd);
-        raddinfo=(TextView)view.findViewById(R.id.raddinfo);
-        weight=(TextView)view.findViewById(R.id.weight);
-       InsuFee=(TextView)view.findViewById(R.id.InsuFee);
-        TranFee=(TextView)view.findViewById(R.id.TranFee);
-        GetTime=(TextView)view.findViewById(R.id.GetTime);
-        OutTime=(TextView)view.findViewById(R.id.OutTime);
-        Acc1=(TextView)view.findViewById(R.id.Acc1);
-        Acc2=(TextView)view.findViewById(R.id.Acc2);
-        target=(Button)view.findViewById(R.id.target);
-        ExpressInfoPresenter =new ExpressInfoPresenterImpl(this);
+        View view = inflater.inflate(R.layout.express_item_info, container, false);
+        back = (ImageButton) view.findViewById(R.id.top_bar_left_img);
+        title = (TextView) view.findViewById(R.id.top_bar_center_text);
+        ID = (TextView) view.findViewById(R.id.ID);
+        sname = (TextView) view.findViewById(R.id.sname);
+        stel = (TextView) view.findViewById(R.id.stel);
+        sadd = (TextView) view.findViewById(R.id.sadd);
+        saddinfo = (TextView) view.findViewById(R.id.saddinfo);
+        rname = (TextView) view.findViewById(R.id.rname);
+        rtel = (TextView) view.findViewById(R.id.rtel);
+        radd = (TextView) view.findViewById(R.id.radd);
+        raddinfo = (TextView) view.findViewById(R.id.raddinfo);
+        weight = (TextView) view.findViewById(R.id.weight);
+        InsuFee = (TextView) view.findViewById(R.id.InsuFee);
+        TranFee = (TextView) view.findViewById(R.id.TranFee);
+        GetTime = (TextView) view.findViewById(R.id.GetTime);
+        OutTime = (TextView) view.findViewById(R.id.OutTime);
+        Acc1 = (TextView) view.findViewById(R.id.Acc1);
+        Acc2 = (TextView) view.findViewById(R.id.Acc2);
+        target = (Button) view.findViewById(R.id.target);
+        ExpressInfoPresenter = new ExpressInfoPresenterImpl(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,9 +71,8 @@ public class ExpressInfoFragment extends Fragment implements ExpressInfoFragment
 
             }
         });
-        if(getArguments()!=null)
-        {
-            ExpressInfo expressInfo=(ExpressInfo)getArguments().getSerializable("1");
+        if (getArguments() != null) {
+            ExpressInfo expressInfo = (ExpressInfo) getArguments().getSerializable("1");
             ID.setText(expressInfo.getID());
             sname.setText(expressInfo.getSname());
             stel.setText(expressInfo.getStel());
@@ -101,11 +99,11 @@ public class ExpressInfoFragment extends Fragment implements ExpressInfoFragment
 
     @Override
     public void onFail() {
-        Toast.makeText(getActivity(),"error",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "error", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void onSuccess( ExpressInfo expressInfo) {
+    public void onSuccess(ExpressInfo expressInfo) {
         /*target.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

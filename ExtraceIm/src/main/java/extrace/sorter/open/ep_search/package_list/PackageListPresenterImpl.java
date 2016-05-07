@@ -1,17 +1,19 @@
 package extrace.sorter.open.ep_search.package_list;
 
 import java.util.List;
+
 import extrace.model.Package;
+
 /**
  * Created by 黎明 on 2016/4/26.
  */
 public class PackageListPresenterImpl implements PackageListPresenter {
     private PackageListFragmentView fragmentView;
     private PackageListModel model;
-    public PackageListPresenterImpl(PackageListFragmentView package_list_fragmentView)
-    {
-        this.fragmentView=package_list_fragmentView;
-        model=new PackageListModelImpl(fragmentView.getTheActivity(),this);
+
+    public PackageListPresenterImpl(PackageListFragmentView package_list_fragmentView) {
+        this.fragmentView = package_list_fragmentView;
+        model = new PackageListModelImpl(fragmentView.getTheActivity(), this);
     }
 
     /*@Override
@@ -26,11 +28,11 @@ public class PackageListPresenterImpl implements PackageListPresenter {
         model.onSearchPByPackageID(packageID);
     }
 
-   /* @Override
-    public void onSuccess() {
-        fragmentView.Success();
-    }
-*/
+    /* @Override
+     public void onSuccess() {
+         fragmentView.Success();
+     }
+ */
     @Override
     public void onFail(String errorMessage) {
 

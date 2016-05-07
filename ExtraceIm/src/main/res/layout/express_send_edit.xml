@@ -271,9 +271,9 @@
         android:gravity="center_horizontal">
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/submit"
-            android:background="@drawable/button_radio_with_background_color"
+            android:background="@color/button_light"
             android:textColor="@color/white"
             android:text="提交"/>
     </LinearLayout>

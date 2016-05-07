@@ -2,105 +2,115 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/whitesmoke"
+    android:orientation="vertical"
     android:weightSum="1">
-    <include layout="@layout/top_bar"/>
+
+    <include layout="@layout/top_bar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20sp"
-            android:paddingLeft="20sp">
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
             <TextView
-                android:layout_height="30sp"
                 android:layout_width="wrap_content"
-                android:gravity="center"
-                android:text="姓名:"/>
-            <TextView
                 android:layout_height="30sp"
-                android:layout_width="match_parent"
                 android:gravity="center"
+                android:text="姓名:" />
+
+            <TextView
                 android:id="@+id/receiver_info_name"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center"
 
                 />
 
         </LinearLayout>
+
         <View style="@style/bg_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20sp"
-            android:paddingLeft="20sp">
-            <TextView
-                android:layout_height="30sp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:text="住址:"/>
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
 
             <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="30sp"
-                android:layout_width="match_parent"
                 android:gravity="center"
+                android:text="住址:" />
+
+            <TextView
                 android:id="@+id/receiver_info_add"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
 
         </LinearLayout>
+
         <View style="@style/bg_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20sp"
-            android:paddingLeft="20sp">
-            <TextView
-                android:layout_height="30sp"
-                android:layout_width="wrap_content"
-                android:gravity="center"
-                android:text="街道:"/>
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
 
             <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="30sp"
-                android:layout_width="match_parent"
                 android:gravity="center"
+                android:text="街道:" />
+
+            <TextView
                 android:id="@+id/receiver_info_addinfo"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
         </LinearLayout>
+
         <View style="@style/bg_line" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20sp"
-            android:paddingLeft="20sp">
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
             <TextView
-                android:layout_height="30sp"
                 android:layout_width="wrap_content"
-                android:gravity="center"
-                android:text="电话:"/>
-            <TextView
                 android:layout_height="30sp"
-                android:layout_width="match_parent"
                 android:gravity="center"
+                android:text="电话:" />
+
+            <TextView
                 android:id="@+id/receiver_info_tel"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
         </LinearLayout>
+
         <View style="@style/bg_line" />
 
     </LinearLayout>
 
     <Button
+        android:id="@+id/receiver_info_send"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/receiver_info_send"
-        android:background="@drawable/button_radio_with_background_color"
+        android:background="@color/button_light"
         android:text="签收" />
 </LinearLayout>

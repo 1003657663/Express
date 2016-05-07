@@ -39,7 +39,7 @@ import extrace.ui.main.R;
  * 查看此包裹中的expresslist
  * 确认拆包发送packageID将包拆开
  */
-public class ExpressListFragment extends Fragment implements ExpressListFragmentView,PackageListFragmentView {
+public class ExpressListFragment extends Fragment implements ExpressListFragmentView, PackageListFragmentView {
     private TextView choose_package, choose_express;
     private ListView listView;
     private ExpressListPresenter presenter;
@@ -56,7 +56,7 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
         presenter = new ExpressListPresenterImpl(this);
         title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("信息查看");
-        save=(Button)view.findViewById(R.id.chai);
+        save = (Button) view.findViewById(R.id.chai);
         back = (ImageButton) view.findViewById(R.id.top_bar_left_img);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +67,7 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
         listView = (ListView) view.findViewById(R.id.listView);
         choose_express = (TextView) view.findViewById(R.id.choose_express);
         choose_package = (TextView) view.findViewById(R.id.choose_package);
-        packagePresenter=new OpenPackagePresenterImpl(getActivity(),this);
+        packagePresenter = new OpenPackagePresenterImpl(getActivity(), this);
         choose_express.setBackgroundColor(getResources().getColor(R.color.white));
         if (getArguments() != null) {
             packageID = getArguments().getString("packageID");
@@ -82,7 +82,7 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
                 bundle.putString("packageID", packageID);
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-               // transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                // transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.replace(R.id.fragment_container_layout, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -92,7 +92,7 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              packagePresenter.onOpenPackage(packageID);
+                packagePresenter.onOpenPackage(packageID);
             }
         });
         return view;
@@ -118,6 +118,7 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
         adp = new ExpressListAdapter(getActivity(), list);
         listView.setAdapter(adp);
     }
+
     @Override
     public void OpenSuccess() {
         Dialog dialog1 = new AlertDialog.Builder(getActivity()).setIcon(
@@ -141,8 +142,8 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
     public void onPackageSuccess(List<Package> list) {
 
     }
-    public class ExpressListAdapter extends BaseAdapter
-    {
+
+    public class ExpressListAdapter extends BaseAdapter {
         private List<ExpressInfo> elist;
         private LayoutInflater mInflater;
 
@@ -150,63 +151,62 @@ public class ExpressListFragment extends Fragment implements ExpressListFragment
             elist = data;
             mInflater = LayoutInflater.from(context);
         }
+
         @Override
         public int getCount() {
-            if(elist!=null)
+            if (elist != null)
                 return elist.size();
             else return 0;
         }
+
         @Override
         public Object getItem(int position) {
-            if(elist!=null)
+            if (elist != null)
                 return elist.get(position);
             else return null;
         }
 
         @Override
         public long getItemId(int position) {
-            if(elist!=null)
+            if (elist != null)
                 return position;
             else return 0;
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            viewHolder view=null;
-            if(convertView==null)
-            {
-                view=new viewHolder();
-                convertView=mInflater.inflate(R.layout.express_item1,null);
-                view.ID=(TextView)convertView.findViewById(R.id.ID);
-                view.gettime=(TextView)convertView.findViewById(R.id.gettime);
-                view.info=(ImageButton)convertView.findViewById(R.id.info);
+            viewHolder view = null;
+            if (convertView == null) {
+                view = new viewHolder();
+                convertView = mInflater.inflate(R.layout.express_item1, null);
+                view.ID = (TextView) convertView.findViewById(R.id.ID);
+                view.gettime = (TextView) convertView.findViewById(R.id.gettime);
+                view.info = (ImageButton) convertView.findViewById(R.id.info);
                 convertView.setTag(view);
-            }
-            else
-            {
-                view=(viewHolder)convertView.getTag();
+            } else {
+                view = (viewHolder) convertView.getTag();
             }
             view.ID.setText(elist.get(position).getID());
             view.gettime.setText(elist.get(position).getGetTime());
             view.info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReceiverInfoFragment fragment=new ReceiverInfoFragment();
-                    FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                    ReceiverInfoFragment fragment = new ReceiverInfoFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                    Bundle bundle=new Bundle();
-                    bundle.putSerializable("express",elist.get(position));
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("express", elist.get(position));
                     fragment.setArguments(bundle);
-                    transaction.replace(R.id.fragment_container_layout,fragment);
+                    transaction.replace(R.id.fragment_container_layout, fragment);
                     transaction.addToBackStack("ExpressListFragment");
                     transaction.commit();
                 }
             });
             return convertView;
         }
-        class viewHolder
-        {
-            public TextView ID,gettime;
+
+        class viewHolder {
+            public TextView ID, gettime;
             public ImageButton info;
         }
     }

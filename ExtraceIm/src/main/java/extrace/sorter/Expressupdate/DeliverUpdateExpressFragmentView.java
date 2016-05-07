@@ -5,5 +5,6 @@ package extrace.sorter.Expressupdate;
  */
 public interface DeliverUpdateExpressFragmentView {
     void onSuccess();
+
     void onFail(String errorMessage);
 }

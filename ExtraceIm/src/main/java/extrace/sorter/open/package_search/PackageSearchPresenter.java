@@ -7,7 +7,9 @@ import extrace.model.PackageInfo;
  */
 public interface PackageSearchPresenter {
     void onopenPackage(String packageID);
+
     void onSuccess(PackageInfo packageInfo);
+
     void onFail(String errorMessage);
 
 }

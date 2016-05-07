@@ -29,6 +29,7 @@ import extrace.sorter.close.add_package_list.AddPackageListFragment;
 import extrace.sorter.close.new_package_info.NewPackageInfoFragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
+
 /**
  * Created by 黎明 on 2016/4/25.
  */
@@ -112,7 +113,7 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
         messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!input.getText().toString().isEmpty())
+                if (!input.getText().toString().isEmpty())
                     sendToPackageFragment(input.getText().toString());
             }
         });
@@ -165,7 +166,7 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
                             public void onClick(DialogInterface dialog, int which) {
                                 PackageSearchFragment fragment = new PackageSearchFragment();
                                 Bundle bundle1 = new Bundle();
-                               bundle1.putString("ID", result);
+                                bundle1.putString("ID", result);
                                 //bundle1.putString("ID",);
                                 fragment.setArguments(bundle1);
                                 transaction.replace(R.id.fragment_container_layout, fragment);
@@ -224,12 +225,11 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 
-    public void sendToPackageFragment(String input)
-    {
-       ExpressUpdateFragment fragment = new ExpressUpdateFragment();
+    public void sendToPackageFragment(String input) {
+        ExpressUpdateFragment fragment = new ExpressUpdateFragment();
         transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
-        bundle.putString("ID",input);
+        bundle.putString("ID", input);
         fragment.setArguments(bundle);
         transaction.replace(R.id.fragment_container_layout, fragment);
         transaction.addToBackStack("SorterIndexFragment");

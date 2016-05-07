@@ -7,5 +7,6 @@ import extrace.model.ExpressInfo;
  */
 public interface ExpressUpdateFragmentView {
     void onSuccess(ExpressInfo expressInfo);
+
     void onFail(String errorMessage);
 }

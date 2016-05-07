@@ -5,15 +5,15 @@ import extrace.model.PackageInfo;
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class PackageSearchPresenterImpl implements PackageSearchPresenter
-{
+public class PackageSearchPresenterImpl implements PackageSearchPresenter {
     private PackageSearchFragmentView package_search_fragmentView;
     private PackageSearchModel PackageSearchModel;
-    public PackageSearchPresenterImpl(PackageSearchFragmentView package_search_fragmentView)
-    {
-        this.package_search_fragmentView=package_search_fragmentView;
-        PackageSearchModel =new PackageSearchModelImpl(package_search_fragmentView.getTheActivity(),this);
+
+    public PackageSearchPresenterImpl(PackageSearchFragmentView package_search_fragmentView) {
+        this.package_search_fragmentView = package_search_fragmentView;
+        PackageSearchModel = new PackageSearchModelImpl(package_search_fragmentView.getTheActivity(), this);
     }
+
     @Override
     public void onopenPackage(String packageID) {
         PackageSearchModel.openPackage(packageID);

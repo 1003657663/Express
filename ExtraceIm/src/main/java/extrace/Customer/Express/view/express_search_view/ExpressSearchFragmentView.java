@@ -9,10 +9,12 @@ import extrace.model.ExpressInfo;
 /**
  * Created by 黎明 on 2016/4/17.
  */
-public interface ExpressSearchFragmentView
-{
+public interface ExpressSearchFragmentView {
     void onToastFail();
+
     Activity getTheActivity();
+
     void onToastSuccess(ExpressInfo expressInfo);
+
     void onToastSuccess(List<ExpressInfo> list);
 }

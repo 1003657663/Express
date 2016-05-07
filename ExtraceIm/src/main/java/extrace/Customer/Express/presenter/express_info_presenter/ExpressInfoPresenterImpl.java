@@ -9,21 +9,19 @@ import extrace.Customer.Express.view.express_info_view.ExpressInfoFragmentView;
 /**
  * Created by 黎明 on 2016/4/19.
  */
-public class ExpressInfoPresenterImpl implements ExpressInfoPresenter
-{
+public class ExpressInfoPresenterImpl implements ExpressInfoPresenter {
     private ExpressInfoFragmentView ExpressInfoFragmentView;
     private ExpressInfoModel express_infoModel;
     private static ExpressInfo expressInfo;
-    public ExpressInfoPresenterImpl(ExpressInfoFragmentView ExpressInfoFragmentView)
-    {
+
+    public ExpressInfoPresenterImpl(ExpressInfoFragmentView ExpressInfoFragmentView) {
         this.ExpressInfoFragmentView = ExpressInfoFragmentView;
-        express_infoModel =new ExpressInfoModelImpl(ExpressInfoFragmentView.getTheActivity(),this);
+        express_infoModel = new ExpressInfoModelImpl(ExpressInfoFragmentView.getTheActivity(), this);
     }
 
 
     @Override
-    public void Success(ExpressInfo expressInfo)
-    {
+    public void Success(ExpressInfo expressInfo) {
         ExpressInfoFragmentView.onSuccess(expressInfo);
     }
 

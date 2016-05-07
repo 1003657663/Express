@@ -5,5 +5,6 @@ package extrace.sorter.ReceiverInfo;
  */
 public interface ReceiverInfoFragmentView {
     void onFail(String errorMessage);
+
     void onSuccess();
 }

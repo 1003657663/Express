@@ -6,6 +6,7 @@ package extrace.sorter.close.add_package_list;
  */
 public interface AddPackageListFragmentView {
     void Success();
+
     void Fail(String errorMessage);
 
 }

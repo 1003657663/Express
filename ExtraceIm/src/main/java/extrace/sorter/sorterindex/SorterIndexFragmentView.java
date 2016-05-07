@@ -7,5 +7,6 @@ import extrace.model.PackageInfo;
  */
 public interface SorterIndexFragmentView {
     void onSuccess(PackageInfo packageInfo);
+
     void onError(String errorMessage);
 }

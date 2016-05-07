@@ -130,8 +130,8 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:id="@+id/open"
-        android:background="@drawable/button_radio_with_background_color"
+        android:background="@color/button_light"
         android:text="拆包" />
 </LinearLayout>

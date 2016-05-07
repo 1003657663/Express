@@ -10,10 +10,10 @@ import extrace.model.ExpressInfo;
 public class ExpressListPresenterImpl implements ExpressListPresenter {
     private ExpressListFragmentView fragmentView;
     private ExpressListModel model;
-    public ExpressListPresenterImpl(ExpressListFragmentView ExpressListFragmentView)
-    {
-        this.fragmentView= ExpressListFragmentView;
-        model=new ExpressListModelImpl(fragmentView.getTheActivity(),this);
+
+    public ExpressListPresenterImpl(ExpressListFragmentView ExpressListFragmentView) {
+        this.fragmentView = ExpressListFragmentView;
+        model = new ExpressListModelImpl(fragmentView.getTheActivity(), this);
     }
 
 

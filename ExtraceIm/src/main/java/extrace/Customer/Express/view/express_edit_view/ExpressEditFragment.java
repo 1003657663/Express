@@ -27,8 +27,7 @@ import extrace.user.address.AddressFragment;
  * Created by 黎明 on 2016/4/16.
  * 快件信息编辑：新建express
  * 向address页面传参 int receiveorSend（SEND:0，RECEIVE:1）
- * 接收 int receiveorSend（SEND:0，RECEIVE:1）
- * int ID,String name,String add,String addinfo
+ * 接收 UserAddress &int receiveorsend
  * 确认寄件，向后台发送int UserID，int sendID，int receiveID
  * 接收 expressID
  */
@@ -63,28 +62,36 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         rtel = (TextView) view.findViewById(R.id.rtel);
         raddress = (TextView) view.findViewById(R.id.radd);
         raddressinfo = (TextView) view.findViewById(R.id.raddressinfo);
-       send_address.setOnClickListener(this);
+        send_address.setOnClickListener(this);
         receive_address.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
-        if (getArguments()!=null) {
-            if (getArguments().getInt("receiveOrSend")==SEND) {
-                UserAddress userAddress=(UserAddress)getArguments().getParcelable("expressaddress");
-                sname.setText(userAddress.getName());
-                send_id=userAddress.getAid();
-                stel.setText(userAddress.getTelephone());
-                saddress.setText(userAddress.getProvince()+userAddress.getCity()+userAddress.getRegion());
-                saddressinfo.setText(userAddress.getAddress());
-            } else if (getArguments().getInt("receiveOrSend")==RECEIVE) {
-                UserAddress userAddress =(UserAddress)getArguments().getParcelable("expressaddress");
-                rname.setText(userAddress.getName());
-                receive_id = userAddress.getAid();
-                rtel.setText(userAddress.getTelephone());
-                raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
-                raddressinfo.setText(userAddress.getAddress());
+        if (getArguments() != null) {
+            if (getArguments().getInt("receiveOrSend") == SEND) {
+                setSendAddress();
+            } else if (getArguments().getInt("receiveOrSend") == RECEIVE) {
+                setReceiveAddress();
             }
         }
         return view;
+    }
+
+    private void setReceiveAddress() {
+        UserAddress userAddress = (UserAddress) getArguments().getParcelable("expressaddress");
+        rname.setText(userAddress.getName());
+        receive_id = userAddress.getAid();
+        rtel.setText(userAddress.getTelephone());
+        raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+        raddressinfo.setText(userAddress.getAddress());
+    }
+
+    private void setSendAddress() {
+        UserAddress userAddress = (UserAddress) getArguments().getParcelable("expressaddress");
+        sname.setText(userAddress.getName());
+        send_id = userAddress.getAid();
+        stel.setText(userAddress.getTelephone());
+        saddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+        saddressinfo.setText(userAddress.getAddress());
     }
 
     @Override
@@ -96,38 +103,49 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.send_address:
                 //用户点击寄件人姓名，跳转至地址fragment
-                Fragment fragment = new AddressFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("receiveOrSend", SEND);
-                fragment.setArguments(bundle);
-                transaction.hide(ExpressEditFragment.this);
-                transaction.add(R.id.fragment_container_layout, fragment);
-                transaction.addToBackStack("expressedit");
-                transaction.commit();
+                toSendAddress();
                 break;
-
             case R.id.receive_address:
-                Fragment fragment1 = new AddressFragment();
-                Bundle bundle1 = new Bundle();
-                bundle1.putInt("receiveOrSend", RECEIVE);
-                fragment1.setArguments(bundle1);
-                transaction.hide(ExpressEditFragment.this);
-                transaction.add(R.id.fragment_container_layout, fragment1);
-                transaction.addToBackStack("expressedit");
-                transaction.commit();
+                toReceiveAddress();
                 break;
             case R.id.submit:
                 //判断ID是否为空 是否相同 toast出相应信息
-                if (send_id == 0 || receive_id == 0) {
-                    Toast.makeText(getActivity(), "寄件人与收件人都不能为空", Toast.LENGTH_SHORT).show();
-                } else if (send_id == receive_id) {
-                    Toast.makeText(getActivity(), "寄件人与收件人不能相同", Toast.LENGTH_SHORT).show();
-                } else {
-                    int customerId=((MyApplication)getActivity().getApplication()).getUserInfo().getId();
-                    expressPresenter.doNewExpress(customerId, send_id, receive_id);
-                }
+                checkSubmit();
                 break;
         }
+    }
+
+    private void checkSubmit() {
+        if (send_id == 0 || receive_id == 0) {
+            Toast.makeText(getActivity(), "寄件人与收件人都不能为空", Toast.LENGTH_SHORT).show();
+        } else if (send_id == receive_id) {
+            Toast.makeText(getActivity(), "寄件人与收件人不能相同", Toast.LENGTH_SHORT).show();
+        } else {
+            int customerId = ((MyApplication) getActivity().getApplication()).getUserInfo().getId();
+            expressPresenter.doNewExpress(customerId, send_id, receive_id);
+        }
+    }
+
+    private void toReceiveAddress() {
+        Fragment fragment1 = new AddressFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt("receiveOrSend", RECEIVE);
+        fragment1.setArguments(bundle1);
+        transaction.hide(ExpressEditFragment.this);
+        transaction.add(R.id.fragment_container_layout, fragment1);
+        transaction.addToBackStack("expressedit1");
+        transaction.commit();
+    }
+
+    private void toSendAddress() {
+        Fragment fragment = new AddressFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("receiveOrSend", SEND);
+        fragment.setArguments(bundle);
+        transaction.hide(ExpressEditFragment.this);
+        transaction.add(R.id.fragment_container_layout, fragment);
+        transaction.addToBackStack("expressedit");
+        transaction.commit();
     }
 
     public void onback() {
@@ -143,7 +161,7 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
     public void onToastSuccess(String ID) {
         Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
                 android.R.drawable.btn_star).setTitle("确认").setMessage(
-                "请妥善保存您的单号："+ID).setPositiveButton("确定",
+                "请妥善保存您的单号：" + ID).setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

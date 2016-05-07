@@ -32,30 +32,30 @@ import java.util.List;
  * Created by 黎明 on 2016/4/17.
  * 快件查询：由快件单号或者电话号码得到express的list或express
  */
-public class ExpressSearchFragment extends ListFragment implements ExpressSearchFragmentView
-{
-   private ExpressListPresenter ExpressListPresenter;
+public class ExpressSearchFragment extends ListFragment implements ExpressSearchFragmentView {
+    private ExpressListPresenter ExpressListPresenter;
     ExpressSearchAdapter adp;
     List<ExpressSheet> list;
     private ListView expresslist;
-    private ImageButton back,enter;
+    private ImageButton back, enter;
     private EditText text;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.express_search,container,false);
-        expresslist=(ListView)view.findViewById(android.R.id.list);
-        back=(ImageButton)view.findViewById(R.id.back);
-        enter=(ImageButton)view.findViewById(R.id.enter);
-        text=(EditText)view.findViewById(R.id.index_top_bar_input);
-        list=new ArrayList<>();
-        ExpressListPresenter =new ExpressListPresenterImpl(this);
+        View view = inflater.inflate(R.layout.express_search, container, false);
+        expresslist = (ListView) view.findViewById(android.R.id.list);
+        back = (ImageButton) view.findViewById(R.id.back);
+        enter = (ImageButton) view.findViewById(R.id.enter);
+        text = (EditText) view.findViewById(R.id.index_top_bar_input);
+        list = new ArrayList<>();
+        ExpressListPresenter = new ExpressListPresenterImpl(this);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFragmentManager().popBackStack();
             }
         });
-        if(text.getText()!=null) {
+        if (text.getText() != null) {
             enter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,18 +63,16 @@ public class ExpressSearchFragment extends ListFragment implements ExpressSearch
                 }
             });
         }
-        if(getArguments()!=null)
-        {
-           if(getArguments().getString("ID")!=null) {
+        if (getArguments() != null) {
+            if (getArguments().getString("ID") != null) {
                 String ID = getArguments().getString("ID");
-               ExpressListPresenter.doSearchByID(ID);
+                ExpressListPresenter.doSearchByID(ID);
             }
             //从上个页面传参ID
-          else if ((getArguments().getInt("CustomerID"))!=0) {
+            else if ((getArguments().getInt("CustomerID")) != 0) {
                 int CID = getArguments().getInt("CustomerID");
-              ExpressListPresenter.doSearchByCID(CID);
-            }
-            else if (getArguments().getString("Tel")!=null) {
+                ExpressListPresenter.doSearchByCID(CID);
+            } else if (getArguments().getString("Tel") != null) {
                 String Tel = getArguments().getString("Tel");
                 ExpressListPresenter.doSearchByTel(Tel);
             }
@@ -95,37 +93,36 @@ public class ExpressSearchFragment extends ListFragment implements ExpressSearch
 
     @Override
     public void onToastSuccess(List<ExpressInfo> list) {
-        adp=new ExpressSearchAdapter(getActivity(),list);
+        adp = new ExpressSearchAdapter(getActivity(), list);
         expresslist.setAdapter(adp);
     }
 
     @Override
-    public void onToastSuccess(ExpressInfo expressInfo)
-    {
-            Fragment fragment = new ExpressInfoFragment();
-            Bundle bundle = new Bundle();
-             bundle.putSerializable("1",expressInfo);
-            fragment.setArguments(bundle);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container_layout, fragment);
-            transaction.addToBackStack("search");
-            transaction.commit();
+    public void onToastSuccess(ExpressInfo expressInfo) {
+        Fragment fragment = new ExpressInfoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("1", expressInfo);
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container_layout, fragment);
+        transaction.addToBackStack("search");
+        transaction.commit();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-                 super.onListItemClick(l, v, position, id);
-                Fragment fragment = new ExpressInfoFragment();
-                ExpressInfo expressInfo=(ExpressInfo)adp.getItem(position);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("1",expressInfo);
-                //bundle.putString("ID",expressInfo.getID());
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container_layout,fragment);
-                transaction.addToBackStack("search");
-                transaction.commit();
-            }
-
+        super.onListItemClick(l, v, position, id);
+        Fragment fragment = new ExpressInfoFragment();
+        ExpressInfo expressInfo = (ExpressInfo) adp.getItem(position);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("1", expressInfo);
+        //bundle.putString("ID",expressInfo.getID());
+        fragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container_layout, fragment);
+        transaction.addToBackStack("search");
+        transaction.commit();
     }
+
+}
 

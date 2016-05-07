@@ -5,13 +5,22 @@ package extrace.sorter;
  */
 public interface SorterMeFragmentView {
     void toSendRecordFragment();
+
     void toReceiveRecordFragment();
+
     void toAboutSoftFragment();
+
     void toMyComplaint();
+
     void toUserSendAddress();
+
     void toUserReceiveAddress();
+
     void toTelChange();
+
     void toPasswordChange();
+
     void loginOut();
+
     void toWorklog();
 }

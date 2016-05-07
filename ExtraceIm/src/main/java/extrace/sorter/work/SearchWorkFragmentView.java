@@ -9,5 +9,6 @@ import extrace.model.ExpressEntity;
  */
 public interface SearchWorkFragmentView {
     void onError(String errorMessage);
+
     void onSuccess(List<ExpressEntity> list);
 }

@@ -119,12 +119,11 @@
      android:layout_height="match_parent">
      <Button
          android:layout_width="match_parent"
-         android:layout_height="wrap_content"
+         android:layout_height="50dp"
          android:id="@+id/submit_deliver"
          android:layout_gravity="bottom"
          android:textColor="@color/white"
-         android:background="@drawable/button_radio_with_background_color"
-         style="@drawable/button_style"
+         android:background="@color/button_light"
          android:text="提交"/>
  </LinearLayout>
 

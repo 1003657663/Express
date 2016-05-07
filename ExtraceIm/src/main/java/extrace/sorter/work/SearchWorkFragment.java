@@ -41,6 +41,7 @@ public class SearchWorkFragment extends Fragment implements SearchWorkFragmentVi
     private SearchWorkPresenter presenter;
     private int EmployeesID;
     private static int DAY;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.search_work, container, false);
@@ -53,7 +54,7 @@ public class SearchWorkFragment extends Fragment implements SearchWorkFragmentVi
         EmployeesID = ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getId();
         if (getArguments() != null) {
             String text = getArguments().getString("key");
-            presenter.searchWork(EmployeesID,text,DAY);
+            presenter.searchWork(EmployeesID, text, DAY);
         }
         return view;
     }
@@ -65,7 +66,7 @@ public class SearchWorkFragment extends Fragment implements SearchWorkFragmentVi
 
     @Override
     public void onSuccess(List<ExpressEntity> list) {
-        adapter=new ExpressListAdapter(getActivity(),list);
+        adapter = new ExpressListAdapter(getActivity(), list);
         listView.setAdapter(adapter);
     }
 
@@ -76,14 +77,14 @@ public class SearchWorkFragment extends Fragment implements SearchWorkFragmentVi
                 getFragmentManager().popBackStack();
                 break;
             case R.id.index_top_bar_message:
-                if(input.getText().toString()!=null) {
+                if (input.getText().toString() != null) {
                     DialogFragment fragment = new DateDialog();
                     try {
-                        DAY=Integer.parseInt(input.getText().toString());
+                        DAY = Integer.parseInt(input.getText().toString());
                         fragment.show(getFragmentManager(), "datePicker");
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
-                        Toast.makeText(getActivity(),"输入不合法",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "输入不合法", Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

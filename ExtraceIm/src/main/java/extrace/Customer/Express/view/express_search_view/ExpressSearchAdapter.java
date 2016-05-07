@@ -16,54 +16,50 @@ import java.util.List;
 /**
  * Created by 黎明 on 2016/4/17.
  * 显示express-search-list的适配器
- *
  */
-public class ExpressSearchAdapter extends BaseAdapter
-{
+public class ExpressSearchAdapter extends BaseAdapter {
     private List<ExpressInfo> elist;
     private LayoutInflater mInflater;
-    public ExpressSearchAdapter(Context context, List<ExpressInfo> data)
-    {
-        elist=data;
-        mInflater=LayoutInflater.from(context);
+
+    public ExpressSearchAdapter(Context context, List<ExpressInfo> data) {
+        elist = data;
+        mInflater = LayoutInflater.from(context);
     }
+
     @Override
     public int getCount() {
-        if(elist!=null)
-        return elist.size();
+        if (elist != null)
+            return elist.size();
         else return 0;
     }
 
     @Override
     public Object getItem(int position) {
-        if(elist!=null)
-        return elist.get(position);
+        if (elist != null)
+            return elist.get(position);
         return null;
     }
 
     @Override
     public long getItemId(int position) {
-        if(elist!=null)
-        return position;
+        if (elist != null)
+            return position;
         return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        viewHolder view=null;
-        if(convertView==null)
-        {
-            view=new viewHolder();
-            convertView=mInflater.inflate(R.layout.express_item,null);
-            view.ID=(TextView)convertView.findViewById(R.id.ID);
-            view.rname=(TextView)convertView.findViewById(R.id.rname);
-            view.sname=(TextView)convertView.findViewById(R.id.sname);
-            view.GetTime=(TextView)convertView.findViewById(R.id.gettime);
+        viewHolder view = null;
+        if (convertView == null) {
+            view = new viewHolder();
+            convertView = mInflater.inflate(R.layout.express_item, null);
+            view.ID = (TextView) convertView.findViewById(R.id.ID);
+            view.rname = (TextView) convertView.findViewById(R.id.rname);
+            view.sname = (TextView) convertView.findViewById(R.id.sname);
+            view.GetTime = (TextView) convertView.findViewById(R.id.gettime);
             convertView.setTag(view);
-        }
-        else
-        {
-            view=(viewHolder)convertView.getTag();
+        } else {
+            view = (viewHolder) convertView.getTag();
         }
         view.ID.setText(elist.get(position).getID());
         view.sname.setText(elist.get(position).getSname());
@@ -71,9 +67,9 @@ public class ExpressSearchAdapter extends BaseAdapter
         view.GetTime.setText(elist.get(position).getGetTime());
         return convertView;
     }
-    class viewHolder
-    {
-        public TextView ID,sname,rname,GetTime;//gettime
+
+    class viewHolder {
+        public TextView ID, sname, rname, GetTime;//gettime
     }
 }
 

@@ -12,9 +12,11 @@ import android.widget.ImageButton;
 
 import android.widget.TextView;
 import android.widget.Toast;
+
 import extrace.model.PackageInfo;
 import extrace.sorter.open.ep_search.package_list.PackageListFragment;
 import extrace.ui.main.R;
+
 /**
  * Created by 黎明 on 2016/4/25.
  * 包裹拆包
@@ -22,25 +24,25 @@ import extrace.ui.main.R;
  * 查看包裹信息
  * 确认转入 PackageListFragment
  */
-public class PackageSearchFragment extends Fragment implements PackageSearchFragmentView
-{
-    private TextView title,package_from,package_to,EmployeesID,EmployeesName,closetime,ID;
+public class PackageSearchFragment extends Fragment implements PackageSearchFragmentView {
+    private TextView title, package_from, package_to, EmployeesID, EmployeesName, closetime, ID;
     private PackageSearchPresenter PackageSearchPresenter;
     private Button open;
     private ImageButton back;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.packageinfo,container,false);
-        package_from=(TextView)view.findViewById(R.id.package_from);
-        package_to=(TextView)view.findViewById(R.id.package_to);
-        EmployeesID=(TextView)view.findViewById(R.id.EmployeesID);
-        EmployeesName=(TextView)view.findViewById(R.id.EmployeesName);
-        closetime=(TextView)view.findViewById(R.id.closetime);
-        ID=(TextView)view.findViewById(R.id.ID);
-        title=(TextView)view.findViewById(R.id.top_bar_center_text);
+        View view = inflater.inflate(R.layout.packageinfo, container, false);
+        package_from = (TextView) view.findViewById(R.id.package_from);
+        package_to = (TextView) view.findViewById(R.id.package_to);
+        EmployeesID = (TextView) view.findViewById(R.id.EmployeesID);
+        EmployeesName = (TextView) view.findViewById(R.id.EmployeesName);
+        closetime = (TextView) view.findViewById(R.id.closetime);
+        ID = (TextView) view.findViewById(R.id.ID);
+        title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("包裹信息");
-        open=(Button)view.findViewById(R.id.open);
-        back=(ImageButton)view.findViewById(R.id.top_bar_left_img);
+        open = (Button) view.findViewById(R.id.open);
+        back = (ImageButton) view.findViewById(R.id.top_bar_left_img);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +55,7 @@ public class PackageSearchFragment extends Fragment implements PackageSearchFrag
                 //跳转到eplist页面
                 PackageListFragment fragment = new PackageListFragment();
                 Bundle bundle = new Bundle();
-                bundle.putString("packageID",ID.getText().toString());
+                bundle.putString("packageID", ID.getText().toString());
                 fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -62,10 +64,9 @@ public class PackageSearchFragment extends Fragment implements PackageSearchFrag
                 transaction.commit();
             }
         });
-        if(getArguments()!=null)
-        {
-            String packageID=getArguments().getString("ID");
-            PackageSearchPresenter =new PackageSearchPresenterImpl(this);
+        if (getArguments() != null) {
+            String packageID = getArguments().getString("ID");
+            PackageSearchPresenter = new PackageSearchPresenterImpl(this);
             PackageSearchPresenter.onopenPackage(packageID);
         }
         return view;
@@ -78,7 +79,7 @@ public class PackageSearchFragment extends Fragment implements PackageSearchFrag
 
     @Override
     public void Fail(String errorMessage) {
-        Toast.makeText(getActivity(),errorMessage,Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
 
     @Override
