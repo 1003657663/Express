@@ -5,7 +5,6 @@ import android.app.Activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import extrace.main.MyApplication;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 

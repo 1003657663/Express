@@ -31,7 +31,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
 
     @Override
     public void onSearchEByPackageID(String packageID) {
-        onSearchEByPackageIDurl += packageID ;
+        onSearchEByPackageIDurl += packageID;
         JSONArray jsonArray = new JSONArray();
         try {
             doJsonArray(onSearchEByPackageIDurl, VolleyHelper.GET, jsonArray);
@@ -54,10 +54,10 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
             try {
                 JSONObject object1 = (JSONObject) jsonArray.get(i);
                 p.setID(object1.getString("id"));
-                   /* p.setRname(object1.getString("rname"));
-                    p.setRtel(object1.getString("rtel"));
-                    p.setRaddinfo(object1.getString("raddinfo"));*/
-                   /* p.setRadd(object1.getString("accAddressId"));*/
+                p.setRname(object1.getString("rname"));
+                p.setRtel(object1.getString("rtel"));
+                p.setRaddinfo(object1.getString("raddinfo"));
+                p.setRadd(object1.getString("accAddressId"));
                 String gettime = object1.getString("getTime").substring(0, 10);
                 p.setGetTime(gettime);
                 list.add(p);

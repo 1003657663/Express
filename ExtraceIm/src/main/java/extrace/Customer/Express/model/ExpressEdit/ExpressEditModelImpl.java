@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import extrace.Customer.Express.presenter.express_edit_presenter.ExpressPresenter;
-import extrace.main.MyApplication;
 import extrace.net.VolleyHelper;
 import extrace.ui.main.R;
 

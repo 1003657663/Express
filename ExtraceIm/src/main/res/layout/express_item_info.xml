@@ -285,6 +285,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/target"
+            android:textColor="@color/white"
             android:background="@drawable/button_radio_with_background_color"
             android:text="target"/>
     </LinearLayout>

@@ -106,11 +106,17 @@
         <View style="@style/bg_line" />
 
     </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:gravity="bottom"
+    android:layout_height="match_parent">
     <Button
         android:id="@+id/receiver_info_send"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:textColor="@color/white"
         android:background="@color/button_light"
         android:text="签收" />
+</LinearLayout>
+
 </LinearLayout>

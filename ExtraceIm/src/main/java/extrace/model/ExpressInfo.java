@@ -1,36 +1,68 @@
 package extrace.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by 黎明 on 2016/5/7.
  */
-public class ExpressInfo implements Serializable{
+public class ExpressInfo implements Parcelable{
 
-        public String ID;//快递单号
-        public String sname;//发件人姓名
-        public String stel;//tel
-        public String sadd;//省市区
-        public String saddinfo;//街道
-        public String rname;//收件人姓名
-        public String rtel;
-        public String radd;
-        public String raddinfo;
-        public String GetTime;
-        public String OutTime;
-        public double weight;
-        public double TranFee;
-        public double InsuFee;
-        public String Acc1;
-        public String Acc2;
+    protected  ExpressInfo(Parcel in)
+    {
+        ID=in.readString();
+        sname=in.readString();
+        stel=in.readString();
+        sadd=in.readString();
+        saddinfo=in.readString();
+        rname=in.readString();
+        rtel=in.readString();
+        radd=in.readString();
+        raddinfo=in.readString();
+        GetTime=in.readString();
+        OutTime=in.readString();
+        weight=in.readFloat();
+        TranFee=in.readFloat();
+        InsuFee=in.readFloat();
+        Acc1=in.readString();
+        Acc2=in.readString();
+    }
+
+    public static final Creator<ExpressInfo> CREATOR = new Creator<ExpressInfo>() {
+        @Override
+        public ExpressInfo createFromParcel(Parcel in) {
+            return new ExpressInfo(in);
+        }
+
+        @Override
+        public ExpressInfo[] newArray(int size) {
+            return new ExpressInfo[size];
+        }
+    };
+        private String ID;//快递单号
+        private String sname;//发件人姓名
+        private String stel;//tel
+        private String sadd;//省市区
+        private String saddinfo;//街道
+        private String rname;//收件人姓名
+        private String rtel;
+        private String radd;
+        private String raddinfo;
+        private String GetTime;
+        private String OutTime;
+        private float weight;
+        private float TranFee;
+        private float InsuFee;
+        private String Acc1;
+        private String Acc2;
 
         public ExpressInfo(){}
 
-        public double getWeight() {
+        public float getWeight() {
             return weight;
         }
 
-        public void setWeight(double weight) {
+        public void setWeight(float weight) {
             this.weight = weight;
         }
 
@@ -66,11 +98,11 @@ public class ExpressInfo implements Serializable{
             Acc2 = acc2;
         }
 
-        public double getInsuFee() {
+        public float getInsuFee() {
             return InsuFee;
         }
 
-        public void setInsuFee(double insuFee) {
+        public void setInsuFee(float insuFee) {
             InsuFee = insuFee;
         }
 
@@ -150,8 +182,32 @@ public class ExpressInfo implements Serializable{
             return TranFee;
         }
 
-        public void setTranFee(double tranFee) {
+        public void setTranFee(float tranFee) {
             TranFee = tranFee;
         }
 
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ID);
+        dest.writeString(sname);
+        dest.writeString(sadd);
+        dest.writeString(stel);
+        dest.writeString(saddinfo);
+        dest.writeString(radd);
+        dest.writeString(rtel);
+        dest.writeString(raddinfo);
+        dest.writeString(rname);
+        dest.writeString(GetTime);
+        dest.writeString(OutTime);
+        dest.writeFloat(InsuFee);
+        dest.writeFloat(TranFee);
+        dest.writeString(Acc1);
+        dest.writeString(Acc2);
+        dest.writeFloat(weight);
+    }
+}
