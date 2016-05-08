@@ -5,10 +5,7 @@ import android.app.Activity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import extrace.main.MyApplication;
 import extrace.model.UserAddress;
 import extrace.net.VolleyHelper;
@@ -31,7 +28,6 @@ public class AddressModelImpl extends VolleyHelper implements AddressModel {
         telephone = ((MyApplication)context.getApplication()).getUserInfo().getTelephone();
         sendAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_send);
         getAddressUrl = context.getResources().getString(R.string.base_url)+context.getResources().getString(R.string.address_get_get);
-
     }
 
     @Override

@@ -30,7 +30,6 @@ public class MyDialog {
             }
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.mydialog_layout, null);
-
         TextView contentText = (TextView) linearLayout.findViewById(R.id.mydialog_text);
         Button sButton = (Button) linearLayout.findViewById(R.id.mydialog_sure_button);
         Button nButton = (Button) linearLayout.findViewById(R.id.mydialog_no_button);

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import extrace.model.PackageInfo;
+import extrace.myelement.MyDialog;
 import extrace.sorter.Expressupdate.ExpressUpdateFragment;
 import extrace.sorter.SorterMe;
 import extrace.sorter.open.ep_search.package_list.PackageListFragment;
@@ -75,7 +76,8 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
             @Override
             public void onClick(View v) {
                 //2为打包
-                Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
+
+               Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
                         android.R.drawable.btn_star).setTitle("包裹类型").setMessage(
                         "请选择包裹类型").setPositiveButton("中转包",
                         new DialogInterface.OnClickListener() {

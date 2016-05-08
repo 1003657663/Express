@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+
+android {
+    dexOptions{
+        javaMaxHeapSize "2g"
+    }
+    compileSdkVersion 19
+    buildToolsVersion "23.0.2"
+    defaultConfig {
+        applicationId "extrace.main"
+        minSdkVersion 19
+        targetSdkVersion 19
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile 'com.android.support:support-v4:19.1.0'
+    compile files('libs/Gson/gson-2.2.4.jar')
+    testCompile 'junit:junit:4.9'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile project(':libzxing')
+    compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile files('libs/MobTools-2016.0303.1229.jar')
+}

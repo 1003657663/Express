@@ -80,7 +80,7 @@ public class NewPackageInfoFragment extends Fragment implements NewPackageInfoFr
                 fragment.setArguments(bundle);
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.hide(NewPackageInfoFragment.this);
-                transaction.add(R.id.fragment_container_layout, fragment);
+                transaction.add(R.id.fragment_container_layout, fragment,"needaddressfragment");
                 transaction.addToBackStack("NewPackageInfoFragment");
                 transaction.commit();
             }

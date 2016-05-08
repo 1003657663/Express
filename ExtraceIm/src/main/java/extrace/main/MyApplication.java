@@ -27,7 +27,12 @@ public class MyApplication extends Application {
     }
 
     public EmployeesEntity getEmployeesInfo() {
-        return employeesInfo;
+        if (employeesInfo != null) {
+            return employeesInfo;
+        } else {
+            employeesInfo =  new EmployeesEntity(3, "name", "password","00000000000",1,"jobtext",0, 3,"1","2");
+            return employeesInfo;
+        }
     }
 
     public UserInfo getUserInfo() {

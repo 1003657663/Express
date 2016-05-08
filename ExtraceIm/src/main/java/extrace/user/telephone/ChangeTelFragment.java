@@ -1,7 +1,6 @@
 package extrace.user.telephone;
 
 import android.app.Fragment;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,10 +14,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
-import extrace.toolbox.CheckInput;
-import extrace.toolbox.CountDown;
+
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 
@@ -27,6 +23,12 @@ import extrace.user.login.LoginFragment;
  */
 public class ChangeTelFragment extends Fragment implements View.OnClickListener,ChangeTelView{
     private EditText telEdit;
+
+    @Override
+    public void getVerify() {
+
+    }
+
     private EditText verifyEdit;
     private Button verifyGetButton;
     private Button verifySubmitButton;
@@ -52,7 +54,7 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
         verifyGetButton.setOnClickListener(this);
         verifySubmitButton.setOnClickListener(this);
 
-        initSMS();//初始化验证码发送
+       // initSMS();//初始化验证码发送
 
         return view;
     }
@@ -64,7 +66,7 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
                 getFragmentManager().popBackStack();
                 break;
             case R.id.user_change_tel_submit:
-                checeVerify();
+              //  checeVerify();
                 break;
             case R.id.user_change_tel_get_verify:
                 getVerify();
@@ -78,7 +80,7 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
         verify = verifyEdit.getText().toString();
         tel = telEdit.getText().toString();
         if(verify!=null){
-            SMSSDK.submitVerificationCode(LoginFragment.COUNTRY_CODE,tel,verify);
+         //   SMSSDK.submitVerificationCode(LoginFragment.COUNTRY_CODE,tel,verify);
         }else{
             verifyEdit.setError("请填写验证码");
         }
@@ -87,9 +89,9 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
     /**
      * 获取验证码
      */
-    CountDown countDown;
-    @Override
-    public void getVerify() {
+    //CountDown countDown;
+  //  @Override
+  /*  public void getVerify() {
         tel = telEdit.getText().toString();
         if(CheckInput.checkTel(tel)){
             verifyGetButton.setBackground(getActivity().getResources().getDrawable(R.color.button_grey));
@@ -107,12 +109,12 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
         if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
             countDown.cancel(true);
         }
-    }
+    }*/
 
     /**
      * 初始化验证码发送器
      */
-    private EventHandler eh;
+  //  private EventHandler eh;
     Handler smsHandler;
     private void initSMS(){
         smsHandler = new Handler(){
@@ -139,38 +141,38 @@ public class ChangeTelFragment extends Fragment implements View.OnClickListener,
                 }
             }
         };
-        eh=new EventHandler(){
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-                if (result == SMSSDK.RESULT_COMPLETE) {
+       // eh=new EventHandler(){
+          //  @Override
+          //  public void afterEvent(int event, int result, Object data) {
+           //     if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+             //       if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_OK,data));
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+             //           smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_OK,data));
+             //       }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_OK));
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+              //          smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_OK));
+              //      }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
                     }
-                }else{
-                    ((Throwable)data).printStackTrace();
-                    //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+            //    }else{
+             //       ((Throwable)data).printStackTrace();
+              //      //回调完成
+              //////      if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码失败
-                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_NO));
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                //        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.TEST_VERIFY_NO));
+                //    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
                         //获取验证码失败
-                        smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_NO));
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                 //       smsHandler.sendMessage(smsHandler.obtainMessage(LoginFragment.REQ_VERIFY_NO));
+                  //  }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
                         //返回支持发送验证码的国家列表
-                    }
-                }
-            }
-        };
-        SMSSDK.registerEventHandler(eh); //注册短信回调
+                //    }
+             //   }
+         //   }
+      //  };
+      //  SMSSDK.registerEventHandler(eh); //注册短信回调
 
-    }
+    //}
 
     private void showToast(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();

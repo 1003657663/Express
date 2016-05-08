@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -128,7 +129,7 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
-        transaction.add(R.id.fragment_container_layout, fragment1);
+        transaction.add(R.id.fragment_container_layout, fragment1,"needaddressfragment");
         transaction.addToBackStack("expressedit1");
         transaction.commit();
     }
@@ -141,7 +142,7 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
-        transaction.add(R.id.fragment_container_layout, fragment);
+        transaction.add(R.id.fragment_container_layout, fragment,"needaddressfragment");
         transaction.addToBackStack("expressedit");
         transaction.commit();
     }
