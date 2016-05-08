@@ -14,6 +14,8 @@ import android.widget.TextView;
 import extrace.main.MyApplication;
 import extrace.ui.main.R;
 import extrace.user.address.AddressFragment;
+import extrace.user.expresshistory.ExpressHistoryFragment;
+import extrace.user.expresshistory.ExpressHistoryPresenterImpl;
 import extrace.user.login.LoginFragment;
 import extrace.user.password.ChangePasswordFragment;
 import extrace.user.telephone.ChangeTelFragment;
@@ -147,10 +149,26 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
     }
 
 
+    @Override
+    public void toReceiveRecordFragment() {
+        ExpressHistoryFragment historyFragment = new ExpressHistoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("sendorrecieve", ExpressHistoryPresenterImpl.HISTORY_RECEIVE);
+        historyFragment.setArguments(bundle);
+        transaction.replace(R.id.fragment_container_layout,historyFragment);
+        transaction.addToBackStack("mefragment");
+        transaction.commit();
+    }
 
     @Override
     public void toSendRecordFragment(){
-
+        ExpressHistoryFragment historyFragment = new ExpressHistoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("sendorrecieve", ExpressHistoryPresenterImpl.HISTORY_SEND);
+        historyFragment.setArguments(bundle);
+        transaction.replace(R.id.fragment_container_layout,historyFragment);
+        transaction.addToBackStack("mefragment");
+        transaction.commit();
     }
 
     /**

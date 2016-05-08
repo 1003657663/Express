@@ -18,26 +18,26 @@
        xmlns:tools="http://schemas.android.com/tools">
 
   <SurfaceView android:id="@+id/preview_view"
-               android:layout_width="fill_parent"
-               android:layout_height="fill_parent"/>
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
 
   <zxing.util.ViewfinderView
       android:id="@+id/viewfinder_view"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"/>
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
 
   <LinearLayout android:id="@+id/result_view"
                 android:orientation="vertical"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:background="@color/result_view"
                 android:visibility="gone"
                 android:baselineAligned="false">
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
         android:padding="@dimen/standard_padding">

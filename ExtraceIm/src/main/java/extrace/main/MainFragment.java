@@ -16,8 +16,7 @@ import android.widget.Toast;
 
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
-import extrace.Customer.Express.view.express_edit_view.express_edit_Fragment;
-import extrace.Customer.Express.view.express_search_view.express_search_Fragment;
+import extrace.Customer.Express.view.express_edit_view.ExpressEditFragment;
 import extrace.ui.main.R;
 import extrace.user.login.LoginFragment;
 import extrace.user.me.MeFragment;
@@ -107,7 +106,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
      * 跳转到搜索界面
      */
     private void toSearchFragment(){
-        express_search_Fragment fragment = new express_search_Fragment();
+        SearchExpressFragment fragment = new SearchExpressFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);
         transaction.addToBackStack("index");
@@ -119,7 +118,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
      * 跳转到寄快递界面
      */
     private void toSendFragment(){
-        express_edit_Fragment fragment = new express_edit_Fragment();
+        ExpressEditFragment fragment = new ExpressEditFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);
         transaction.addToBackStack("index");
@@ -157,7 +156,7 @@ public class MainFragment extends Fragment implements View.OnClickListener{
             Bundle bundle=data.getExtras();
             String result=bundle.getString("result");
             Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
-            express_search_Fragment fragment=new express_search_Fragment();
+           SearchExpressFragment fragment=new SearchExpressFragment();
             Bundle bundle1=new Bundle();
             bundle1.putString("ID",result);
             fragment.setArguments(bundle1);

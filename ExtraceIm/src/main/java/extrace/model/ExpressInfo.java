@@ -1,10 +1,14 @@
 package extrace.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
- * Created by 黎明 on 2016/4/20.
+ * Created by 黎明 on 2016/5/7.
  */
-public class ExpressInfo
-{
+public class ExpressInfo implements Parcelable {
+
+
     public String ID;//快递单号
     public String sname;//发件人姓名
     public String stel;//tel
@@ -22,7 +26,39 @@ public class ExpressInfo
     public String Acc1;
     public String Acc2;
 
-    public ExpressInfo(){}
+    public ExpressInfo() {
+    }
+
+    protected ExpressInfo(Parcel in) {
+        ID = in.readString();
+        sname = in.readString();
+        stel = in.readString();
+        sadd = in.readString();
+        saddinfo = in.readString();
+        rname = in.readString();
+        rtel = in.readString();
+        radd = in.readString();
+        raddinfo = in.readString();
+        GetTime = in.readString();
+        OutTime = in.readString();
+        weight = in.readDouble();
+        TranFee = in.readDouble();
+        InsuFee = in.readDouble();
+        Acc1 = in.readString();
+        Acc2 = in.readString();
+    }
+
+    public static final Creator<ExpressInfo> CREATOR = new Creator<ExpressInfo>() {
+        @Override
+        public ExpressInfo createFromParcel(Parcel in) {
+            return new ExpressInfo(in);
+        }
+
+        @Override
+        public ExpressInfo[] newArray(int size) {
+            return new ExpressInfo[size];
+        }
+    };
 
     public double getWeight() {
         return weight;
@@ -150,6 +186,32 @@ public class ExpressInfo
 
     public void setTranFee(double tranFee) {
         TranFee = tranFee;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(ID);
+        dest.writeString(sname);
+        dest.writeString(stel);
+        dest.writeString(sadd);
+        dest.writeString(saddinfo);
+        dest.writeString(rname);
+        dest.writeString(rtel);
+        dest.writeString(radd);
+        dest.writeString(raddinfo);
+        dest.writeString(GetTime);
+        dest.writeString(OutTime);
+        dest.writeDouble(weight);
+        dest.writeDouble(TranFee);
+        dest.writeDouble(InsuFee);
+        dest.writeString(Acc1);
+        dest.writeString(Acc2);
     }
 
 

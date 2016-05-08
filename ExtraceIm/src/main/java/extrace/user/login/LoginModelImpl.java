@@ -16,7 +16,7 @@ import extrace.ui.main.R;
  */
 public class LoginModelImpl extends VolleyHelper implements LoginModel{
 
-    private LoginPresenter loginPresenter;
+    private LoginFragmentView loginView;
     private String loginUrl;
     private String registerUrl;
 
@@ -28,17 +28,17 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
     private MyApplication application;//保存用户登录状态到全局appliction中
 
     private boolean isLogin;
-    public LoginModelImpl(Activity activity,LoginPresenter loginPresenter) {
+    public LoginModelImpl(Activity activity,LoginFragmentView loginView) {
         super(activity);
         application = (MyApplication) activity.getApplication();
         this.activity = activity;
-        this.loginPresenter = loginPresenter;
+        this.loginView = loginView;
         loginUrl = activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.login_send);
         registerUrl = activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.register_send);
     }
 
     @Override
-    public void onStartLogin(String tel,String password) {
+    public void startLogin(String tel, String password) {
         isLogin = true;
         String url = loginUrl;
         //加密传输
@@ -57,12 +57,12 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
 
         } catch (Exception e) {
             e.printStackTrace();
-            loginPresenter.onLoginFail();
+            loginView.showToast("登陆数据解析失败");
         }
     }
 
     @Override
-    public void onStartRegister(String tel,String password,String name) {
+    public void startRegister(String tel, String password, String name) {
         isLogin = false;
         String url = registerUrl;
         //加密传输
@@ -82,7 +82,7 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
 
         } catch (Exception e) {
             e.printStackTrace();
-            loginPresenter.onRegisterFail();
+            loginView.showToast("注册数据解析失败");
         }
     }
 
@@ -111,20 +111,21 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setPassword(mD5Password);
                         application.getUserInfo().setLoginState(true);
-                        loginPresenter.onLoginSuccess();
+                        loginView.showToast("登陆成功");
+                        loginView.onback();
                         break;
                     case "false":
                         application.getUserInfo().setLoginState(false);
-                        loginPresenter.onLoginFail();
+                        loginView.showToast("登陆失败，请重试");
                         break;
                     default:
                         application.getUserInfo().setLoginState(false);
-                        loginPresenter.onLoginFail();
+                        loginView.showToast("登陆失败，请重试");
                         break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                loginPresenter.onLoginFail();
+                loginView.showToast("异常，请重试");
             }
         }else{
             try {
@@ -137,30 +138,31 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                         application.getUserInfo().setPassword(mD5Password);
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setId(jsonObject.getInt("id"));//---!!!
-                        loginPresenter.onRegisterSuccess();
+                        loginView.showToast("注册成功");
+                        loginView.onback();
                         break;
                     case "false":
                         application.getUserInfo().setLoginState(false);
                         application.getUserInfo().setLoginState(false);
-                        loginPresenter.onRegisterFail();
+                        loginView.showToast("注册失败");
                         break;
                     case "deny":
                         application.getUserInfo().setLoginState(false);
                         application.getUserInfo().setLoginState(false);
-                        loginPresenter.onRegisterRepeat();
+                        loginView.showToast("手机号已经被注册，请登录");
                         break;
                     default:
                         break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-                loginPresenter.onRegisterFail();
+                loginView.showToast("异常，请重试");
             }
         }
     }
 
     @Override
     public void onError(String errorMessage) {
-
+        loginView.showToast(errorMessage);
     }
 }

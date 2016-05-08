@@ -35,7 +35,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
     public static final int VERIFY_ERROR = 3;
 
 
-    private LoginPresenter loginPresenter;
+    private LoginModel loginModel;
     private EditText telEdit;
     private EditText passwordEdit;
     private EditText nameEdit;
@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
         View view = inflater.inflate(R.layout.user_login,container,false);
         TextView topText = (TextView) view.findViewById(R.id.top_bar_center_text);
         topText.setText("登陆");
-        loginPresenter = new LoginPresenterImpl(this);
+        loginModel = new LoginModelImpl(getActivity(),this);
 
         telEdit = (EditText) view.findViewById(R.id.login_tel_edit);
         passwordEdit = (EditText) view.findViewById(R.id.login_password_edit);
@@ -82,14 +82,14 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                 if(telEdit.getText().toString().equals("")) {
                     tel = "12345678909";
                     password = "123456";
-                    loginPresenter.startLogin(tel, password);
+                    loginModel.startLogin(tel, password);
                     break;
                 }else {
                     //------------------------test
                     if(checkInput()) {
                         //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
                         //---test
-                        loginPresenter.startLogin(tel,password);
+                        loginModel.startLogin(tel,password);
                     }
                 }
                 break;
@@ -98,7 +98,7 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                     isLogin = false;
                     if (checkInput()) {
                         //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        loginPresenter.startRegister(tel,password,name);
+                        loginModel.startRegister(tel,password,name);
                     }
                 }else {
                     addUserNameEdit();
@@ -164,9 +164,9 @@ public class LoginFragment extends Fragment implements LoginFragmentView,View.On
                         HashMap<String, String> data = (HashMap<String, String>) msg.obj;
                         if (data.get("phone").equals(tel)) {
                             if (isLogin) {//判断是注册还是登录通过用户姓名输入框的存在性
-                                loginPresenter.startLogin(tel, password);
+                                loginModel.startLogin(tel, password);
                             } else {
-                                loginPresenter.startRegister(tel, password, name);
+                                loginModel.startRegister(tel, password, name);
                             }
                         } else {
                             showToast("验证失败，请重新获取验证码");

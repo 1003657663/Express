@@ -4,8 +4,8 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:paddingLeft="15dip"
         android:paddingRight="15dip" >
@@ -28,7 +28,7 @@
             <TextView
                 android:id="@+id/action_ex_receive"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="快件揽收"
@@ -37,7 +37,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -59,7 +59,7 @@
             <TextView
                 android:id="@+id/action_ex_transfer"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="快件派送"
@@ -68,7 +68,7 @@
         </LinearLayout>
         
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -89,7 +89,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="包裹拆包"
@@ -98,7 +98,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -119,7 +119,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="包裹打包"
@@ -128,7 +128,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -150,7 +150,7 @@
             <TextView
                 android:id="@+id/action_cu_mng"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="客户管理"
@@ -159,7 +159,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -181,7 +181,7 @@
             <TextView
                 android:id="@+id/action_ex_qur"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
                 android:text="快件查询"
@@ -190,7 +190,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
     </LinearLayout>
