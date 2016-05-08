@@ -214,22 +214,4 @@ public class ExpressInfo implements Parcelable {
         dest.writeString(Acc2);
     }
 
-
-
-
-    /*expressInfo.setAcc1(jsonObject.getString("acc1"));
-            expressInfo.setAcc2(jsonObject.getString("acc2"));
-            expressInfo.setGetTime(jsonObject.getString("getTime"));
-            expressInfo.setID(jsonObject.getString("ID"));
-            expressInfo.setInsuFee(jsonObject.getDouble("insuFee"));
-            expressInfo.setOutTime(jsonObject.getString("outTime"));
-            expressInfo.setRadd(jsonObject.getString("sadd"));
-            expressInfo.setRaddinfo(jsonObject.getString("raddinfo"));
-            expressInfo.setSadd(jsonObject.getString("sadd"));
-            expressInfo.setSaddinfo(jsonObject.getString("saddinfo"));
-            expressInfo.setRname(jsonObject.getString("rname"));
-            expressInfo.setSname(jsonObject.getString("sname"));
-            expressInfo.setRtel(jsonObject.getString("rtel"));
-            expressInfo.setStel(jsonObject.getString("stel"));
-            expressInfo.setWeight(jsonObject.getDouble("weight"));*/
 }
