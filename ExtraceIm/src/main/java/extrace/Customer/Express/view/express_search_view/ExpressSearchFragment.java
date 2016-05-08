@@ -101,7 +101,7 @@ public class ExpressSearchFragment extends ListFragment implements ExpressSearch
     public void onToastSuccess(ExpressInfo expressInfo) {
         Fragment fragment = new ExpressInfoFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("1", expressInfo);
+        bundle.putParcelable("1", expressInfo);
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_layout, fragment);
@@ -115,7 +115,7 @@ public class ExpressSearchFragment extends ListFragment implements ExpressSearch
         Fragment fragment = new ExpressInfoFragment();
         ExpressInfo expressInfo = (ExpressInfo) adp.getItem(position);
         Bundle bundle = new Bundle();
-        bundle.putSerializable("1", expressInfo);
+        bundle.putParcelable("1", expressInfo);
         //bundle.putString("ID",expressInfo.getID());
         fragment.setArguments(bundle);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

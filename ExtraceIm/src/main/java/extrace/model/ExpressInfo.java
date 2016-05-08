@@ -116,6 +116,38 @@ public class ExpressInfo implements Parcelable {
         this.radd = radd;
     }
 
+    public String getOutTime() {
+        return OutTime;
+    }
+
+    public void setOutTime(String outTime) {
+        OutTime = outTime;
+    }
+
+    public String getRaddinfo() {
+        return raddinfo;
+    }
+
+    public void setRaddinfo(String raddinfo) {
+        this.raddinfo = raddinfo;
+    }
+
+    public String getRname() {
+        return rname;
+    }
+
+    public void setRname(String rname) {
+        this.rname = rname;
+    }
+
+    public String getRtel() {
+        return rtel;
+    }
+
+    public void setRtel(String rtel) {
+        this.rtel = rtel;
+    }
+
     public String getSadd() {
         return sadd;
     }

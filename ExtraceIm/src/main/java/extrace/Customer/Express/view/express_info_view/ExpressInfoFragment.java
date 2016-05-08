@@ -72,7 +72,7 @@ public class ExpressInfoFragment extends Fragment implements ExpressInfoFragment
             }
         });
         if (getArguments() != null) {
-            ExpressInfo expressInfo = (ExpressInfo) getArguments().getSerializable("1");
+            ExpressInfo expressInfo = (ExpressInfo) getArguments().getParcelable("1");
             ID.setText(expressInfo.getID());
             sname.setText(expressInfo.getSname());
             stel.setText(expressInfo.getStel());

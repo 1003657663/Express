@@ -39,7 +39,7 @@ public class ReceiverInfoFragment extends Fragment implements ReceiverInfoFragme
         back.setOnClickListener(this);
         receiver_info_send.setOnClickListener(this);
         if (getArguments() != null) {
-            ExpressInfo expressInfo = (ExpressInfo) getArguments().getSerializable("express");
+            ExpressInfo expressInfo = (ExpressInfo) getArguments().getParcelable("express");
             receiver_info_add.setText(expressInfo.getRadd());
             receiver_info_addinfo.setText(expressInfo.getRaddinfo());
             receiver_info_name.setText(expressInfo.getRname());

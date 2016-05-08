@@ -49,13 +49,16 @@ public class PackageListModelImpl extends VolleyHelper implements PackageListMod
         JSONArray jsonArray = (JSONArray) jsonOrArray;
         List<Package> list = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
-            Package p = null;
             try {
-                p = (Package) jsonArray.get(i);
-            } catch (JSONException e2) {
-                e2.printStackTrace();
+                JSONObject object=(JSONObject)jsonArray.get(i);
+                Package p=new Package();
+                p.setEmployeesId(object.getInt("employeesId"));
+                p.setId(object.getString("Id"));
+                p.setTime(object.getString("time"));
+                list.add(p);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            list.add(p);
         }
         PackageListPresenter.onPackageSuccess(list);
     }

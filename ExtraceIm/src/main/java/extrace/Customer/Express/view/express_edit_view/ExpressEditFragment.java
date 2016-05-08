@@ -12,11 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-
-
 import extrace.Customer.Express.presenter.express_edit_presenter.ExpressPresenter;
 import extrace.Customer.Express.presenter.express_edit_presenter.ExpressPresenterImpl;
-
 import extrace.main.MainFragment;
 import extrace.main.MyApplication;
 import extrace.model.UserAddress;

@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:id="@+id/express_search"
     android:orientation="vertical">
+
         <include layout="@layout/index_top_bar"/>
         <ListView
             android:layout_width="match_parent"
@@ -22,4 +23,5 @@
                     android:text="拆包"
                     android:id="@+id/add_open"/>
         </LinearLayout>
+
 </LinearLayout>
