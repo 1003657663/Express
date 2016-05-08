@@ -6,8 +6,8 @@
     tools:context="extrace.ui.domain.ExpressEditActivity$ExpressEditFragment1" >
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1"
         android:paddingTop="8dip"
@@ -24,7 +24,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="运单:"
@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/expressId"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -50,7 +50,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -64,7 +64,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="收件人:"
@@ -74,7 +74,7 @@
             <TextView
                 android:id="@+id/expressRcvName"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -85,7 +85,7 @@
              <TextView
                 android:id="@+id/expressRcvTel"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -111,7 +111,7 @@
             <TextView
                 android:id="@+id/expressRcvDpt"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -121,7 +121,7 @@
             <TextView
                 android:id="@+id/expressRcvAddr"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -131,7 +131,7 @@
             <TextView
                 android:id="@+id/expressRcvRegion"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -140,7 +140,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -154,7 +154,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="发件人:"
@@ -164,7 +164,7 @@
             <TextView
                 android:id="@+id/expressSndName"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -175,7 +175,7 @@
             <TextView
                 android:id="@+id/expressSndTel"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -201,7 +201,7 @@
             <TextView
                 android:id="@+id/expressSndDpt"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -211,7 +211,7 @@
             <TextView
                 android:id="@+id/expressSndAddr"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -221,7 +221,7 @@
             <TextView
                 android:id="@+id/expressSndRegion"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -230,7 +230,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
 
@@ -244,7 +244,7 @@
         
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="收件时间:"
@@ -254,7 +254,7 @@
             <TextView
                 android:id="@+id/expressAccTime"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -263,7 +263,7 @@
         </LinearLayout>
             
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/lightgray" />
         
@@ -277,7 +277,7 @@
         
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="交付时间:"
@@ -287,7 +287,7 @@
             <TextView
                 android:id="@+id/expressDlvTime"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -296,7 +296,7 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/lightgray" />
         
@@ -310,7 +310,7 @@
         
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="6dp"
                 android:gravity="center"
                 android:text="运单状态:"
@@ -320,7 +320,7 @@
             <TextView
                 android:id="@+id/expressStatus"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -329,7 +329,7 @@
         </LinearLayout>
             
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="0.2dp"
             android:background="@color/lightgray" />
     </LinearLayout>

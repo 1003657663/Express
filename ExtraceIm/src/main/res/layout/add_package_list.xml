@@ -22,7 +22,7 @@
             android:layout_marginRight="10dp"
             android:src="@mipmap/camera"/>
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_weight="1"
             android:hint="输入包裹号"
