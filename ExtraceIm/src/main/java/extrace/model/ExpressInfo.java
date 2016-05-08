@@ -41,9 +41,9 @@ public class ExpressInfo implements Parcelable {
         raddinfo = in.readString();
         GetTime = in.readString();
         OutTime = in.readString();
-        weight = in.readFloat();
-        TranFee = in.readFloat();
-        InsuFee = in.readFloat();
+        weight = in.readDouble();
+        TranFee = in.readDouble();
+        InsuFee = in.readDouble();
         Acc1 = in.readString();
         Acc2 = in.readString();
     }
