@@ -41,6 +41,7 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         view.findViewById(R.id.user_tel).setOnClickListener(this);
         view.findViewById(R.id.user_password).setOnClickListener(this);
         view.findViewById(R.id.send_record).setOnClickListener(this);
+        view.findViewById(R.id.receive_record).setOnClickListener(this);
         view.findViewById(R.id.about_soft).setOnClickListener(this);
         view.findViewById(R.id.my_complaint).setOnClickListener(this);
         view.findViewById(R.id.user_send_address).setOnClickListener(this);
@@ -69,6 +70,9 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
             case R.id.send_record:
                 toSendRecordFragment();
                 break;
+            case R.id.receive_record:
+                toReceiveRecordFragment();
+                break;
             case R.id.about_soft:
                 toAboutSoftFragment();
                 break;
@@ -89,6 +93,7 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
+        bundle.putBoolean("isme",true);
         addressFragment.setArguments(bundle);
 
         transaction.replace(R.id.fragment_container_layout,addressFragment);
@@ -128,6 +133,7 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
         AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.SEND);
+        bundle.putBoolean("isme",true);
         addressFragment.setArguments(bundle);
 
         transaction.replace(R.id.fragment_container_layout,addressFragment);

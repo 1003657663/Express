@@ -7,6 +7,4 @@ public interface LoginModel {
     void startLogin(String tel, String password);
 
     void startRegister(String tel, String password, String name);
-
-    void onSaveUserInfo();//存储登陆或者注册成功的用户信息
 }

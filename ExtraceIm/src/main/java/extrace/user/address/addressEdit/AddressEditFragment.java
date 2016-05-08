@@ -70,6 +70,16 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
         Bundle bundle = getArguments();//获取地址信息
         userAddress = bundle.getParcelable("userAddress");
         editWhat = bundle.getInt("editWhat");
+
+        init(view);
+
+        setAddressInfo(view);//设置初始信息
+        myDialog = new MyDialog(getActivity());
+        myDialog.setSureButton(this);
+        return view;
+    }
+
+    private void init(View view){
         //判断如果是新增地址，那么设置标题，同时默认加载北京市信息
         if(userAddress == null) {
             if(editWhat == ADDRESS_NEW_RECEIVE) {
@@ -98,15 +108,7 @@ public class AddressEditFragment extends Fragment implements View.OnClickListene
                 setDefaultButton.setText("设为默认地址");
             }
         }
-
-
-
-        setAddressInfo(view);//设置初始信息
-        myDialog = new MyDialog(getActivity());
-        myDialog.setSureButton(this);
-        return view;
     }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()){

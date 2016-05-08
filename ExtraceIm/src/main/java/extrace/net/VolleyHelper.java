@@ -12,7 +12,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import extrace.main.MyApplication;
 
 /**
  * Created by chao on 2016/4/17.
@@ -24,13 +27,21 @@ public abstract class VolleyHelper {
     private Context context;
     private ProgressDialog dialog;
     private Boolean isShowProgress = true;
+    private Boolean isLogin = false;
+    private String token;
 
     public VolleyHelper(Activity context){
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
+        isLogin = ((MyApplication)context.getApplication()).getUserInfo().getLoginState();
+        if(isLogin){
+            token = ((MyApplication)context.getApplication()).getUserInfo().getToken();
+        }
     }
 
     public void doJson(String url,int method,JSONObject jsonObject){
+        //添加token
+        url = initUrl(url,method,jsonObject);
         showProgressDialog();
         JsonObjectRequest objectRequest = new JsonObjectRequest(method, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -48,9 +59,10 @@ public abstract class VolleyHelper {
         requestQueue.add(objectRequest);
     }
 
-    public void doJsonArray(String url,Integer postOrGet,JSONArray jsonObject){
+    public void doJsonArray(String url,Integer postOrGet,JSONArray jsonArray){
+        url = initUrl(url,postOrGet,null);
         showProgressDialog();
-        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonObject,new Response.Listener<JSONArray>() {
+        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonArray,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 hideProgressDialog();
@@ -64,6 +76,19 @@ public abstract class VolleyHelper {
             }
         });
         requestQueue.add(arrayRequest);
+    }
+
+    private String initUrl(String url,int method ,JSONObject jsonObject){
+        if(isLogin) {
+            if(method == GET) {
+                if (url.charAt(url.length() - 1) == '/') {
+                    url = url + token;
+                } else {
+                    url = url + "/" + token;
+                }
+            }
+        }
+        return url;
     }
 
 
