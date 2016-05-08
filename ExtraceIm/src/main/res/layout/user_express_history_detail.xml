@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_bar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:shrinkColumns="1">
+
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView android:text="快递单号:" />
+
+                <TextView android:id="@+id/express_detail_id" />
+            </TableRow>
+
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="发件人:" />
+                <TextView android:id="@+id/express_detail_send_name" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="发件人电话:" />
+                <TextView android:id="@+id/express_detail_send_tel" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="发件人地址:" />
+                <TextView android:id="@+id/express_detail_send_address" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="收件人:" />
+                <TextView android:id="@+id/express_detail_receive_name" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="收件人电话:" />
+                <TextView android:id="@+id/express_detail_receive_tel" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="收件人地址:" />
+                <TextView android:id="@+id/express_detail_receive_address"
+                    android:text="sdlf的几率是减肥的受打击了房间大连市解放圣诞节福利卡大家发生了涉及到法律多少级分类"/>
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="快件发出时间:" />
+                <TextView android:id="@+id/express_detail_out_time" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="签收时间:" />
+                <TextView android:id="@+id/express_detail_get_time" />
+            </TableRow>
+            <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <TextView android:text="快件重量:" />
+                <TextView android:id="@+id/express_detail_weight" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>
