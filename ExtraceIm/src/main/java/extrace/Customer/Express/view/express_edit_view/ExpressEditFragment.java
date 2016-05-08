@@ -37,7 +37,6 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
     private ImageView back;
     public static final int SEND = 0;
     public static final int RECEIVE = 1;
-    private static FragmentTransaction transaction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,8 +44,6 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("快件信息");
         expressPresenter = new ExpressPresenterImpl(this);
-        transaction = getFragmentManager().beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         send_address = (LinearLayout) view.findViewById(R.id.send_address);
         receive_address = (LinearLayout) view.findViewById(R.id.receive_address);
         submit = (Button) view.findViewById(R.id.submit);
@@ -128,6 +125,8 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         Bundle bundle1 = new Bundle();
         bundle1.putInt("receiveOrSend", RECEIVE);
         fragment1.setArguments(bundle1);
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
         transaction.add(R.id.fragment_container_layout, fragment1);
         transaction.addToBackStack("expressedit1");
@@ -139,6 +138,8 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", SEND);
         fragment.setArguments(bundle);
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
         transaction.add(R.id.fragment_container_layout, fragment);
         transaction.addToBackStack("expressedit");
@@ -163,6 +164,8 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainFragment fragment = new MainFragment();
+                        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                         transaction.replace(R.id.fragment_container_layout, fragment);
                         transaction.addToBackStack("null");
                         transaction.commit();

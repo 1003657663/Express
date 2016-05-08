@@ -38,7 +38,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
 
     @Override
     public void onDataReceive(Object jsonOrArray) {
-        JSONArray jsonArray = null;
+       /* JSONArray jsonArray = null;
         try {
             jsonArray = (JSONArray) jsonOrArray;
             List<ExpressInfo> list = new ArrayList<>();
@@ -63,7 +63,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
             }
             express_List_Presenter.Success(list);//如果返回值是list
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();*/
             JSONObject object = (JSONObject) jsonOrArray;
             try {
                 ExpressInfo expressInfo = new ExpressInfo();
@@ -82,7 +82,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
                 e1.printStackTrace();
             }
         }
-    }
+   // }
 
     @Override
     public void searchByID(String ID) {
@@ -117,5 +117,4 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
             e.printStackTrace();
         }
     }
-
 }

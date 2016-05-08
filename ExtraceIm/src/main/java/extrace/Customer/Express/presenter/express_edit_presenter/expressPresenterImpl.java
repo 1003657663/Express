@@ -28,6 +28,4 @@ public class ExpressPresenterImpl implements ExpressPresenter {
     public void onFail(String message) {
         express_edit_fragmentView.onToastFail(message);
     }
-
-
 }
