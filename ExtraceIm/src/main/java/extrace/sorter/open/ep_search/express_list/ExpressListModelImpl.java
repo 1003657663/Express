@@ -19,12 +19,11 @@ import extrace.ui.main.R;
  */
 public class ExpressListModelImpl extends VolleyHelper implements ExpressListModel {
     private ExpressListPresenter ExpressListPresenter;
-    String onSearchEByPackageIDurl, token;
+    String onSearchEByPackageIDurl;
 
     public ExpressListModelImpl(Activity activity, ExpressListPresenter ExpressListPresenter) {
         super(activity);
         this.ExpressListPresenter = ExpressListPresenter;
-        token = ((MyApplication) activity.getApplication()).getToken();
         onSearchEByPackageIDurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.searchExpressInPackage_ById);
         //  onOpenurl=activity.getResources().getString(R.string.base_url)+activity.getResources().getString(R.string.getPackageInfo_ById);
     }
@@ -32,7 +31,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
 
     @Override
     public void onSearchEByPackageID(String packageID) {
-        onSearchEByPackageIDurl += packageID + "/" + token;
+        onSearchEByPackageIDurl += packageID ;
         JSONArray jsonArray = new JSONArray();
         try {
             doJsonArray(onSearchEByPackageIDurl, VolleyHelper.GET, jsonArray);

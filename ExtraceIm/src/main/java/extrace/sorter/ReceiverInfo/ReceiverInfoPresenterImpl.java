@@ -14,12 +14,11 @@ import extrace.ui.main.R;
  */
 public class ReceiverInfoPresenterImpl extends VolleyHelper implements ReceiverInfoPresenter {
     private ReceiverInfoFragmentView fragmentView;
-    String url, turl, token;
+    String url, turl;
 
     public ReceiverInfoPresenterImpl(Activity activity, ReceiverInfoFragmentView fragmentView) {
         super(activity);
         this.fragmentView = fragmentView;
-        token = ((MyApplication) activity.getApplication()).getToken();
         turl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getExpressInfo_ById);
         url = turl;
     }
@@ -32,7 +31,7 @@ public class ReceiverInfoPresenterImpl extends VolleyHelper implements ReceiverI
 
     @Override
     public void ReceiveExpress(String ID) {
-        url += ID + "/" + token;
+        url += ID ;
         try {
             doJson(url, VolleyHelper.GET, null);
         } catch (Exception e) {

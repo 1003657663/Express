@@ -1,13 +1,10 @@
 package extrace.sorter.work;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +30,6 @@ import extrace.ui.main.R;
  */
 public class SearchWorkFragment extends Fragment implements SearchWorkFragmentView, View.OnClickListener {
 
-    private List<ExpressEntity> list;
     private ExpressListAdapter adapter;
     private ListView listView;
     private EditText input;
@@ -49,6 +45,7 @@ public class SearchWorkFragment extends Fragment implements SearchWorkFragmentVi
         input = (EditText) view.findViewById(R.id.index_top_bar_input);
         input.setHint("请输入查询天数");
         search = (ImageButton) view.findViewById(R.id.index_top_bar_message);
+        search.setImageResource(R.mipmap.search);
         search.setOnClickListener(this);
         presenter = new SearchWorkPresenterImpl(getActivity(), this);
         EmployeesID = ((MyApplication) getActivity().getApplication()).getEmployeesInfo().getId();

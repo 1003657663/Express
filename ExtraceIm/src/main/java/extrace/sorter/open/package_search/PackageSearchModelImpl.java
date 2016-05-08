@@ -15,12 +15,11 @@ import extrace.ui.main.R;
  */
 public class PackageSearchModelImpl extends VolleyHelper implements PackageSearchModel {
     private PackageSearchPresenter package_searchPresenter;
-    String url, turl, token;
+    String url, turl;
 
     public PackageSearchModelImpl(Activity activity, PackageSearchPresenter PackageSearchPresenter) {
         super(activity);
         this.package_searchPresenter = PackageSearchPresenter;
-        token = ((MyApplication) activity.getApplication()).getToken();
         turl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getPackageInfo_ById);
         url = turl;
     }
@@ -28,7 +27,7 @@ public class PackageSearchModelImpl extends VolleyHelper implements PackageSearc
     @Override
     public void openPackage(String packageID) {
         // url+=packageID;
-        url += packageID + "/" + token;
+        url += packageID ;
         JSONObject jsonObject = new JSONObject();
         try {
             doJson(url, VolleyHelper.GET, jsonObject);

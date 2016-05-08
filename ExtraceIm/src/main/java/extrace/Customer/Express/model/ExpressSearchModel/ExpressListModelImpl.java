@@ -21,7 +21,6 @@ import java.util.List;
 public class ExpressListModelImpl extends VolleyHelper implements ExpressListModel {
     private ExpressListPresenter express_List_Presenter;
     private String searchByIDurl, searchByCIDurl, searchByTelurl;
-    private String token;
 
     @Override
     public void onError(String errorMessage) {
@@ -32,7 +31,6 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
     public ExpressListModelImpl(Activity activity, ExpressListPresenter expressListPresenter) {
         super(activity);
         this.express_List_Presenter = expressListPresenter;
-        token = ((MyApplication) activity.getApplication()).getToken();
         searchByIDurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getExpressInfo_ById);
         searchByCIDurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getExpressInfo_ByCustomerId);
         searchByTelurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getExpressInfo_ByTel);
@@ -89,7 +87,7 @@ public class ExpressListModelImpl extends VolleyHelper implements ExpressListMod
     @Override
     public void searchByID(String ID) {
         JSONObject object = new JSONObject();
-        searchByIDurl += ID + "/" + token;
+        searchByIDurl += ID;
         try {
             doJson(searchByIDurl, VolleyHelper.GET, object);
         } catch (Exception e) {

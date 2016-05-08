@@ -16,12 +16,10 @@ import extrace.ui.main.R;
 public class NewPackageInfoPresenterImpl extends VolleyHelper implements NewPackageInfoPresenter {
     private NewPackageInfoFragmentView fragmentView1;
     String url, turl;
-    String token;
 
     public NewPackageInfoPresenterImpl(Activity activity, NewPackageInfoFragmentView fragmentView2) {
         super(activity);
         this.fragmentView1 = fragmentView2;
-        token = ((MyApplication) activity.getApplication()).getToken();
         turl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.createPackage);
         // turl="http://192.168.1.113:8080"+activity.getResources().getString(R.string.createPackage);
         url = turl;
@@ -29,7 +27,7 @@ public class NewPackageInfoPresenterImpl extends VolleyHelper implements NewPack
 
     @Override
     public void newPackage(int fromID, int toID, int employeesId, int isSorter) {
-        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + employeesId + "/isSorter/" + isSorter + "/" + token;
+        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + employeesId + "/isSorter/" + isSorter ;
         try {
             doJson(url, VolleyHelper.GET, null);
         } catch (Exception e) {

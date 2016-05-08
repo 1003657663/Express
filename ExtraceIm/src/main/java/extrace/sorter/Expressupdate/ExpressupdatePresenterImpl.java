@@ -15,13 +15,12 @@ import extrace.ui.main.R;
  */
 public class ExpressUpdatePresenterImpl extends VolleyHelper implements ExpressUpdatePresenter {
     private ExpressUpdateFragmentView fragmentView;
-    String url, turl, token;
+    String url, turl;
 
     public ExpressUpdatePresenterImpl(Activity activity, ExpressUpdateFragmentView fragmentview) {
         super(activity);
         this.fragmentView = fragmentview;
         turl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.getExpressInfo_ById);
-        token = ((MyApplication) activity.getApplication()).getToken();
         url = turl;
     }
 
@@ -51,7 +50,7 @@ public class ExpressUpdatePresenterImpl extends VolleyHelper implements ExpressU
 
     @Override
     public void getExpressInfoByID(String ID) {
-        url += ID + "/" + token;
+        url += ID ;
         try {
             JSONObject jsonObject = new JSONObject();
             doJson(url, VolleyHelper.GET, jsonObject);

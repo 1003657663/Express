@@ -19,12 +19,11 @@ import extrace.ui.main.R;
  */
 public class SearchWorkPresenterImpl extends VolleyHelper implements SearchWorkPresenter {
     private SearchWorkFragmentView fragmentview;
-    private String turl, url, token;
+    private String turl, url;
 
     public SearchWorkPresenterImpl(Activity activity, SearchWorkFragmentView fragmentView) {
         super(activity);
         this.fragmentview = fragmentView;
-        token = ((MyApplication) activity.getApplication()).getToken();
         turl = activity.getResources().getString(R.string.base_url);
         url = turl;
     }
@@ -50,7 +49,7 @@ public class SearchWorkPresenterImpl extends VolleyHelper implements SearchWorkP
 
     @Override
     public void searchWork(int EmployeesID, String start, int day) {
-        turl += "/REST/Domain/getWork/" + EmployeesID + "/starttime/" + start + "/days/" + day + "/" + token;
+        turl += "/REST/Domain/getWork/" + EmployeesID + "/starttime/" + start + "/days/" + day ;
         try {
             doJson(turl, VolleyHelper.GET, null);
         } catch (Exception e) {

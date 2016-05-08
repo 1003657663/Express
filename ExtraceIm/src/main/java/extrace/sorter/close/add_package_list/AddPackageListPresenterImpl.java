@@ -15,18 +15,16 @@ import extrace.ui.main.R;
 public class AddPackageListPresenterImpl extends VolleyHelper implements AddPackageListPresenter {
     private AddPackageListFragmentView add_packageListFragmentView;
     String url = "";
-    String token;
 
     public AddPackageListPresenterImpl(Activity activity, AddPackageListFragmentView AddPackageListFragmentView) {
         super(activity);
-        token = ((MyApplication) activity.getApplication()).getToken();
         this.add_packageListFragmentView = AddPackageListFragmentView;
         url = activity.getResources().getString(R.string.base_url);
     }
 
     @Override
     public void loadIntoPackage(String packageID, String ID, int isPackage) {
-        url += "/REST/Domain/loadIntoPackage/packageId/" + packageID + "/id/" + ID + "/isPackage/" + isPackage + "/" + token;
+        url += "/REST/Domain/loadIntoPackage/packageId/" + packageID + "/id/" + ID + "/isPackage/" + isPackage;
         JSONObject object = new JSONObject();
         try {
             doJson(url, VolleyHelper.GET, object);

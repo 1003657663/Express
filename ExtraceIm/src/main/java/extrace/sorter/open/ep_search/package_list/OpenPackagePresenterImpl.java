@@ -14,18 +14,17 @@ import extrace.ui.main.R;
  */
 public class OpenPackagePresenterImpl extends VolleyHelper implements OpenPackagePresenter {
     private PackageListFragmentView fragmentView;
-    private String url, token;
+    private String url;
 
     public OpenPackagePresenterImpl(Activity activity, PackageListFragmentView fragmentView) {
         super(activity);
         this.fragmentView = fragmentView;
-        token = ((MyApplication) activity.getApplication()).getToken();
         url = activity.getResources().getString(R.string.base_url) + "REST/Domain/OpenPackageByPackageId/";
     }
 
     @Override
     public void onOpenPackage(String packageID) {
-        url += packageID + "/" + token;
+        url += packageID ;
         try {
             doJson(url, VolleyHelper.GET, null);
         } catch (Exception e) {

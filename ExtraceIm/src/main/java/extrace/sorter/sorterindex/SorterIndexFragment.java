@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 
 import extrace.model.PackageInfo;
-import extrace.sorter.Expressupdate.DeliverUpdateExpressFragment;
 import extrace.sorter.Expressupdate.ExpressUpdateFragment;
 import extrace.sorter.SorterMe;
 import extrace.sorter.open.ep_search.package_list.PackageListFragment;
@@ -167,7 +166,6 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
                                 PackageSearchFragment fragment = new PackageSearchFragment();
                                 Bundle bundle1 = new Bundle();
                                 bundle1.putString("ID", result);
-                                //bundle1.putString("ID",);
                                 fragment.setArguments(bundle1);
                                 transaction.replace(R.id.fragment_container_layout, fragment);
                                 transaction.addToBackStack("null");
@@ -187,8 +185,6 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
                 }).create();
                 dialog.show();
             }
-
-
         }
     }
 

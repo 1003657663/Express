@@ -20,18 +20,17 @@ import extrace.ui.main.R;
  */
 public class PackageListModelImpl extends VolleyHelper implements PackageListModel {
     private PackageListPresenter PackageListPresenter;
-    String token, onSearchPByPackageIDurl;
+    String onSearchPByPackageIDurl;
 
     public PackageListModelImpl(Activity activity, PackageListPresenter PackageListPresenter) {
         super(activity);
         this.PackageListPresenter = PackageListPresenter;
-        token = ((MyApplication) activity.getApplication()).getToken();
         onSearchPByPackageIDurl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.searchPackageInPackage_ById);
     }
 
     @Override
     public void onSearchPByPackageID(String packageID) {
-        onSearchPByPackageIDurl += packageID + "/" + token;
+        onSearchPByPackageIDurl += packageID;
         JSONObject jsonObject = new JSONObject();
         try {
             doJson(onSearchPByPackageIDurl, VolleyHelper.GET, jsonObject);

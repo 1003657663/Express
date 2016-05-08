@@ -16,13 +16,11 @@ import extrace.ui.main.R;
 public class DeliverUpdateExpressPresenterImpl extends VolleyHelper implements DeliverUpdateExpressPresenter {
     private DeliverUpdateExpressFragmentView fragmentView;
     String url, turl;
-    String token;
 
     public DeliverUpdateExpressPresenterImpl(Activity activity, DeliverUpdateExpressFragmentView fragmentView) {
         super(activity);
         this.fragmentView = fragmentView;
         turl = activity.getResources().getString(R.string.base_url) + "REST/Domain/updateExpressFree";
-        token = ((MyApplication) activity.getApplication()).getToken();
         url = turl;
     }
 

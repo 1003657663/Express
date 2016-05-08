@@ -19,11 +19,9 @@ public class ExpressEditModelImpl extends VolleyHelper implements ExpressEditMod
     ExpressPresenter ExpressPresenter;
     String url = "";
     String turl;
-    String token;
 
     public ExpressEditModelImpl(Activity activity, ExpressPresenter ExpressPresenter) {
         super(activity);
-        token = ((MyApplication) activity.getApplication()).getToken();
         this.ExpressPresenter = ExpressPresenter;
         turl = activity.getResources().getString(R.string.base_url);
         url = turl;
@@ -31,7 +29,7 @@ public class ExpressEditModelImpl extends VolleyHelper implements ExpressEditMod
 
     @Override
     public void newExpress(int customerId, int senderID, int receiverID) {
-        url += "/REST/Domain/prepareSendExpress/customerId/" + customerId + "/sendAddressId/" + senderID + "/recAddressId/" + receiverID + "/" + token;
+        url += "/REST/Domain/prepareSendExpress/customerId/" + customerId + "/sendAddressId/" + senderID + "/recAddressId/" + receiverID ;
         try {
             JSONObject object = new JSONObject();
             doJson(url, VolleyHelper.GET, object);

@@ -15,12 +15,11 @@ import extrace.ui.main.R;
  */
 public class SorterIndexPresenterImpl extends VolleyHelper implements SorterIndexPresenter {
     private SorterIndexFragmentView fragmentview;
-    String url, turl, token;
+    String url, turl;
 
     public SorterIndexPresenterImpl(Activity activity, SorterIndexFragmentView sorterindexfragmentView) {
         super(activity);
         this.fragmentview = sorterindexfragmentView;
-        token = ((MyApplication) activity.getApplication()).getToken();
         //turl="http://192.168.1.113:8080"+activity.getResources().getString(R.string.createPackage);
         turl = activity.getResources().getString(R.string.base_url) + activity.getResources().getString(R.string.createPackage);
         url = turl;
@@ -49,7 +48,7 @@ public class SorterIndexPresenterImpl extends VolleyHelper implements SorterInde
 
     @Override
     public void CreatPackage(int fromID, int toID, int EmployeesID, int isSorter) {
-        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + EmployeesID + "/isSorter/" + isSorter + "/" + token;
+        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + EmployeesID + "/isSorter/" + isSorter;
         try {
             JSONObject object = new JSONObject();
             doJson(url, VolleyHelper.GET, object);
