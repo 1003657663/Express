@@ -1,11 +1,11 @@
 package extrace.model;
 
-import java.io.Serializable;
-
+import android.os.Parcel;
+import android.os.Parcelable;
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class PackageInfo implements Serializable {
+public class PackageInfo implements Parcelable{
     private String id;//包裹ID
     private String packageFrom;//从哪里来
     private String packageTo;//到哪里去
@@ -15,7 +15,26 @@ public class PackageInfo implements Serializable {
 
     public PackageInfo() {
     }
+    protected PackageInfo(Parcel in) {
+        id = in.readString();
+       packageFrom = in.readString();
+       packageTo = in.readString();
+        employeesName = in.readString();
+        employeesID = in.readInt();
+        closeTime = in.readString();
+    }
 
+    public static final Creator<PackageInfo> CREATOR = new Creator<PackageInfo>() {
+        @Override
+        public PackageInfo createFromParcel(Parcel in) {
+            return new PackageInfo(in);
+        }
+
+        @Override
+        public PackageInfo[] newArray(int size) {
+            return new PackageInfo[size];
+        }
+    };
     public PackageInfo(String id, String packageFrom, String packageTo, String employeesName, Integer employeesID, String closeTime) {
         this.id = id;
         this.packageFrom = packageFrom;
@@ -74,14 +93,17 @@ public class PackageInfo implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "PackageInfo{" +
-                "id='" + id + '\'' +
-                ", packageFrom='" + packageFrom + '\'' +
-                ", packageTo='" + packageTo + '\'' +
-                ", employeesName='" + employeesName + '\'' +
-                ", employeesID=" + employeesID +
-                ", closeTime='" + closeTime + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(packageFrom);
+        dest.writeString(packageTo);
+        dest.writeString(employeesName);
+        dest.writeInt(employeesID);
+        dest.writeString(closeTime);
     }
 }
