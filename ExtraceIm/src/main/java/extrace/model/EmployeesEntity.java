@@ -1,11 +1,12 @@
 package extrace.model;
 
 
-/**
- * Created by violet on 2016/4/6.
- */
+import java.io.Serializable;
 
-public class EmployeesEntity {
+/**
+ * Created by violet on 2016/5/3.
+ */
+public class EmployeesEntity implements Serializable {
     private int id;
     private String name;
     private String password;
@@ -14,11 +15,13 @@ public class EmployeesEntity {
     private String jobText;
     private Integer status;
     private int outletsId;
+    private String sendPackageId;
+    private String recvPackageId;
 
     public EmployeesEntity() {
     }
 
-    public EmployeesEntity(int id, String name, String password, String telephone, Integer job, String jobText, Integer status, int outletsId) {
+    public EmployeesEntity(int id, String name, String password, String telephone, Integer job, String jobText, Integer status, int outletsId, String sendPackageId, String recvPackageId) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -27,8 +30,9 @@ public class EmployeesEntity {
         this.jobText = jobText;
         this.status = status;
         this.outletsId = outletsId;
+        this.sendPackageId = sendPackageId;
+        this.recvPackageId = recvPackageId;
     }
-
 
     public int getId() {
         return id;
@@ -37,7 +41,6 @@ public class EmployeesEntity {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public String getName() {
         return name;
@@ -55,6 +58,7 @@ public class EmployeesEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getTelephone() {
         return telephone;
@@ -100,6 +104,24 @@ public class EmployeesEntity {
         this.outletsId = outletsId;
     }
 
+
+    public String getSendPackageId() {
+        return sendPackageId;
+    }
+
+    public void setSendPackageId(String sendPackageId) {
+        this.sendPackageId = sendPackageId;
+    }
+
+
+    public String getRecvPackageId() {
+        return recvPackageId;
+    }
+
+    public void setRecvPackageId(String recvPackageId) {
+        this.recvPackageId = recvPackageId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,6 +137,10 @@ public class EmployeesEntity {
         if (job != null ? !job.equals(that.job) : that.job != null) return false;
         if (jobText != null ? !jobText.equals(that.jobText) : that.jobText != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
+        if (sendPackageId != null ? !sendPackageId.equals(that.sendPackageId) : that.sendPackageId != null)
+            return false;
+        if (recvPackageId != null ? !recvPackageId.equals(that.recvPackageId) : that.recvPackageId != null)
+            return false;
 
         return true;
     }
@@ -129,6 +155,24 @@ public class EmployeesEntity {
         result = 31 * result + (jobText != null ? jobText.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + outletsId;
+        result = 31 * result + (sendPackageId != null ? sendPackageId.hashCode() : 0);
+        result = 31 * result + (recvPackageId != null ? recvPackageId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeesEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", job=" + job +
+                ", jobText='" + jobText + '\'' +
+                ", status=" + status +
+                ", outletsId=" + outletsId +
+                ", sendPackageId='" + sendPackageId + '\'' +
+                ", recvPackageId='" + recvPackageId + '\'' +
+                '}';
     }
 }

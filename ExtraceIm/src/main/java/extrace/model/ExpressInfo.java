@@ -4,10 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by 黎明 on 2016/4/20.
+ * Created by 黎明 on 2016/5/7.
  */
-public class ExpressInfo implements Parcelable{
-
+public class ExpressInfo implements Parcelable {
 
 
     public String ID;//快递单号
@@ -27,7 +26,8 @@ public class ExpressInfo implements Parcelable{
     public String Acc1;
     public String Acc2;
 
-    public ExpressInfo(){}
+    public ExpressInfo() {
+    }
 
     protected ExpressInfo(Parcel in) {
         ID = in.readString();
@@ -116,38 +116,6 @@ public class ExpressInfo implements Parcelable{
         this.radd = radd;
     }
 
-    public String getOutTime() {
-        return OutTime;
-    }
-
-    public void setOutTime(String outTime) {
-        OutTime = outTime;
-    }
-
-    public String getRaddinfo() {
-        return raddinfo;
-    }
-
-    public void setRaddinfo(String raddinfo) {
-        this.raddinfo = raddinfo;
-    }
-
-    public String getRname() {
-        return rname;
-    }
-
-    public void setRname(String rname) {
-        this.rname = rname;
-    }
-
-    public String getRtel() {
-        return rtel;
-    }
-
-    public void setRtel(String rtel) {
-        this.rtel = rtel;
-    }
-
     public String getSadd() {
         return sadd;
     }
@@ -187,6 +155,7 @@ public class ExpressInfo implements Parcelable{
     public void setTranFee(double tranFee) {
         TranFee = tranFee;
     }
+
 
     @Override
     public int describeContents() {

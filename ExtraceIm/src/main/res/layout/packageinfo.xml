@@ -26,7 +26,7 @@
        <TextView
            android:layout_width="100sp"
            android:layout_height="60sp"
-           android:id="@+id/packageto"
+           android:id="@+id/package_to"
            android:hint="请选取地址"
            android:gravity="center"
            android:textSize="10sp"/>
@@ -130,8 +130,8 @@
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:id="@+id/open"
-        style="@drawable/button_style"
+        android:background="@color/button_light"
         android:text="拆包" />
 </LinearLayout>

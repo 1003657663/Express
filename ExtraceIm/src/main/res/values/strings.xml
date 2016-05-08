@@ -161,7 +161,6 @@
 
     <!--软件中所有的请求的url-->
     <string name="base_url">http://182.254.214.97:8080</string>
-
     <string name="login_send">/REST/Domain/login</string>
     <string name="register_send">/REST/Domain/register</string>
     <string name="address_get_send">/REST/Misc/getSendAddress/customertel/{tel}</string><!--get方法，后面跟手机号-->
@@ -181,5 +180,15 @@
     <string name="getExpressInfo_ByCustomerId">/REST/Domain/getExpressInfoByCustomerId/</string><!--根据customerID查询express list-->
     <string name="getPackageInfo_ById">/REST/Domain/getPackageInfoById/</string><!--根据包裹单号查询包裹信息-->
     <string name="searchPackageInPackage_ById">/REST/Domain/searchPackageInPackageById/</string><!--查询包裹中的包裹-->
-    <string name="searchExpressInPackage_ById">/REST/Domain/searchExpressInPackageById/</string><!--查询包裹中的快件-->
+    <string name="searchExpressInPackage_ById">/REST/Domain/searchExpressInPackageById/</string>
+    <string name="createPackage">/REST/Domain/createPackage/</string>
+    <string name="transfee">运输费:</string>
+    <string name="weight">重量:</string>
+    <string name="insufee">保险费</string>
+    <string name="ID">快件单号</string>
+    <string name="send_address">收货地址</string>
+    <string name="receive_address">发货地址</string>
+    <string name="tel">电话</string>
+    <string name="password">密码</string>
+
 </resources>
