@@ -21,6 +21,7 @@
                     android:layout_height="50dp"
                     android:background="@color/button_light"
                     android:text="拆包"
+                    android:textColor="@color/white"
                     android:id="@+id/add_open"/>
         </LinearLayout>
 
