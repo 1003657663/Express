@@ -71,8 +71,16 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         return view;
     }
 
+    public UserAddress userAddress;
+    public UserAddress getUserAddress(){
+        return userAddress;
+    }
+    public void setUserAddress(UserAddress userAddress){
+        this.userAddress = userAddress;
+    }
     private void setReceiveAddress() {
-        UserAddress userAddress = (UserAddress) getArguments().getParcelable("expressaddress");
+        UserAddress userAddress = this.userAddress;
+                //(UserAddress) getArguments().getParcelable("expressaddress");
         rname.setText(userAddress.getName());
         receive_id = userAddress.getAid();
         rtel.setText(userAddress.getTelephone());
@@ -128,9 +136,8 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         fragment1.setArguments(bundle1);
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.hide(ExpressEditFragment.this);
-        transaction.add(R.id.fragment_container_layout, fragment1,"needaddressfragment");
-        transaction.addToBackStack("expressedit1");
+        transaction.replace(R.id.fragment_container_layout, fragment1,"needaddressfragment");
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -143,7 +150,8 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
         transaction.add(R.id.fragment_container_layout, fragment,"needaddressfragment");
-        transaction.addToBackStack("expressedit");
+       // transaction.replace(R.id.fragment_container_layout, fragment,"needaddressfragment");
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 

@@ -10,6 +10,7 @@
         android:id="@+id/express_send"
         layout="@layout/top_bar"/>
     <LinearLayout
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="450dp">

@@ -7,6 +7,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageButton
         android:layout_width="50dp"
+        android:id="@+id/info"
         android:background="@color/white"
         android:layout_height="50dp"
         android:src="@mipmap/packagepic"

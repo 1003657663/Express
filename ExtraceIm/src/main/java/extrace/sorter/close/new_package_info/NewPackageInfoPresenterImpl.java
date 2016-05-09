@@ -26,7 +26,7 @@ public class NewPackageInfoPresenterImpl extends VolleyHelper implements NewPack
 
     @Override
     public void newPackage(int fromID, int toID, int employeesId, int isSorter) {
-        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + employeesId + "/isSorter/" + isSorter ;
+        url += "fromID/" + fromID + "/toID/" + 18 + "/employeesID/" + employeesId + "/isSorter/" + isSorter ;
         try {
             doJson(url, VolleyHelper.GET, null);
         } catch (Exception e) {

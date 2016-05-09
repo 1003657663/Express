@@ -159,8 +159,8 @@
     <string name="can_not_parse_json">the string can not parse to json</string>
 
 
-    <!--软件中所有的请求的url-->
-    <string name="base_url">http://182.254.214.97:8080</string>
+    <!--软件中所有的请求的urlhttp://192.168.1.125:8080-->
+    <string name="base_url">http://182.254.214.97:8080/ExTrace_Server</string>
     <string name="login_send">/REST/Domain/login</string>
     <string name="register_send">/REST/Domain/register</string>
     <string name="address_get_send">/REST/Misc/getSendAddress/customertel/{tel}</string><!--get方法，后面跟手机号-->

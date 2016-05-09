@@ -40,7 +40,6 @@ public class GetAddressModelImpl extends VolleyHelper implements GetAddressModel
         this.addressEditView = addressEditView;
         MyApplication myApplication = (MyApplication) activity.getApplication();
         baseUrl = activity.getResources().getString(R.string.base_url);
-        baseUrl="http://192.168.1.113:8080";
         getProUrl = baseUrl + activity.getResources().getString(R.string.address_get_province);
         getCityUrl = baseUrl + activity.getResources().getString(R.string.address_get_city);//后面加上省份号
         getRegionUrl = baseUrl + activity.getResources().getString(R.string.address_get_region);//后面加上城市号

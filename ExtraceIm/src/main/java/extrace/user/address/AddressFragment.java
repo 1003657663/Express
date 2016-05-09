@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import extrace.Customer.Express.view.express_edit_view.ExpressEditFragment;
 import extrace.model.UserAddress;
 import extrace.ui.main.R;
 import extrace.user.address.addressEdit.AddressEditFragment;
@@ -120,9 +121,11 @@ public class AddressFragment extends Fragment implements AddressView,View.OnClic
             bundle.putParcelable("expressaddress",userAddress);
         }
         FragmentManager fm = getFragmentManager();
-        Fragment fragment = fm.findFragmentByTag("expressedit");
-        fragment.setArguments(bundle);
+        ExpressEditFragment fragment = (ExpressEditFragment) fm.findFragmentByTag("needaddressfragment");
+        //fragment.setArguments(bundle);
+        fragment.setUserAddress(userAddress);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.show(fragment);
+        transaction.commit();
     }
 }

@@ -30,8 +30,8 @@ public class SorterIndexPresenterImpl extends VolleyHelper implements SorterInde
         JSONObject jsonObject = (JSONObject) jsonOrArray;
         PackageInfo packageInfo = new PackageInfo();
         try {
-            packageInfo.setCloseTime(jsonObject.getString("closetime"));
-            packageInfo.setId(jsonObject.getString("ID"));
+            packageInfo.setCloseTime(jsonObject.getString("closeTime"));
+            packageInfo.setId(jsonObject.getString("id"));
             fragmentview.onSuccess(packageInfo);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -48,7 +48,7 @@ public class SorterIndexPresenterImpl extends VolleyHelper implements SorterInde
 
     @Override
     public void CreatPackage(int fromID, int toID, int EmployeesID, int isSorter) {
-        url += "fromID/" + fromID + "/toID/" + toID + "/employeesID/" + EmployeesID + "/isSorter/" + isSorter;
+        url += "fromID/" + fromID + "/toID/" + 18 + "/employeesID/" + EmployeesID + "/isSorter/" + isSorter;
         try {
             JSONObject object = new JSONObject();
             doJson(url, VolleyHelper.GET, object);

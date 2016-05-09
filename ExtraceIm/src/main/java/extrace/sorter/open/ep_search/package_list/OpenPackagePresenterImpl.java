@@ -18,7 +18,7 @@ public class OpenPackagePresenterImpl extends VolleyHelper implements OpenPackag
     public OpenPackagePresenterImpl(Activity activity, PackageListFragmentView fragmentView) {
         super(activity);
         this.fragmentView = fragmentView;
-        url = activity.getResources().getString(R.string.base_url) + "REST/Domain/OpenPackageByPackageId/";
+        url = activity.getResources().getString(R.string.base_url) + "/REST/Domain/OpenPackageByPackageId/";
     }
 
     @Override

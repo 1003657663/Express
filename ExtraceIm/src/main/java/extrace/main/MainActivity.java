@@ -32,8 +32,8 @@ public class MainActivity extends Activity implements MainView {
     public void setDefaultFragment() {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
-        SorterIndexFragment indexFragment = new SorterIndexFragment();
-       // MainFragment indexFragment = new MainFragment();
+        //SorterIndexFragment indexFragment = new SorterIndexFragment();
+        MainFragment indexFragment = new MainFragment();
         transaction.replace(R.id.fragment_container_layout, indexFragment);
         transaction.commit();
     }

@@ -48,6 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:id="@+id/sname"
                     android:textColor="@color/gray"
                     />
@@ -78,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:id="@+id/stel"
                     android:textColor="@color/gray"
                     />
@@ -102,6 +104,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:id="@+id/sadd"
+                    android:gravity="center"
                     android:textColor="@color/gray"
                     />
             </LinearLayout>
@@ -126,6 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:layout_gravity="center"
                     android:id="@+id/saddressinfo"
                     android:textColor="@color/gray"
                     />
@@ -175,6 +179,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/rname"
+            android:gravity="center"
             android:textColor="@color/gray"
             />
         <ImageView
@@ -205,6 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:id="@+id/rtel"
             android:textColor="@color/gray"
             />
@@ -231,6 +237,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/radd"
+            android:gravity="center"
             android:textColor="@color/gray"
             />
     </LinearLayout>
@@ -258,6 +265,7 @@
             android:layout_weight="1"
             android:id="@+id/raddressinfo"
             android:textColor="@color/gray"
+            android:gravity="center"
             />
     </LinearLayout>
         <View style="@style/bg_line" />

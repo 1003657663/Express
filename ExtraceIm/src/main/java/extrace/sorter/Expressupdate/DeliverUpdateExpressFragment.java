@@ -38,19 +38,23 @@ public class DeliverUpdateExpressFragment extends Fragment implements DeliverUpd
         submit = (Button) view.findViewById(R.id.submit_deliver);
         if (getArguments() != null) {
             ID.setText(getArguments().getString("ID").toString());
-        } else getFragmentManager().popBackStack();
+        }
+        else getFragmentManager().popBackStack();
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (weight.getText() == null || insufee.getText() == null || transfee.getText() == null) {
+                    Toast.makeText(getActivity(), "请将信息补充完整", Toast.LENGTH_SHORT).show();
 
+                } else
+                {
                     ExpressEntity expressEntity = new ExpressEntity();
                     expressEntity.setId(ID.getText().toString());
                     expressEntity.setWeight(Float.parseFloat(weight.getText().toString()));
                     expressEntity.setTranFee(Float.parseFloat(transfee.getText().toString()));
                     expressEntity.setInsuFee(Float.parseFloat(insufee.getText().toString()));
                     presenter.updateExpress(expressEntity);
-                } else Toast.makeText(getActivity(), "请将信息补充完整", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return view;

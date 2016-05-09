@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.widget.Button;
-
-
 /**
  * 倒计时工具类,制定button上，显示指定时间的倒计时
  * Created by chao on 2016/4/28.

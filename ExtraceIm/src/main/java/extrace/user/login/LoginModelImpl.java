@@ -111,6 +111,7 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setPassword(mD5Password);
                         application.getUserInfo().setLoginState(true);
+                        application.getUserInfo().setToken(jsonObject.getString("token"));
                         loginView.showToast("登陆成功");
                         loginView.onback();
                         break;
@@ -138,6 +139,7 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                         application.getUserInfo().setPassword(mD5Password);
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setId(jsonObject.getInt("id"));//---!!!
+                        application.getUserInfo().setToken(jsonObject.getString("token"));
                         loginView.showToast("注册成功");
                         loginView.onback();
                         break;

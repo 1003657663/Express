@@ -74,6 +74,7 @@ public class ExpressUpdateFragment extends Fragment implements ExpressUpdateFrag
                 DeliverUpdateExpressFragment fragment = new DeliverUpdateExpressFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("ID", ID);
+                fragment.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 transaction.replace(R.id.fragment_container_layout, fragment);

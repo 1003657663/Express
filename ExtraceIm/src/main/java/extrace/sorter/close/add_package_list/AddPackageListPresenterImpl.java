@@ -13,12 +13,13 @@ import extrace.ui.main.R;
  */
 public class AddPackageListPresenterImpl extends VolleyHelper implements AddPackageListPresenter {
     private AddPackageListFragmentView add_packageListFragmentView;
-    String url = "";
+    String url = "",turl;
 
     public AddPackageListPresenterImpl(Activity activity, AddPackageListFragmentView AddPackageListFragmentView) {
         super(activity);
         this.add_packageListFragmentView = AddPackageListFragmentView;
-        url = activity.getResources().getString(R.string.base_url);
+        turl = activity.getResources().getString(R.string.base_url);
+        url=turl;
     }
 
     @Override
@@ -29,6 +30,8 @@ public class AddPackageListPresenterImpl extends VolleyHelper implements AddPack
             doJson(url, VolleyHelper.GET, object);
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            url=turl;
         }
     }
 
@@ -46,6 +49,7 @@ public class AddPackageListPresenterImpl extends VolleyHelper implements AddPack
     @Override
     public void onError(String errorMessage) {
         add_packageListFragmentView.Fail(errorMessage);
+        url=turl;
     }
 
 

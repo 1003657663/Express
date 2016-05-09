@@ -16,6 +16,7 @@ public class UserInfo{
     private String password;
 	private String name;
 	private String telephone;
+    private String token;
 
     private SharedPreferences spf;
     private Context context;
@@ -109,5 +110,13 @@ public class UserInfo{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

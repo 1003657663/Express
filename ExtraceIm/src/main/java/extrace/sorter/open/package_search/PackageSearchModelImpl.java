@@ -27,7 +27,7 @@ public class PackageSearchModelImpl extends VolleyHelper implements PackageSearc
     @Override
     public void openPackage(String packageID) {
         // url+=packageID;
-        url += packageID ;
+        url += "01908141641757" ;
         JSONObject jsonObject = new JSONObject();
         try {
             doJson(url, VolleyHelper.GET, jsonObject);

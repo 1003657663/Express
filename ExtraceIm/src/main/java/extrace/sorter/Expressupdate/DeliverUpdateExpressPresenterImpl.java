@@ -20,7 +20,7 @@ public class DeliverUpdateExpressPresenterImpl extends VolleyHelper implements D
     public DeliverUpdateExpressPresenterImpl(Activity activity, DeliverUpdateExpressFragmentView fragmentView) {
         super(activity);
         this.fragmentView = fragmentView;
-        turl = activity.getResources().getString(R.string.base_url) + "REST/Domain/updateExpressFree";
+        turl = activity.getResources().getString(R.string.base_url) + "/REST/Domain/updateExpressFree";
         url = turl;
     }
 

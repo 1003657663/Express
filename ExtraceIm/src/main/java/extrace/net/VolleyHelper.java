@@ -1,6 +1,7 @@
 package extrace.net;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 
@@ -14,6 +15,9 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import extrace.main.MyApplication;
+import extrace.model.UserInfo;
+
 /**
  * Created by chao on 2016/4/17.
  */
@@ -24,13 +28,19 @@ public abstract class VolleyHelper {
     private Context context;
     private ProgressDialog dialog;
     private Boolean isShowProgress = true;
+    private String token;
+    private Boolean isLogin = false;
 
     public VolleyHelper(Activity context){
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
+        UserInfo userInfo = ((MyApplication)context.getApplication()).getUserInfo();
+        isLogin = userInfo.getLoginState();
+        token = userInfo.getToken();
     }
 
     public void doJson(String url,int method,JSONObject jsonObject){
+        url = init(url,method,jsonObject);
         showProgressDialog();
         JsonObjectRequest objectRequest = new JsonObjectRequest(method, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -49,6 +59,7 @@ public abstract class VolleyHelper {
     }
 
     public void doJsonArray(String url,Integer postOrGet,JSONArray jsonObject){
+        url = init(url,postOrGet,null);
         showProgressDialog();
         MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonObject,new Response.Listener<JSONArray>() {
             @Override
@@ -78,6 +89,20 @@ public abstract class VolleyHelper {
             }
         }
     }
+
+    private String init(String url,int method,JSONObject jsonObject){
+        if(isLogin){
+            if(method == GET){
+                if(url.charAt(url.length()-1) == '/') {
+                    url = url + token;
+                }else {
+                    url = url +"/" +token;
+                }
+            }
+        }
+        return url;
+    }
+
     private void hideProgressDialog(){
         if(isShowProgress) {
             if (dialog != null) {

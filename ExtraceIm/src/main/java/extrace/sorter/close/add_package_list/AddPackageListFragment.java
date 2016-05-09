@@ -95,6 +95,7 @@ public class AddPackageListFragment extends Fragment implements PackageListFragm
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             IDlist.add(input.getText().toString());
+                            adapter=new AddPackageListAdapter(getActivity(),IDlist);
                             listView.setAdapter(adapter);
                             presenter.loadIntoPackage(DpackageID, input.getText().toString(), EXPRESS);//调用presenter
                         }
@@ -102,6 +103,7 @@ public class AddPackageListFragment extends Fragment implements PackageListFragm
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             IDlist.add(input.getText().toString());
+                            adapter=new AddPackageListAdapter(getActivity(),IDlist);
                             listView.setAdapter(adapter);
                             presenter.loadIntoPackage(DpackageID, input.getText().toString(), PACKAGE);//调用presenter
                         }
@@ -197,6 +199,7 @@ public class AddPackageListFragment extends Fragment implements PackageListFragm
 
     @Override
     public void Success() {
+
         Toast.makeText(getActivity(), "操作成功", Toast.LENGTH_SHORT).show();
     }
 

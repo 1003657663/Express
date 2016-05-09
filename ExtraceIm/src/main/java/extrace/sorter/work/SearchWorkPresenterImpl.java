@@ -49,9 +49,9 @@ public class SearchWorkPresenterImpl extends VolleyHelper implements SearchWorkP
 
     @Override
     public void searchWork(int EmployeesID, String start, int day) {
-        turl += "/REST/Domain/getWork/" + EmployeesID + "/starttime/" + start + "/days/" + day ;
+        turl += "/REST/Domain/getWork/employeeId/" + EmployeesID + "/starttime/" + start + "/days/" + day ;
         try {
-            doJson(turl, VolleyHelper.GET, null);
+            doJsonArray(turl, VolleyHelper.GET, null);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
