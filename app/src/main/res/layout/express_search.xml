@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/express_search"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/top"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:background="@color/top_bar_background">
+
+        <ImageButton
+            android:layout_width="29dp"
+            android:layout_height="28dp"
+            android:id="@+id/back"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/left_arrow"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:hint="输入单号或电话号码"
+            android:id="@+id/index_top_bar_input"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:background="@drawable/editor_radio_without_border"/>
+        <ImageButton
+            android:layout_width="29dp"
+            android:layout_height="28dp"
+            android:id="@+id/enter"
+            android:background="#00000000"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/more"/>
+    </LinearLayout>
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@android:id/list">
+</ListView>
+
+</LinearLayout>

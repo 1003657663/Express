@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/express_item_info"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical">
+    <include layout="@layout/top_bar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="20sp"
+        android:paddingLeft="20sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="快件单号：      "/>
+            <TextView
+
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/ID"
+                />
+
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="寄件人姓名：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/sname"
+                />
+
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="寄件人电话：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/stel"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="寄件人地址：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/sadd"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="寄件人街道地址：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/saddinfo"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="收件人姓名：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/rname"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="收件人电话：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/rtel"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="收件人地址：      "/>
+            <TextView
+                android:layout_height="40sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/radd"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="收件人街道地址：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/raddinfo"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="重量：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/weight"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="InsuFee：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/InsuFee"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="TranFee：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/TranFee"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="下单时间：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/GetTime"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:text="送出时间：      "/>
+            <TextView
+                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:id="@+id/OutTime"
+                />
+        </LinearLayout>
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+                <TextView
+                    android:layout_height="30sp"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/blue"
+                    android:id="@+id/Acc1"
+                    android:text="附件一      "/>
+                <TextView
+                    android:layout_height="30sp"
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/blue"
+                    android:id="@+id/Acc2"
+                    android:text="附件二"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/target"
+            android:textColor="@color/white"
+            android:background="@drawable/button_radio_with_background_color"
+            android:text="target"/>
+    </LinearLayout>
+</LinearLayout>

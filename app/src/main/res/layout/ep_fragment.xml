@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/top_bar" />
+
+    <LinearLayout
+        android:id="@+id/express_listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:id="@+id/choose_package"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/whitesmoke"
+                android:gravity="center"
+
+                android:text="包裹" />
+
+            <TextView
+                android:id="@+id/choose_express"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/whitesmoke"
+                android:gravity="center"
+                android:text="快件" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"></ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="bottom">
+
+            <Button
+                android:id="@+id/chai"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/button_light"
+                android:text="拆包" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <include layout="@layout/top_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/package_from"
+            android:layout_width="100sp"
+            android:layout_height="60sp"
+            android:gravity="center"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:layout_width="100sp"
+            android:layout_height="60sp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/to" />
+
+        <TextView
+            android:id="@+id/package_to"
+            android:layout_width="100sp"
+            android:layout_height="60sp"
+            android:gravity="center"
+            android:hint="请选取地址"
+            android:textSize="10sp" />
+
+        <ImageView
+            android:id="@+id/toaddress"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:gravity="center"
+                android:text="包裹单号:" />
+
+            <TextView
+                android:id="@+id/ID"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center"
+
+                />
+
+        </LinearLayout>
+
+        <View style="@style/bg_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:gravity="center"
+                android:text="负责人:" />
+
+            <TextView
+                android:id="@+id/EmployeesName"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <View style="@style/bg_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:gravity="center"
+                android:text="负责人ID:" />
+
+            <TextView
+                android:id="@+id/EmployeesID"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <View style="@style/bg_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20sp"
+            android:paddingTop="20sp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30sp"
+                android:gravity="center"
+                android:text="打包时间:" />
+
+            <TextView
+                android:id="@+id/closetime"
+                android:layout_width="match_parent"
+                android:layout_height="30sp"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <View style="@style/bg_line" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/open"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/button_light"
+            android:text="拆包" />
+    </LinearLayout>
+
+</LinearLayout>

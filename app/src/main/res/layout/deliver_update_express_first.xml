@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    android:background="@color/whitesmoke"
+    >
+    <include
+        android:id="@+id/express_send"
+        layout="@layout/top_bar"/>
+    <LinearLayout
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="450dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:id="@id/send_address"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="@string/ID"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/deliver_update_express_first_ID"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+        <!-- 分割线 -->
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:id="@id/send_address"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="@string/weight"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/deliver_update_express_first_weight"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+        <!-- 分割线 -->
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:id="@id/send_address"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="@string/transfee"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/deliver_update_express_first_transfee"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+        <!-- 分割线 -->
+        <View style="@style/bg_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
+            android:id="@id/send_address"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:paddingLeft="20sp"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:text="@string/insufee"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/deliver_update_express_first_insufee"
+                android:textColor="@color/gray"
+                />
+        </LinearLayout>
+        <!-- 分割线 -->
+        <View style="@style/bg_line" />
+    </LinearLayout>
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <Button
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:id="@+id/submit_deliver"
+         android:layout_gravity="bottom"
+         android:textColor="@color/white"
+         android:background="@color/button_light"
+         android:text="提交"/>
+ </LinearLayout>
+
+</LinearLayout>
+
+

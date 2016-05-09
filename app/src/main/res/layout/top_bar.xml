@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:background="@color/top_bar_background"
+    android:id="@+id/top_bar">
+    <ImageButton
+        
+        android:id="@+id/top_bar_left_img"
+        android:layout_width="30dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_vertical"
+        android:background="@color/transparent"
+        android:src="@mipmap/left_arrow"/>
+    <TextView
+        android:id="@+id/top_bar_center_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="待填"
+        android:textColor="@color/white"
+        android:textSize="16dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:paddingRight="10dp"
+        android:visibility="gone"
+        android:textSize="16sp"
+        android:id="@+id/top_bar_right_text"
+        android:textColor="@color/white"
+        android:text="确定"/>
+    <ImageView
+        android:layout_width="27dp"
+        android:layout_height="30dp"
+        android:id="@+id/top_bar_right_img"
+        android:layout_gravity="end|center_vertical"
+        android:scaleType="fitXY"
+        android:layout_marginRight="10dp" />
+</FrameLayout>

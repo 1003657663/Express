@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/index_top_bar" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@+id/main_top_linear"
+            android:layout_centerHorizontal="true"
+            android:background="#844141"
+            android:scaleType="fitXY"
+            android:src="@drawable/ad" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="30dp"
+                android:background="#ffffff"
+                android:text="寄快递"
+                android:id="@+id/send"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:background="#ffffff"
+                android:text="查快递"
+                android:id="@+id/search"/>
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/me_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="我"
+        android:textColor="#ffffff"
+        android:background="@drawable/index_button_radio"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"/>
+</FrameLayout>

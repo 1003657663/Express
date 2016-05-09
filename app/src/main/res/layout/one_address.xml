@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="2px"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/user_name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp" />
+
+    <TextView
+        android:id="@+id/user_tel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/user_name_textView" />
+
+    <TextView
+        android:id="@+id/user_address_isDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/user_name_textView"
+        android:layout_marginRight="13dp"
+        android:layout_marginTop="13dp"
+
+        android:background="@color/blueviolet"
+        android:padding="2dp"
+        android:text="默认"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/user_address_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_name_textView"
+        android:layout_toLeftOf="@+id/edit_address_button"
+        android:layout_toRightOf="@+id/user_address_isDefault"
+        android:layout_marginTop="15dp"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/edit_address_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/edit" />
+
+</RelativeLayout>

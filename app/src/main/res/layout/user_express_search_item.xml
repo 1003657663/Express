@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2px"
+    android:layout_weight="1"
+    android:background="@color/white"
+    android:paddingBottom="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="20dp">
+
+    <TextView
+        android:id="@+id/express_address_point"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="1.2"
+        android:text="快递员已经从郑州出发，即将到达郑州大学站,sljfdllsfdj涉及到了房间联系电话：15265879456，欢迎您下次光临"
+        android:textColor="@color/font_color_dark" />
+
+    <TextView
+        android:id="@+id/express_point_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/express_address_point"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:text="2015-06-08     2:36"
+        android:textColor="@color/font_color_dark" />
+
+</RelativeLayout>

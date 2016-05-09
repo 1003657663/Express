@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="2px"
+    android:padding="15dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/user_name_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="无小小"
+        android:paddingRight="15dp" />
+
+    <TextView
+        android:id="@+id/user_tel_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15038290935"
+        android:layout_toRightOf="@+id/user_name_textView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/user_name_textView"
+        android:layout_toLeftOf="@+id/edit_address_button">
+
+        <TextView
+            android:id="@+id/user_address_isDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_below="@+id/user_name_textView"
+            android:layout_marginRight="13dp"
+            android:layout_marginTop="13dp"
+
+            android:background="@color/blueviolet"
+            android:padding="2dp"
+            android:text="默认"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_province_text"
+                android:textSize="12sp"
+                android:layout_marginTop="15dp"
+                android:text="山东省"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_city_text"
+                android:layout_toRightOf="@id/user_province_text"
+                android:textSize="12sp"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="5dp"
+                android:text="烟台市"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_area_text"
+                android:layout_toRightOf="@id/user_city_text"
+                android:textSize="12sp"
+                android:paddingLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:text="中心区"/>
+
+            <TextView
+                android:id="@+id/user_address_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/user_province_text"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                android:text="市中心南路24号楼5楼"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/edit_address_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/edit" />
+
+</RelativeLayout>

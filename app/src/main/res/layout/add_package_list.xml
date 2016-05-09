@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/express_search"
+    android:orientation="vertical">
+
+        <include layout="@layout/index_top_bar"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:id="@android:id/list">
+        </ListView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="bottom"
+            android:layout_height="match_parent">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/button_light"
+                    android:text="拆包"
+                    android:textColor="@color/white"
+                    android:id="@+id/add_open"/>
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.expressba.express"
+        minSdkVersion 19
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+repositories{
+    flatDir{
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    //compile 'com.android.support:appcompat-v7:19'
+    compile files('libs/Gson/gson-2.2.4.jar')
+    compile name: 'SMSSDK-2.0.2', ext: 'aar'
+    testCompile 'junit:junit:4.9'
+    compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile files('libs/MobTools-2016.0303.1229.jar')
+    compile files('libs/MobCommons-2016.0303.1229.jar')
+    compile files('libs/zxing.jar')
+}
