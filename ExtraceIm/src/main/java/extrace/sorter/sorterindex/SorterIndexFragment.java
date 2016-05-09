@@ -76,8 +76,7 @@ public class SorterIndexFragment extends Fragment implements SorterIndexFragment
             @Override
             public void onClick(View v) {
                 //2为打包
-
-               Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
+                Dialog dialog = new AlertDialog.Builder(getActivity()).setIcon(
                         android.R.drawable.btn_star).setTitle("包裹类型").setMessage(
                         "请选择包裹类型").setPositiveButton("中转包",
                         new DialogInterface.OnClickListener() {

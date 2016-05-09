@@ -6,6 +6,7 @@ import android.os.Parcelable;
  * Created by 黎明 on 2016/4/25.
  */
 public class PackageInfo implements Parcelable{
+
     private String id;//包裹ID
     private String packageFrom;//从哪里来
     private String packageTo;//到哪里去
@@ -105,5 +106,15 @@ public class PackageInfo implements Parcelable{
         dest.writeString(employeesName);
         dest.writeInt(employeesID);
         dest.writeString(closeTime);
+    }
+    public String toString() {
+        return "PackageInfo{" +
+                "id='" + id + '\'' +
+                ", packageFrom='" + packageFrom + '\'' +
+                ", packageTo='" + packageTo + '\'' +
+                ", employeesName='" + employeesName + '\'' +
+                ", employeesID=" + employeesID +
+                ", closeTime='" + closeTime + '\'' +
+                '}';
     }
 }

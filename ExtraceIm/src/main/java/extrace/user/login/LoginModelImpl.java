@@ -87,16 +87,6 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
     }
 
     @Override
-    public void onSaveUserInfo() {
-        SharedPreferences preferences =  PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("tel",telephone);
-        editor.putString("password",mD5Password);
-        editor.putString("name",name);
-        editor.apply();
-    }
-
-    @Override
     public void onDataReceive(Object object) {
         JSONObject jsonObject = (JSONObject) object;
         if(isLogin) {
@@ -104,12 +94,13 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                 String loginState = jsonObject.getString("loginstate");
                 switch (loginState) {
                     case "true":
-                        onSaveUserInfo();
                         this.name = jsonObject.getString("name");//登陆成功后存储必要用户信息
                         application.getUserInfo().setId(jsonObject.getInt("id"));
                         application.getUserInfo().setName(this.name);
                         application.getUserInfo().setTelephone(telephone);
                         application.getUserInfo().setPassword(mD5Password);
+                        application.getUserInfo().setToken(jsonObject.getString("token"));
+
                         application.getUserInfo().setLoginState(true);
                         application.getUserInfo().setToken(jsonObject.getString("token"));
                         loginView.showToast("登陆成功");
@@ -133,7 +124,6 @@ public class LoginModelImpl extends VolleyHelper implements LoginModel{
                 String registerState = jsonObject.getString("registerstate");
                 switch (registerState) {
                     case "true":
-                        onSaveUserInfo();
                         application.getUserInfo().setLoginState(true);
                         application.getUserInfo().setName(name);
                         application.getUserInfo().setPassword(mD5Password);

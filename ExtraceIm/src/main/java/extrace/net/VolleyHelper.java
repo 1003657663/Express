@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import extrace.main.MyApplication;
@@ -36,11 +37,14 @@ public abstract class VolleyHelper {
         requestQueue = Volley.newRequestQueue(context);
         UserInfo userInfo = ((MyApplication)context.getApplication()).getUserInfo();
         isLogin = userInfo.getLoginState();
-        token = userInfo.getToken();
+        if(isLogin){
+            token = userInfo.getToken();
+        }
     }
 
     public void doJson(String url,int method,JSONObject jsonObject){
-        url = init(url,method,jsonObject);
+        //添加token
+        url = initUrl(url,method,jsonObject);
         showProgressDialog();
         JsonObjectRequest objectRequest = new JsonObjectRequest(method, url, jsonObject, new Response.Listener<JSONObject>() {
             @Override
@@ -58,10 +62,10 @@ public abstract class VolleyHelper {
         requestQueue.add(objectRequest);
     }
 
-    public void doJsonArray(String url,Integer postOrGet,JSONArray jsonObject){
-        url = init(url,postOrGet,null);
+    public void doJsonArray(String url,Integer postOrGet,JSONArray jsonArray){
+        url = initUrl(url,postOrGet,null);
         showProgressDialog();
-        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonObject,new Response.Listener<JSONArray>() {
+        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonArray,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 hideProgressDialog();
@@ -75,6 +79,19 @@ public abstract class VolleyHelper {
             }
         });
         requestQueue.add(arrayRequest);
+    }
+
+    private String initUrl(String url,int method ,JSONObject jsonObject){
+        if(isLogin) {
+            if(method == GET) {
+                if (url.charAt(url.length() - 1) == '/') {
+                    url = url + token;
+                } else {
+                    url = url + "/" + token;
+                }
+            }
+        }
+        return url;
     }
 
 

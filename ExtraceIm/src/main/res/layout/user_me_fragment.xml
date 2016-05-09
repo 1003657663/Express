@@ -181,6 +181,38 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/receive_record"
+        android:background="#ffffff"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginBottom="2px">
+        <ImageView
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:scaleType="fitXY"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+
+            android:layout_alignParentLeft="true"
+            android:id="@+id/user_info_icon8"
+            android:src="@mipmap/record"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/user_info_icon8"
+            android:gravity="center"
+            android:text="收件记录"/>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/right"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/my_complaint"
         android:layout_width="match_parent"
         android:layout_height="50dp"

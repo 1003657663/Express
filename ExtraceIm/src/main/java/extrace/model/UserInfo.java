@@ -21,6 +21,8 @@ public class UserInfo{
     private SharedPreferences spf;
     private Context context;
 
+    private String token;
+
     public UserInfo(Context context){
         this.context = context;
         spf = PreferenceManager.getDefaultSharedPreferences(context);
@@ -29,6 +31,9 @@ public class UserInfo{
 
 	
 	public void setPassword(String value) {
+        SharedPreferences.Editor editor = spf.edit();
+        editor.putString("password",value);
+        editor.apply();
 		this.password = value;
 	}
 	
