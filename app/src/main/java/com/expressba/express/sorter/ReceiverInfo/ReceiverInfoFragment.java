@@ -10,13 +10,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
 
 /**
  * Created by 黎明 on 2016/5/3.
  */
-public class ReceiverInfoFragment extends Fragment implements ReceiverInfoFragmentView, View.OnClickListener {
+public class ReceiverInfoFragment extends UIFragment implements ReceiverInfoFragmentView, View.OnClickListener {
     private ImageButton back;
     private TextView title;
     private TextView receiver_info_tel, receiver_info_name, receiver_info_add, receiver_info_addinfo;

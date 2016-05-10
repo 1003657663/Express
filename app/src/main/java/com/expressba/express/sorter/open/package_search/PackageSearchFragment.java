@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.PackageInfo;
 import com.expressba.express.sorter.open.ep_search.package_list.PackageListFragment;
 import com.expressba.express.R;
@@ -24,7 +25,7 @@ import com.expressba.express.R;
  * 查看包裹信息
  * 确认转入 PackageListFragment
  */
-public class PackageSearchFragment extends Fragment implements PackageSearchFragmentView {
+public class PackageSearchFragment extends UIFragment implements PackageSearchFragmentView {
     private TextView title, package_from, package_to, EmployeesID, EmployeesName, closetime, ID;
     private PackageSearchPresenter PackageSearchPresenter;
     private Button open;

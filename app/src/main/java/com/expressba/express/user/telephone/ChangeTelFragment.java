@@ -16,12 +16,13 @@ import java.util.HashMap;
 
 
 import com.expressba.express.R;
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.user.login.LoginFragment;
 
 /**
  * Created by chao on 2016/4/28.
  */
-public class ChangeTelFragment extends Fragment implements View.OnClickListener,ChangeTelView{
+public class ChangeTelFragment extends UIFragment implements View.OnClickListener,ChangeTelView{
     private EditText telEdit;
 
     @Override

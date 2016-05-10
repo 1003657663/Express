@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expressba.express.main.MyApplication;
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.model.address.City;
 import com.expressba.express.model.address.Province;
@@ -29,7 +30,7 @@ import com.expressba.express.user.address.getaddressdata.GetAddressModelImpl;
  * Created by chao on 2016/4/19.
  * 编辑地址部分
  */
-public class AddressEditFragment extends Fragment implements View.OnClickListener,AddressEditView,MyDialog.SureButton{
+public class AddressEditFragment extends UIFragment implements View.OnClickListener,AddressEditView,MyDialog.SureButton{
     public static final int ADDRESS_UPDATE_SEND = 0;//发货地址更新
     public static final int ADDRESS_UPDATE_RECEIVE = 1;//收货地址更新
     public static final int ADDRESS_NEW_SEND = 2;//新增发货地址更新

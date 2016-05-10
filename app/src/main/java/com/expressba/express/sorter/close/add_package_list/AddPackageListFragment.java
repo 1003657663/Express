@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ import com.expressba.express.R;
  * 向包裹中添加包裹或快件
  * 接收参数为packageID
  */
-public class AddPackageListFragment extends Fragment implements PackageListFragmentView, ExpressListFragmentView, AddPackageListFragmentView, View.OnClickListener {
+public class AddPackageListFragment extends UIFragment implements PackageListFragmentView, ExpressListFragmentView, AddPackageListFragmentView, View.OnClickListener {
     private AddPackageListPresenter presenter;      //调用其load
     private ListView listView;                      //listView显示内容list
     private static String DpackageID;               //default包裹ID

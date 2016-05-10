@@ -10,12 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expressba.express.R;
+import com.expressba.express.main.UIFragment;
 
 /**
  * 用户密码修改
  * Created by chao on 2016/4/28.
  */
-public class ChangePasswordFragment extends Fragment implements ChangePasswordView,View.OnClickListener {
+public class ChangePasswordFragment extends UIFragment implements ChangePasswordView,View.OnClickListener {
 
     private EditText passwordEdit;
     private EditText passwordEdit2;

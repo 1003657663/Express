@@ -12,13 +12,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
 
 /**
  * Created by songchao on 16/5/8.
  */
-public class ExpressHistoryFragment extends Fragment implements ExpressHistoryView,View.OnClickListener {
+public class ExpressHistoryFragment extends UIFragment implements ExpressHistoryView,View.OnClickListener {
     private ListView historyList;
     private ExpressHistoryPresenter presenter;
     private int sendOrReceive;

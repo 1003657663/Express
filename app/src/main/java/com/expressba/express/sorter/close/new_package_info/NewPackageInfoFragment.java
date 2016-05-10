@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.expressba.express.main.MyApplication;
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.EmployeesEntity;
 import com.expressba.express.model.PackageInfo;
 import com.expressba.express.model.UserAddress;
@@ -32,7 +33,7 @@ import com.expressba.express.user.address.AddressFragment;
  * 选择是否添加 是：进入Add_package_listFragment
  * 否：结束
  */
-public class NewPackageInfoFragment extends Fragment implements NewPackageInfoFragmentView {
+public class NewPackageInfoFragment extends UIFragment implements NewPackageInfoFragmentView {
     private ImageButton back;
     private ImageView toaddress;
     private TextView title, from, to, ID, employeesId, time, employeesname;

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import com.expressba.express.main.MyApplication;
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressEntity;
 import com.expressba.express.sorter.ReceiverInfo.ReceiverInfoFragment;
 import com.expressba.express.R;
@@ -24,7 +25,7 @@ import com.expressba.express.R;
 /**
  * Created by 黎明 on 2016/5/7.
  */
-public class SearchWorkFragment extends Fragment implements SearchWorkFragmentView, View.OnClickListener {
+public class SearchWorkFragment extends UIFragment implements SearchWorkFragmentView, View.OnClickListener {
 
     private ExpressListAdapter adapter;
     private ListView listView;

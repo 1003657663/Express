@@ -1,7 +1,6 @@
 package com.expressba.express.user.search;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,10 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressSearchInfo;
 import com.expressba.express.R;
 
@@ -24,7 +22,7 @@ import com.expressba.express.R;
  * Created by songchao on 16/5/1.
  *
  */
-public class SearchExpressFragment extends Fragment implements View.OnClickListener,SearchExpressView{
+public class SearchExpressFragment extends UIFragment implements View.OnClickListener,SearchExpressView{
 
     //1 未揽收,2 揽收,3 派送,4 寄送,5 签收
     private final int NO_TAKE = 1;
@@ -59,7 +57,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
         view.findViewById(R.id.express_search_result_tomap).setOnClickListener(this);
         expressPresenter = new SearchExpressPresenterImpl(getActivity(),this);
 
-        getBundle();
+        getMyBundle();
 
         //onRequestSuccess();
         return view;
@@ -92,7 +90,7 @@ public class SearchExpressFragment extends Fragment implements View.OnClickListe
      * 获取bundle并且读取其中的信息
      */
     @Override
-    public void getBundle() {
+    public void getMyBundle() {
         Bundle bundle = getArguments();
         if(bundle!=null) {
             searchID = bundle.getString("searchID");//获取运单号码

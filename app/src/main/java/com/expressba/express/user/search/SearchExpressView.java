@@ -8,7 +8,7 @@ import com.expressba.express.model.ExpressSearchInfo;
  * Created by songchao on 16/5/1.
  */
 public interface SearchExpressView {
-    void getBundle();
+    void getMyBundle();
     void init();
     void onError(String errorMessage);
     void getSearchInfo();

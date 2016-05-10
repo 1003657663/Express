@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressEntity;
 import com.expressba.express.sorter.SorterIndex.SorterIndexFragment;
 import com.expressba.express.R;
@@ -21,7 +22,7 @@ import com.expressba.express.R;
 /**
  * Created by 黎明 on 2016/5/3.
  */
-public class DeliverUpdateExpressFragment extends Fragment implements DeliverUpdateExpressFragmentView {
+public class DeliverUpdateExpressFragment extends UIFragment implements DeliverUpdateExpressFragmentView {
     private DeliverUpdateExpressPresenter presenter;
     private EditText weight, insufee, transfee;
     private Button submit;

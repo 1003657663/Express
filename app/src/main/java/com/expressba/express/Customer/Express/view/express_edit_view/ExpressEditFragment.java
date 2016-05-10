@@ -17,8 +17,10 @@ import com.expressba.express.Customer.Express.presenter.express_edit_presenter.E
 import com.expressba.express.Customer.Express.presenter.express_edit_presenter.ExpressPresenterImpl;
 import com.expressba.express.main.MainFragment;
 import com.expressba.express.main.MyApplication;
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.R;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.address.AddressFragment;
 
 /**
@@ -29,7 +31,7 @@ import com.expressba.express.user.address.AddressFragment;
  * 确认寄件，向后台发送int UserID，int sendID，int receiveID
  * 接收 expressID
  */
-public class ExpressEditFragment extends Fragment implements View.OnClickListener, ExpressEditFragmentView {
+public class ExpressEditFragment extends UIFragment implements View.OnClickListener, ExpressEditFragmentView {
     private ExpressPresenter expressPresenter;
     private LinearLayout send_address, receive_address;
     private Button submit;
@@ -61,26 +63,24 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
         receive_address.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             if (getArguments().getInt("receiveOrSend") == SEND) {
                 setSendAddress();
             } else if (getArguments().getInt("receiveOrSend") == RECEIVE) {
                 setReceiveAddress();
             }
-        }
+        }*/
         return view;
     }
 
-    public UserAddress userAddress;
-    public UserAddress getUserAddress(){
-        return userAddress;
+    @Override
+    public void setBundle(Bundle bundle) {
+        super.setBundle(bundle);
+        setReceiveAddress();
     }
-    public void setUserAddress(UserAddress userAddress){
-        this.userAddress = userAddress;
-    }
+
     private void setReceiveAddress() {
-        UserAddress userAddress = this.userAddress;
-                //(UserAddress) getArguments().getParcelable("expressaddress");
+        UserAddress userAddress = getBundle().getParcelable("expressaddress");
         rname.setText(userAddress.getName());
         receive_id = userAddress.getAid();
         rtel.setText(userAddress.getTelephone());
@@ -142,21 +142,27 @@ public class ExpressEditFragment extends Fragment implements View.OnClickListene
     }
 
     private void toSendAddress() {
-        Fragment fragment = new AddressFragment();
+        /*Fragment fragment = new AddressFragment();
+        fragment.setTargetFragment(this,0);*/
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", SEND);
-        fragment.setArguments(bundle);
+        bundle.putString("wherefrom",getClass().getName());
+        /*fragment.setArguments(bundle);
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.hide(ExpressEditFragment.this);
-        transaction.add(R.id.fragment_container_layout, fragment,"needaddressfragment");
-       // transaction.replace(R.id.fragment_container_layout, fragment,"needaddressfragment");
-        transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.add(R.id.fragment_container_layout, fragment);
+        //transaction.replace(R.id.fragment_container_layout, fragment,"needaddressfragment");
+        transaction.addToBackStack("needaddressfragment");
+        transaction.commit();*/
+
+        MyFragmentManager.turnFragment(ExpressEditFragment.class,AddressFragment.class,bundle,getFragmentManager());
     }
 
     public void onback() {
-        getFragmentManager().popBackStack();
+        //getFragmentManager().popBackStack();
+        //弹出包括自身和在自己上面的所有栈
+        getFragmentManager().popBackStackImmediate(ExpressEditFragment.class.getSimpleName(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override

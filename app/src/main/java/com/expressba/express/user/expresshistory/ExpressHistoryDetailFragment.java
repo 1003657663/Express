@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
 
@@ -14,7 +15,7 @@ import com.expressba.express.R;
  * 快件详情
  * Created by songchao on 16/5/8.
  */
-public class ExpressHistoryDetailFragment extends Fragment implements View.OnClickListener{
+public class ExpressHistoryDetailFragment extends UIFragment implements View.OnClickListener{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
