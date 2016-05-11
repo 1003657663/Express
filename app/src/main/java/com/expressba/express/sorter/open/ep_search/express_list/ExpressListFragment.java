@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.model.Package;
 import com.expressba.express.sorter.ReceiverInfo.ReceiverInfoFragment;
@@ -39,7 +40,7 @@ import com.expressba.express.R;
  * 查看此包裹中的expresslist
  * 确认拆包发送packageID将包拆开
  */
-public class ExpressListFragment extends Fragment implements ExpressListFragmentView, PackageListFragmentView {
+public class ExpressListFragment extends UIFragment implements ExpressListFragmentView, PackageListFragmentView {
     private TextView choose_package, choose_express;
     private ListView listView;
     private ExpressListPresenter presenter;

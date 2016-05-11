@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
 import com.expressba.express.model.PackageInfo;
@@ -33,7 +34,7 @@ import com.expressba.express.user.login.LoginFragment;
 /**
  * Created by 黎明 on 2016/4/25.
  */
-public class SorterIndexFragment extends Fragment implements SorterIndexFragmentView {
+public class SorterIndexFragment extends UIFragment implements SorterIndexFragmentView {
     private Button meButton;
     private FragmentTransaction transaction;
     private ImageButton cameraButton;

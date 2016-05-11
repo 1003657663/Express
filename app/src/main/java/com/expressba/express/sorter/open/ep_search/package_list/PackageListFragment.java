@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.Package;
 import com.expressba.express.sorter.open.ep_search.express_list.ExpressListFragment;
 import com.expressba.express.sorter.SorterIndex.SorterIndexFragment;
@@ -29,7 +30,7 @@ import com.expressba.express.R;
  * Created by 黎明 on 2016/4/26.
  * 查看此包裹中的packagelist
  */
-public class PackageListFragment extends Fragment implements PackageListFragmentView {
+public class PackageListFragment extends UIFragment implements PackageListFragmentView {
     private TextView choose_package, choose_express;
     private ListView listView;
     private ImageButton back;

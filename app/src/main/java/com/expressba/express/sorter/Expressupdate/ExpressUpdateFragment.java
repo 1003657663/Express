@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
 
@@ -25,7 +26,7 @@ import com.expressba.express.R;
  * 暂不考虑用户未下订单的情况
  * 一打开就是用户填好的订单 只需确认并更新
  */
-public class ExpressUpdateFragment extends Fragment implements ExpressUpdateFragmentView, View.OnClickListener {
+public class ExpressUpdateFragment extends UIFragment implements ExpressUpdateFragmentView, View.OnClickListener {
     private ExpressUpdatePresenter presenter;
     private LinearLayout send_address, receive_address;
     private Button submit;

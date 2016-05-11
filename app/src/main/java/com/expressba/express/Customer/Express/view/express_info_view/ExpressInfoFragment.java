@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.Customer.Express.presenter.express_info_presenter.ExpressInfoPresenter;
 import com.expressba.express.Customer.Express.presenter.express_info_presenter.ExpressInfoPresenterImpl;
@@ -20,7 +21,7 @@ import com.expressba.express.R;
  * Created by 黎明 on 2016/4/19.
  * 用户查询出的list，点击后显示的快件详细信息
  */
-public class ExpressInfoFragment extends Fragment implements ExpressInfoFragmentView {
+public class ExpressInfoFragment extends UIFragment implements ExpressInfoFragmentView {
     private ImageButton back;
     private TextView title;
     private ExpressInfoPresenter ExpressInfoPresenter;

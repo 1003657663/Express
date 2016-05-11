@@ -1,6 +1,5 @@
 package com.expressba.express.sorter;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.expressba.express.main.MyApplication;
+import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.sorter.close.add_package_list.AddPackageListFragment;
 import com.expressba.express.sorter.work.SearchWorkFragment;
 import com.expressba.express.R;
@@ -20,7 +21,7 @@ import com.expressba.express.user.telephone.ChangeTelFragment;
 /**
  * Created by 黎明 on 2016/5/4.
  */
-public class SorterMe extends Fragment implements SorterMeFragmentView, View.OnClickListener {
+public class SorterMe extends UIFragment implements SorterMeFragmentView, View.OnClickListener {
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -91,14 +92,16 @@ public class SorterMe extends Fragment implements SorterMeFragmentView, View.OnC
      */
     @Override
     public void toUserReceiveAddress() {
-        AddressFragment addressFragment = new AddressFragment();
+        /*AddressFragment addressFragment = new AddressFragment();*/
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
-        addressFragment.setArguments(bundle);
+        /*addressFragment.setArguments(bundle);
 
         transaction.replace(R.id.fragment_container_layout, addressFragment);
         transaction.addToBackStack("mefragment");
-        transaction.commit();
+        transaction.commit();*/
+
+        MyFragmentManager.turnFragment(SorterMe.class,AddressFragment.class,bundle,getFragmentManager());
     }
 
     /**
@@ -118,11 +121,13 @@ public class SorterMe extends Fragment implements SorterMeFragmentView, View.OnC
      */
     @Override
     public void toPasswordChange() {
-        ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
+        /*ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
 
         transaction.replace(R.id.fragment_container_layout, changePasswordFragment);
         transaction.addToBackStack("mefragment");
-        transaction.commit();
+        transaction.commit();*/
+
+        MyFragmentManager.turnFragment(SorterMe.class,ChangePasswordFragment.class,null,getFragmentManager());
     }
 
     /**
@@ -161,6 +166,8 @@ public class SorterMe extends Fragment implements SorterMeFragmentView, View.OnC
         transaction.replace(R.id.fragment_container_layout, fragment);
         transaction.addToBackStack("SorterMe");
         transaction.commit();
+
+        MyFragmentManager.turnFragment(SorterMe.class,AddPackageListFragment.class,bundle,getFragmentManager());
     }
 
     /**

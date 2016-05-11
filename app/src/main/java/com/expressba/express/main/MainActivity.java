@@ -2,11 +2,10 @@ package com.expressba.express.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.expressba.express.sorter.SorterIndex.SorterIndexFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.R;
 
 public class MainActivity extends Activity implements MainView {
@@ -19,8 +18,10 @@ public class MainActivity extends Activity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainPresenter = new MainPresenterImpl(this);
-        fm = getFragmentManager();
-        setDefaultFragment();//设置第一个主布局的fragment
+        if(savedInstanceState == null) {//保存状态，防止重建
+            fm = getFragmentManager();
+            setDefaultFragment();//设置第一个主布局的fragment
+        }
     }
 
     @Override
@@ -30,11 +31,13 @@ public class MainActivity extends Activity implements MainView {
 
     @Override
     public void setDefaultFragment() {
-        FragmentManager fm = getFragmentManager();
+        MyFragmentManager.turnFragment(null,MainFragment.class,null,getFragmentManager());
+        /*FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         //SorterIndexFragment indexFragment = new SorterIndexFragment();
         MainFragment indexFragment = new MainFragment();
         transaction.replace(R.id.fragment_container_layout, indexFragment);
-        transaction.commit();
+        transaction.commit();*/
     }
+
 }

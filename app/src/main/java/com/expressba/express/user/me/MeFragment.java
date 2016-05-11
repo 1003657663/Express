@@ -1,11 +1,8 @@
 package com.expressba.express.user.me;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +10,18 @@ import android.widget.TextView;
 
 import com.expressba.express.main.MyApplication;
 import com.expressba.express.R;
+import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.address.AddressFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryPresenterImpl;
-import com.expressba.express.user.login.LoginFragment;
 import com.expressba.express.user.password.ChangePasswordFragment;
 import com.expressba.express.user.telephone.ChangeTelFragment;
 
 /**
  * Created by chao on 2016/4/17.
  */
-public class MeFragment extends Fragment implements MeView,View.OnClickListener{
+public class MeFragment extends UIFragment implements MeView,View.OnClickListener{
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
@@ -89,15 +87,18 @@ public class MeFragment extends Fragment implements MeView,View.OnClickListener{
      */
     @Override
     public void toUserReceiveAddress(){
-        AddressFragment addressFragment = new AddressFragment();
+        //AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
         bundle.putBoolean("isme",true);
-        addressFragment.setArguments(bundle);
 
-        transaction.replace(R.id.fragment_container_layout,addressFragment);
+        //addressFragment.setArguments(bundle);
+
+        MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
+
+        /*transaction.replace(R.id.fragment_container_layout,addressFragment);
         transaction.addToBackStack("mefragment");
-        transaction.commit();
+        transaction.commit();*/
     }
 
     /**

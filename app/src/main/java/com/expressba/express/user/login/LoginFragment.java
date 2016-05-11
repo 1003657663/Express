@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
+
+import com.expressba.express.main.UIFragment;
 import com.expressba.express.toolbox.CheckInput;
 import com.expressba.express.toolbox.CountDown;
 import com.expressba.express.R;
@@ -27,7 +29,7 @@ import com.expressba.express.R;
 /**
  * Created by chao on 2016/4/16.
  */
-public class LoginFragment extends Fragment implements LoginFragmentView,View.OnClickListener{
+public class LoginFragment extends UIFragment implements LoginFragmentView,View.OnClickListener{
 
     public static final int TEL_ERROR = 0;
     public static final int PASSWORD_ERROR = 1;
