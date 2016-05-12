@@ -3,9 +3,7 @@ package com.expressba.express.Customer.Express.view.express_edit_view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -13,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+
 import com.expressba.express.Customer.Express.presenter.express_edit_presenter.ExpressPresenter;
 import com.expressba.express.Customer.Express.presenter.express_edit_presenter.ExpressPresenterImpl;
-import com.expressba.express.main.MainFragment;
 import com.expressba.express.main.MyApplication;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.UserAddress;
@@ -63,20 +61,17 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         receive_address.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
-        /*if (getArguments() != null) {
-            if (getArguments().getInt("receiveOrSend") == SEND) {
-                setSendAddress();
-            } else if (getArguments().getInt("receiveOrSend") == RECEIVE) {
-                setReceiveAddress();
-            }
-        }*/
         return view;
     }
 
     @Override
     public void setBundle(Bundle bundle) {
         super.setBundle(bundle);
-        setReceiveAddress();
+        if (getBundle().getInt("receiveOrSend") == SEND) {
+            setSendAddress();
+        } else if (getBundle().getInt("receiveOrSend") == RECEIVE) {
+            setReceiveAddress();
+        }
     }
 
     private void setReceiveAddress() {
@@ -89,7 +84,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     }
 
     private void setSendAddress() {
-        UserAddress userAddress = (UserAddress) getArguments().getParcelable("expressaddress");
+        UserAddress userAddress = getBundle().getParcelable("expressaddress");
         sname.setText(userAddress.getName());
         send_id = userAddress.getAid();
         stel.setText(userAddress.getTelephone());
@@ -103,6 +98,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
             case R.id.top_bar_left_img:
                 //点击后退按钮
                 onback();
+                getFragmentManager().popBackStack();
                 break;
             case R.id.send_address:
                 //用户点击寄件人姓名，跳转至地址fragment
@@ -130,39 +126,25 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     }
 
     private void toReceiveAddress() {
-        Fragment fragment1 = new AddressFragment();
+
         Bundle bundle1 = new Bundle();
         bundle1.putInt("receiveOrSend", RECEIVE);
-        fragment1.setArguments(bundle1);
-        FragmentTransaction transaction=getFragmentManager().beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.replace(R.id.fragment_container_layout, fragment1,"needaddressfragment");
-        transaction.addToBackStack(null);
-        transaction.commit();
+        bundle1.putString("wherefrom", getClass().getName());
+        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressFragment.class, bundle1, getFragmentManager());
     }
 
     private void toSendAddress() {
-        /*Fragment fragment = new AddressFragment();
-        fragment.setTargetFragment(this,0);*/
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", SEND);
-        bundle.putString("wherefrom",getClass().getName());
-        /*fragment.setArguments(bundle);
-        FragmentTransaction transaction=getFragmentManager().beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.hide(ExpressEditFragment.this);
-        transaction.add(R.id.fragment_container_layout, fragment);
-        //transaction.replace(R.id.fragment_container_layout, fragment,"needaddressfragment");
-        transaction.addToBackStack("needaddressfragment");
-        transaction.commit();*/
+        bundle.putString("wherefrom", getClass().getName());
 
-        MyFragmentManager.turnFragment(ExpressEditFragment.class,AddressFragment.class,bundle,getFragmentManager());
+        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressFragment.class, bundle, getFragmentManager());
     }
 
     public void onback() {
         //getFragmentManager().popBackStack();
         //弹出包括自身和在自己上面的所有栈
-        getFragmentManager().popBackStackImmediate(ExpressEditFragment.class.getSimpleName(),FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getFragmentManager().popBackStackImmediate(ExpressEditFragment.class.getSimpleName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
@@ -178,12 +160,8 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        MainFragment fragment = new MainFragment();
-                        FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                        transaction.replace(R.id.fragment_container_layout, fragment);
-                        transaction.addToBackStack("null");
-                        transaction.commit();
+                        onback();
+                        getFragmentManager().popBackStack();
                     }
                 }).create();
         dialog.show();

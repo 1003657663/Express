@@ -101,7 +101,6 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         Bundle bundle = new Bundle();
         bundle.putParcelable("userAddress", userAddress);
         bundle.putInt("editWhat", receiveOrSend);
-
         /*AddressEditFragment addressEditFragment = new AddressEditFragment();
         addressEditFragment.setArguments(bundle);
         ft.addToBackStack("address");

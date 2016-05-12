@@ -3,7 +3,6 @@ package com.expressba.express.sorter.SorterIndex;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import com.expressba.express.main.UIFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
 import com.expressba.express.model.PackageInfo;
-import com.expressba.express.myelement.MyDialog;
 import com.expressba.express.sorter.Expressupdate.ExpressUpdateFragment;
 import com.expressba.express.sorter.SorterMe;
 import com.expressba.express.sorter.open.ep_search.package_list.PackageListFragment;
