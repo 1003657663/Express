@@ -2,7 +2,6 @@ package com.expressba.express.sorter.close.new_package_info;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.EmployeesEntity;
 import com.expressba.express.model.PackageInfo;
 import com.expressba.express.model.UserAddress;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.sorter.SorterIndex.SorterIndexFragment;
 import com.expressba.express.sorter.close.add_package_list.AddPackageListFragment;
 import com.expressba.express.R;
@@ -41,6 +41,18 @@ public class NewPackageInfoFragment extends UIFragment implements NewPackageInfo
     private NewPackageInfoPresenter presenter1;
     private static int fromID, toID, EmployeesID;
     private static String packageID;
+    @Override
+    public void setBundle(Bundle bundle) {
+        super.setBundle(bundle);
+        UserAddress userAddress = getBundle().getParcelable("expressaddress");
+        toID = userAddress.getAid();
+        to.setText("" + toID);
+    }
+
+    @Override
+    public Bundle getBundle() {
+        return super.getBundle();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,30 +85,19 @@ public class NewPackageInfoFragment extends UIFragment implements NewPackageInfo
         toaddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddressFragment fragment = new AddressFragment();
-                //去address选取一个目的地地址并返回ID和address
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
                 Bundle bundle = new Bundle();
                 bundle.putInt("receiveOrSend", 1);
-                fragment.setArguments(bundle);
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.hide(NewPackageInfoFragment.this);
-                transaction.add(R.id.fragment_container_layout, fragment,"needaddressfragment");
-                transaction.addToBackStack("NewPackageInfoFragment");
-                transaction.commit();
+                bundle.putString("wherefrom", getClass().getName());
+                MyFragmentManager.turnFragment(NewPackageInfoFragment.class, AddressFragment.class, bundle, getFragmentManager());
+
             }
         });
 
-        if (getArguments() != null) {
-            UserAddress userAddress = (UserAddress) getArguments().getParcelable("expressaddress");
-            toID = userAddress.getAid();
-            to.setText("" + toID);
-        }
         presenter1 = new NewPackageInfoPresenterImpl(getActivity(), this);
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (to.getText() != null)
                     //创建包裹
                     presenter1.newPackage(fromID, toID, EmployeesID, 1);
             }
