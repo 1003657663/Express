@@ -144,7 +144,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     public void onback() {
         //getFragmentManager().popBackStack();
         //弹出包括自身和在自己上面的所有栈
-        getFragmentManager().popBackStackImmediate(ExpressEditFragment.class.getSimpleName(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        MyFragmentManager.popFragment(ExpressEditFragment.class,null,null,getFragmentManager());
     }
 
     @Override

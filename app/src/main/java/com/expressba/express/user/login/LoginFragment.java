@@ -2,6 +2,8 @@ package com.expressba.express.user.login;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,7 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.toolbox.CheckInput;
 import com.expressba.express.toolbox.CountDown;
 import com.expressba.express.R;
@@ -219,7 +222,11 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
 
     @Override
     public void onback() {
-        getFragmentManager().popBackStack();
+        /*FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.hide(this);
+        ft.commitAllowingStateLoss();*/
+        MyFragmentManager.popFragment(LoginFragment.class,null,null,getFragmentManager());
     }
 
     @Override

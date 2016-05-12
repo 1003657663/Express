@@ -2,6 +2,7 @@ package com.expressba.express.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -31,13 +32,7 @@ public class MainActivity extends Activity implements MainView {
 
     @Override
     public void setDefaultFragment() {
-        MyFragmentManager.turnFragment(null,MainFragment.class,null,getFragmentManager());
-        /*FragmentManager fm = getFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        //SorterIndexFragment indexFragment = new SorterIndexFragment();
-        MainFragment indexFragment = new MainFragment();
-        transaction.replace(R.id.fragment_container_layout, indexFragment);
-        transaction.commit();*/
+        MyFragmentManager.turnFragment(null,MainFragment.class,null,getFragmentManager(),false);
     }
 
 }

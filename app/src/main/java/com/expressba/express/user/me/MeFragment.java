@@ -15,6 +15,7 @@ import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.address.AddressFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryPresenterImpl;
+import com.expressba.express.user.login.LoginFragment;
 import com.expressba.express.user.password.ChangePasswordFragment;
 import com.expressba.express.user.telephone.ChangeTelFragment;
 
@@ -73,9 +74,6 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
             case R.id.about_soft:
                 toAboutSoftFragment();
                 break;
-            case R.id.my_complaint:
-                toMyComplaint();
-                break;
             case R.id.user_me_login_out:
                 loginOut();
                 break;
@@ -87,18 +85,11 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
      */
     @Override
     public void toUserReceiveAddress(){
-        //AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
         bundle.putBoolean("isme",true);
 
-        //addressFragment.setArguments(bundle);
-
         MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
-
-        /*transaction.replace(R.id.fragment_container_layout,addressFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();*/
     }
 
     /**
@@ -106,11 +97,7 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
      */
     @Override
     public void toTelChange() {
-        ChangeTelFragment changeTelFragment = new ChangeTelFragment();
-
-        transaction.replace(R.id.fragment_container_layout,changeTelFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();
+        MyFragmentManager.turnFragment(MeFragment.class,ChangeTelFragment.class,null,getFragmentManager());
     }
 
     /**
@@ -118,11 +105,7 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
      */
     @Override
     public void toPasswordChange() {
-        ChangePasswordFragment changePasswordFragment = new ChangePasswordFragment();
-
-        transaction.replace(R.id.fragment_container_layout,changePasswordFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();
+        MyFragmentManager.turnFragment(MeFragment.class,ChangePasswordFragment.class,null,getFragmentManager());
     }
 
     /**
@@ -130,15 +113,10 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
      */
     @Override
     public void toUserSendAddress() {
-        AddressFragment addressFragment = new AddressFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.SEND);
         bundle.putBoolean("isme",true);
-        addressFragment.setArguments(bundle);
-
-        transaction.replace(R.id.fragment_container_layout,addressFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();
+        MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
     }
 
     /**
@@ -147,34 +125,34 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public void loginOut() {
         ((MyApplication)getActivity().getApplication()).getUserInfo().setLoginState(false);
-        //LoginFragment loginFragment = new LoginFragment();
-        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        //transaction.replace(R.id.fragment_container_layout,loginFragment);
-        getFragmentManager().popBackStack();
-        transaction.commit();
+        /*LoginFragment loginFragment = new LoginFragment();
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        ft.hide(this);
+        if(!loginFragment.isAdded()) {
+            ft.add(R.id.fragment_container_layout,loginFragment, LoginFragment.class.getSimpleName());
+        }else {
+            ft.show(loginFragment);
+        }
+        ft.commitAllowingStateLoss();*/
+
+        MyFragmentManager.turnFragment(MeFragment.class,LoginFragment.class,null,getFragmentManager(),false);
     }
 
 
     @Override
     public void toReceiveRecordFragment() {
-        ExpressHistoryFragment historyFragment = new ExpressHistoryFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("sendorrecieve", ExpressHistoryPresenterImpl.HISTORY_RECEIVE);
-        historyFragment.setArguments(bundle);
-        transaction.replace(R.id.fragment_container_layout,historyFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();
+        bundle.putInt("sendorreceive", ExpressHistoryPresenterImpl.HISTORY_RECEIVE);
+        MyFragmentManager.turnFragment(MeFragment.class,ExpressHistoryFragment.class,bundle,getFragmentManager());
     }
 
     @Override
     public void toSendRecordFragment(){
-        ExpressHistoryFragment historyFragment = new ExpressHistoryFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("sendorrecieve", ExpressHistoryPresenterImpl.HISTORY_SEND);
-        historyFragment.setArguments(bundle);
-        transaction.replace(R.id.fragment_container_layout,historyFragment);
-        transaction.addToBackStack("mefragment");
-        transaction.commit();
+        bundle.putInt("sendorreceive", ExpressHistoryPresenterImpl.HISTORY_SEND);
+        MyFragmentManager.turnFragment(MeFragment.class,ExpressHistoryFragment.class,bundle,getFragmentManager());
     }
 
     /**

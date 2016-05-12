@@ -95,17 +95,9 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
 
     @Override
     public void toEditFragment(UserAddress userAddress, Integer receiveOrSend) {
-        /*FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);*/
         Bundle bundle = new Bundle();
         bundle.putParcelable("userAddress", userAddress);
         bundle.putInt("editWhat", receiveOrSend);
-
-        /*AddressEditFragment addressEditFragment = new AddressEditFragment();
-        addressEditFragment.setArguments(bundle);
-        ft.addToBackStack("address");
-        ft.replace(R.id.fragment_container_layout, addressEditFragment).commit();*/
 
         MyFragmentManager.turnFragment(AddressFragment.class,AddressEditFragment.class,bundle,getFragmentManager());
     }
@@ -140,7 +132,7 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         }
 
         try {//这里需要判断一下
-            MyFragmentManager.popFragment((Class<? extends UIFragment>) Class.forName(from),bundle,getFragmentManager());
+            MyFragmentManager.popFragment(AddressFragment.class,(Class<? extends UIFragment>) Class.forName(from),bundle,getFragmentManager());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
