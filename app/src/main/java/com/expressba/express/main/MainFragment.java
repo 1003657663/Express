@@ -13,6 +13,11 @@ import android.app.Activity;
 import android.widget.Toast;
 
 
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMapOptions;
+import com.baidu.mapapi.map.MapFragment;
+import com.baidu.mapapi.map.MapStatus;
+import com.expressba.express.map.MyBaiduMapFragment;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
@@ -71,7 +76,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 startCamera();
                 break;
             case R.id.index_top_bar_message:
-                toSearchResult();
+                //toSearchResult();
+                toTestMap();
                 break;
             case R.id.send:
                 toSendFragment();
@@ -80,6 +86,19 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 toSearchFragment();
                 break;
         }
+    }
+
+    /**
+     * 跳转到测试用百度地图页面
+     */
+    private void toTestMap(){
+        SDKInitializer.initialize(getActivity().getApplicationContext());
+        MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
+        BaiduMapOptions bo = new BaiduMapOptions().mapStatus(ms).compassEnabled(false).zoomControlsEnabled(false);
+        MapFragment mapFragment = MapFragment.newInstance(bo);
+        FragmentManager fm = getFragmentManager();
+        fm.beginTransaction().hide(this);
+        fm.beginTransaction().add(R.id.fragment_container_layout,mapFragment,"mapfragment").commitAllowingStateLoss();
     }
 
     /**

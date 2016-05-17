@@ -40,4 +40,6 @@ dependencies {
     compile files('libs/MobTools-2016.0303.1229.jar')
     compile files('libs/MobCommons-2016.0303.1229.jar')
     compile files('libs/zxing.jar')
+    compile files('libs/BaiduTraceSDK_v2_1_7.jar')
+    compile files('libs/BaiduLBS_Android.jar')
 }

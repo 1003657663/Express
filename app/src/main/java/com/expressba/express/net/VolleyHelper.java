@@ -1,19 +1,21 @@
 package com.expressba.express.net;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.Response.*;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.expressba.express.main.MyApplication;
@@ -65,7 +67,7 @@ public abstract class VolleyHelper {
     public void doJsonArray(String url,Integer postOrGet,JSONArray jsonArray){
         url = initUrl(url,postOrGet,null);
         showProgressDialog();
-        MyJsonArrayRequest arrayRequest = new MyJsonArrayRequest(postOrGet,url,jsonArray,new Response.Listener<JSONArray>() {
+        JsonArrayRequest arrayRequest = new JsonArrayRequest(postOrGet,url,jsonArray,new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 hideProgressDialog();
@@ -81,6 +83,41 @@ public abstract class VolleyHelper {
         requestQueue.add(arrayRequest);
     }
 
+
+    /**
+     * 请求图片的方法
+     * @param url
+     * @param bitmap
+     */
+    public void doImage(String url,Bitmap bitmap){
+
+        showProgressDialog();
+        Listener<Bitmap> listener = new Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                hideProgressDialog();
+
+            }
+        };
+
+        ImageRequest imageRequest = new ImageRequest(url, listener, bitmap.getWidth(), bitmap.getHeight(), ImageView.ScaleType.FIT_XY, bitmap.getConfig(), new ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideProgressDialog();
+                onError(VolleyErrorHelper.getMessage(error,context));
+            }
+        });
+
+        requestQueue.add(imageRequest);
+    }
+
+    /**
+     * url加密数据token带上-----其实没用
+     * @param url
+     * @param method
+     * @param jsonObject
+     * @return
+     */
     private String initUrl(String url,int method ,JSONObject jsonObject){
         if(isLogin) {
             if(method == GET) {
@@ -107,18 +144,6 @@ public abstract class VolleyHelper {
         }
     }
 
-    private String init(String url,int method,JSONObject jsonObject){
-        if(isLogin){
-            if(method == GET){
-                if(url.charAt(url.length()-1) == '/') {
-                    url = url + token;
-                }else {
-                    url = url +"/" +token;
-                }
-            }
-        }
-        return url;
-    }
 
     private void hideProgressDialog(){
         if(isShowProgress) {
