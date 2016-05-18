@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="12"
+        android:minSdkVersion="19"
         android:targetSdkVersion="19" />
 
     <application
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="GX8pWuPhG7e7aUQtzck59s0u5AQcNz6A" />
+            android:value="9ZLmmOvYVlN8FUP3PE3s92Wd55GbGEBT" />
 
         <service
             android:name="com.baidu.trace.LBSTraceService"

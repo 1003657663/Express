@@ -92,13 +92,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      * 跳转到测试用百度地图页面
      */
     private void toTestMap(){
-        SDKInitializer.initialize(getActivity().getApplicationContext());
-        MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
-        BaiduMapOptions bo = new BaiduMapOptions().mapStatus(ms).compassEnabled(false).zoomControlsEnabled(false);
-        MapFragment mapFragment = MapFragment.newInstance(bo);
-        FragmentManager fm = getFragmentManager();
-        fm.beginTransaction().hide(this);
-        fm.beginTransaction().add(R.id.fragment_container_layout,mapFragment,"mapfragment").commitAllowingStateLoss();
+        //MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
+        MyFragmentManager.turnBaiduFragment(MainFragment.class,MyBaiduMapFragment.class,null,"mycar",getFragmentManager());
     }
 
     /**

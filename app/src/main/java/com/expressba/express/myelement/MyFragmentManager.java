@@ -84,7 +84,7 @@ public class MyFragmentManager {
      * @param args
      * @param fm
      */
-    public static void turnBaiduFragment(Class<? extends UIFragment> fromFragmentClass, Class<? extends MyBaiduMapFragment> toFragmentClass, Bundle args, BaiduMapOptions bo, FragmentManager fm){
+    public static void turnBaiduFragment(Class<? extends UIFragment> fromFragmentClass, Class<MyBaiduMapFragment> toFragmentClass, Bundle args,String entityName, FragmentManager fm){
 
         FragmentTransaction ft = fm.beginTransaction();
         //被切换的fragment标签
@@ -101,8 +101,7 @@ public class MyFragmentManager {
         if(toFragment == null){
             try {
                 toFragment = toFragmentClass.newInstance();
-
-                toFragment.setArguments(args);
+                toFragment = toFragment.newInstance(args,entityName);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -111,7 +110,7 @@ public class MyFragmentManager {
         }else {
             if (args != null && !args.isEmpty()) {
                 //toFragment.getArguments().putAll(args);
-                toFragment.setBundle(args);
+                toFragment.setBundle(args,entityName);
             }
         }
         //设置fragment切换效果

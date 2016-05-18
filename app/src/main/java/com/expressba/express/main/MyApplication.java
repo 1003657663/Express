@@ -4,6 +4,8 @@ import android.app.Application;
 import android.location.Address;
 
 import cn.smssdk.SMSSDK;
+
+import com.baidu.mapapi.SDKInitializer;
 import com.expressba.express.model.EmployeesEntity;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.model.UserInfo;
@@ -20,8 +22,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        userInfo = new UserInfo(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());//初始化传入application,百度地图
         SMSSDK.initSDK(this, "12282c18097fb", "55a709db05d0213647f5bd05e29c24f6");//初始化短信发送sdk
+        userInfo = new UserInfo(getApplicationContext());
 
         testInit();//待删除
     }

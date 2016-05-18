@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.R;
 

@@ -13,12 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMapOptions;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
@@ -31,7 +28,6 @@ import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.map.toolbox.MapToastView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,36 +42,50 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
     private String entityName;
 
 
-    public static MyBaiduMapFragment newInstance(Bundle bundle) {
+    public static MyBaiduMapFragment newInstance(Bundle bundle,String entityName) {
         MyBaiduMapFragment fragment = new MyBaiduMapFragment();
+        if(bundle!=null) {
+            bundle.putString("entityname", entityName);
+        }else{
+            bundle = new Bundle();
+            bundle.putString("entityname",entityName);
+        }
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    @Override
-    public void setBundle(Bundle bundle) {
+    public void setBundle(Bundle bundle,String entityName) {
         this.bundle = bundle;
+        this.entityName = entityName;
+    }
+
+    public Bundle getBundle(){
+        return this.bundle;
     }
 
     @Override
-    public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        SDKInitializer.initialize(getActivity().getApplicationContext());//初始化传入application
-        initMap();//初始化生成mapView
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //SDKInitializer.initialize(getActivity().getApplicationContext());//初始化传入application
+        View view = inflater.inflate(R.layout.baidu_map,container,false);
+        mapView = (MapView) view.findViewById(R.id.baidu_map_view);
         mBaiduMap = mapView.getMap();
-        getAllTrace = new GetAllTrace(getActivity(),entityName);
+        initMap();//初始化生成mapView
         getBundleData();
-        getTraceThread();
-        return mapView;
+        getAllTrace = new GetAllTrace(getActivity());
+        initTraceThread();
+        startAsyncTask();
+
+        return view;
     }
 
     AsyncTask asyncTask;
-    private final long time = 60*2;
-    private void getTraceThread(){
+    private final long time = 10;
+    private void initTraceThread(){
         asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
                 while (true) {
-                    getAllTrace.startGetAllTrace();
+                    getAllTrace.startGetAllTrace(entityName);
                     try {
                         Thread.sleep(time*1000);
                     } catch (InterruptedException e) {
@@ -97,13 +107,9 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
      * 初始化地图获取map和view类
      */
     private void initMap(){
-        BaiduMapOptions options = new BaiduMapOptions();
-        //options.mapStatus();//设置起始点和缩放级别
-        options.overlookingGesturesEnabled(false);//不允许俯仰手势
-        options.scaleControlEnabled(true);//显示比例尺控件
-        options.zoomControlsEnabled(true);//支持缩放控件显示
-        options.mapType(BaiduMap.MAP_TYPE_NORMAL);
-        mapView = new MapView(getActivity(),options);
+        MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
+        MapStatusUpdate msU = MapStatusUpdateFactory.newMapStatus(ms);
+        mBaiduMap.setMapStatus(msU);
     }
 
     /**
@@ -233,4 +239,58 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            stopAsyncTask();
+        }else {
+            startAsyncTask();
+        }
+    }
+
+    /**
+     * 停止循环异步获取轨迹
+     */
+    private void stopAsyncTask(){
+        if(asyncTask != null && asyncTask.getStatus() != AsyncTask.Status.FINISHED){
+            asyncTask.cancel(true);
+        }
+    }
+
+    /**
+     * 启动异步获取轨迹点任务
+     */
+    private void startAsyncTask(){
+        if(asyncTask!=null){
+            if(asyncTask.getStatus() == AsyncTask.Status.FINISHED) {
+                asyncTask.execute();
+            }else if(asyncTask.getStatus() != AsyncTask.Status.RUNNING){
+                asyncTask.execute();
+            }
+        }else {
+            initTraceThread();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopAsyncTask();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopAsyncTask();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startAsyncTask();
+        mapView.onResume();
+    }
 }

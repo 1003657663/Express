@@ -1,6 +1,7 @@
 package com.expressba.express.map;
 
 import android.app.Activity;
+import android.os.Looper;
 import android.widget.Toast;
 
 import com.baidu.mapapi.model.LatLng;
@@ -22,7 +23,7 @@ public class GetAllTrace {
     private List<LatLng> latLngsHistory;
     private List<LatLng> tempLatLngs;
 
-    public GetAllTrace(Activity activity, String entityName){
+    public GetAllTrace(Activity activity){
         this.activity = activity;
         this.entityName = entityName;
         tempLatLngs = new ArrayList<>();
@@ -36,7 +37,8 @@ public class GetAllTrace {
     /**
      * 开始获取点
      */
-    public void startGetAllTrace(){
+    public void startGetAllTrace(String entityName){
+        this.entityName = entityName;
         if(!hasHistory) {
             myHistoryTrace.queryProcessedHistoryTrack(entityName);
         }else {
@@ -57,11 +59,11 @@ public class GetAllTrace {
         myHistoryTrace.historyInterface = new MyHistoryTrace.QueryHistoryInterface() {
             @Override
             public void queryHistoryCallBack(List<LatLng> latLngs) {
-                if(latLngs.size()>1) {
+                if(latLngs !=null && latLngs.size()>1) {
                     latLngsHistory = latLngs;
                     hasHistory = true;
                     myHistoryTrace.queryRealtimeTrack();
-                }else if(latLngs.size() == 1){
+                }else if(latLngs!=null && latLngs.size() == 1){
                     LatLng latLng = latLngs.get(0);
                     Double latitude = latLng.latitude;
                     Double longitude = latLng.longitude;
@@ -70,6 +72,7 @@ public class GetAllTrace {
                     }
                 }else{
                     onError("当前查询无轨迹点");
+                    Looper.loop();
                     myHistoryTrace.queryRealtimeTrack();
                 }
             }

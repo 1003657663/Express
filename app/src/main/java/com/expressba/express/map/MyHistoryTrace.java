@@ -172,7 +172,7 @@ public class MyHistoryTrace {
      * 初始化track回调
      */
     private void initOnTrackListener(){
-        OnTrackListener onTrackListener = new OnTrackListener() {
+        onTrackListener = new OnTrackListener() {
             @Override
             public void onRequestFailedCallback(String s) {
                 if(historyInterface != null){
