@@ -10,9 +10,9 @@ import com.baidu.trace.OnTrackListener;
 import com.baidu.trace.Trace;
 import com.baidu.trace.TraceLocation;
 import com.expressba.express.map.model.HistoryTrackData;
+import com.expressba.express.map.model.MyLatLng;
 import com.expressba.express.map.toolbox.GsonService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,13 +69,13 @@ public class MyHistoryTrace {
         initOnStartTraceListener();
 
         //开启轨迹服务
-        GetAllTrace.client.startTrace(trace, startTraceListener);
+        MyBaiduMapPresenterImpl.client.startTrace(trace, startTraceListener);
 
         //设置位置采集和打包周期
-        GetAllTrace.client.setInterval(gatherInterval, packInterval);
+        MyBaiduMapPresenterImpl.client.setInterval(gatherInterval, packInterval);
 
         //设置协议
-        GetAllTrace.client.setProtocolType(protocoType);
+        MyBaiduMapPresenterImpl.client.setProtocolType(protocoType);
     }
 
     /**
@@ -135,7 +135,7 @@ public class MyHistoryTrace {
         };
 
         //停止轨迹服务
-        GetAllTrace.client.stopTrace(trace,stopTraceListener);
+        MyBaiduMapPresenterImpl.client.stopTrace(trace,stopTraceListener);
     }
 
     /**
@@ -164,8 +164,8 @@ public class MyHistoryTrace {
 
         initOnTrackListener();//初始化listener
 
-        GetAllTrace.client.setOnTrackListener(onTrackListener);
-        GetAllTrace.client.queryProcessedHistoryTrack(SERVICE_ID,entityName,simpleReturn,isProcessed,startTime,endTime,pageSize,pageIndex,onTrackListener);
+        MyBaiduMapPresenterImpl.client.setOnTrackListener(onTrackListener);
+        MyBaiduMapPresenterImpl.client.queryProcessedHistoryTrack(SERVICE_ID,entityName,simpleReturn,isProcessed,startTime,endTime,pageSize,pageIndex,onTrackListener);
     }
 
     /**
@@ -189,7 +189,7 @@ public class MyHistoryTrace {
             @Override
             public void onQueryHistoryTrackCallback(String s) {
                 super.onQueryHistoryTrackCallback(s);
-                List<LatLng> latLngs = null;
+                List<MyLatLng> latLngs = null;
                 latLngs = handlerHistoryTrackData(s);
                 if(historyInterface != null) {
                     historyInterface.queryHistoryCallBack(latLngs);
@@ -204,12 +204,12 @@ public class MyHistoryTrace {
      * @param s
      * @return
      */
-    private List<LatLng> handlerHistoryTrackData(String s){
+    private List<MyLatLng> handlerHistoryTrackData(String s){
         //这里是查询历史记录接口回调，先把数据处理成列表样式
         HistoryTrackData historyTrackData = GsonService.parseJson(s,HistoryTrackData.class);
         HistoryTrackDataManage trackDataManage = new HistoryTrackDataManage(historyTrackData);
         if(historyTrackData != null && historyTrackData.getStatus() == 0) {
-            final List<LatLng> latLngs = trackDataManage.getListPoints();
+            final List<MyLatLng> latLngs = trackDataManage.getListPoints();
             return latLngs;
 
         }else {
@@ -221,17 +221,13 @@ public class MyHistoryTrace {
      * 查询历史记录的接口回调，返回历史数据数据列表
      */
     public interface QueryHistoryInterface{
-        void queryHistoryCallBack(List<LatLng> latLngs);
+        void queryHistoryCallBack(List<MyLatLng> latLngs);
         void requestFail(String s);
     }
 
-    /*public void setQueryHistoryInterface(QueryHistoryInterface historyInterface){
-        this.historyInterface = historyInterface;
-    }*/
-
     public void queryRealtimeTrack(){
         initOnTrackListener();
-        GetAllTrace.client.queryRealtimeLoc(SERVICE_ID,entityListener);
+        MyBaiduMapPresenterImpl.client.queryRealtimeLoc(SERVICE_ID,entityListener);
     }
 
     /**
@@ -259,7 +255,7 @@ public class MyHistoryTrace {
             @Override
             public void onReceiveLocation(TraceLocation traceLocation) {
                 super.onReceiveLocation(traceLocation);
-                LatLng latLng;
+                MyLatLng latLng;
                 if((latLng = handlerReceiveLocation(traceLocation)) != null){
                     if(entityInterface!=null){
                         entityInterface.onReceiveLocation(latLng);
@@ -273,14 +269,14 @@ public class MyHistoryTrace {
         };
     }
 
-    private LatLng handlerReceiveLocation(TraceLocation traceLocation){
+    private MyLatLng handlerReceiveLocation(TraceLocation traceLocation){
 
         double latitude = traceLocation.getLatitude();
         double longitude = traceLocation.getLongitude();
         if(Math.abs(latitude - 0.0) < 0.000001 && Math.abs(longitude - 0.0) < 0.000001){
             return null;
         }else{
-            LatLng latLng = new LatLng(latitude,longitude);
+            MyLatLng latLng = new MyLatLng(latitude,longitude,traceLocation.getTime());
             return latLng;
         }
     }
@@ -288,6 +284,6 @@ public class MyHistoryTrace {
     OnEntityInterface entityInterface;
     public interface OnEntityInterface{
         void onRequestFailed(String s);
-        void onReceiveLocation(LatLng latLng);
+        void onReceiveLocation(MyLatLng latLng);
     }
 }

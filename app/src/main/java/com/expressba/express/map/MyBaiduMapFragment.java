@@ -26,37 +26,41 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.model.LatLngBounds;
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.map.model.MyLatLng;
 import com.expressba.express.map.toolbox.MapToastView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by songchao on 16/5/17.
  */
-public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAllTraceInterface{
+public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
 
     private BaiduMap mBaiduMap;
     private MapView mapView;
     private Bundle bundle;
-    private GetAllTrace getAllTrace;
-    private String entityName;
+    private MyBaiduMapPresenterImpl myBaiduMapPresenterImpl;
+    private ArrayList<String> entityNames;
 
 
-    public static MyBaiduMapFragment newInstance(Bundle bundle,String entityName) {
+    public static MyBaiduMapFragment newInstance(Bundle bundle,ArrayList<String> entityNames) {
         MyBaiduMapFragment fragment = new MyBaiduMapFragment();
         if(bundle!=null) {
-            bundle.putString("entityname", entityName);
+            //bundle.putString("entityname", entityName);
+            bundle.putStringArrayList("entitynames",entityNames);
         }else{
             bundle = new Bundle();
-            bundle.putString("entityname",entityName);
+            //bundle.putString("entityname",entityName);
+            bundle.putStringArrayList("entitynames",entityNames);
         }
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public void setBundle(Bundle bundle,String entityName) {
+    public void setBundle(Bundle bundle,ArrayList<String> entityNames) {
         this.bundle = bundle;
-        this.entityName = entityName;
+        this.entityNames = entityNames;
     }
 
     public Bundle getBundle(){
@@ -71,7 +75,7 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
         mBaiduMap = mapView.getMap();
         initMap();//初始化生成mapView
         getBundleData();
-        getAllTrace = new GetAllTrace(getActivity());
+        myBaiduMapPresenterImpl = new MyBaiduMapPresenterImpl(getActivity(),this);
         initTraceThread();
         startAsyncTask();
 
@@ -83,22 +87,29 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
     private void initTraceThread(){
         asyncTask = new AsyncTask() {
             @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                myBaiduMapPresenterImpl.startGetAllTrace(entityNames,true);
+            }
+
+            @Override
             protected Object doInBackground(Object[] params) {
                 while (true) {
-                    getAllTrace.startGetAllTrace(entityName);
                     try {
                         Thread.sleep(time*1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                         onError("线程sleep失败");
                     }
+                    myBaiduMapPresenterImpl.startGetAllTrace(entityNames,false);
                 }
             }
 
         };
     }
 
-    private void onError(String message){
+    @Override
+    public void onError(String message){
         Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
     }
 
@@ -120,14 +131,18 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
             bundle = getArguments();
         }
         if(bundle != null){
-            entityName = bundle.getString("entityname");
+            entityNames = bundle.getStringArrayList("entitynames");
         }
     }
 
 
     @Override
-    public void getAllTraceCallBack(List<LatLng> latLngs) {
-        drawHistoryTrack(latLngs);
+    public void getAllTraceCallBack(List<MyLatLng> latLngs) {
+        List<LatLng> latLngList = new ArrayList<>();
+        for(int i=0;i<latLngs.size();i++){//转换自定义经纬度类到官方类
+            latLngList.add(new LatLng(latLngs.get(i).latitude,latLngs.get(i).longitude));
+        }
+        drawHistoryTrack(latLngList);
     }
 
 
@@ -171,7 +186,7 @@ public class MyBaiduMapFragment extends UIFragment implements GetAllTrace.GetAll
 
             // 添加起点图标
             startMarker = new MarkerOptions()
-                    .position(points.get(points.size() - 1)).icon(bmStart)
+                    .position(points.get(points.size()-1)).icon(bmStart)
                     .zIndex(9).draggable(true);
 
             // 添加终点图标

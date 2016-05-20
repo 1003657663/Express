@@ -3,6 +3,7 @@ package com.expressba.express.map;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
 import com.expressba.express.map.model.HistoryTrackData;
+import com.expressba.express.map.model.MyLatLng;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -102,55 +103,19 @@ public class HistoryTrackDataManage {
      * @return
      */
 
-    public List<LatLng> getListPoints() {
-        List<LatLng> list = new ArrayList<LatLng>();
-
+    public List<MyLatLng> getListPoints() {
+        List<MyLatLng> list = new ArrayList<MyLatLng>();
         if (points == null || points.size() == 0) {
             return null;
-
         }
         Iterator<Points> it = points.iterator();
-        Points prePoint = null;
-        List<Double> preLocation = null;
-
         while (it.hasNext()) {
-            Boolean isOk = false;
-            Points nextPoint = (Points) it.next();
-            List<Double> location = nextPoint.getLocation();
-            Double speed;
+            Points points = it.next();
+            List<Double> location = points.getLocation();
             if (Math.abs(location.get(0) - 0.0) >= 0.01 && Math.abs(location.get(1) - 0.0) >= 0.01) {
-                LatLng latLng = new LatLng(location.get(1), location.get(0));
-                if (prePoint != null) {
-                    //计算开始
-                    Integer preTime = Integer.valueOf(prePoint.getLoc_time());
-                    Integer nextTime = Integer.valueOf(nextPoint.getLoc_time());
-                    int time = preTime - nextTime;
-                    preLocation = prePoint.getLocation();
-                    LatLng preLatLng = new LatLng(preLocation.get(1),preLocation.get(0));
-
-                    Double distance = DistanceUtil.getDistance(preLatLng,latLng);
-                    speed = distance / time;
-                    if (speed < 5) {
-                        isOk = true;
-                    } else {
-                        isOk = false;
-                    }
-                }else{
-                    list.add(latLng);
-                    //计算完毕赋值
-                    prePoint = nextPoint;
-                }
-                //----------------------------------------对点进行过滤，在相应的行驶速度下跑的太远的点将被抛弃
-                if(isOk) {
-                    list.add(latLng);
-                    //计算完毕赋值
-                    prePoint = nextPoint;
-                }
+                list.add(new MyLatLng(location.get(0),location.get(1),points.getCreate_time()));
             }
         }
         return list;
-
     }
-
-
 }
