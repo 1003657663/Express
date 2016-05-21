@@ -11,6 +11,9 @@ import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.map.MyBaiduMapFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by songchao on 16/5/11.
  */
@@ -84,7 +87,7 @@ public class MyFragmentManager {
      * @param args
      * @param fm
      */
-    public static void turnBaiduFragment(Class<? extends UIFragment> fromFragmentClass, Class<MyBaiduMapFragment> toFragmentClass, Bundle args,String entityName, FragmentManager fm){
+    public static void turnBaiduFragment(Class<? extends UIFragment> fromFragmentClass, Class<MyBaiduMapFragment> toFragmentClass, Bundle args, ArrayList<String> entityNames, FragmentManager fm){
 
         FragmentTransaction ft = fm.beginTransaction();
         //被切换的fragment标签
@@ -101,7 +104,7 @@ public class MyFragmentManager {
         if(toFragment == null){
             try {
                 toFragment = toFragmentClass.newInstance();
-                toFragment = toFragment.newInstance(args,entityName);
+                toFragment = toFragment.newInstance(args,entityNames);
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
@@ -110,7 +113,7 @@ public class MyFragmentManager {
         }else {
             if (args != null && !args.isEmpty()) {
                 //toFragment.getArguments().putAll(args);
-                toFragment.setBundle(args,entityName);
+                toFragment.setBundle(args,entityNames);
             }
         }
         //设置fragment切换效果

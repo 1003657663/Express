@@ -1,14 +1,11 @@
 package com.expressba.express.map;
 
 import android.app.Activity;
-import android.os.Looper;
 import android.widget.Toast;
 
-import com.baidu.mapapi.model.LatLng;
 import com.baidu.trace.LBSTraceClient;
 import com.expressba.express.map.model.MyLatLng;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +20,6 @@ import java.util.Locale;
  */
 public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
     private final Activity activity;
-    public static LBSTraceClient client;
     private MyHistoryTrace myHistoryTrace;
 
     private List<MyLatLng> latLngsHistory;
@@ -41,7 +37,7 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
         this.myBaiduMapView = myBaiduMapView;
         latLngsHistory = new ArrayList<>();
         myLatLngArrays = new ArrayList<>();
-        client = new LBSTraceClient(activity);//实例化轨迹客户端
+        MyHistoryTrace.client = new LBSTraceClient(activity);//实例化轨迹客户端
         myHistoryTrace = new MyHistoryTrace();
 
         setListener();//设置监听
@@ -66,6 +62,14 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
     }
 
 
+    private void handlerEmptyEntity(String entityName){
+        myHistoryTrace.addEntity(entityName);
+    }
+
+    /**
+     * 错误提示
+     * @param message
+     */
     private void onError(String message){
         Toast.makeText(activity,message,Toast.LENGTH_SHORT).show();
     }
@@ -95,8 +99,12 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
             }
 
             @Override
-            public void requestFail(String s) {
-                onError(s);
+            public void requestFail(int state,String s) {
+                if(state == 3003){
+                     handlerEmptyEntity(entityNames.get(i));
+                }else {
+                    onError(s);
+                }
             }
         };
     }

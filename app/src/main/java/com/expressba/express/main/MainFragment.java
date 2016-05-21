@@ -27,6 +27,8 @@ import com.expressba.express.user.login.LoginFragment;
 import com.expressba.express.user.me.MeFragment;
 import com.expressba.express.user.search.SearchExpressFragment;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by songchao on 16/4/4.
@@ -93,7 +95,9 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      */
     private void toTestMap(){
         //MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
-        MyFragmentManager.turnBaiduFragment(MainFragment.class,MyBaiduMapFragment.class,null,"mycar",getFragmentManager());
+        ArrayList<String> entityNames = new ArrayList<>();
+        entityNames.add("mycar");
+        MyFragmentManager.turnBaiduFragment(MainFragment.class,MyBaiduMapFragment.class,null,entityNames,getFragmentManager());
     }
 
     /**
@@ -101,20 +105,12 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      */
     private void toSearchResult(){
         MyFragmentManager.turnFragment(MainFragment.class,SearchExpressFragment.class,null,getFragmentManager());
-        /*SearchExpressFragment searchExpressFragment = new SearchExpressFragment();
-        transaction.replace(R.id.fragment_container_layout,searchExpressFragment);
-        transaction.addToBackStack("index");
-        transaction.commit();*/
     }
     /**
      * 跳转到“我”界面
      */
     private void toMeFragment(){
         MyFragmentManager.turnFragment(MainFragment.class,MeFragment.class,null,getFragmentManager());
-        /*MeFragment meFragment = new MeFragment();
-        transaction.replace(R.id.fragment_container_layout, meFragment);
-        transaction.addToBackStack("index");
-        transaction.commit();*/
     }
 
 
@@ -137,11 +133,6 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         Bundle bundle = new Bundle();
         bundle.putString("test","test");
         MyFragmentManager.turnFragment(MainFragment.class, ExpressEditFragment.class,bundle,getFragmentManager());
-        /*ExpressEditFragment fragment = new ExpressEditFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container_layout, fragment,"expresseditfragment");
-        transaction.addToBackStack("index");
-        transaction.commit();*/
     }
 
     /**
@@ -149,10 +140,6 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      */
     private void toLoginFragment(){
         MyFragmentManager.turnFragment(MainFragment.class,LoginFragment.class,null,getFragmentManager());
-        /*LoginFragment loginFragment = new LoginFragment();
-        transaction.replace(R.id.fragment_container_layout, loginFragment);
-        transaction.addToBackStack("index");
-        transaction.commit();*/
     }
 
     /**

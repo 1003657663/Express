@@ -2,7 +2,7 @@ package com.expressba.express.map;
 
 import android.app.Activity;
 
-import com.baidu.mapapi.model.LatLng;
+import com.baidu.trace.LBSTraceClient;
 import com.baidu.trace.OnEntityListener;
 import com.baidu.trace.OnStartTraceListener;
 import com.baidu.trace.OnStopTraceListener;
@@ -21,6 +21,7 @@ import java.util.Map;
  */
 public class MyHistoryTrace {
 
+    public static LBSTraceClient client;
     private StartTraceInterface startTrace;
     private Trace trace;
     public  final long SERVICE_ID = 115498;
@@ -69,13 +70,13 @@ public class MyHistoryTrace {
         initOnStartTraceListener();
 
         //开启轨迹服务
-        MyBaiduMapPresenterImpl.client.startTrace(trace, startTraceListener);
+        client.startTrace(trace, startTraceListener);
 
         //设置位置采集和打包周期
-        MyBaiduMapPresenterImpl.client.setInterval(gatherInterval, packInterval);
+        client.setInterval(gatherInterval, packInterval);
 
         //设置协议
-        MyBaiduMapPresenterImpl.client.setProtocolType(protocoType);
+        client.setProtocolType(protocoType);
     }
 
     /**
@@ -135,7 +136,7 @@ public class MyHistoryTrace {
         };
 
         //停止轨迹服务
-        MyBaiduMapPresenterImpl.client.stopTrace(trace,stopTraceListener);
+        client.stopTrace(trace,stopTraceListener);
     }
 
     /**
@@ -164,8 +165,8 @@ public class MyHistoryTrace {
 
         initOnTrackListener();//初始化listener
 
-        MyBaiduMapPresenterImpl.client.setOnTrackListener(onTrackListener);
-        MyBaiduMapPresenterImpl.client.queryProcessedHistoryTrack(SERVICE_ID,entityName,simpleReturn,isProcessed,startTime,endTime,pageSize,pageIndex,onTrackListener);
+        client.setOnTrackListener(onTrackListener);
+        client.queryProcessedHistoryTrack(SERVICE_ID,entityName,simpleReturn,isProcessed,startTime,endTime,pageSize,pageIndex,onTrackListener);
     }
 
     /**
@@ -176,7 +177,7 @@ public class MyHistoryTrace {
             @Override
             public void onRequestFailedCallback(String s) {
                 if(historyInterface != null){
-                    historyInterface.requestFail(s);
+                    historyInterface.requestFail(10,s);
                 }
             }
 
@@ -190,31 +191,28 @@ public class MyHistoryTrace {
             public void onQueryHistoryTrackCallback(String s) {
                 super.onQueryHistoryTrackCallback(s);
                 List<MyLatLng> latLngs = null;
-                latLngs = handlerHistoryTrackData(s);
-                if(historyInterface != null) {
-                    historyInterface.queryHistoryCallBack(latLngs);
+                HistoryTrackData historyTrackData = GsonService.parseJson(s,HistoryTrackData.class);
+                HistoryTrackDataManage trackDataManage = new HistoryTrackDataManage(historyTrackData);
+                if(historyTrackData!=null){
+                    if(historyTrackData.getStatus() == 0){
+                        //请求位置成功,开始处理
+                        final List<MyLatLng> myLatLngs = trackDataManage.getListPoints();
+                        if(historyInterface!=null){
+                            historyInterface.queryHistoryCallBack(myLatLngs);
+                        }
+                    }else if(historyTrackData.getStatus() == 3003){
+                        //指定entity不存在
+                        if(historyInterface!=null){
+                            historyInterface.requestFail(3003,historyTrackData.getMessage());
+                        }
+                    }
+                }else{
+                    if(historyInterface!=null){
+                        historyInterface.requestFail(10,"获取数据转换出错");
+                    }
                 }
             }
         };
-    }
-
-
-    /**
-     * 处理返回的轨迹字符串
-     * @param s
-     * @return
-     */
-    private List<MyLatLng> handlerHistoryTrackData(String s){
-        //这里是查询历史记录接口回调，先把数据处理成列表样式
-        HistoryTrackData historyTrackData = GsonService.parseJson(s,HistoryTrackData.class);
-        HistoryTrackDataManage trackDataManage = new HistoryTrackDataManage(historyTrackData);
-        if(historyTrackData != null && historyTrackData.getStatus() == 0) {
-            final List<MyLatLng> latLngs = trackDataManage.getListPoints();
-            return latLngs;
-
-        }else {
-            return null;
-        }
     }
 
     /**
@@ -222,68 +220,45 @@ public class MyHistoryTrace {
      */
     public interface QueryHistoryInterface{
         void queryHistoryCallBack(List<MyLatLng> latLngs);
-        void requestFail(String s);
+        void requestFail(int state,String message);
     }
 
-    public void queryRealtimeTrack(){
-        initOnTrackListener();
-        MyBaiduMapPresenterImpl.client.queryRealtimeLoc(SERVICE_ID,entityListener);
-    }
 
     /**
-     * 初始化OnEntityListener
+     * 添加entityName，在entityName不存在的时候
+     * @param entityName
      */
-    private void initOnEntityListener(){
+    public void addEntity(String entityName){
+        initEntityListener();
+        MyHistoryTrace.client.addEntity(SERVICE_ID,entityName,null,entityListener);
+    }
+
+    private void initEntityListener(){
         entityListener = new OnEntityListener() {
             @Override
             public void onRequestFailedCallback(String s) {
-                if(entityInterface!=null){
-                    entityInterface.onRequestFailed(s);
-                }
+                entityListenerInterface.requestFailedCallBack(s);
             }
 
             @Override
             public void onAddEntityCallback(String s) {
                 super.onAddEntityCallback(s);
-            }
-
-            @Override
-            public void onQueryEntityListCallback(String s) {
-                super.onQueryEntityListCallback(s);
-            }
-
-            @Override
-            public void onReceiveLocation(TraceLocation traceLocation) {
-                super.onReceiveLocation(traceLocation);
-                MyLatLng latLng;
-                if((latLng = handlerReceiveLocation(traceLocation)) != null){
-                    if(entityInterface!=null){
-                        entityInterface.onReceiveLocation(latLng);
-                    }
-                }else {
-                    if(entityInterface!=null){
-                        entityInterface.onReceiveLocation(null);
-                    }
+                if(entityListenerInterface!=null){
+                    entityListenerInterface.addEntityCallBack(s);
                 }
             }
         };
     }
 
-    private MyLatLng handlerReceiveLocation(TraceLocation traceLocation){
-
-        double latitude = traceLocation.getLatitude();
-        double longitude = traceLocation.getLongitude();
-        if(Math.abs(latitude - 0.0) < 0.000001 && Math.abs(longitude - 0.0) < 0.000001){
-            return null;
-        }else{
-            MyLatLng latLng = new MyLatLng(latitude,longitude,traceLocation.getTime());
-            return latLng;
-        }
+    /**
+     * entity操作的回调接口
+     */
+    EntityListenerInterface entityListenerInterface;
+    public void setEntityListenerInterface(EntityListenerInterface entityListenerInterface){
+        this.entityListenerInterface = entityListenerInterface;
     }
-
-    OnEntityInterface entityInterface;
-    public interface OnEntityInterface{
-        void onRequestFailed(String s);
-        void onReceiveLocation(MyLatLng latLng);
+    interface EntityListenerInterface{
+        void addEntityCallBack(String s);
+        void requestFailedCallBack(String s);
     }
 }
