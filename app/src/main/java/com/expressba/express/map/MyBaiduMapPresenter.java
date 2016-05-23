@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface MyBaiduMapPresenter {
     void startGetAllTrace(ArrayList<String> entityNames,Boolean resetData);
+    void startGetEmployees(String expressID);
 }

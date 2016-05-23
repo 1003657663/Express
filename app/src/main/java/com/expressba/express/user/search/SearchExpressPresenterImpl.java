@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import com.expressba.express.model.EmployeeInfo;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.model.ExpressSearchInfo;
 import com.expressba.express.net.VolleyHelper;
@@ -16,12 +17,11 @@ import com.expressba.express.R;
 /**
  * Created by songchao on 16/5/1.
  */
-public class SearchExpressPresenterImpl extends VolleyHelper implements SearchExpressPresenter{
-
+public class SearchExpressPresenterImpl extends VolleyHelper implements SearchExpressPresenter {
     private SearchExpressView searchExpressView;
     private String searchUrl;
 
-    public SearchExpressPresenterImpl(Activity context,SearchExpressView searchExpressView) {
+    public SearchExpressPresenterImpl(Activity context, SearchExpressView searchExpressView) {
         super(context);
         this.searchExpressView = searchExpressView;
         String baseUrl = context.getResources().getString(R.string.base_url);
@@ -30,8 +30,8 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
 
     @Override
     public void startGetExpressInfo(String expressID) {
-        searchUrl = searchUrl.replace("{id}",expressID);
-        doJsonArray(searchUrl,VolleyHelper.GET,null);
+        searchUrl = searchUrl.replace("{id}", expressID);
+        doJsonArray(searchUrl, VolleyHelper.GET, null);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
         JSONArray jsonArray = (JSONArray) jsonOrArray;
         ArrayList<ExpressSearchInfo> expressSearchInfos = new ArrayList<>();
         try {
-            for(int i=0;i<jsonArray.length();i++){
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 ExpressSearchInfo expressSearchInfo = new ExpressSearchInfo();
                 expressSearchInfo.setInfo(jsonObject.getString("info"));
@@ -52,6 +52,7 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
             e.printStackTrace();
             searchExpressView.onError("快递状态出错");
         }
+
 
     }
 

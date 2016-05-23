@@ -28,6 +28,7 @@ import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.map.model.MyLatLng;
 import com.expressba.express.map.toolbox.MapToastView;
+import com.expressba.express.model.EmployeeInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +43,25 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
     private Bundle bundle;
     private MyBaiduMapPresenterImpl myBaiduMapPresenterImpl;
     private ArrayList<String> entityNames;
+    private String expressID;
 
 
-    public static MyBaiduMapFragment newInstance(Bundle bundle,ArrayList<String> entityNames) {
+    public static MyBaiduMapFragment newInstance(Bundle bundle,String expressID) {
         MyBaiduMapFragment fragment = new MyBaiduMapFragment();
         if(bundle!=null) {
-            //bundle.putString("entityname", entityName);
-            bundle.putStringArrayList("entitynames",entityNames);
+            bundle.putString("expressid",expressID);
         }else{
             bundle = new Bundle();
-            //bundle.putString("entityname",entityName);
-            bundle.putStringArrayList("entitynames",entityNames);
+            bundle.putString("expressid",expressID);
         }
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public void setBundle(Bundle bundle,ArrayList<String> entityNames) {
+    public void setBundle(Bundle bundle,String expressID) {
         this.bundle = bundle;
-        this.entityNames = entityNames;
+        this.expressID = expressID;
+        getEmployees(expressID);
     }
 
     public Bundle getBundle(){
@@ -77,11 +78,22 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         getBundleData();
         myBaiduMapPresenterImpl = new MyBaiduMapPresenterImpl(getActivity(),this);
         initTraceThread();
-        startAsyncTask();
-
+        getEmployees(expressID);
         return view;
     }
 
+    /**
+     * 获取快递经手的员工id
+     * @param expressID
+     */
+    private void getEmployees(String expressID){
+        myBaiduMapPresenterImpl.startGetEmployees(expressID);
+    }
+
+
+    /**
+     * 开启异步任务循环获取实时路径信息
+     */
     AsyncTask asyncTask;
     private final long time = 10;
     private void initTraceThread(){
@@ -131,7 +143,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
             bundle = getArguments();
         }
         if(bundle != null){
-            entityNames = bundle.getStringArrayList("entitynames");
+            expressID = bundle.getString("expressid");
         }
     }
 
@@ -143,6 +155,20 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
             latLngList.add(new LatLng(latLngs.get(i).latitude,latLngs.get(i).longitude));
         }
         drawHistoryTrack(latLngList);
+    }
+
+    @Override
+    public void onGetEmployeeSuccess(ArrayList<EmployeeInfo> employeeInfos) {
+        ArrayList<String> entityNames = new ArrayList<>();
+        EmployeeInfo employeeInfo;
+        for(int i=0;i<employeeInfos.size();i++){
+            employeeInfo = employeeInfos.get(i);
+            if(employeeInfo.getJob() == EmployeeInfo.KUAIDI_EMPLOYEE || employeeInfo.getJob() == EmployeeInfo.SIJI_EMPLOYEE){
+                entityNames.add(String.valueOf(employeeInfo.getEmployeeId()));
+            }
+        }
+        this.entityNames = entityNames;
+        startAsyncTask();
     }
 
 

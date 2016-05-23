@@ -15,8 +15,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.map.MyBaiduMapFragment;
+import com.expressba.express.model.EmployeeInfo;
 import com.expressba.express.model.ExpressSearchInfo;
 import com.expressba.express.R;
+import com.expressba.express.myelement.MyDialog;
+import com.expressba.express.myelement.MyFragmentManager;
 
 /**
  * Created by songchao on 16/5/1.
@@ -39,8 +43,12 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     private RelativeLayout leftContain;
     private TextView topbarTitle;
     private ImageView topbarRight;
+    private boolean hasGetEmployeeID = false;
 
     private SearchExpressPresenter expressPresenter;
+    private ArrayList<String> entityNames;
+    private MyDialog myDialog;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +64,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.express_search_result_tomap).setOnClickListener(this);
         expressPresenter = new SearchExpressPresenterImpl(getActivity(),this);
-
+        myDialog = new MyDialog(getActivity());
         getMyBundle();
 
         //onRequestSuccess();
@@ -83,7 +91,11 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
      * 跳转到百度地图位置实时监测
      */
     private void toBaiduMap(){
-
+        if(hasGetEmployeeID){
+            MyFragmentManager.turnBaiduFragment(SearchExpressFragment.class, MyBaiduMapFragment.class,null,searchID,getFragmentManager());
+        }else{
+            myDialog.showProgressDialog("正在加载，请稍后");
+        }
     }
 
     /**
@@ -136,7 +148,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
             }
             searchContain.addView(relativeLayout);
         }
-
+        //开始动画
         AsyncTask asyncTask = new AsyncTask() {
             @Override
             protected Object doInBackground(Object[] params) {
@@ -157,6 +169,13 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
             }
         };
         asyncTask.execute();
+    }
+
+    @Override
+    public void onGetEmployeesSuccess(ArrayList<EmployeeInfo> employeeInfos) {
+
+        hasGetEmployeeID = true;
+        toBaiduMap();
     }
 
     /**

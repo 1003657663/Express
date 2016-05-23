@@ -3,8 +3,16 @@ package com.expressba.express.map;
 import android.app.Activity;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.baidu.trace.LBSTraceClient;
+import com.expressba.express.R;
 import com.expressba.express.map.model.MyLatLng;
+import com.expressba.express.model.EmployeeInfo;
+import com.expressba.express.net.VolleyHelper;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -18,7 +26,7 @@ import java.util.Locale;
  * Created by songchao on 16/5/17.
  * 获取所有的地址信息，处理并返回给调用的Fragment
  */
-public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
+public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapPresenter{
     private final Activity activity;
     private MyHistoryTrace myHistoryTrace;
 
@@ -27,14 +35,20 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
 
     private MyBaiduMapView myBaiduMapView;
     private boolean hasGetLastHistory = false;//判断是否是最后一个请求历史
+    private String getEmployeeUrl;
 
     private ArrayList<String> entityNames;
     private int i;
 
 
     public MyBaiduMapPresenterImpl(Activity activity,MyBaiduMapView myBaiduMapView){
+        super(activity);
         this.activity = activity;
         this.myBaiduMapView = myBaiduMapView;
+
+        String baseUrl = activity.getResources().getString(R.string.base_url);
+        getEmployeeUrl = baseUrl + activity.getResources().getString(R.string.employee_get_map);
+
         latLngsHistory = new ArrayList<>();
         myLatLngArrays = new ArrayList<>();
         MyHistoryTrace.client = new LBSTraceClient(activity);//实例化轨迹客户端
@@ -61,7 +75,43 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
         }
     }
 
+    /**
+     * 开始获取员工
+     * @param expressID
+     */
+    @Override
+    public void startGetEmployees(String expressID) {
+        getEmployeeUrl = getEmployeeUrl.replace("{expressId}",expressID);
+        doJsonArray(getEmployeeUrl,VolleyHelper.GET,null);
+    }
 
+    /**
+     * 获取员工信息回调
+     * @param jsonOrArray
+     */
+    @Override
+    public void onDataReceive(Object jsonOrArray) {
+        JSONArray jsonArray = (JSONArray) jsonOrArray;
+        ArrayList<EmployeeInfo> employeeInfos = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                EmployeeInfo employeeInfo = new EmployeeInfo();
+                employeeInfo.setEmployeeId(jsonObject.getInt("employeeId"));
+                employeeInfo.setJob(jsonObject.getInt("Job"));
+                employeeInfos.add(employeeInfo);
+            }
+            myBaiduMapView.onGetEmployeeSuccess(employeeInfos);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            onError("请求路径id出错");
+        }
+    }
+
+    /**
+     * 如果entity不存在，那么添加上去
+     * @param entityName
+     */
     private void handlerEmptyEntity(String entityName){
         myHistoryTrace.addEntity(entityName);
     }
@@ -70,8 +120,9 @@ public class MyBaiduMapPresenterImpl implements MyBaiduMapPresenter{
      * 错误提示
      * @param message
      */
-    private void onError(String message){
-        Toast.makeText(activity,message,Toast.LENGTH_SHORT).show();
+    @Override
+    public void onError(String message){
+        myBaiduMapView.onError(message);
     }
 
 

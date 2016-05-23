@@ -94,10 +94,10 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      * 跳转到测试用百度地图页面
      */
     private void toTestMap(){
-        //MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
+        String expressID = "";
         ArrayList<String> entityNames = new ArrayList<>();
         entityNames.add("mycar");
-        MyFragmentManager.turnBaiduFragment(MainFragment.class,MyBaiduMapFragment.class,null,entityNames,getFragmentManager());
+        MyFragmentManager.turnBaiduFragment(MainFragment.class,MyBaiduMapFragment.class,null,expressID,getFragmentManager());
     }
 
     /**

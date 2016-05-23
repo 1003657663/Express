@@ -2,6 +2,7 @@ package com.expressba.express.user.search;
 
 import java.util.ArrayList;
 
+import com.expressba.express.model.EmployeeInfo;
 import com.expressba.express.model.ExpressSearchInfo;
 
 /**
@@ -13,4 +14,5 @@ public interface SearchExpressView {
     void onError(String errorMessage);
     void getSearchInfo();
     void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos);
+    void onGetEmployeesSuccess(ArrayList<EmployeeInfo> employeeInfos);
 }
