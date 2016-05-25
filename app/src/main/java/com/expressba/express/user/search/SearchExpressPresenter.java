@@ -5,4 +5,5 @@ package com.expressba.express.user.search;
  */
 public interface SearchExpressPresenter {
     void startGetExpressInfo(String expressID);
+    void startGetExpressImage(String id,int whichImage);
 }

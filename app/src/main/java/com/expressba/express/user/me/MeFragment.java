@@ -12,6 +12,7 @@ import com.expressba.express.main.MyApplication;
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.myelement.MyFragmentManager;
+import com.expressba.express.user.about.AboutFragment;
 import com.expressba.express.user.address.AddressFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryPresenterImpl;
@@ -160,7 +161,7 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
      */
     @Override
     public void toAboutSoftFragment(){
-
+        MyFragmentManager.turnFragment(getClass(), AboutFragment.class,null,getFragmentManager());
     }
 
     /**

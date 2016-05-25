@@ -24,6 +24,8 @@ import com.expressba.express.model.address.Province;
 import com.expressba.express.model.address.Region;
 import com.expressba.express.myelement.MyDialog;
 import com.expressba.express.R;
+import com.expressba.express.myelement.MyFragmentManager;
+import com.expressba.express.user.address.AddressFragment;
 import com.expressba.express.user.address.getaddressdata.GetAddressModelImpl;
 
 /**
@@ -110,11 +112,22 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
             }
         }
     }
+
+    private void popBack(){
+        Bundle bundle = new Bundle();
+        if(editWhat == ADDRESS_NEW_SEND || editWhat==ADDRESS_UPDATE_SEND) {
+            bundle.putInt("receiveOrSend",AddressFragment.SEND);
+            MyFragmentManager.popFragment(getClass(), AddressFragment.class, bundle, getFragmentManager());
+        }else{
+            bundle.putInt("receiveOrSend",AddressFragment.RECEIVE);
+            MyFragmentManager.popFragment(getClass(), AddressFragment.class, bundle, getFragmentManager());
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                popBack();
                 break;
             case R.id.top_bar_right_img:
                 //删除当前地址,弹出警告框
@@ -377,12 +390,12 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     @Override
     public void onSubmitSuccess() {
         Toast.makeText(getActivity(),"提交成功",Toast.LENGTH_SHORT).show();
-        getFragmentManager().popBackStack();
+        popBack();
     }
 
     @Override
     public void onDeleteSuccess() {
         Toast.makeText(getActivity(),"删除地址成功",Toast.LENGTH_SHORT).show();
-        getFragmentManager().popBackStack();
+        popBack();
     }
 }

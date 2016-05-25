@@ -170,7 +170,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@+id/user_info_icon1"
             android:gravity="center"
-            android:text="寄件记录" />
+            android:text="发件记录" />
 
         <ImageView
             android:layout_width="18dp"

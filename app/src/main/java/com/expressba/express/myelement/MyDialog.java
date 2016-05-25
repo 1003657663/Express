@@ -1,8 +1,10 @@
 package com.expressba.express.myelement;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -55,10 +57,11 @@ public class MyDialog {
     }
 
     public void showDialogWithSureAndNo(String message, String sureButtonText, String noButtonText){
-        if(progressDialog!=null)
-            if(progressDialog.isShowing()){
+        if(progressDialog!=null) {
+            if (progressDialog.isShowing()) {
                 progressDialog.hide();
             }
+        }
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         LinearLayout linearLayout = (LinearLayout) layoutInflater.inflate(R.layout.mydialog_layout, null);
         TextView contentText = (TextView) linearLayout.findViewById(R.id.mydialog_text);
@@ -93,6 +96,19 @@ public class MyDialog {
                 }
             }
         });
+        alertDialog.show();
+    }
+
+    public void showViewDialog(View view, DialogInterface.OnClickListener sureListenre){
+        if(progressDialog!=null) {
+            if (progressDialog.isShowing()) {
+                progressDialog.hide();
+            }
+        }
+        builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+        builder.setPositiveButton("确定", sureListenre);
+        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 

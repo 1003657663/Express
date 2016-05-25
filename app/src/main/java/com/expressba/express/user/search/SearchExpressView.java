@@ -1,5 +1,7 @@
 package com.expressba.express.user.search;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 import com.expressba.express.model.EmployeeInfo;
@@ -14,5 +16,5 @@ public interface SearchExpressView {
     void onError(String errorMessage);
     void getSearchInfo();
     void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos);
-    void onGetEmployeesSuccess(ArrayList<EmployeeInfo> employeeInfos);
+    void onGetExpressImageSuccess(int whichImage,Bitmap bitmap);
 }

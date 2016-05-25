@@ -1,6 +1,7 @@
 package com.expressba.express.map;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.JsonArrayRequest;
@@ -38,7 +39,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
     private String getEmployeeUrl;
 
     private ArrayList<String> entityNames;
-    private int i;
+    private int i = 0;
 
 
     public MyBaiduMapPresenterImpl(Activity activity,MyBaiduMapView myBaiduMapView){
@@ -63,7 +64,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
      */
     @Override
     public void startGetAllTrace(ArrayList<String> entityNames,Boolean resetData){
-        i = entityNames.size();
+        //i = entityNames.size();
         this.entityNames = entityNames;
         if(resetData != null && resetData){
             hasGetLastHistory = false;
@@ -113,7 +114,17 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
      * @param entityName
      */
     private void handlerEmptyEntity(String entityName){
-        myHistoryTrace.addEntity(entityName);
+        myHistoryTrace.addEntity(entityName, new MyHistoryTrace.EntityListenerInterface() {
+            @Override
+            public void addEntityCallBack(String s) {
+                Log.e("addcallback",s);
+            }
+
+            @Override
+            public void requestFailedCallBack(String s) {
+                Log.e("addfail:",s);
+            }
+        });
     }
 
     /**

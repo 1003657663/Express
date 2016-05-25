@@ -1,8 +1,15 @@
 package com.expressba.express.user.search;
 
 import android.animation.ObjectAnimator;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +39,11 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     private final int NO_TAKE = 1;
     private final int HAS_TAKEv= 2;
     private final int IS_SEND = 3;
-
     private final int HAS_RECEIVE = 5;
+
+    public static int QIAN_SHOW = 10;
+    public static int LAN_SHOW = 11;
+
 
 
     private String searchID;
@@ -130,6 +140,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
 
     /**
      * 请求服务器返回的数据
+     * 揽收图片部分没有添加，待签收部分测试之后再说
      */
     @Override
     public void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos) {
@@ -140,7 +151,21 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
             TextView timeText = (TextView) relativeLayout.findViewById(R.id.express_point_date);
 
             ExpressSearchInfo expressSearchInfo = expressSearchInfos.get(i);
-            pointText.setText(expressSearchInfo.getInfo());
+            //判断如果是已经签收，那么提示可以点击看签收图片
+            if(expressSearchInfo.getState() == HAS_RECEIVE){
+                String text = expressSearchInfo.getInfo();
+                text = text+"点击查看签收图片";
+                SpannableString spannableString = new SpannableString(text);
+                spannableString.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+                        getExpressImage(QIAN_SHOW);
+                    }
+                },text.length()-8,text.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                pointText.setText(spannableString);
+            }else {
+                pointText.setText(expressSearchInfo.getInfo());
+            }
             timeText.setText(expressSearchInfo.getTime());
             if(i==size-1) {
                 pointText.setTextColor(getResources().getColor(R.color.black));
@@ -148,6 +173,44 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
             }
             searchContain.addView(relativeLayout);
         }
+
+        initAni().execute();//初始化箭头动画的异步类并启动
+    }
+
+
+    private void getExpressImage(int whichImage){
+        if(whichImage == LAN_SHOW) {
+            expressPresenter.startGetExpressImage(searchID, LAN_SHOW);
+        }else{
+            expressPresenter.startGetExpressImage(searchID, QIAN_SHOW);
+        }
+    }
+
+
+    @Override
+    public void onGetExpressImageSuccess(int whichImage,Bitmap bitmap) {
+        if(whichImage == LAN_SHOW){
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setImageBitmap(bitmap);
+            myDialog.showViewDialog(imageView, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }else{
+            ImageView imageView = new ImageView(getActivity());
+            imageView.setImageBitmap(bitmap);
+            myDialog.showViewDialog(imageView, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+    }
+
+    private AsyncTask initAni(){
         //开始动画
         AsyncTask asyncTask = new AsyncTask() {
             @Override
@@ -168,14 +231,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
                 startAni(height);
             }
         };
-        asyncTask.execute();
-    }
-
-    @Override
-    public void onGetEmployeesSuccess(ArrayList<EmployeeInfo> employeeInfos) {
-
-        hasGetEmployeeID = true;
-        toBaiduMap();
+        return asyncTask;
     }
 
     /**

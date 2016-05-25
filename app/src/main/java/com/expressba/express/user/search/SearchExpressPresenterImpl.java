@@ -35,6 +35,15 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
     }
 
     @Override
+    public void startGetExpressImage(String id, int whichImage) {
+        if(whichImage == SearchExpressFragment.LAN_SHOW){
+
+        }else{
+
+        }
+    }
+
+    @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
         ArrayList<ExpressSearchInfo> expressSearchInfos = new ArrayList<>();

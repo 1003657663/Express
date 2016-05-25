@@ -62,6 +62,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         this.bundle = bundle;
         this.expressID = expressID;
         getEmployees(expressID);
+        //onGetEmployeeSuccess(null);
     }
 
     public Bundle getBundle(){
@@ -79,6 +80,8 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         myBaiduMapPresenterImpl = new MyBaiduMapPresenterImpl(getActivity(),this);
         initTraceThread();
         getEmployees(expressID);
+        //onGetEmployeeSuccess(null);
+
         return view;
     }
 
@@ -161,12 +164,21 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
     public void onGetEmployeeSuccess(ArrayList<EmployeeInfo> employeeInfos) {
         ArrayList<String> entityNames = new ArrayList<>();
         EmployeeInfo employeeInfo;
-        for(int i=0;i<employeeInfos.size();i++){
-            employeeInfo = employeeInfos.get(i);
-            if(employeeInfo.getJob() == EmployeeInfo.KUAIDI_EMPLOYEE || employeeInfo.getJob() == EmployeeInfo.SIJI_EMPLOYEE){
-                entityNames.add(String.valueOf(employeeInfo.getEmployeeId()));
+        if(entityNames!=null && entityNames.size()>0) {
+            for (int i = 0; i < employeeInfos.size(); i++) {
+                employeeInfo = employeeInfos.get(i);
+                if (employeeInfo.getJob() == EmployeeInfo.KUAIDI_EMPLOYEE || employeeInfo.getJob() == EmployeeInfo.SIJI_EMPLOYEE) {
+                    entityNames.add(String.valueOf(employeeInfo.getEmployeeId()));
+                }
             }
         }
+
+        /*//-----test
+        entityNames.add("100");
+        entityNames.add("101");
+        entityNames.add("102");
+        entityNames.add("103");
+        //---------*/
         this.entityNames = entityNames;
         startAsyncTask();
     }
@@ -303,14 +315,16 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
      * 启动异步获取轨迹点任务
      */
     private void startAsyncTask(){
-        if(asyncTask!=null){
-            if(asyncTask.getStatus() == AsyncTask.Status.FINISHED) {
-                asyncTask.execute();
-            }else if(asyncTask.getStatus() != AsyncTask.Status.RUNNING){
-                asyncTask.execute();
+        if(entityNames!=null) {
+            if (asyncTask != null) {
+                if (asyncTask.getStatus() == AsyncTask.Status.FINISHED) {
+                    asyncTask.execute();
+                } else if (asyncTask.getStatus() != AsyncTask.Status.RUNNING) {
+                    asyncTask.execute();
+                }
+            } else {
+                initTraceThread();
             }
-        }else {
-            initTraceThread();
         }
     }
 

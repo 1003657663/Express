@@ -228,7 +228,8 @@ public class MyHistoryTrace {
      * 添加entityName，在entityName不存在的时候
      * @param entityName
      */
-    public void addEntity(String entityName){
+    public void addEntity(String entityName,EntityListenerInterface entityListenerInterface){
+        this.entityListenerInterface = entityListenerInterface;
         initEntityListener();
         MyHistoryTrace.client.addEntity(SERVICE_ID,entityName,null,entityListener);
     }
@@ -254,9 +255,6 @@ public class MyHistoryTrace {
      * entity操作的回调接口
      */
     EntityListenerInterface entityListenerInterface;
-    public void setEntityListenerInterface(EntityListenerInterface entityListenerInterface){
-        this.entityListenerInterface = entityListenerInterface;
-    }
     interface EntityListenerInterface{
         void addEntityCallBack(String s);
         void requestFailedCallBack(String s);

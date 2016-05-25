@@ -39,20 +39,30 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         View view = inflater.inflate(R.layout.user_address_fragment, container, false);
         this.inflater = inflater;
         this.viewGroup = container;
-        getMyBundle();
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_addres_add_new).setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.user_address_list);
-        presenter = new AddressPresenterImpl(getActivity(), this);
-
+        getMyBundle();
         if (receiveOrSend == SEND) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
-            presenter.getSendAddress();
         } else if (receiveOrSend == RECEIVE) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
-            presenter.getReceiveAddress();
         }
         return view;
+    }
+
+    private void getAddress(){
+        if (receiveOrSend == SEND) {
+            presenter.getSendAddress();
+        } else if (receiveOrSend == RECEIVE) {
+            presenter.getReceiveAddress();
+        }
+    }
+
+    @Override
+    public void setBundle(Bundle bundle) {
+        super.setBundle(bundle);
+        getMyBundle();
     }
 
     /**
@@ -68,6 +78,8 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
                 from = bundle.getString("wherefrom");
             }
         }
+        presenter = new AddressPresenterImpl(getActivity(), this);
+        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
 
     @Override

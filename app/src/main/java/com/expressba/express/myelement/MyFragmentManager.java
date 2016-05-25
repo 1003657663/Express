@@ -210,6 +210,55 @@ public class MyFragmentManager {
 
 
     /**
+     * 用于fragment之间进行切换,可以选择是否添加到回退栈。
+     * 在什么情况下不需要添加回退栈？
+     * 1. 刚进入app添加MainFragment，防止按返回键出现空白
+     * 2. 在下一个fragment中按下返回键想要直接返回上一个fragment，不经过这个fragment
+     *
+     * replace方法，每次进入这个页面都会重新加载页面内容
+     * @param fromFragmentClass
+     * @param toFragmentClass
+     * @param args
+     * @param fm
+     */
+    public static void turnReplaceFragment(Class<? extends UIFragment> fromFragmentClass, Class<? extends UIFragment> toFragmentClass, Bundle args, FragmentManager fm ,boolean addBackStack){
+
+        FragmentTransaction ft = fm.beginTransaction();
+        //被切换的fragment标签
+        String fromTag = null;
+        if(fromFragmentClass!=null) {
+            fromTag = fromFragmentClass.getSimpleName();
+        }
+        //切换到fragment标签
+        String toTag = toFragmentClass.getSimpleName();
+
+        //UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
+        UIFragment toFragment = null;// = (UIFragment) fm.findFragmentByTag(toTag);
+        try {
+            toFragment = toFragmentClass.newInstance();
+            toFragment.setArguments(args);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        //设置fragment切换效果
+        ft.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_left,R.animator.slide_in_right,R.animator.slide_out_right);
+        //如果tofragment已经添加到栈里面，那么隐藏现在的fragment显示要切换的fragment，
+        //如果没有添加，那么隐藏现在的，添加要切换的fragment
+        if(toFragment!=null) {
+            ft.replace(R.id.fragment_container_layout,toFragment,toTag);
+            if(addBackStack) {
+                //添加到回退栈
+                ft.addToBackStack(fromTag);
+            }
+            //不保留状态提交事务
+            ft.commitAllowingStateLoss();
+        }
+    }
+
+
+    /**
      * 用于fragment之间进行切换,pop出栈传值,如果不传值那么toFragmentClass可以为空
      * 传入fromFragmentClass作用，在pop之前先隐藏fromFragment，防止出现双层fragment覆盖错误
      * @param toFragmentClass
