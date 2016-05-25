@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,9 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_express_search,container,false);
+        view.setOnKeyListener(backListener);
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
         searchText = (TextView) view.findViewById(R.id.express_search_result_id);
         leftArrow = (ImageView) view.findViewById(R.id.express_search_left_image);
         leftContain = (RelativeLayout) view.findViewById(R.id.express_search_arrow);
@@ -81,12 +85,28 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
         return view;
     }
 
+    private View.OnKeyListener backListener = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if(event.getAction() == KeyEvent.ACTION_DOWN){
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    onBack();
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+    private void onBack(){
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.top_bar_right_img:
                 toBaiduMap();
@@ -96,6 +116,8 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
                 break;
         }
     }
+
+
 
     /**
      * 跳转到百度地图位置实时监测
@@ -117,6 +139,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
         if(bundle!=null) {
             searchID = bundle.getString("searchID");//获取运单号码
         }
+        init();
     }
 
     @Override

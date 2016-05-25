@@ -21,4 +21,13 @@ public class CheckInput {
         }
         return true;
     }
+
+    public static boolean checkNumber(String number){
+        Pattern pattern = Pattern.compile("^[0-9]+$");
+        Matcher matcher = pattern.matcher(number);
+        if(!matcher.matches()){
+            return false;
+        }
+        return true;
+    }
 }

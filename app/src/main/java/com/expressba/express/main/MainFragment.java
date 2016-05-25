@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.app.Activity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -19,6 +20,7 @@ import com.baidu.mapapi.map.MapFragment;
 import com.baidu.mapapi.map.MapStatus;
 import com.expressba.express.map.MyBaiduMapFragment;
 import com.expressba.express.myelement.MyFragmentManager;
+import com.expressba.express.user.search.SearchMainFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
 import com.expressba.express.Customer.Express.view.express_edit_view.ExpressEditFragment;
@@ -42,6 +44,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
     private ImageButton messageButton;
     private MyApplication myApplication;
     private Button send,search;
+    private TextView searchTextView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.index_fragment,container,false);
@@ -51,6 +54,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         send=(Button)view.findViewById(R.id.send);
         search=(Button)view.findViewById(R.id.search);
         meButton = (Button) view.findViewById(R.id.me_button);
+        searchTextView = (TextView) view.findViewById(R.id.index_top_bar_input);
 
         meButton.setOnClickListener(this);
         cameraButton.setOnClickListener(this);
@@ -58,6 +62,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         send.setOnClickListener(this);
         search.setOnClickListener(this);
 
+        searchTextView.setEnabled(false);
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -85,6 +90,9 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 toSendFragment();
                 break;
             case R.id.search:
+                toSearchFragment();
+                break;
+            case R.id.index_top_bar_input:
                 toSearchFragment();
                 break;
         }
@@ -118,11 +126,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      * 跳转到搜索界面
      */
     private void toSearchFragment(){
-        SearchExpressFragment fragment = new SearchExpressFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container_layout, fragment);
-        transaction.addToBackStack("index");
-        transaction.commit();
+        MyFragmentManager.turnFragment(getClass(), SearchMainFragment.class,null,getFragmentManager());
     }
 
 

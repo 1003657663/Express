@@ -52,7 +52,6 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
 
         latLngsHistory = new ArrayList<>();
         myLatLngArrays = new ArrayList<>();
-        MyHistoryTrace.client = new LBSTraceClient(activity);//实例化轨迹客户端
         myHistoryTrace = new MyHistoryTrace();
 
         setListener();//设置监听

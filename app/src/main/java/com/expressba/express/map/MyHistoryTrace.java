@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class MyHistoryTrace {
 
-    public static LBSTraceClient client;
+    public static LBSTraceClient client;//实例化轨迹客户端;
     private StartTraceInterface startTrace;
     private Trace trace;
     public  final long SERVICE_ID = 115498;
@@ -255,7 +255,7 @@ public class MyHistoryTrace {
      * entity操作的回调接口
      */
     EntityListenerInterface entityListenerInterface;
-    interface EntityListenerInterface{
+    public interface EntityListenerInterface{
         void addEntityCallBack(String s);
         void requestFailedCallBack(String s);
     }
