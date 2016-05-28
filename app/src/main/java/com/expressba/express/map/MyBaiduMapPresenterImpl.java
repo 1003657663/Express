@@ -68,10 +68,13 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
         if(resetData != null && resetData){
             hasGetLastHistory = false;
         }
+        if(i<entityNames.size()){//i小于size表示还没有加载完，或者entityname的尺寸发生了增加
+            hasGetLastHistory = false;
+        }
         if(hasGetLastHistory){
-            myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(entityNames.size()-1));
+            myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(entityNames.size()-1),historyInterface);
         }else {
-            myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(0));
+            myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(0),historyInterface);
         }
     }
 
@@ -139,21 +142,26 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
     /**
      * 设置listener
      */
+    MyHistoryTrace.QueryHistoryInterface historyInterface;
     private void setListener(){
-        myHistoryTrace.historyInterface = new MyHistoryTrace.QueryHistoryInterface() {
+        historyInterface = new MyHistoryTrace.QueryHistoryInterface() {
             @Override
             public void queryHistoryCallBack(List<MyLatLng> latLngs) {
-                i++;
-                if(i < entityNames.size()-1){
+                if(i < entityNames.size()-2){
+                    i++;
                     if(latLngs !=null && latLngs.size()>1) {
                         myLatLngArrays.add(latLngs);
                     }
-                    myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i));
-                }else if(i == entityNames.size()-1){
+                    myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i),historyInterface);
+                }else if(i == entityNames.size()-2){
+                    i++;
                     hasGetLastHistory = true;
-                    myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i));
+                    if(latLngs !=null && latLngs.size()>1) {
+                        myLatLngArrays.add(latLngs);
+                    }
+                    myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i),historyInterface);
                 }
-                if(i == entityNames.size()){
+                if(i == entityNames.size()-1){
                     handlerLatLngList(myLatLngArrays,latLngs);
                     myBaiduMapView.getAllTraceCallBack(latLngsHistory);
                 }
@@ -199,9 +207,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
                 }
             }
         }
-        for(int r=0;r<latLngs.size();r++){
-            latLngsHistory.add(r,latLngs.get(r));
-        }
+        latLngsHistory.addAll(latLngs);
     }
 
 

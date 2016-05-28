@@ -54,10 +54,8 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     private RelativeLayout leftContain;
     private TextView topbarTitle;
     private ImageView topbarRight;
-    private boolean hasGetEmployeeID = false;
 
     private SearchExpressPresenter expressPresenter;
-    private ArrayList<String> entityNames;
     private MyDialog myDialog;
 
 
@@ -73,6 +71,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
         searchContain = (LinearLayout) view.findViewById(R.id.express_search_containt);
         topbarTitle = (TextView) view.findViewById(R.id.top_bar_center_text);
         topbarRight = (ImageView) view.findViewById(R.id.top_bar_right_img);
+        topbarRight.setOnClickListener(this);
         topbarRight.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.map));
 
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
@@ -123,11 +122,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
      * 跳转到百度地图位置实时监测
      */
     private void toBaiduMap(){
-        if(hasGetEmployeeID){
-            MyFragmentManager.turnBaiduFragment(SearchExpressFragment.class, MyBaiduMapFragment.class,null,searchID,getFragmentManager());
-        }else{
-            myDialog.showProgressDialog("正在加载，请稍后");
-        }
+        MyFragmentManager.turnBaiduFragment(SearchExpressFragment.class, MyBaiduMapFragment.class,null,searchID,getFragmentManager());
     }
 
     /**

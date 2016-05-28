@@ -23,6 +23,7 @@
             android:hint="输入单号或扫描"
             android:singleLine="true"
             android:id="@+id/index_top_bar_input"
+            android:imeOptions="actionSearch"
             android:paddingLeft="7dp"
             android:paddingRight="7dp"
             android:background="@drawable/editor_radio_without_border"/>
@@ -34,6 +35,6 @@
             android:scaleType="fitXY"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/facebook_messenger"/>
+            android:src="@mipmap/search"/>
 
 </LinearLayout>

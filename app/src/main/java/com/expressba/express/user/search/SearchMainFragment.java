@@ -28,6 +28,9 @@ public class SearchMainFragment extends UIFragment implements View.OnClickListen
         view.findViewById(R.id.search_main_submit).setOnClickListener(this);
 
         searchTextView = (TextView) view.findViewById(R.id.search_main_text);
+
+        searchTextView.setText("89899774542259");
+
         initListener();
         return view;
     }

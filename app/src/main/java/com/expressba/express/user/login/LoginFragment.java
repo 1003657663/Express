@@ -32,7 +32,7 @@ import com.expressba.express.R;
 /**
  * Created by chao on 2016/4/16.
  */
-public class LoginFragment extends UIFragment implements LoginFragmentView,View.OnClickListener{
+public class LoginFragment extends UIFragment implements LoginFragmentView, View.OnClickListener {
 
     public static final int TEL_ERROR = 0;
     public static final int PASSWORD_ERROR = 1;
@@ -52,12 +52,13 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
     private String verifyCode;
     private boolean hasUserNameEdit = false;//用户名输入框是否存在
     private boolean isLogin;
+
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.user_login,container,false);
+        View view = inflater.inflate(R.layout.user_login, container, false);
         TextView topText = (TextView) view.findViewById(R.id.top_bar_center_text);
         topText.setText("登陆");
-        loginModel = new LoginModelImpl(getActivity(),this);
+        loginModel = new LoginModelImpl(getActivity(), this);
 
         telEdit = (EditText) view.findViewById(R.id.login_tel_edit);
         passwordEdit = (EditText) view.findViewById(R.id.login_password_edit);
@@ -76,45 +77,35 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.top_bar_left_img :
+        switch (v.getId()) {
+            case R.id.top_bar_left_img:
                 //点击后退按钮
                 onback();
                 break;
             case R.id.login_button:
                 isLogin = true;
-                //------------------------test
-                if(telEdit.getText().toString().equals("")) {
-                    tel = "12345678909";
-                    password = "123456";
-                    loginModel.startLogin(tel, password);
-                    break;
-                }else {
-                    //------------------------test
-                    if(checkInput()) {
-                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        //---test
-                        loginModel.startLogin(tel,password);
-                    }
+                if (checkInput()) {
+                    SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                    //loginModel.startLogin(tel, password);
                 }
                 break;
             case R.id.register_button:
-                if(hasUserNameEdit) {
+                if (hasUserNameEdit) {
                     isLogin = false;
                     if (checkInput()) {
-                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        loginModel.startRegister(tel,password,name);
+                        SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        //loginModel.startRegister(tel, password, name);
                     }
-                }else {
+                } else {
                     addUserNameEdit();
                 }
                 break;
             case R.id.login_tel_verify_button:
                 tel = telEdit.getText().toString();
-                if(CheckInput.checkTel(tel)) {
+                if (CheckInput.checkTel(tel)) {
                     SMSSDK.getVerificationCode(COUNTRY_CODE, tel);
                     setVerifyButton();
-                }else{
+                } else {
                     telEdit.setError("手机号错误");
                 }
                 break;
@@ -127,12 +118,12 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
      * 获取验证码后，验证码按钮显示倒计时，倒计时完毕，显示重新获取
      */
     CountDown countDown;
-    private void setVerifyButton(){
+    private void setVerifyButton() {
 
         verifyCodeButton.setClickable(false);
         verifyCodeButton.setBackground(getActivity().getResources().getDrawable(R.drawable.button_radio_grey_background));
         //创建一个循环计时异步线程用来更新主线程
-        countDown = new CountDown(getActivity(),verifyCodeButton,60,"重新获取验证码",getActivity().getResources().getDrawable(R.drawable.button_radio_with_background_color));
+        countDown = new CountDown(getActivity(), verifyCodeButton, 60, "重新获取验证码", getActivity().getResources().getDrawable(R.drawable.button_radio_with_background_color));
         countDown.execute(60);
     }
 
@@ -143,7 +134,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
     @Override
     public void onDestroyView() {
         SMSSDK.unregisterEventHandler(eh);
-        if(countDown!=null && countDown.getStatus() != AsyncTask.Status.FINISHED){
+        if (countDown != null && countDown.getStatus() != AsyncTask.Status.FINISHED) {
             countDown.cancel(true);
         }
         super.onDestroy();
@@ -160,12 +151,13 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
     public final static int TEST_VERIFY_NO = -2;//校验验证码失败
 
     private Handler smsHandler;
-    private void initSMS(){
-        smsHandler = new Handler(){//创建一个回调handler控制UI线程
+
+    private void initSMS() {
+        smsHandler = new Handler() {//创建一个回调handler控制UI线程
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case TEST_VERIFY_OK :
+                    case TEST_VERIFY_OK:
                         HashMap<String, String> data = (HashMap<String, String>) msg.obj;
                         if (data.get("phone").equals(tel)) {
                             if (isLogin) {//判断是注册还是登录通过用户姓名输入框的存在性
@@ -180,7 +172,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
                     case TEST_VERIFY_NO:
                         showToast("验证码校验失败，请重新获取");
                         break;
-                    case REQ_VERIFY_OK :
+                    case REQ_VERIFY_OK:
                         showToast("验证码发送成功，注意查收");
                         break;
                     case REQ_VERIFY_NO:
@@ -188,30 +180,30 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
                 }
             }
         };
-        eh=new EventHandler(){
+        eh = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
                 if (result == SMSSDK.RESULT_COMPLETE) {
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码成功
-                        smsHandler.sendMessage(smsHandler.obtainMessage(TEST_VERIFY_OK,data));
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                        smsHandler.sendMessage(smsHandler.obtainMessage(TEST_VERIFY_OK, data));
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         //获取验证码成功
                         smsHandler.sendMessage(smsHandler.obtainMessage(REQ_VERIFY_OK));
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                         //返回支持发送验证码的国家列表
                     }
-                }else{
-                    ((Throwable)data).printStackTrace();
+                } else {
+                    ((Throwable) data).printStackTrace();
                     //回调完成
                     if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
                         //提交验证码失败
                         smsHandler.sendMessage(smsHandler.obtainMessage(TEST_VERIFY_NO));
-                    }else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE){
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
                         //获取验证码失败
                         smsHandler.sendMessage(smsHandler.obtainMessage(REQ_VERIFY_NO));
-                    }else if (event ==SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES){
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
                         //返回支持发送验证码的国家列表
                     }
                 }
@@ -222,16 +214,12 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
 
     @Override
     public void onback() {
-        /*FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-        ft.hide(this);
-        ft.commitAllowingStateLoss();*/
-        MyFragmentManager.popFragment(LoginFragment.class,null,null,getFragmentManager());
+        MyFragmentManager.popFragment(LoginFragment.class, null, null, getFragmentManager());
     }
 
     @Override
     public void showToast(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -246,23 +234,23 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
         verifyCode = verifyCodeEdit.getText().toString();
         Pattern pattern = Pattern.compile("^[0-9]+$");
         Matcher matcher = pattern.matcher(tel);
-        if(tel.length()!=11 || !matcher.matches()) {
+        if (tel.length() != 11 || !matcher.matches()) {
             telEdit.setError("必须是电话号");
             return false;
         }
-        if(password.length()>20 || password.length()<6){
+        if (password.length() > 20 || password.length() < 6) {
             passwordEdit.setError("6-20个字符");
             return false;
         }
-        if(hasUserNameEdit){
-            if(nameEdit.getText().toString().equals("")){
-                onError(NAME_ERROT,"请填写用户名");
-            }else {
+        if (hasUserNameEdit) {
+            if (nameEdit.getText().toString().equals("")) {
+                onError(NAME_ERROT, "请填写用户名");
+            } else {
                 name = nameEdit.getText().toString();
             }
         }
-        if(verifyCode.equals("")){
-            onError(VERIFY_ERROR,"请填写验证码");
+        if (verifyCode.equals("")) {
+            onError(VERIFY_ERROR, "请填写验证码");
             return false;
         }
         return true;
@@ -276,7 +264,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView,View.
 
     @Override
     public void onError(int whereError, String errorInfo) {
-        switch (whereError){
+        switch (whereError) {
             case TEL_ERROR:
                 telEdit.setError(errorInfo);
                 break;

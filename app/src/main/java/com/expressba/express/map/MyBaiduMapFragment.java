@@ -9,6 +9,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +45,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
     private MyBaiduMapPresenterImpl myBaiduMapPresenterImpl;
     private ArrayList<String> entityNames;
     private String expressID;
+    private ImageButton dingweiButton;
 
 
     public static MyBaiduMapFragment newInstance(Bundle bundle,String expressID) {
@@ -75,14 +77,59 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         View view = inflater.inflate(R.layout.baidu_map,container,false);
         mapView = (MapView) view.findViewById(R.id.baidu_map_view);
         mBaiduMap = mapView.getMap();
+        dingweiButton = (ImageButton) view.findViewById(R.id.baidu_map_dingwei);
+        initDingweiListener();
         initMap();//初始化生成mapView
         getBundleData();
         myBaiduMapPresenterImpl = new MyBaiduMapPresenterImpl(getActivity(),this);
         initTraceThread();
         getEmployees(expressID);
-        //onGetEmployeeSuccess(null);
-
         return view;
+    }
+
+    /**
+     * 初始化定位按钮监听，点击之后地图轨迹回到屏幕中心
+     */
+    private void initDingweiListener(){
+        dingweiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hasSetBound = false;
+                drawHistoryTrack(points);
+                delay(5);
+            }
+        });
+    }
+
+    /**
+     * 让地图轨迹加载暂停一定时间
+     * @param time
+     */
+    private void delay(final int time){
+        AsyncTask task = new AsyncTask() {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                stopAsyncTask();
+            }
+
+            @Override
+            protected Object doInBackground(Object[] params) {
+                try {
+                    Thread.sleep(time*1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(Object[] values) {
+                startAsyncTask();
+                this.cancel(true);
+            }
+        };
+        task.execute();
     }
 
     /**
@@ -133,7 +180,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
      * 初始化地图获取map和view类
      */
     private void initMap(){
-        MapStatus ms = new MapStatus.Builder().overlook(-20).zoom(15).build();
+        MapStatus ms = new MapStatus.Builder().overlook(0).build();
         MapStatusUpdate msU = MapStatusUpdateFactory.newMapStatus(ms);
         mBaiduMap.setMapStatus(msU);
     }
@@ -172,13 +219,6 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
                 }
             }
         }
-
-        /*//-----test
-        entityNames.add("100");
-        entityNames.add("101");
-        entityNames.add("102");
-        entityNames.add("103");
-        //---------*/
         this.entityNames = entityNames;
         startAsyncTask();
     }
@@ -188,14 +228,15 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
      * 绘制历史轨迹
      * @param points
      */
-    MapStatusUpdate msUpdate;
-    MapStatusUpdate nextUpdate;
-    PolylineOptions polyline;
-    BitmapDescriptor bmStart,bmEnd;
-    MarkerOptions startMarker,endMarker;
-    public void drawHistoryTrack(List<LatLng> pointss) {
-        final List<LatLng> points = pointss;
+    private MapStatusUpdate msUpdate;
+    private MapStatusUpdate nextUpdate;
+    private PolylineOptions polyline;
+    private BitmapDescriptor bmStart,bmEnd;
+    private MarkerOptions startMarker,endMarker;
+    private List<LatLng> points;//点备份
+    public void drawHistoryTrack(final List<LatLng> points) {
         // 绘制新覆盖物前，清空之前的覆盖物
+        this.points = points;
         mBaiduMap.clear();
         MapStatus preMapStatus = mBaiduMap.getMapStatus();
         if (points == null || points.size() == 0) {
@@ -222,15 +263,24 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
                 bmEnd = BitmapDescriptorFactory.fromBitmap(bitmap);
             }
 
-            // 添加起点图标
-            startMarker = new MarkerOptions()
-                    .position(points.get(points.size()-1)).icon(bmStart)
-                    .zIndex(9).draggable(true);
+            // 添加起点图标,如果已经加载了，就不需要动画
+            if(hasSetBound){
+                startMarker = new MarkerOptions()
+                        .position(points.get(points.size() - 1)).icon(bmStart)
+                        .zIndex(9).draggable(true).animateType(MarkerOptions.MarkerAnimateType.none);
 
-            // 添加终点图标
-            endMarker = new MarkerOptions().position(points.get(0))
-                    .icon(bmEnd).zIndex(9).draggable(true);
+                // 添加终点图标
+                endMarker = new MarkerOptions().position(points.get(0))
+                        .icon(bmEnd).zIndex(9).draggable(true).animateType(MarkerOptions.MarkerAnimateType.none);
+            }else {
+                startMarker = new MarkerOptions()
+                        .position(points.get(points.size() - 1)).icon(bmStart)
+                        .zIndex(9).draggable(true).animateType(MarkerOptions.MarkerAnimateType.grow);
 
+                // 添加终点图标
+                endMarker = new MarkerOptions().position(points.get(0))
+                        .icon(bmEnd).zIndex(9).draggable(true).animateType(MarkerOptions.MarkerAnimateType.grow);
+            }
             // 添加路线（轨迹）
             polyline = new PolylineOptions().width(10)
                     .color(Color.BLUE).points(points);

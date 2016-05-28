@@ -14,10 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.BaiduMapOptions;
-import com.baidu.mapapi.map.MapFragment;
-import com.baidu.mapapi.map.MapStatus;
 import com.expressba.express.map.MyBaiduMapFragment;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.search.SearchMainFragment;
@@ -41,7 +37,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
     private FragmentManager fm;
     private FragmentTransaction transaction;
     private ImageButton cameraButton;
-    private ImageButton messageButton;
+    private ImageButton searchButton;
     private MyApplication myApplication;
     private Button send,search;
     private TextView searchTextView;
@@ -50,7 +46,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.index_fragment,container,false);
         myApplication = (MyApplication) getActivity().getApplication();
         cameraButton = (ImageButton) view.findViewById(R.id.index_top_bar_camera);
-        messageButton = (ImageButton) view.findViewById(R.id.index_top_bar_message);
+        searchButton = (ImageButton) view.findViewById(R.id.index_top_bar_message);
         send=(Button)view.findViewById(R.id.send);
         search=(Button)view.findViewById(R.id.search);
         meButton = (Button) view.findViewById(R.id.me_button);
@@ -58,7 +54,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
 
         meButton.setOnClickListener(this);
         cameraButton.setOnClickListener(this);
-        messageButton.setOnClickListener(this);
+        searchButton.setOnClickListener(this);
         send.setOnClickListener(this);
         search.setOnClickListener(this);
 
@@ -83,8 +79,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 startCamera();
                 break;
             case R.id.index_top_bar_message:
-                //toSearchResult();
-                toTestMap();
+                toSearchFragment();
                 break;
             case R.id.send:
                 toSendFragment();
