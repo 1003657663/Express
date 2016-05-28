@@ -85,16 +85,16 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
             case R.id.login_button:
                 isLogin = true;
                 if (checkInput()) {
-                    SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                    //loginModel.startLogin(tel, password);
+                    //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                    loginModel.startLogin(tel, password);
                 }
                 break;
             case R.id.register_button:
                 if (hasUserNameEdit) {
                     isLogin = false;
                     if (checkInput()) {
-                        SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        //loginModel.startRegister(tel, password, name);
+                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        loginModel.startRegister(tel, password, name);
                     }
                 } else {
                     addUserNameEdit();

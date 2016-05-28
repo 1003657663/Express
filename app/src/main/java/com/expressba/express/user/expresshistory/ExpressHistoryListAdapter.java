@@ -65,9 +65,17 @@ public class ExpressHistoryListAdapter extends BaseAdapter {
         ExpressInfo expressInfo = expressInfos.get(position);
         viewHolder.expressIDText.setText(expressInfo.getID());
         viewHolder.sendNameText.setText(expressInfo.getSname());
-        viewHolder.sendTimeText.setText(expressInfo.getOutTime());
+        if(expressInfo.getOutTime() == null){
+            viewHolder.sendTimeText.setText("未揽收");
+        }else{
+            viewHolder.sendTimeText.setText(expressInfo.getOutTime());
+        }
+        if(expressInfo.getGetTime() == null){
+            viewHolder.receiveTimeText.setText("未签收");
+        }else {
+            viewHolder.receiveTimeText.setText(expressInfo.getGetTime());
+        }
         viewHolder.receiveNameText.setText(expressInfo.getRname());
-        viewHolder.receiveTimeText.setText(expressInfo.getGetTime());
         return convertView;
     }
 }

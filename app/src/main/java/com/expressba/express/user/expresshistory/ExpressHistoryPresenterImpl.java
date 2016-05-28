@@ -55,12 +55,20 @@ public class ExpressHistoryPresenterImpl extends VolleyHelper implements Express
             for(int i=0;i<jsonArray.length();i++){
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 ExpressInfo expressInfo = new ExpressInfo();
-                expressInfo.setAcc1(jsonObject.getString("acc1"));
-                expressInfo.setAcc2(jsonObject.getString("acc2"));
-                expressInfo.setGetTime(jsonObject.getString("getTime"));
+                if(jsonObject.has("acc1")) {
+                    expressInfo.setAcc1(jsonObject.getString("acc1"));
+                }
+                if(jsonObject.has("acc2")){
+                    expressInfo.setAcc2(jsonObject.getString("acc2"));
+                }
+                if(jsonObject.has("getTime")){
+                    expressInfo.setGetTime(jsonObject.getString("getTime"));
+                }
+                if(jsonObject.has("outTime")){
+                    expressInfo.setOutTime(jsonObject.getString("outTime"));
+                }
                 expressInfo.setID(jsonObject.getString("ID"));
                 expressInfo.setInsuFee(jsonObject.getDouble("insuFee"));
-                expressInfo.setOutTime(jsonObject.getString("outTime"));
                 expressInfo.setRadd(jsonObject.getString("sadd"));
                 expressInfo.setRaddinfo(jsonObject.getString("raddinfo"));
                 expressInfo.setSadd(jsonObject.getString("sadd"));
