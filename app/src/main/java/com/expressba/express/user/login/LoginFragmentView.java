@@ -8,6 +8,8 @@ import android.app.Activity;
 public interface LoginFragmentView {
     void onback();
 
+    void onSuccess();
+
     void showToast(String message);
 
     Activity getTheActivity();

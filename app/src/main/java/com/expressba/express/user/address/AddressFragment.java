@@ -1,6 +1,7 @@
 package com.expressba.express.user.address;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import com.expressba.express.Customer.Express.view.express_edit_view.ExpressEditFragment;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.R;
@@ -37,6 +37,9 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_address_fragment, container, false);
+        view.setOnKeyListener(onKeyListener);
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
         this.inflater = inflater;
         this.viewGroup = container;
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
@@ -49,6 +52,24 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
         }
         return view;
+    }
+
+    private View.OnKeyListener onKeyListener = new View.OnKeyListener(){
+
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if(event.getAction() == KeyEvent.ACTION_DOWN){
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    onBack();
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+
+    private void onBack(){
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
 
     private void getAddress(){
@@ -86,7 +107,7 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.user_addres_add_new:
                 if (receiveOrSend == SEND) {

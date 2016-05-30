@@ -52,8 +52,6 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     private ImageView leftArrow;
     private LinearLayout searchContain;
     private RelativeLayout leftContain;
-    private TextView topbarTitle;
-    private ImageView topbarRight;
 
     private SearchExpressPresenter expressPresenter;
     private MyDialog myDialog;
@@ -69,18 +67,11 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
         leftArrow = (ImageView) view.findViewById(R.id.express_search_left_image);
         leftContain = (RelativeLayout) view.findViewById(R.id.express_search_arrow);
         searchContain = (LinearLayout) view.findViewById(R.id.express_search_containt);
-        topbarTitle = (TextView) view.findViewById(R.id.top_bar_center_text);
-        topbarRight = (ImageView) view.findViewById(R.id.top_bar_right_img);
-        topbarRight.setOnClickListener(this);
-        topbarRight.setImageDrawable(getActivity().getResources().getDrawable(R.mipmap.map));
 
-        view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.express_search_result_tomap).setOnClickListener(this);
         expressPresenter = new SearchExpressPresenterImpl(getActivity(),this);
         myDialog = new MyDialog(getActivity());
         getMyBundle();
-
-        //onRequestSuccess();
         return view;
     }
 
@@ -104,12 +95,6 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.top_bar_left_img:
-                onBack();
-                break;
-            case R.id.top_bar_right_img:
-                toBaiduMap();
-                break;
             case R.id.express_search_result_tomap:
                 toBaiduMap();
                 break;
@@ -122,7 +107,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
      * 跳转到百度地图位置实时监测
      */
     private void toBaiduMap(){
-        MyFragmentManager.turnBaiduFragment(SearchExpressFragment.class, MyBaiduMapFragment.class,null,searchID,getFragmentManager());
+        MyFragmentManager.turnBaiduFragment(SearchMainFragment.class, MyBaiduMapFragment.class,null,searchID,getFragmentManager());
     }
 
     /**
@@ -140,7 +125,8 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     @Override
     public void init() {
         searchText.setText(searchID);
-        topbarTitle.setText(searchID+"物流信息");
+        getSearchInfo();
+        //topbarTitle.setText(searchID+"物流信息");*/
     }
 
     @Override
@@ -163,7 +149,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
     @Override
     public void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos) {
         int size = expressSearchInfos.size();
-        for(int i=0;i<size;i++) {//循环读取每一条数据
+        for(int i=size-1;i>=0;i--) {//循环读取每一条数据
             RelativeLayout relativeLayout = (RelativeLayout) LinearLayout.inflate(getActivity(), R.layout.user_express_search_item, null);
             TextView pointText = (TextView) relativeLayout.findViewById(R.id.express_address_point);
             TextView timeText = (TextView) relativeLayout.findViewById(R.id.express_point_date);

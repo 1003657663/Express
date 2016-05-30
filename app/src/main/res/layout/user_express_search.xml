@@ -5,8 +5,6 @@
     android:background="@color/whitesmoke"
     android:orientation="vertical">
 
-    <include layout="@layout/top_bar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,13 +20,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/express_search_result_id"
-            android:text="1234567890" />
+            android:text="" />
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/white"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:gravity="center_vertical"
         android:id="@+id/express_search_result_tomap"
         android:layout_marginTop="5dp">
@@ -46,8 +44,9 @@
     </RelativeLayout>
 
     <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +57,6 @@
                 android:id="@+id/express_search_arrow"
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:background="@color/white"
                 android:paddingBottom="10dp"
                 android:paddingTop="20dp">
 
@@ -76,6 +74,10 @@
                 android:layout_weight="1"
                 android:id="@+id/express_search_containt"
                 android:orientation="vertical">
+                <!--<include layout="@layout/user_express_search_item"/>
+                <include layout="@layout/user_express_search_item"/>
+                <include layout="@layout/user_express_search_item"/>-->
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

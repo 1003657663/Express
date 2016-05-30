@@ -35,7 +35,7 @@ public class ChangePassworPresenterImpl extends VolleyHelper implements ChangePa
             if(jsonObject.getString("changepwd").equals("true")){
                 application.getUserInfo().setPassword(password);
                 changePasswordView.onSubmitSuccess();
-            }{
+            }else{
                 onError("修改密码失败，请重试");
             }
         } catch (JSONException e) {

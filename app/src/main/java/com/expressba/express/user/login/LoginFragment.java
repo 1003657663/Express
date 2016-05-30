@@ -1,9 +1,6 @@
 package com.expressba.express.user.login;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +21,7 @@ import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.model.FromAndTo;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.toolbox.CheckInput;
 import com.expressba.express.toolbox.CountDown;
@@ -40,7 +38,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     public static final int VERIFY_ERROR = 3;
 
 
-    private LoginModel loginModel;
+    private LoginPresenter loginPresenter;
     private EditText telEdit;
     private EditText passwordEdit;
     private EditText nameEdit;
@@ -52,13 +50,14 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     private String verifyCode;
     private boolean hasUserNameEdit = false;//用户名输入框是否存在
     private boolean isLogin;
+    private FromAndTo fromAndTo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_login, container, false);
         TextView topText = (TextView) view.findViewById(R.id.top_bar_center_text);
         topText.setText("登陆");
-        loginModel = new LoginModelImpl(getActivity(), this);
+        loginPresenter = new LoginPresenterImpl(getActivity(), this);
 
         telEdit = (EditText) view.findViewById(R.id.login_tel_edit);
         passwordEdit = (EditText) view.findViewById(R.id.login_password_edit);
@@ -69,10 +68,26 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
         view.findViewById(R.id.login_button).setOnClickListener(this);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.register_button).setOnClickListener(this);
-
+        getBundle();
         initSMS();
-
+        getMyBundle();
         return view;
+    }
+
+    @Override
+    public void setBundle(Bundle bundle) {
+        super.setBundle(bundle);
+        getMyBundle();
+    }
+
+    private void getMyBundle(){
+        Bundle bundle = getArguments();
+        if(bundle ==null){
+            bundle = getBundle();
+        }
+        if(bundle !=null){
+            fromAndTo = bundle.getParcelable("fromandto");
+        }
     }
 
     @Override
@@ -84,9 +99,18 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
                 break;
             case R.id.login_button:
                 isLogin = true;
-                if (checkInput()) {
-                    //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                    loginModel.startLogin(tel, password);
+                //----test
+                if(telEdit.getText().toString().equals("")){
+                    tel = "12345678909";
+                    password = "123456";
+                    /*tel = "11111111111";
+                    password = "111111";*/
+                    loginPresenter.startLogin(tel,password);
+                }else {
+                    if (checkInput()) {
+                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                        loginPresenter.startLogin(tel, password);
+                    }
                 }
                 break;
             case R.id.register_button:
@@ -94,7 +118,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
                     isLogin = false;
                     if (checkInput()) {
                         //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        loginModel.startRegister(tel, password, name);
+                        loginPresenter.startRegister(tel, password, name);
                     }
                 } else {
                     addUserNameEdit();
@@ -161,9 +185,9 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
                         HashMap<String, String> data = (HashMap<String, String>) msg.obj;
                         if (data.get("phone").equals(tel)) {
                             if (isLogin) {//判断是注册还是登录通过用户姓名输入框的存在性
-                                loginModel.startLogin(tel, password);
+                                loginPresenter.startLogin(tel, password);
                             } else {
-                                loginModel.startRegister(tel, password, name);
+                                loginPresenter.startRegister(tel, password, name);
                             }
                         } else {
                             showToast("验证失败，请重新获取验证码");
@@ -214,7 +238,31 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
 
     @Override
     public void onback() {
-        MyFragmentManager.popFragment(LoginFragment.class, null, null, getFragmentManager());
+        if(fromAndTo!=null){
+            try {
+                MyFragmentManager.popFragment(LoginFragment.class,(Class<? extends UIFragment>) Class.forName(fromAndTo.getFrom()), null, getFragmentManager());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
+            MyFragmentManager.popFragment(LoginFragment.class, null, null, getFragmentManager());
+        }
+    }
+
+    /**
+     * 登陆或者注册成功跳转到要去的页面
+     */
+    @Override
+    public void onSuccess() {
+        if(fromAndTo!=null) {
+            try {
+                MyFragmentManager.turnFragment(getClass(), (Class<? extends UIFragment>)Class.forName(fromAndTo.getTo()),null,getFragmentManager(),false);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else{
+            onback();
+        }
     }
 
     @Override

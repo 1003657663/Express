@@ -148,7 +148,7 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     /**
      * 设为默认 按钮 被点击后调用
      */
-    private int preRank;
+    private int preRank = -1;
     private void setDefault(){
         MyDialog myDialog = new MyDialog(getActivity());
         if(preRank == 0){

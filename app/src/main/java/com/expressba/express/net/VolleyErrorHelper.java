@@ -110,7 +110,11 @@ public class VolleyErrorHelper {
                         e.printStackTrace();
                     }
                     // invalid request
-                    return error.getMessage();
+                    if(error.getMessage()!=null) {
+                        return error.getMessage();
+                    }else{
+                        return "Service error "+response.statusCode;
+                    }
 
                 default:
                     return context.getResources().getString(

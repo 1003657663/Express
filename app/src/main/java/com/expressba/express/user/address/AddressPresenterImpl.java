@@ -35,6 +35,10 @@ public class AddressPresenterImpl implements AddressPresenter{
 
     @Override
     public void onGetAddressSuccess(ArrayList<UserAddress> addressList) {
+        if(addressList.size() == 0){
+            addressView.onError("没有地址，请添加地址");
+            return;
+        }
         addressView.refreshAddress(addressList);
     }
 

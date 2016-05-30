@@ -14,6 +14,7 @@ import com.expressba.express.main.MyApplication;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.net.VolleyHelper;
 import com.expressba.express.R;
+import com.expressba.express.toolbox.Tools;
 
 /**
  * Created by songchao on 16/5/8.
@@ -50,6 +51,10 @@ public class ExpressHistoryPresenterImpl extends VolleyHelper implements Express
     @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
+        if(jsonArray.length()==0){
+            onError("没有快递历史哦");
+            return;
+        }
         ArrayList<ExpressInfo> expressInfos = new ArrayList<>();
         try {
             for(int i=0;i<jsonArray.length();i++){
@@ -62,10 +67,10 @@ public class ExpressHistoryPresenterImpl extends VolleyHelper implements Express
                     expressInfo.setAcc2(jsonObject.getString("acc2"));
                 }
                 if(jsonObject.has("getTime")){
-                    expressInfo.setGetTime(jsonObject.getString("getTime"));
+                    expressInfo.setGetTime(Tools.handlerTimeWithZero(jsonObject.getString("getTime")));
                 }
                 if(jsonObject.has("outTime")){
-                    expressInfo.setOutTime(jsonObject.getString("outTime"));
+                    expressInfo.setOutTime(Tools.handlerTimeWithZero(jsonObject.getString("outTime")));
                 }
                 expressInfo.setID(jsonObject.getString("ID"));
                 expressInfo.setInsuFee(jsonObject.getDouble("insuFee"));

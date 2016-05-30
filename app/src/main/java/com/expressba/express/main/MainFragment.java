@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.Activity;
 import android.widget.TextView;
@@ -15,11 +16,12 @@ import android.widget.Toast;
 
 
 import com.expressba.express.map.MyBaiduMapFragment;
+import com.expressba.express.model.FromAndTo;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.search.SearchMainFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
-import com.expressba.express.Customer.Express.view.express_edit_view.ExpressEditFragment;
+import com.expressba.express.express.view.express_edit_view.ExpressEditFragment;
 import com.expressba.express.R;
 import com.expressba.express.user.login.LoginFragment;
 import com.expressba.express.user.me.MeFragment;
@@ -50,7 +52,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         send=(Button)view.findViewById(R.id.send);
         search=(Button)view.findViewById(R.id.search);
         meButton = (Button) view.findViewById(R.id.me_button);
-        searchTextView = (TextView) view.findViewById(R.id.index_top_bar_input);
+        searchTextView = (EditText) view.findViewById(R.id.index_top_bar_input);
 
         meButton.setOnClickListener(this);
         cameraButton.setOnClickListener(this);
@@ -58,7 +60,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         send.setOnClickListener(this);
         search.setOnClickListener(this);
 
-        searchTextView.setEnabled(false);
+        searchTextView.setClickable(true);
+        searchTextView.setOnClickListener(this);
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -69,8 +72,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.me_button:
-                if(!myApplication.getUserInfo().getLoginState()) {//没有登陆跳转登陆界面
-                    toLoginFragment();
+                if(!isLogin()) {//没有登陆跳转登陆界面
+                    toLoginFragment(MeFragment.class.getName());
                 }else {
                     toMeFragment();//登陆后跳转"我"界面
                 }
@@ -82,7 +85,11 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 toSearchFragment();
                 break;
             case R.id.send:
-                toSendFragment();
+                if(isLogin()) {
+                    toSendFragment();
+                }else{
+                    toLoginFragment(ExpressEditFragment.class.getName());
+                }
                 break;
             case R.id.search:
                 toSearchFragment();
@@ -90,6 +97,14 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
             case R.id.index_top_bar_input:
                 toSearchFragment();
                 break;
+        }
+    }
+
+    private boolean isLogin(){
+        if(myApplication.getUserInfo().getLoginState()){
+            return true;
+        }else{
+            return false;
         }
     }
 
@@ -137,8 +152,13 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
     /**
      * 跳转到登陆界面
      */
-    private void toLoginFragment(){
-        MyFragmentManager.turnFragment(MainFragment.class,LoginFragment.class,null,getFragmentManager());
+    private void toLoginFragment(String to){
+        Bundle bundle = new Bundle();
+        FromAndTo fromAndTo = new FromAndTo();
+        fromAndTo.setFrom(getClass().getName());
+        fromAndTo.setTo(to);
+        bundle.putParcelable("fromandto",fromAndTo);
+        MyFragmentManager.turnFragment(MainFragment.class,LoginFragment.class,bundle,getFragmentManager());
     }
 
     /**

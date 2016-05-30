@@ -1,5 +1,6 @@
 package com.expressba.express.user.search;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
-import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.toolbox.CheckInput;
 
 /**
@@ -23,13 +23,13 @@ public class SearchMainFragment extends UIFragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.search_main,container,false);
+        View view = inflater.inflate(R.layout.user_search_main,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.search_main_submit).setOnClickListener(this);
 
         searchTextView = (TextView) view.findViewById(R.id.search_main_text);
 
-        searchTextView.setText("89899774542259");
+        searchTextView.setText("22222222222222");
 
         initListener();
         return view;
@@ -71,7 +71,12 @@ public class SearchMainFragment extends UIFragment implements View.OnClickListen
         if(CheckInput.checkNumber(searchText)){
             Bundle bundle = new Bundle();
             bundle.putString("searchID",searchText);
-            MyFragmentManager.turnFragment(getClass(),SearchExpressFragment.class,bundle,getFragmentManager(),false);
+            SearchExpressFragment sef = new SearchExpressFragment();
+            sef.setArguments(bundle);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.search_main_framelayout,sef);
+            ft.commitAllowingStateLoss();
+
         }else{
             searchTextView.setError("输入必须是快递单号");
         }

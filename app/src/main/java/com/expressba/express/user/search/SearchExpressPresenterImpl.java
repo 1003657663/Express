@@ -25,12 +25,12 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
         super(context);
         this.searchExpressView = searchExpressView;
         String baseUrl = context.getResources().getString(R.string.base_url);
-        searchUrl = baseUrl + context.getResources().getString(R.string.express_search_one);
+        searchUrl = baseUrl + context.getResources().getString(R.string.express_route_search);
     }
 
     @Override
     public void startGetExpressInfo(String expressID) {
-        searchUrl = searchUrl.replace("{id}", expressID);
+        searchUrl = searchUrl.replace("{expressId}", expressID);
         doJsonArray(searchUrl, VolleyHelper.GET, null);
     }
 
@@ -46,6 +46,10 @@ public class SearchExpressPresenterImpl extends VolleyHelper implements SearchEx
     @Override
     public void onDataReceive(Object jsonOrArray) {
         JSONArray jsonArray = (JSONArray) jsonOrArray;
+        if(jsonArray.length() == 0){
+            onError("您查的快递不存在");
+            return;
+        }
         ArrayList<ExpressSearchInfo> expressSearchInfos = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {

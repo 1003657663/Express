@@ -3,6 +3,7 @@ package com.expressba.express.user.me;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,9 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_me_fragment,container,false);
+        view.setOnKeyListener(onKeyListener);
+        view.setFocusable(true);
+        view.setFocusableInTouchMode(true);
         TextView textView = (TextView) view.findViewById(R.id.top_bar_center_text);
         textView.setText("我");
         fragmentManager = getFragmentManager();
@@ -48,11 +52,26 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
         return view;
     }
 
+    private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            if(event.getAction() == KeyEvent.ACTION_DOWN){
+                onBack();
+                return true;
+            }
+            return false;
+        }
+    };
+
+    private void onBack(){
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.user_receive_address:
                 toUserReceiveAddress();
