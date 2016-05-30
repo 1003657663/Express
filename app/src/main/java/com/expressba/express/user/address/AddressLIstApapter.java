@@ -68,26 +68,13 @@ public class AddressLIstApapter extends BaseAdapter{
         if(convertView == null){
             viewHolder = new ViewHolder();
             convertView = View.inflate(context, R.layout.user_address_one,null);
-            viewHolder.nameText = (TextView) convertView.findViewById(R.id.user_name_textView);
-            viewHolder.telephoneText = (TextView) convertView.findViewById(R.id.user_tel_textView);
-            viewHolder.provinceText = (TextView) convertView.findViewById(R.id.user_province_text);
-            viewHolder.cityText = (TextView) convertView.findViewById(R.id.user_city_text);
-            viewHolder.areaText = (TextView) convertView.findViewById(R.id.user_area_text);
-            viewHolder.isDefaultText = (TextView) convertView.findViewById(R.id.user_address_isDefault);
-            viewHolder.addressText = (TextView) convertView.findViewById(R.id.user_address_textView);
-            viewHolder.editButton = (ImageView) convertView.findViewById(R.id.edit_address_button);
+            findViewHolder(viewHolder,convertView);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final UserAddress userAddress = addressList.get(position);
-        viewHolder.nameText.setText(userAddress.getName());
-        viewHolder.telephoneText.setText(userAddress.getTelephone());
-        viewHolder.provinceText.setText(userAddress.getProvince());
-        viewHolder.cityText.setText(userAddress.getCity());
-        viewHolder.areaText.setText(userAddress.getRegion());
-        viewHolder.addressText.setText(userAddress.getAddress());
-
+        setViewHolder(viewHolder,userAddress);
         viewHolder.editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,5 +88,25 @@ public class AddressLIstApapter extends BaseAdapter{
             viewHolder.isDefaultText.setVisibility(TextView.VISIBLE);
         }
         return convertView;
+    }
+
+    private void findViewHolder(ViewHolder viewHolder,View convertView){
+        viewHolder.nameText = (TextView) convertView.findViewById(R.id.user_name_textView);
+        viewHolder.telephoneText = (TextView) convertView.findViewById(R.id.user_tel_textView);
+        viewHolder.provinceText = (TextView) convertView.findViewById(R.id.user_province_text);
+        viewHolder.cityText = (TextView) convertView.findViewById(R.id.user_city_text);
+        viewHolder.areaText = (TextView) convertView.findViewById(R.id.user_area_text);
+        viewHolder.isDefaultText = (TextView) convertView.findViewById(R.id.user_address_isDefault);
+        viewHolder.addressText = (TextView) convertView.findViewById(R.id.user_address_textView);
+        viewHolder.editButton = (ImageView) convertView.findViewById(R.id.edit_address_button);
+    }
+
+    private void setViewHolder(ViewHolder viewHolder,UserAddress userAddress){
+        viewHolder.nameText.setText(userAddress.getName());
+        viewHolder.telephoneText.setText(userAddress.getTelephone());
+        viewHolder.provinceText.setText(userAddress.getProvince());
+        viewHolder.cityText.setText(userAddress.getCity());
+        viewHolder.areaText.setText(userAddress.getRegion());
+        viewHolder.addressText.setText(userAddress.getAddress());
     }
 }

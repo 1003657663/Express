@@ -1,4 +1,4 @@
-package com.expressba.express.express.model.ExpressEdit;
+package com.expressba.express.express;
 
 /**
  * Created by 黎明 on 2016/4/16.

@@ -1,8 +1,5 @@
-package com.expressba.express.express.presenter.express_edit_presenter;
+package com.expressba.express.express;
 
-import com.expressba.express.express.model.ExpressEdit.ExpressEditModel;
-import com.expressba.express.express.model.ExpressEdit.ExpressEditModelImpl;
-import com.expressba.express.express.view.express_edit_view.ExpressEditFragmentView;
 /**
  * Created by 黎明 on 2016/4/16.
  */

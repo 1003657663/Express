@@ -256,7 +256,10 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     public void onSuccess() {
         if(fromAndTo!=null) {
             try {
-                MyFragmentManager.turnFragment(getClass(), (Class<? extends UIFragment>)Class.forName(fromAndTo.getTo()),null,getFragmentManager(),false);
+                Class to;
+                if(UIFragment.class.isAssignableFrom((to = Class.forName(fromAndTo.getTo())))) {//判断继承性
+                    MyFragmentManager.turnFragment(getClass(), to, null, getFragmentManager(), false);
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

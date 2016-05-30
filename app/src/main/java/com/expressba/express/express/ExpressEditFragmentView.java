@@ -1,4 +1,4 @@
-package com.expressba.express.express.view.express_edit_view;
+package com.expressba.express.express;
 
 import android.app.Activity;
 

@@ -18,10 +18,13 @@ import android.widget.Toast;
 import com.expressba.express.map.MyBaiduMapFragment;
 import com.expressba.express.model.FromAndTo;
 import com.expressba.express.myelement.MyFragmentManager;
+import com.expressba.express.user.address.AddressFragment;
+import com.expressba.express.user.address.AddressReceiveFragment;
+import com.expressba.express.user.address.AddressSendFragment;
 import com.expressba.express.user.search.SearchMainFragment;
 import com.expressba.express.zxing.activity.CaptureActivity;
 
-import com.expressba.express.express.view.express_edit_view.ExpressEditFragment;
+import com.expressba.express.express.ExpressEditFragment;
 import com.expressba.express.R;
 import com.expressba.express.user.login.LoginFragment;
 import com.expressba.express.user.me.MeFragment;
@@ -144,9 +147,11 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      * 跳转到寄快递界面
      */
     private void toSendFragment(){
+        Toast.makeText(getActivity(), "请选择发货地址", Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
-        bundle.putString("test","test");
-        MyFragmentManager.turnFragment(MainFragment.class, ExpressEditFragment.class,bundle,getFragmentManager());
+        FromAndTo fromAndTo = new FromAndTo(getClass().getName(),AddressReceiveFragment.class.getName());
+        bundle.putParcelable("fromandto",fromAndTo);
+        MyFragmentManager.turnFragment(MainFragment.class, AddressSendFragment.class,bundle,getFragmentManager());
     }
 
     /**

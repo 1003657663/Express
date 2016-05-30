@@ -12,6 +12,11 @@ public class FromAndTo implements Parcelable {
 
     }
 
+    public FromAndTo(String from,String to){
+        this.from = from;
+        this.to = to;
+    }
+
     String from;
     String to;
 

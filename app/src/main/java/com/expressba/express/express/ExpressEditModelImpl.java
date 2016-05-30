@@ -1,11 +1,10 @@
-package com.expressba.express.express.model.ExpressEdit;
+package com.expressba.express.express;
 
 import android.app.Activity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.expressba.express.express.presenter.express_edit_presenter.ExpressPresenter;
 import com.expressba.express.net.VolleyHelper;
 import com.expressba.express.R;
 

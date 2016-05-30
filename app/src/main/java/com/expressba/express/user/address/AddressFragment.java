@@ -13,6 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.model.FromAndTo;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.R;
 import com.expressba.express.myelement.MyFragmentManager;
@@ -31,8 +32,8 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     ViewGroup viewGroup;
     ListView listView;
     Integer receiveOrSend;
-    Boolean isMe = false;
-    String from;
+    protected FromAndTo fromAndTo;
+    protected Bundle bundle;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,9 +52,20 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         } else if (receiveOrSend == RECEIVE) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
         }
+        init();
         return view;
     }
 
+    /**
+     * 留给子类实现
+     */
+    protected void init(){
+
+    }
+
+    /**
+     * 监听返回键
+     */
     private View.OnKeyListener onKeyListener = new View.OnKeyListener(){
 
         @Override
@@ -68,6 +80,9 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         }
     };
 
+    /**
+     * 返回
+     */
     private void onBack(){
         MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
@@ -89,15 +104,14 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     /**
      * 获取参数
      */
-    private void getMyBundle(){
-        if(getArguments()!=null){
-            Bundle bundle = getArguments();
+    public void getMyBundle(){
+        Bundle bundle = getArguments();
+        if(bundle==null){
+            bundle = getBundle();
+        }
+        if(bundle!=null){
+            fromAndTo = bundle.getParcelable("fromandto");
             receiveOrSend = bundle.getInt("receiveOrSend");//获取上个页面传的发送或者接受地址的标志
-            isMe = bundle.getBoolean("isme", false);
-            //如果不是从me界面传过来需要获取from参数
-            if(!isMe) {
-                from = bundle.getString("wherefrom");
-            }
         }
         presenter = new AddressPresenterImpl(getActivity(), this);
         getAddress();//每次跳转到这个页面都会获取一次地址信息
@@ -131,7 +145,6 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         Bundle bundle = new Bundle();
         bundle.putParcelable("userAddress", userAddress);
         bundle.putInt("editWhat", receiveOrSend);
-
         MyFragmentManager.turnFragment(AddressFragment.class,AddressEditFragment.class,bundle,getFragmentManager());
     }
 
@@ -140,34 +153,29 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         //地址获取成功后，加载到list通过adapter
         AddressLIstApapter listApapter = new AddressLIstApapter(this, addressList, receiveOrSend);
         listView.setAdapter(listApapter);
-        if (!isMe) {
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
-                    toExpress(addressList.get(position));
-                }
-            });
-        }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                jump(addressList.get(position));
+            }
+        });
     }
 
     /**
-     * 返回去寄快递界面并且传参
+     * 跳转到xx页面
+     * @param userAddress
      */
-    private void toExpress(UserAddress userAddress) {
-        Bundle bundle = new Bundle();
-        if (receiveOrSend == RECEIVE) {
-            bundle.putInt("receiveOrSend", RECEIVE);
-            bundle.putParcelable("expressaddress", userAddress);
-        } else if (receiveOrSend == SEND) {
-            bundle.putInt("receiveOrSend", SEND);
-            bundle.putParcelable("expressaddress", userAddress);
+    protected void jump(UserAddress userAddress){
+        if(bundle==null){
+            bundle = new Bundle();
+        }else {
+            bundle.clear();
         }
-
-        try {//这里需要判断一下
-            MyFragmentManager.popFragment(AddressFragment.class,(Class<? extends UIFragment>) Class.forName(from),bundle,getFragmentManager());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        if(userAddress!=null) {
+            bundle.putParcelable("useraddress", userAddress);
+        }
+        if(fromAndTo==null){
+            toEditFragment(userAddress,receiveOrSend==AddressFragment.SEND? AddressEditFragment.ADDRESS_UPDATE_SEND:AddressEditFragment.ADDRESS_UPDATE_RECEIVE);
         }
     }
 }

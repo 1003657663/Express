@@ -1,4 +1,4 @@
-package com.expressba.express.express.view.express_edit_view;
+package com.expressba.express.express;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
-import com.expressba.express.express.presenter.express_edit_presenter.ExpressPresenter;
-import com.expressba.express.express.presenter.express_edit_presenter.ExpressPresenterImpl;
 import com.expressba.express.main.MyApplication;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.UserAddress;
@@ -60,6 +58,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         receive_address.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
+        getMyBundle();
         return view;
     }
 
@@ -67,28 +66,54 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     public void setBundle(Bundle bundle) {
         super.setBundle(bundle);
         if (getBundle().getInt("receiveOrSend") == SEND) {
-            setSendAddress();
+            setSendAddress(null);
         } else if (getBundle().getInt("receiveOrSend") == RECEIVE) {
-            setReceiveAddress();
+            setReceiveAddress(null);
+        }
+        getMyBundle();
+    }
+
+    private void getMyBundle(){
+        Bundle bundle = getArguments();
+        if(bundle==null){
+            bundle = getBundle();
+        }
+        if(bundle!=null){
+            UserAddress sendAddress = bundle.getParcelable("sendaddress");
+            UserAddress receiveAddress = bundle.getParcelable("receiveaddress");
+            if(sendAddress!=null){
+                setSendAddress(sendAddress);
+            }
+            if(receiveAddress!=null){
+                setReceiveAddress(receiveAddress);
+            }
         }
     }
 
-    private void setReceiveAddress() {
-        UserAddress userAddress = getBundle().getParcelable("expressaddress");
-        rname.setText(userAddress.getName());
-        receive_id = userAddress.getAid();
-        rtel.setText(userAddress.getTelephone());
-        raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
-        raddressinfo.setText(userAddress.getAddress());
+    private void setReceiveAddress(UserAddress userAddress) {
+        if(userAddress==null){
+            userAddress = getBundle().getParcelable("expressaddress");
+        }
+        if(userAddress!=null) {
+            rname.setText(userAddress.getName());
+            receive_id = userAddress.getAid();
+            rtel.setText(userAddress.getTelephone());
+            raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+            raddressinfo.setText(userAddress.getAddress());
+        }
     }
 
-    private void setSendAddress() {
-        UserAddress userAddress = getBundle().getParcelable("expressaddress");
-        sname.setText(userAddress.getName());
-        send_id = userAddress.getAid();
-        stel.setText(userAddress.getTelephone());
-        saddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
-        saddressinfo.setText(userAddress.getAddress());
+    private void setSendAddress(UserAddress userAddress) {
+        if(userAddress==null){
+            userAddress = getBundle().getParcelable("expressaddress");
+        }
+        if(userAddress!=null) {
+            sname.setText(userAddress.getName());
+            send_id = userAddress.getAid();
+            stel.setText(userAddress.getTelephone());
+            saddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+            saddressinfo.setText(userAddress.getAddress());
+        }
     }
 
     @Override

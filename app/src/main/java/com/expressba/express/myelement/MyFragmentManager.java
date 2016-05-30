@@ -49,7 +49,7 @@ public class MyFragmentManager {
                 e.printStackTrace();
             }
         }else {
-            if (args != null && !args.isEmpty()) {
+            if (args != null) {
                 //toFragment.getArguments().putAll(args);
                 toFragment.setBundle(args);
             }
@@ -111,7 +111,7 @@ public class MyFragmentManager {
                 e.printStackTrace();
             }
         }else {
-            if (args != null && !args.isEmpty()) {
+            if (args != null) {
                 //toFragment.getArguments().putAll(args);
                 toFragment.setBundle(args,expressID);
             }
@@ -176,7 +176,7 @@ public class MyFragmentManager {
                 e.printStackTrace();
             }
         }else {
-            if (args != null && !args.isEmpty()) {
+            if (args != null) {
                 //toFragment.getArguments().putAll(args);
                 toFragment.setBundle(args);
             }
@@ -278,7 +278,7 @@ public class MyFragmentManager {
             String toTag = toFragmentClass.getSimpleName();
             UIFragment toFragment = (UIFragment) fm.findFragmentByTag(toTag);
             if (toFragment != null) {
-                if (args != null && !args.isEmpty()) {
+                if (args != null) {
                     //toFragment.getArguments().putAll(args);
                     toFragment.setBundle(args);
                 }

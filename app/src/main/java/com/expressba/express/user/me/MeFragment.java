@@ -107,8 +107,6 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     public void toUserReceiveAddress(){
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
-        bundle.putBoolean("isme",true);
-
         MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
     }
 
@@ -135,7 +133,6 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     public void toUserSendAddress() {
         Bundle bundle = new Bundle();
         bundle.putInt("receiveOrSend", AddressFragment.SEND);
-        bundle.putBoolean("isme",true);
         MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
     }
 
@@ -145,18 +142,6 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public void loginOut() {
         ((MyApplication)getActivity().getApplication()).getUserInfo().setLoginState(false);
-        /*LoginFragment loginFragment = new LoginFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        ft.hide(this);
-        if(!loginFragment.isAdded()) {
-            ft.add(R.id.fragment_container_layout,loginFragment, LoginFragment.class.getSimpleName());
-        }else {
-            ft.show(loginFragment);
-        }
-        ft.commitAllowingStateLoss();*/
-
         MyFragmentManager.turnFragment(MeFragment.class,LoginFragment.class,null,getFragmentManager(),false);
     }
 
