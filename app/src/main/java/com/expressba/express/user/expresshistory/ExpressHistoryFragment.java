@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
+import com.expressba.express.myelement.MyFragmentManager;
 
 /**
  * Created by songchao on 16/5/8.
@@ -50,13 +51,8 @@ public class ExpressHistoryFragment extends UIFragment implements ExpressHistory
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //跳转到此快递详情页面
                 ExpressInfo expressInfo = expressInfos.get(position);
-                ExpressHistoryDetailFragment detailFragment = ExpressHistoryDetailFragment.newInstance(expressInfo,sendOrReceive);
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction transaction = fm.beginTransaction();
-                transaction.replace(R.id.fragment_container_layout,detailFragment);
-                transaction.addToBackStack("expresshistoryfragment");
-                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                transaction.commit();
+                Bundle bundle = ExpressHistoryDetailFragment.newInstanceBundle(expressInfo,sendOrReceive);
+                MyFragmentManager.turnReplaceFragment(ExpressHistoryFragment.class,ExpressHistoryDetailFragment.class,bundle,getFragmentManager(),true);
             }
         });
     }

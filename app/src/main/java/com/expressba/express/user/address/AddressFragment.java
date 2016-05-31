@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import com.expressba.express.express.ExpressEditFragment;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.FromAndTo;
 import com.expressba.express.model.UserAddress;
@@ -23,7 +24,7 @@ import com.expressba.express.user.address.addressEdit.AddressEditFragment;
  * 用户地址界面
  * Created by chao on 2016/4/17.
  */
-public class AddressFragment extends UIFragment implements AddressView, View.OnClickListener {
+public abstract class AddressFragment extends UIFragment implements AddressView, View.OnClickListener {
     public static final int SEND = 0;
     public static final int RECEIVE = 1;
 
@@ -46,21 +47,15 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_addres_add_new).setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.user_address_list);
+        presenter = new AddressPresenterImpl(getActivity(), this);
         getMyBundle();
+        getAddress();//每次跳转到这个页面都会获取一次地址信息
         if (receiveOrSend == SEND) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
         } else if (receiveOrSend == RECEIVE) {
             ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
         }
-        init();
         return view;
-    }
-
-    /**
-     * 留给子类实现
-     */
-    protected void init(){
-
     }
 
     /**
@@ -87,7 +82,15 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
 
-    private void getAddress(){
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            getAddress();
+        }
+    }
+
+    protected void getAddress(){
         if (receiveOrSend == SEND) {
             presenter.getSendAddress();
         } else if (receiveOrSend == RECEIVE) {
@@ -99,22 +102,21 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     public void setBundle(Bundle bundle) {
         super.setBundle(bundle);
         getMyBundle();
+        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
 
     /**
      * 获取参数
      */
-    public void getMyBundle(){
-        Bundle bundle = getArguments();
+    protected void getMyBundle(){
+        bundle = getBundle();
         if(bundle==null){
-            bundle = getBundle();
+            bundle = getArguments();
         }
         if(bundle!=null){
             fromAndTo = bundle.getParcelable("fromandto");
             receiveOrSend = bundle.getInt("receiveOrSend");//获取上个页面传的发送或者接受地址的标志
         }
-        presenter = new AddressPresenterImpl(getActivity(), this);
-        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
 
     @Override
@@ -140,12 +142,21 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * 跳转到地址编辑界面
+     * @param userAddress
+     * @param receiveOrSend
+     */
     @Override
     public void toEditFragment(UserAddress userAddress, Integer receiveOrSend) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("userAddress", userAddress);
-        bundle.putInt("editWhat", receiveOrSend);
-        MyFragmentManager.turnFragment(AddressFragment.class,AddressEditFragment.class,bundle,getFragmentManager());
+        bundle.putInt("editwhat",receiveOrSend);
+        bundle.putParcelable("useraddress",userAddress);
+        MyFragmentManager.turnFragment(getClass(),AddressEditFragment.class,bundle,getFragmentManager());
+    }
+
+    protected void toExpressEditFragment(){
+        MyFragmentManager.turnFragment(AddressFragment.class,ExpressEditFragment.class,bundle,getFragmentManager(),false);
     }
 
     @Override
@@ -168,11 +179,14 @@ public class AddressFragment extends UIFragment implements AddressView, View.OnC
     protected void jump(UserAddress userAddress){
         if(bundle==null){
             bundle = new Bundle();
-        }else {
-            bundle.clear();
         }
         if(userAddress!=null) {
-            bundle.putParcelable("useraddress", userAddress);
+            bundle.putInt("receiveOrSend",receiveOrSend);
+            if(receiveOrSend == SEND) {
+                bundle.putParcelable("sendaddress", userAddress);
+            }else{
+                bundle.putParcelable("receiveaddress", userAddress);
+            }
         }
         if(fromAndTo==null){
             toEditFragment(userAddress,receiveOrSend==AddressFragment.SEND? AddressEditFragment.ADDRESS_UPDATE_SEND:AddressEditFragment.ADDRESS_UPDATE_RECEIVE);

@@ -15,6 +15,8 @@ import com.expressba.express.main.UIFragment;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.about.AboutFragment;
 import com.expressba.express.user.address.AddressFragment;
+import com.expressba.express.user.address.AddressReceiveFragment;
+import com.expressba.express.user.address.AddressSendFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryFragment;
 import com.expressba.express.user.expresshistory.ExpressHistoryPresenterImpl;
 import com.expressba.express.user.login.LoginFragment;
@@ -106,8 +108,7 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public void toUserReceiveAddress(){
         Bundle bundle = new Bundle();
-        bundle.putInt("receiveOrSend", AddressFragment.RECEIVE);
-        MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
+        MyFragmentManager.turnFragment(MeFragment.class,AddressReceiveFragment.class,bundle,getFragmentManager());
     }
 
     /**
@@ -132,8 +133,7 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public void toUserSendAddress() {
         Bundle bundle = new Bundle();
-        bundle.putInt("receiveOrSend", AddressFragment.SEND);
-        MyFragmentManager.turnFragment(MeFragment.class,AddressFragment.class,bundle,getFragmentManager());
+        MyFragmentManager.turnFragment(MeFragment.class,AddressSendFragment.class,bundle,getFragmentManager());
     }
 
     /**

@@ -16,10 +16,22 @@ import com.expressba.express.user.address.addressEdit.AddressEditFragment;
  * Created by songchao on 16/5/30.
  */
 public class AddressSendFragment extends AddressFragment {
+
     @Override
-    protected void init() {
-        super.init();
-        ((TextView)viewGroup.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
+    public void getMyBundle() {
+        bundle = getBundle();
+        if(bundle==null){
+            bundle = getArguments();
+        }
+        if(bundle!=null){
+            fromAndTo = bundle.getParcelable("fromandto");
+            if(fromAndTo!=null && fromAndTo.getTo().equals(AddressReceiveFragment.class.getName())){
+                Toast.makeText(getActivity(), "请选择发货地址", Toast.LENGTH_SHORT).show();
+            }
+        }
+        receiveOrSend = SEND;
+        presenter = new AddressPresenterImpl(getActivity(), this);
+        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
 
     @Override
@@ -27,8 +39,6 @@ public class AddressSendFragment extends AddressFragment {
         super.jump(userAddress);
         if(fromAndTo!=null){
             toAddressReceiveFragment(bundle,userAddress);
-        }else{
-            toEditFragment(userAddress,receiveOrSend==AddressFragment.SEND? AddressEditFragment.ADDRESS_UPDATE_SEND:AddressEditFragment.ADDRESS_UPDATE_RECEIVE);
         }
     }
 
@@ -40,8 +50,6 @@ public class AddressSendFragment extends AddressFragment {
         //判断页面不同页面，不同参数
         Class toClass;
         FromAndTo fromAndTo2 = new FromAndTo(getClass().getName(),ExpressEditFragment.class.getName());
-        bundle.putInt("receiveOrSend",SEND);
-        bundle.putParcelable("sendaddress",userAddress);
         bundle.putParcelable("fromandto",fromAndTo2);
         try {
             if(UIFragment.class.isAssignableFrom((toClass = Class.forName(fromAndTo.getTo())))) {

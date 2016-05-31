@@ -26,6 +26,8 @@ import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.toolbox.CheckInput;
 import com.expressba.express.toolbox.CountDown;
 import com.expressba.express.R;
+import com.expressba.express.user.address.AddressReceiveFragment;
+import com.expressba.express.user.address.AddressSendFragment;
 
 /**
  * Created by chao on 2016/4/16.
@@ -81,9 +83,9 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     }
 
     private void getMyBundle(){
-        Bundle bundle = getArguments();
+        Bundle bundle = getBundle();
         if(bundle ==null){
-            bundle = getBundle();
+            bundle = getArguments();
         }
         if(bundle !=null){
             fromAndTo = bundle.getParcelable("fromandto");
@@ -258,7 +260,14 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
             try {
                 Class to;
                 if(UIFragment.class.isAssignableFrom((to = Class.forName(fromAndTo.getTo())))) {//判断继承性
-                    MyFragmentManager.turnFragment(getClass(), to, null, getFragmentManager(), false);
+                    //加入fromandto
+                    Bundle bundle = null;
+                    if(fromAndTo.getTo().equals(AddressSendFragment.class.getName())) {
+                        bundle = new Bundle();
+                        FromAndTo fromAndTo = new FromAndTo(getClass().getName(), AddressReceiveFragment.class.getName());
+                        bundle.putParcelable("fromandto",fromAndTo);
+                    }
+                    MyFragmentManager.turnFragment(getClass(), to, bundle, getFragmentManager(), false);
                 }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

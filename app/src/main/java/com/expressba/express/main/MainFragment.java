@@ -63,7 +63,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
         send.setOnClickListener(this);
         search.setOnClickListener(this);
 
-        searchTextView.setClickable(true);
+        searchTextView.setEnabled(true);
+        searchTextView.setFocusable(false);
         searchTextView.setOnClickListener(this);
         fm = getFragmentManager();
         transaction = fm.beginTransaction();
@@ -91,7 +92,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 if(isLogin()) {
                     toSendFragment();
                 }else{
-                    toLoginFragment(ExpressEditFragment.class.getName());
+                    toLoginFragment(AddressSendFragment.class.getName());
                 }
                 break;
             case R.id.search:
@@ -147,7 +148,6 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
      * 跳转到寄快递界面
      */
     private void toSendFragment(){
-        Toast.makeText(getActivity(), "请选择发货地址", Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
         FromAndTo fromAndTo = new FromAndTo(getClass().getName(),AddressReceiveFragment.class.getName());
         bundle.putParcelable("fromandto",fromAndTo);

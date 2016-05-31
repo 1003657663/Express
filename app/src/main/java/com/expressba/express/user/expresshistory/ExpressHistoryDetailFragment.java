@@ -26,19 +26,16 @@ public class ExpressHistoryDetailFragment extends UIFragment implements View.OnC
     }
 
     /**
-     * 静态工厂方法实例化fragment，保证所需bundle参数不会出错
+     * 静态bundle创建方法
      * @param expressInfo
      * @param sendOrReceive
      * @return
      */
-    public static ExpressHistoryDetailFragment newInstance(ExpressInfo expressInfo,int sendOrReceive){
-        ExpressHistoryDetailFragment detailFragment = new ExpressHistoryDetailFragment();
+    public static Bundle newInstanceBundle(ExpressInfo expressInfo,int sendOrReceive){
         Bundle bundle = new Bundle();
         bundle.putParcelable("expressinfo",expressInfo);
         bundle.putInt("sendorreceive",sendOrReceive);
-        detailFragment.setArguments(bundle);
-
-        return detailFragment;
+        return bundle;
     }
 
     private void init(View view){

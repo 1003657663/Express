@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="express_search_one">/REST/Domain/getExpressInfoById/{id}</string><!--单号搜索快件-->
-    <string name="employee_get_map">/REST/Domain/getSendEmployeesInfos/{expressId}</string>
+    <string name="employee_get_map">/REST/Domain/getSendEmployeesInfos/{expressId}</string><!---->
     <string name="user_express_history_send">/REST/Domain/getSendExpressInfoByCustomerId/{CustomerId}</string><!--用户发出快件历史-->
     <string name="user_express_history_receive">/REST/Domain/getRercvExpressInfoByCustomerId/{CustomerId}</string><!--用户收到快件历史-->
     <string name="about_soft"><strong>卓越快递</strong>\n实时快递跟踪软件</string>

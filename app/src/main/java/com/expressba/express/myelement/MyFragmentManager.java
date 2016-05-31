@@ -31,10 +31,10 @@ public class MyFragmentManager {
         //被切换的fragment标签
         String fromTag = null;
         if(fromFragmentClass!=null) {
-            fromTag = fromFragmentClass.getSimpleName();
+            fromTag = fromFragmentClass.getName();
         }
         //切换到fragment标签
-        String toTag = toFragmentClass.getSimpleName();
+        String toTag = toFragmentClass.getName();
 
         UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
         UIFragment toFragment = (UIFragment) fm.findFragmentByTag(toTag);
@@ -93,10 +93,10 @@ public class MyFragmentManager {
         //被切换的fragment标签
         String fromTag = null;
         if(fromFragmentClass!=null) {
-            fromTag = fromFragmentClass.getSimpleName();
+            fromTag = fromFragmentClass.getName();
         }
         //切换到fragment标签
-        String toTag = toFragmentClass.getSimpleName();
+        String toTag = toFragmentClass.getName();
 
         UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
         MyBaiduMapFragment toFragment = (MyBaiduMapFragment) fm.findFragmentByTag(toTag);
@@ -158,10 +158,10 @@ public class MyFragmentManager {
         //被切换的fragment标签
         String fromTag = null;
         if(fromFragmentClass!=null) {
-            fromTag = fromFragmentClass.getSimpleName();
+            fromTag = fromFragmentClass.getName();
         }
         //切换到fragment标签
-        String toTag = toFragmentClass.getSimpleName();
+        String toTag = toFragmentClass.getName();
 
         UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
         UIFragment toFragment = (UIFragment) fm.findFragmentByTag(toTag);
@@ -227,16 +227,18 @@ public class MyFragmentManager {
         //被切换的fragment标签
         String fromTag = null;
         if(fromFragmentClass!=null) {
-            fromTag = fromFragmentClass.getSimpleName();
+            fromTag = fromFragmentClass.getName();
         }
         //切换到fragment标签
-        String toTag = toFragmentClass.getSimpleName();
+        String toTag = toFragmentClass.getName();
 
         //UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
         UIFragment toFragment = null;// = (UIFragment) fm.findFragmentByTag(toTag);
+        UIFragment fromFragment = null;
         try {
             toFragment = toFragmentClass.newInstance();
             toFragment.setArguments(args);
+            fromFragment = (UIFragment) fm.findFragmentByTag(fromTag);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -247,7 +249,11 @@ public class MyFragmentManager {
         //如果tofragment已经添加到栈里面，那么隐藏现在的fragment显示要切换的fragment，
         //如果没有添加，那么隐藏现在的，添加要切换的fragment
         if(toFragment!=null) {
-            ft.replace(R.id.fragment_container_layout,toFragment,toTag);
+            if(fromFragment!=null) {
+                ft.hide(fromFragment).add(R.id.fragment_container_layout, toFragment, toTag);
+            }else {
+                ft.add(R.id.fragment_container_layout, toFragment, toTag);
+            }
             if(addBackStack) {
                 //添加到回退栈
                 ft.addToBackStack(fromTag);
@@ -275,7 +281,7 @@ public class MyFragmentManager {
         //如果要切换的fragment不存在，那么创建
         if(args!=null) {
             //切换到fragment标签
-            String toTag = toFragmentClass.getSimpleName();
+            String toTag = toFragmentClass.getName();
             UIFragment toFragment = (UIFragment) fm.findFragmentByTag(toTag);
             if (toFragment != null) {
                 if (args != null) {
@@ -295,13 +301,63 @@ public class MyFragmentManager {
         }
         //隐藏现在的Fragment
         if(fromFragmentClass!=null) {
-            UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromFragmentClass.getSimpleName());
+            UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromFragmentClass.getName());
             if(!fromFragment.isHidden()){
                 ft.hide(fromFragment);
                 ft.commitAllowingStateLoss();
             }
         }
         fm.popBackStack();
+    }
+
+
+    /**
+     * 弹出某个fragment上的所有栈中元素，并且显示那个栈
+     * @param fromFragmentClass
+     * @param toFragmentClass
+     * @param args
+     * @param fm
+     * @param popState
+     */
+    public static void popFragment(Class<? extends UIFragment> fromFragmentClass,Class<? extends UIFragment> toFragmentClass,Bundle args,FragmentManager fm,int popState){
+        FragmentTransaction ft = fm.beginTransaction();
+        //设置fragment切换效果
+        ft.setCustomAnimations(R.animator.slide_in_left,R.animator.slide_out_left,R.animator.slide_in_right,R.animator.slide_out_right);
+        //如果没有参数传递，那么不需要穿件toFragment
+        //如果要切换的fragment不存在，那么创建
+        String toTag = toFragmentClass.getName();
+        if(args!=null) {
+            //切换到fragment标签
+            UIFragment toFragment = (UIFragment) fm.findFragmentByTag(toTag);
+            if (toFragment != null) {
+                if (args != null) {
+                    //toFragment.getArguments().putAll(args);
+                    toFragment.setBundle(args);
+                }
+            } else {
+                try {
+                    toFragment = toFragmentClass.newInstance();
+                    toFragment.setArguments(args);
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        //隐藏现在的Fragment
+        if(fromFragmentClass!=null) {
+            UIFragment fromFragment = (UIFragment) fm.findFragmentByTag(fromFragmentClass.getName());
+            if(!fromFragment.isHidden()){
+                ft.hide(fromFragment);
+                ft.commitAllowingStateLoss();
+            }
+        }
+        if(toTag!=null) {
+            fm.popBackStackImmediate(toTag, popState);
+        }else{
+            fm.popBackStackImmediate();
+        }
     }
 
 }

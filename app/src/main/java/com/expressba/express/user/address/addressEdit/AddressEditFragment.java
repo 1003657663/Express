@@ -59,20 +59,19 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     private Integer cityPosition = 0;
     private Integer regionPosition = 0;
     private Boolean isdefault = true;//判断用户是否修改了地址spinner
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_address_edit,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_address_edit_submit_button).setOnClickListener(this);
+        this.view = view;
         setDefaultButton = (Button) view.findViewById(R.id.user_address_setdefault);
         setDefaultButton.setOnClickListener(this);
         myApplication = (MyApplication) getActivity().getApplication();
         getAddressModel = new GetAddressModelImpl(getActivity(),this);
-
-        Bundle bundle = getArguments();//获取地址信息
-        userAddress = bundle.getParcelable("userAddress");
-        editWhat = bundle.getInt("editWhat");
+        getMyBundle();
 
         init(view);
 
@@ -82,14 +81,45 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
         return view;
     }
 
+    @Override
+    public void setBundle(Bundle bundle) {
+        super.setBundle(bundle);
+        getMyBundle();
+    }
+
+    private void getMyBundle(){
+        Bundle bundle = getBundle();
+        if(bundle==null){
+            bundle = getArguments();//获取地址信息
+        }
+        if(bundle!=null) {
+            userAddress = bundle.getParcelable("useraddress");
+            editWhat = bundle.getInt("editwhat");
+        }
+        if(view!=null) {
+            setTitle((TextView) view.findViewById(R.id.top_bar_center_text));
+        }
+    }
+
+    private void setTitle(TextView title){
+        if(userAddress == null){
+            if(editWhat == ADDRESS_NEW_RECEIVE) {
+                title.setText("新增收货地址");
+            }else if(editWhat == ADDRESS_NEW_SEND){
+                title.setText("新增发货地址");
+            }
+        }else{
+            if(editWhat == ADDRESS_UPDATE_RECEIVE) {
+                title.setText("修改收货地址");
+            }else {
+                title.setText("修改发货地址");
+            }
+        }
+    }
+
     private void init(View view){
         //判断如果是新增地址，那么设置标题，同时默认加载北京市信息
         if(userAddress == null) {
-            if(editWhat == ADDRESS_NEW_RECEIVE) {
-                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("新增收货地址");
-            }else if(editWhat == ADDRESS_NEW_SEND){
-                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("新增发货地址");
-            }
             //设置初始省份地址，北京，初始字段设置
             userAddress = new UserAddress();
             userAddress.setRank(1);
@@ -98,11 +128,6 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
             //-------!!!
             userAddress.setCustomerid(myApplication.getUserInfo().getId());
         }else {
-            if(editWhat == ADDRESS_UPDATE_RECEIVE) {
-                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改收货地址");
-            }else {
-                ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("修改发货地址");
-            }
             setRightDelIcon(view);//如果不是新增地址，那么设置右边的删除按钮
             preRank = userAddress.getRank();//存储rank数据
             if(preRank == 0){

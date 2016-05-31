@@ -3,6 +3,7 @@ package com.expressba.express.express;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -11,12 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
+import com.expressba.express.main.MainFragment;
 import com.expressba.express.main.MyApplication;
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.model.FromAndTo;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.R;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.address.AddressFragment;
+import com.expressba.express.user.address.AddressReceiveFragment;
+import com.expressba.express.user.address.AddressSendFragment;
 
 /**
  * Created by 黎明 on 2016/4/16.
@@ -28,13 +33,11 @@ import com.expressba.express.user.address.AddressFragment;
  */
 public class ExpressEditFragment extends UIFragment implements View.OnClickListener, ExpressEditFragmentView {
     private ExpressPresenter expressPresenter;
-    private LinearLayout send_address, receive_address;
+    private LinearLayout sendAddress, receiveAddress;
     private Button submit;
-    public static int send_id = 0, receive_id = 0;
+    public static int SEND_ID = 0, RECEIVE_ID = 0;
     private TextView title, sname, stel, saddress, saddressinfo, rname, rtel, raddress, raddressinfo;
     private ImageView back;
-    public static final int SEND = 0;
-    public static final int RECEIVE = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,8 +45,8 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         title = (TextView) view.findViewById(R.id.top_bar_center_text);
         title.setText("快件信息");
         expressPresenter = new ExpressPresenterImpl(this);
-        send_address = (LinearLayout) view.findViewById(R.id.send_address);
-        receive_address = (LinearLayout) view.findViewById(R.id.receive_address);
+        sendAddress = (LinearLayout) view.findViewById(R.id.send_address);
+        receiveAddress = (LinearLayout) view.findViewById(R.id.receive_address);
         submit = (Button) view.findViewById(R.id.submit);
         sname = (TextView) view.findViewById(R.id.sname);
         stel = (TextView) view.findViewById(R.id.stel);
@@ -54,8 +57,8 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         rtel = (TextView) view.findViewById(R.id.rtel);
         raddress = (TextView) view.findViewById(R.id.radd);
         raddressinfo = (TextView) view.findViewById(R.id.raddressinfo);
-        send_address.setOnClickListener(this);
-        receive_address.setOnClickListener(this);
+        sendAddress.setOnClickListener(this);
+        receiveAddress.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
         getMyBundle();
@@ -65,54 +68,41 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     @Override
     public void setBundle(Bundle bundle) {
         super.setBundle(bundle);
-        if (getBundle().getInt("receiveOrSend") == SEND) {
-            setSendAddress(null);
-        } else if (getBundle().getInt("receiveOrSend") == RECEIVE) {
-            setReceiveAddress(null);
-        }
         getMyBundle();
     }
 
     private void getMyBundle(){
-        Bundle bundle = getArguments();
+        Bundle bundle = getBundle();
         if(bundle==null){
-            bundle = getBundle();
+            bundle = getArguments();
         }
         if(bundle!=null){
             UserAddress sendAddress = bundle.getParcelable("sendaddress");
             UserAddress receiveAddress = bundle.getParcelable("receiveaddress");
             if(sendAddress!=null){
-                setSendAddress(sendAddress);
+                setAddress(sendAddress,AddressFragment.SEND);
             }
             if(receiveAddress!=null){
-                setReceiveAddress(receiveAddress);
+                setAddress(receiveAddress,AddressFragment.RECEIVE);
             }
         }
     }
 
-    private void setReceiveAddress(UserAddress userAddress) {
-        if(userAddress==null){
-            userAddress = getBundle().getParcelable("expressaddress");
-        }
+    private void setAddress(UserAddress userAddress, int receiveOrSend) {
         if(userAddress!=null) {
-            rname.setText(userAddress.getName());
-            receive_id = userAddress.getAid();
-            rtel.setText(userAddress.getTelephone());
-            raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
-            raddressinfo.setText(userAddress.getAddress());
-        }
-    }
-
-    private void setSendAddress(UserAddress userAddress) {
-        if(userAddress==null){
-            userAddress = getBundle().getParcelable("expressaddress");
-        }
-        if(userAddress!=null) {
-            sname.setText(userAddress.getName());
-            send_id = userAddress.getAid();
-            stel.setText(userAddress.getTelephone());
-            saddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
-            saddressinfo.setText(userAddress.getAddress());
+            if (receiveOrSend == AddressFragment.SEND) {
+                sname.setText(userAddress.getName());
+                SEND_ID = userAddress.getAid();
+                stel.setText(userAddress.getTelephone());
+                saddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+                saddressinfo.setText(userAddress.getAddress());
+            } else {
+                rname.setText(userAddress.getName());
+                RECEIVE_ID = userAddress.getAid();
+                rtel.setText(userAddress.getTelephone());
+                raddress.setText(userAddress.getProvince() + userAddress.getCity() + userAddress.getRegion());
+                raddressinfo.setText(userAddress.getAddress());
+            }
         }
     }
 
@@ -122,7 +112,6 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
             case R.id.top_bar_left_img:
                 //点击后退按钮
                 onback();
-                getFragmentManager().popBackStack();
                 break;
             case R.id.send_address:
                 //用户点击寄件人姓名，跳转至地址fragment
@@ -139,36 +128,32 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
     }
 
     private void checkSubmit() {
-        if (send_id == 0 || receive_id == 0) {
+        if (SEND_ID == 0 || RECEIVE_ID == 0) {
             Toast.makeText(getActivity(), "寄件人与收件人都不能为空", Toast.LENGTH_SHORT).show();
-        } else if (send_id == receive_id) {
+        } else if (SEND_ID == RECEIVE_ID) {
             Toast.makeText(getActivity(), "寄件人与收件人不能相同", Toast.LENGTH_SHORT).show();
         } else {
             int customerId = ((MyApplication) getActivity().getApplication()).getUserInfo().getId();
-            expressPresenter.doNewExpress(customerId, send_id, receive_id);
+            expressPresenter.doNewExpress(customerId, SEND_ID, RECEIVE_ID);
         }
     }
 
     private void toReceiveAddress() {
-
         Bundle bundle1 = new Bundle();
-        bundle1.putInt("receiveOrSend", RECEIVE);
-        bundle1.putString("wherefrom", getClass().getName());
-        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressFragment.class, bundle1, getFragmentManager());
+        FromAndTo fromAndTo = new FromAndTo(getClass().getName(),ExpressEditFragment.class.getName());
+        bundle1.putParcelable("fromandto",fromAndTo);
+        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressReceiveFragment.class, bundle1, getFragmentManager());
     }
 
     private void toSendAddress() {
         Bundle bundle = new Bundle();
-        bundle.putInt("receiveOrSend", SEND);
-        bundle.putString("wherefrom", getClass().getName());
-
-        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressFragment.class, bundle, getFragmentManager());
+        FromAndTo fromAndTo = new FromAndTo(getClass().getName(),ExpressEditFragment.class.getName());
+        bundle.putParcelable("fromandto",fromAndTo);
+        MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressSendFragment.class, bundle, getFragmentManager());
     }
 
     public void onback() {
-        //getFragmentManager().popBackStack();
-        //弹出包括自身和在自己上面的所有栈
-        MyFragmentManager.popFragment(ExpressEditFragment.class,null,null,getFragmentManager());
+        MyFragmentManager.popFragment(ExpressEditFragment.class, MainFragment.class,null,getFragmentManager(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
@@ -185,7 +170,6 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         onback();
-                        getFragmentManager().popBackStack();
                     }
                 }).create();
         dialog.show();
