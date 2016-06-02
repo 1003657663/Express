@@ -64,6 +64,9 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
     @Override
     public void startGetAllTrace(ArrayList<String> entityNames,Boolean resetData){
         //i = entityNames.size();
+        if(entityNames!=null && entityNames.size()==0){
+            return;
+        }
         this.entityNames = entityNames;
         if(resetData != null && resetData){
             hasGetLastHistory = false;
@@ -101,7 +104,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 EmployeeInfo employeeInfo = new EmployeeInfo();
                 employeeInfo.setEmployeeId(jsonObject.getInt("employeeId"));
-                employeeInfo.setJob(jsonObject.getInt("Job"));
+                employeeInfo.setJob(jsonObject.getInt("job"));
                 employeeInfos.add(employeeInfo);
             }
             myBaiduMapView.onGetEmployeeSuccess(employeeInfos);

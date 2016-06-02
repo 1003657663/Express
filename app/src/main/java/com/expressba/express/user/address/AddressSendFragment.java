@@ -1,6 +1,9 @@
 package com.expressba.express.user.address;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,29 +13,34 @@ import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.FromAndTo;
 import com.expressba.express.model.UserAddress;
 import com.expressba.express.myelement.MyFragmentManager;
-import com.expressba.express.user.address.addressEdit.AddressEditFragment;
 
 /**
  * Created by songchao on 16/5/30.
  */
 public class AddressSendFragment extends AddressFragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("发件地址");
+        return view;
+    }
 
     @Override
-    public void getMyBundle() {
-        bundle = getBundle();
-        if(bundle==null){
-            bundle = getArguments();
+    protected void handlerIfBundle(Bundle bundle) {
+        super.handlerIfBundle(bundle);
+        this.bundle = bundle;
+        fromAndTo = bundle.getParcelable("fromandto");
+        if(fromAndTo!=null && fromAndTo.getTo().equals(AddressReceiveFragment.class.getName())){
+            Toast.makeText(getActivity(), "请选择发货地址", Toast.LENGTH_SHORT).show();
         }
-        if(bundle!=null){
-            fromAndTo = bundle.getParcelable("fromandto");
-            if(fromAndTo!=null && fromAndTo.getTo().equals(AddressReceiveFragment.class.getName())){
-                Toast.makeText(getActivity(), "请选择发货地址", Toast.LENGTH_SHORT).show();
-            }
-        }
-        receiveOrSend = SEND;
-        presenter = new AddressPresenterImpl(getActivity(), this);
-        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
+
+    @Override
+    public void handlerEveryInit() {
+        init(SEND);
+    }
+
+
 
     @Override
     protected void jump(UserAddress userAddress) {

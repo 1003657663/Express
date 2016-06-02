@@ -61,30 +61,18 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         receiveAddress.setOnClickListener(this);
         back.setOnClickListener(this);
         submit.setOnClickListener(this);
-        getMyBundle();
         return view;
     }
 
     @Override
-    public void setBundle(Bundle bundle) {
-        super.setBundle(bundle);
-        getMyBundle();
-    }
-
-    private void getMyBundle(){
-        Bundle bundle = getBundle();
-        if(bundle==null){
-            bundle = getArguments();
+    protected void handlerIfBundle(Bundle bundle){
+        UserAddress sendAddress = bundle.getParcelable("sendaddress");
+        UserAddress receiveAddress = bundle.getParcelable("receiveaddress");
+        if(sendAddress!=null){
+            setAddress(sendAddress,AddressFragment.SEND);
         }
-        if(bundle!=null){
-            UserAddress sendAddress = bundle.getParcelable("sendaddress");
-            UserAddress receiveAddress = bundle.getParcelable("receiveaddress");
-            if(sendAddress!=null){
-                setAddress(sendAddress,AddressFragment.SEND);
-            }
-            if(receiveAddress!=null){
-                setAddress(receiveAddress,AddressFragment.RECEIVE);
-            }
+        if(receiveAddress!=null){
+            setAddress(receiveAddress,AddressFragment.RECEIVE);
         }
     }
 
@@ -111,7 +99,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.top_bar_left_img:
                 //点击后退按钮
-                onback();
+                onBack();
                 break;
             case R.id.send_address:
                 //用户点击寄件人姓名，跳转至地址fragment
@@ -152,7 +140,8 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
         MyFragmentManager.turnFragment(ExpressEditFragment.class, AddressSendFragment.class, bundle, getFragmentManager());
     }
 
-    public void onback() {
+    @Override
+    public void onBack() {
         MyFragmentManager.popFragment(ExpressEditFragment.class, MainFragment.class,null,getFragmentManager(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
@@ -169,7 +158,7 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        onback();
+                        onBack();
                     }
                 }).create();
         dialog.show();

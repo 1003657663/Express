@@ -20,26 +20,43 @@ import com.expressba.express.toolbox.CheckInput;
 public class SearchMainFragment extends UIFragment implements View.OnClickListener{
 
     private TextView searchTextView;
+    private String expressID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_search_main,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.search_main_submit).setOnClickListener(this);
-
         searchTextView = (TextView) view.findViewById(R.id.search_main_text);
-
-        searchTextView.setText("22222222222222");
-
         initListener();
         return view;
+    }
+
+    @Override
+    protected void handlerIfBundle(Bundle bundle) {
+        expressID = bundle.getString("expressid");
+    }
+
+    @Override
+    protected void handlerEveryInit() {
+        super.handlerEveryInit();
+        if(expressID!=null) {
+            searchTextView.setText(expressID);
+        }else{
+            searchTextView.setText("42776244229381");
+        }
+    }
+
+    @Override
+    protected void onBack() {
+        getFragmentManager().popBackStackImmediate();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.search_main_submit:
                 toSearchExpressFragment();

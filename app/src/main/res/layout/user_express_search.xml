@@ -22,7 +22,7 @@
             android:id="@+id/express_search_result_id"
             android:text="" />
     </LinearLayout>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
         android:background="@color/white"
@@ -33,16 +33,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:paddingLeft="10dp"
             android:gravity="center_vertical"
             android:text="查看实时位置"/>
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_alignParentRight="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitXY"
             android:src="@mipmap/right"/>
-    </RelativeLayout>
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"

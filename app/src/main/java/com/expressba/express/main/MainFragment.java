@@ -73,6 +73,11 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
     }
 
     @Override
+    protected void onBack() {
+        getActivity().finish();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.me_button:
@@ -83,7 +88,8 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 }
                 break;
             case R.id.index_top_bar_camera:
-                startCamera();
+                //startCamera();
+                cameraToSearchFragment("22222222222222");
                 break;
             case R.id.index_top_bar_message:
                 toSearchFragment();
@@ -187,13 +193,15 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
             Bundle bundle=data.getExtras();
             String result=bundle.getString("result");
             Toast.makeText(getActivity(),result,Toast.LENGTH_LONG).show();
-           SearchExpressFragment fragment=new SearchExpressFragment();
-            Bundle bundle1=new Bundle();
-            bundle1.putString("ID",result);
-            fragment.setArguments(bundle1);
-            transaction.replace(R.id.fragment_container_layout, fragment);
-            transaction.addToBackStack("index");
-            transaction.commit();
+            if(result!=null){
+                cameraToSearchFragment(result);
+            }
         }
+    }
+
+    private void cameraToSearchFragment(String result){
+        Bundle bundle = new Bundle();
+        bundle.putString("expressid",result);
+        MyFragmentManager.turnFragment(getClass(),SearchMainFragment.class,bundle,getFragmentManager());
     }
 }

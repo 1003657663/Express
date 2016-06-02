@@ -38,6 +38,11 @@ public class ExpressHistoryFragment extends UIFragment implements ExpressHistory
         return view;
     }
 
+    @Override
+    protected void onBack() {
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
+    }
+
     private void init(View view){
         Bundle bundle = getArguments();
         sendOrReceive = bundle.getInt("sendorreceive");
@@ -61,7 +66,7 @@ public class ExpressHistoryFragment extends UIFragment implements ExpressHistory
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
         }
     }

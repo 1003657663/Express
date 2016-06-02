@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 
 /**
  * 用户密码修改
@@ -36,10 +37,15 @@ public class ChangePasswordFragment extends UIFragment implements ChangePassword
     }
 
     @Override
+    protected void onBack() {
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.user_change_password_submit:
                 submit();

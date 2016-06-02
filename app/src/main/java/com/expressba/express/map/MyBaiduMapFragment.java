@@ -30,6 +30,7 @@ import com.expressba.express.main.UIFragment;
 import com.expressba.express.map.model.MyLatLng;
 import com.expressba.express.map.toolbox.MapToastView;
 import com.expressba.express.model.EmployeeInfo;
+import com.expressba.express.user.search.SearchExpressFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,12 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
 
     private BaiduMap mBaiduMap;
     private MapView mapView;
-    private Bundle bundle;
     private MyBaiduMapPresenterImpl myBaiduMapPresenterImpl;
     private ArrayList<String> entityNames;
     private String expressID;
     private ImageButton dingweiButton;
+    private ImageButton backButton;
+    private Integer nowState;
 
 
     public static MyBaiduMapFragment newInstance(Bundle bundle,String expressID) {
@@ -60,31 +62,42 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         return fragment;
     }
 
-    public void setBundle(Bundle bundle,String expressID) {
-        this.bundle = bundle;
-        this.expressID = expressID;
-        getEmployees(expressID);
-        //onGetEmployeeSuccess(null);
+    @Override
+    protected void onStartHandlerView(View view) {
+        super.onStartHandlerView(view);
+        if(expressID!=null) {
+            getEmployees(expressID);
+        }
     }
 
-    public Bundle getBundle(){
-        return this.bundle;
+    public void setBundle(Bundle bundle, String expressID) {
+        this.expressID = expressID;
+        super.setBundle(bundle);
+    }
+
+    protected void handlerIfBundle(Bundle bundle){
+        nowState = bundle.getInt("nowstate");
+        expressID = bundle.getString("expressid");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //SDKInitializer.initialize(getActivity().getApplicationContext());//初始化传入application
         View view = inflater.inflate(R.layout.baidu_map,container,false);
         mapView = (MapView) view.findViewById(R.id.baidu_map_view);
         mBaiduMap = mapView.getMap();
         dingweiButton = (ImageButton) view.findViewById(R.id.baidu_map_dingwei);
+        backButton = (ImageButton) view.findViewById(R.id.top_bar_left_img);
+        ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("物流跟踪路径");
         initDingweiListener();
         initMap();//初始化生成mapView
-        getBundleData();
         myBaiduMapPresenterImpl = new MyBaiduMapPresenterImpl(getActivity(),this);
         initTraceThread();
-        getEmployees(expressID);
         return view;
+    }
+
+    @Override
+    protected void onBack() {
+        getFragmentManager().popBackStackImmediate();
     }
 
     /**
@@ -97,6 +110,12 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
                 hasSetBound = false;
                 drawHistoryTrack(points);
                 delay(5);
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBack();
             }
         });
     }
@@ -185,18 +204,6 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         mBaiduMap.setMapStatus(msU);
     }
 
-    /**
-     * 从argument中取出bundle
-     */
-    private void getBundleData(){
-        if(getBundle() == null){
-            bundle = getArguments();
-        }
-        if(bundle != null){
-            expressID = bundle.getString("expressid");
-        }
-    }
-
 
     @Override
     public void getAllTraceCallBack(List<MyLatLng> latLngs) {
@@ -211,7 +218,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
     public void onGetEmployeeSuccess(ArrayList<EmployeeInfo> employeeInfos) {
         ArrayList<String> entityNames = new ArrayList<>();
         EmployeeInfo employeeInfo;
-        if(entityNames!=null && entityNames.size()>0) {
+        if(employeeInfos!=null && employeeInfos.size()>0) {
             for (int i = 0; i < employeeInfos.size(); i++) {
                 employeeInfo = employeeInfos.get(i);
                 if (employeeInfo.getJob() == EmployeeInfo.KUAIDI_EMPLOYEE || employeeInfo.getJob() == EmployeeInfo.SIJI_EMPLOYEE) {
@@ -259,7 +266,13 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
                 bmStart = BitmapDescriptorFactory.fromBitmap(bitmap);
             }
             if(bmEnd == null){
-                Bitmap bitmap = getMapToastBitmap("终点",getResources().getDrawable(R.mipmap.temphouse));
+                String endStr = "终点";
+                if(nowState!=null){
+                    if(nowState != SearchExpressFragment.QIAN_SHOW){
+                        endStr = "当前";
+                    }
+                }
+                Bitmap bitmap = getMapToastBitmap(endStr,getResources().getDrawable(R.mipmap.temphouse));
                 bmEnd = BitmapDescriptorFactory.fromBitmap(bitmap);
             }
 

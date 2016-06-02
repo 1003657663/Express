@@ -3,5 +3,5 @@
         android:topLeftRadius="3dp"
         android:bottomLeftRadius="3dp" />
 
-    <solid android:color="#3089ed"/>
+    <solid android:color="#25babf"/>
 </shape>

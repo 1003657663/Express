@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.login.LoginFragment;
 
 /**
@@ -61,10 +62,15 @@ public class ChangeTelFragment extends UIFragment implements View.OnClickListene
     }
 
     @Override
+    protected void onBack() {
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
             case R.id.user_change_tel_submit:
               //  checeVerify();

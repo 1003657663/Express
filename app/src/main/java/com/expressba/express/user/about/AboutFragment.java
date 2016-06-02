@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.expressba.express.R;
 import com.expressba.express.main.UIFragment;
+import com.expressba.express.myelement.MyFragmentManager;
 
 /**
  * Created by songchao on 16/5/25.
@@ -22,9 +23,14 @@ public class AboutFragment extends UIFragment{
         ((ImageView)view.findViewById(R.id.top_bar_left_img)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                onBack();
             }
         });
         return view;
+    }
+
+    @Override
+    protected void onBack() {
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
 }

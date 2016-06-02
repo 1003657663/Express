@@ -38,56 +38,22 @@ public abstract class AddressFragment extends UIFragment implements AddressView,
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.user_address_fragment, container, false);
-        view.setOnKeyListener(onKeyListener);
-        view.setFocusable(true);
-        view.setFocusableInTouchMode(true);
         this.inflater = inflater;
         this.viewGroup = container;
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_addres_add_new).setOnClickListener(this);
         listView = (ListView) view.findViewById(R.id.user_address_list);
         presenter = new AddressPresenterImpl(getActivity(), this);
-        getMyBundle();
-        getAddress();//每次跳转到这个页面都会获取一次地址信息
-        if (receiveOrSend == SEND) {
-            ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理发货地址");
-        } else if (receiveOrSend == RECEIVE) {
-            ((TextView) view.findViewById(R.id.top_bar_center_text)).setText("管理收货地址");
-        }
         return view;
     }
 
     /**
-     * 监听返回键
-     */
-    private View.OnKeyListener onKeyListener = new View.OnKeyListener(){
-
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if(event.getAction() == KeyEvent.ACTION_DOWN){
-                if(keyCode == KeyEvent.KEYCODE_BACK){
-                    onBack();
-                    return true;
-                }
-            }
-            return false;
-        }
-    };
-
-    /**
      * 返回
      */
-    private void onBack(){
+    protected void onBack(){
         MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(!hidden){
-            getAddress();
-        }
     }
 
     protected void getAddress(){
@@ -98,25 +64,14 @@ public abstract class AddressFragment extends UIFragment implements AddressView,
         }
     }
 
-    @Override
-    public void setBundle(Bundle bundle) {
-        super.setBundle(bundle);
-        getMyBundle();
-        getAddress();//每次跳转到这个页面都会获取一次地址信息
-    }
-
     /**
-     * 获取参数
+     * 在getMyBundle中执行初始化工作
+     * @param receiveOrSend
      */
-    protected void getMyBundle(){
-        bundle = getBundle();
-        if(bundle==null){
-            bundle = getArguments();
-        }
-        if(bundle!=null){
-            fromAndTo = bundle.getParcelable("fromandto");
-            receiveOrSend = bundle.getInt("receiveOrSend");//获取上个页面传的发送或者接受地址的标志
-        }
+    protected void init(int receiveOrSend){
+        this.receiveOrSend = receiveOrSend;
+        presenter = new AddressPresenterImpl(getActivity(), this);
+        getAddress();//每次跳转到这个页面都会获取一次地址信息
     }
 
     @Override
@@ -153,10 +108,6 @@ public abstract class AddressFragment extends UIFragment implements AddressView,
         bundle.putInt("editwhat",receiveOrSend);
         bundle.putParcelable("useraddress",userAddress);
         MyFragmentManager.turnFragment(getClass(),AddressEditFragment.class,bundle,getFragmentManager());
-    }
-
-    protected void toExpressEditFragment(){
-        MyFragmentManager.turnFragment(AddressFragment.class,ExpressEditFragment.class,bundle,getFragmentManager(),false);
     }
 
     @Override

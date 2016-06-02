@@ -244,12 +244,6 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
         builder.show();
     }
 
-    public void restartPreviewAfterDelay(long delayMS) {
-        if (handler != null) {
-            handler.sendEmptyMessageDelayed(R.id.restart_preview, delayMS);
-        }
-    }
-
     public Rect getCropRect() {
         return mCropRect;
     }

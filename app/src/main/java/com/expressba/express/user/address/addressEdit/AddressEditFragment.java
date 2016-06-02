@@ -1,6 +1,5 @@
 package com.expressba.express.user.address.addressEdit;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -63,6 +62,7 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
         View view = inflater.inflate(R.layout.user_address_edit,container,false);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.user_address_edit_submit_button).setOnClickListener(this);
@@ -71,33 +71,25 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
         setDefaultButton.setOnClickListener(this);
         myApplication = (MyApplication) getActivity().getApplication();
         getAddressModel = new GetAddressModelImpl(getActivity(),this);
-        getMyBundle();
-
-        init(view);
-
         setAddressInfo(view);//设置初始信息
         myDialog = new MyDialog(getActivity());
         myDialog.setSureButton(this);
         return view;
     }
 
+
     @Override
-    public void setBundle(Bundle bundle) {
-        super.setBundle(bundle);
-        getMyBundle();
+    protected void handlerIfBundle(Bundle bundle){
+        userAddress = bundle.getParcelable("useraddress");
+        editWhat = bundle.getInt("editwhat");
     }
 
-    private void getMyBundle(){
-        Bundle bundle = getBundle();
-        if(bundle==null){
-            bundle = getArguments();//获取地址信息
-        }
-        if(bundle!=null) {
-            userAddress = bundle.getParcelable("useraddress");
-            editWhat = bundle.getInt("editwhat");
-        }
+    @Override
+    protected void handlerEveryInit() {
+        super.handlerEveryInit();
         if(view!=null) {
             setTitle((TextView) view.findViewById(R.id.top_bar_center_text));
+            init(view);
         }
     }
 
@@ -138,7 +130,8 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
         }
     }
 
-    private void popBack(){
+    @Override
+    protected void onBack(){
         Bundle bundle = new Bundle();
         if(editWhat == ADDRESS_NEW_SEND || editWhat==ADDRESS_UPDATE_SEND) {
             bundle.putInt("receiveOrSend",AddressFragment.SEND);
@@ -152,7 +145,7 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                popBack();
+                onBack();
                 break;
             case R.id.top_bar_right_img:
                 //删除当前地址,弹出警告框
@@ -415,12 +408,12 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     @Override
     public void onSubmitSuccess() {
         Toast.makeText(getActivity(),"提交成功",Toast.LENGTH_SHORT).show();
-        popBack();
+        onBack();
     }
 
     @Override
     public void onDeleteSuccess() {
         Toast.makeText(getActivity(),"删除地址成功",Toast.LENGTH_SHORT).show();
-        popBack();
+        onBack();
     }
 }

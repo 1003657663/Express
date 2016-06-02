@@ -1,6 +1,5 @@
 package com.expressba.express.user.login;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -70,26 +69,15 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
         view.findViewById(R.id.login_button).setOnClickListener(this);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         view.findViewById(R.id.register_button).setOnClickListener(this);
-        getBundle();
         initSMS();
-        getMyBundle();
         return view;
     }
 
-    @Override
-    public void setBundle(Bundle bundle) {
-        super.setBundle(bundle);
-        getMyBundle();
-    }
 
-    private void getMyBundle(){
-        Bundle bundle = getBundle();
-        if(bundle ==null){
-            bundle = getArguments();
-        }
-        if(bundle !=null){
-            fromAndTo = bundle.getParcelable("fromandto");
-        }
+    @Override
+    protected void handlerIfBundle(Bundle bundle) {
+        super.handlerIfBundle(bundle);
+        fromAndTo = bundle.getParcelable("fromandto");
     }
 
     @Override
@@ -97,7 +85,7 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
         switch (v.getId()) {
             case R.id.top_bar_left_img:
                 //点击后退按钮
-                onback();
+                onBack();
                 break;
             case R.id.login_button:
                 isLogin = true;
@@ -239,10 +227,12 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     }
 
     @Override
-    public void onback() {
+    public void onBack() {
         if(fromAndTo!=null){
             try {
-                MyFragmentManager.popFragment(LoginFragment.class,(Class<? extends UIFragment>) Class.forName(fromAndTo.getFrom()), null, getFragmentManager());
+                if(UIFragment.class.isAssignableFrom(Class.forName(fromAndTo.getFrom()))) {
+                    MyFragmentManager.popFragment(LoginFragment.class, (Class<? extends UIFragment>) Class.forName(fromAndTo.getFrom()), null, getFragmentManager());
+                }
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -273,18 +263,13 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
                 e.printStackTrace();
             }
         }else{
-            onback();
+            onBack();
         }
     }
 
     @Override
     public void showToast(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public Activity getTheActivity() {
-        return getActivity();
     }
 
     @Override

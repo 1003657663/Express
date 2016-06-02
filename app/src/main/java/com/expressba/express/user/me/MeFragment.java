@@ -33,9 +33,6 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_me_fragment,container,false);
-        view.setOnKeyListener(onKeyListener);
-        view.setFocusable(true);
-        view.setFocusableInTouchMode(true);
         TextView textView = (TextView) view.findViewById(R.id.top_bar_center_text);
         textView.setText("我");
         fragmentManager = getFragmentManager();
@@ -54,18 +51,8 @@ public class MeFragment extends UIFragment implements MeView,View.OnClickListene
         return view;
     }
 
-    private View.OnKeyListener onKeyListener = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            if(event.getAction() == KeyEvent.ACTION_DOWN){
-                onBack();
-                return true;
-            }
-            return false;
-        }
-    };
-
-    private void onBack(){
+    @Override
+    protected void onBack(){
         MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
 

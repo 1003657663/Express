@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.expressba.express.main.UIFragment;
 import com.expressba.express.model.ExpressInfo;
 import com.expressba.express.R;
+import com.expressba.express.myelement.MyFragmentManager;
 
 /**
  * 快件详情
@@ -17,12 +18,19 @@ import com.expressba.express.R;
  */
 public class ExpressHistoryDetailFragment extends UIFragment implements View.OnClickListener{
 
+    private ExpressInfo expressInfo;
+    private Integer sendOrReceive = -1;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_express_history_detail,container,false);
-        init(view);
         view.findViewById(R.id.top_bar_left_img).setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    protected void onBack() {
+        MyFragmentManager.popFragment(getClass(),null,null,getFragmentManager());
     }
 
     /**
@@ -38,32 +46,44 @@ public class ExpressHistoryDetailFragment extends UIFragment implements View.OnC
         return bundle;
     }
 
-    private void init(View view){
-        Bundle bundle = getArguments();
-        ExpressInfo expressInfo = bundle.getParcelable("expressinfo");
-        int sendOrReceive = bundle.getInt("sendorreceive");
+
+    @Override
+    protected void onStartHandlerBundle() {
+        super.onStartHandlerBundle();
+        if(getBundle()!=null){
+            expressInfo = getBundle().getParcelable("expressinfo");
+            sendOrReceive = getBundle().getInt("sendorreceive");
+        }
+    }
+
+    @Override
+    protected void onStartHandlerView(View view) {
+        super.onStartHandlerView(view);
         if(sendOrReceive == ExpressHistoryPresenterImpl.HISTORY_SEND){
             ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("发件详情");
         }else{
             ((TextView)view.findViewById(R.id.top_bar_center_text)).setText("收件详情");
         }
-        ((TextView)view.findViewById(R.id.express_detail_id)).setText(expressInfo.getID());
-        ((TextView)view.findViewById(R.id.express_detail_send_name)).setText(expressInfo.getSname());
-        ((TextView)view.findViewById(R.id.express_detail_send_tel)).setText(expressInfo.getStel());
-        ((TextView)view.findViewById(R.id.express_detail_send_address)).setText(expressInfo.getSadd()+" "+expressInfo.getSaddinfo());
-        ((TextView)view.findViewById(R.id.express_detail_receive_name)).setText(expressInfo.getRname());
-        ((TextView)view.findViewById(R.id.express_detail_receive_tel)).setText(expressInfo.getRtel());
-        ((TextView)view.findViewById(R.id.express_detail_receive_address)).setText(expressInfo.getRadd()+" "+expressInfo.getRaddinfo());
-        ((TextView)view.findViewById(R.id.express_detail_get_time)).setText(expressInfo.getGetTime());
-        ((TextView)view.findViewById(R.id.express_detail_out_time)).setText(expressInfo.getOutTime());
-        ((TextView)view.findViewById(R.id.express_detail_weight)).setText(expressInfo.getWeight()+"");
+        if(expressInfo!=null) {
+            ((TextView) view.findViewById(R.id.express_detail_id)).setText(expressInfo.getID());
+            ((TextView) view.findViewById(R.id.express_detail_send_name)).setText(expressInfo.getSname());
+            ((TextView) view.findViewById(R.id.express_detail_send_tel)).setText(expressInfo.getStel());
+            ((TextView) view.findViewById(R.id.express_detail_send_address)).setText(expressInfo.getSadd() + " " + expressInfo.getSaddinfo());
+            ((TextView) view.findViewById(R.id.express_detail_receive_name)).setText(expressInfo.getRname());
+            ((TextView) view.findViewById(R.id.express_detail_receive_tel)).setText(expressInfo.getRtel());
+            ((TextView) view.findViewById(R.id.express_detail_receive_address)).setText(expressInfo.getRadd() + " " + expressInfo.getRaddinfo());
+            ((TextView) view.findViewById(R.id.express_detail_get_time)).setText(expressInfo.getGetTime());
+            ((TextView) view.findViewById(R.id.express_detail_out_time)).setText(expressInfo.getOutTime());
+            ((TextView) view.findViewById(R.id.express_detail_weight)).setText(expressInfo.getWeight() + "");
+        }
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.top_bar_left_img:
-                getFragmentManager().popBackStack();
+                onBack();
                 break;
 
         }
