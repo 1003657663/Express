@@ -23,21 +23,6 @@ public abstract class UIFragment extends Fragment {
         }
     };
 
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        onCreateHandlerBundle();
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }*/
-
-
-    /*@Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(!hidden){
-            runEvery();
-        }
-    }*/
-
     /**
      * 每次进入这个fragment都会执行这一部分
      */

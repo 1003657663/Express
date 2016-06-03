@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -142,6 +143,10 @@ public class ExpressEditFragment extends UIFragment implements View.OnClickListe
 
     @Override
     public void onBack() {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.remove(this);
+        ft.commitAllowingStateLoss();
         MyFragmentManager.popFragment(ExpressEditFragment.class, MainFragment.class,null,getFragmentManager(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 

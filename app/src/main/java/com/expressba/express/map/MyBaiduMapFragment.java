@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -247,9 +246,7 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
         mBaiduMap.clear();
         MapStatus preMapStatus = mBaiduMap.getMapStatus();
         if (points == null || points.size() == 0) {
-            Looper.prepare();
             Toast.makeText(getActivity(), "当前查询无轨迹点", Toast.LENGTH_SHORT).show();
-            Looper.loop();
             //resetMarker();
         } else if (points.size() > 1) {
 

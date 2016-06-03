@@ -25,6 +25,8 @@ import com.expressba.express.myelement.MyDialog;
 import com.expressba.express.R;
 import com.expressba.express.myelement.MyFragmentManager;
 import com.expressba.express.user.address.AddressFragment;
+import com.expressba.express.user.address.AddressReceiveFragment;
+import com.expressba.express.user.address.AddressSendFragment;
 import com.expressba.express.user.address.getaddressdata.GetAddressModelImpl;
 
 /**
@@ -71,11 +73,11 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
         setDefaultButton.setOnClickListener(this);
         myApplication = (MyApplication) getActivity().getApplication();
         getAddressModel = new GetAddressModelImpl(getActivity(),this);
-        setAddressInfo(view);//设置初始信息
         myDialog = new MyDialog(getActivity());
         myDialog.setSureButton(this);
         return view;
     }
+
 
 
     @Override
@@ -91,6 +93,12 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
             setTitle((TextView) view.findViewById(R.id.top_bar_center_text));
             init(view);
         }
+    }
+
+    @Override
+    protected void onStartHandlerBundle() {
+        super.onStartHandlerBundle();
+        setAddressInfo(view);//设置初始信息
     }
 
     private void setTitle(TextView title){
@@ -134,11 +142,9 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     protected void onBack(){
         Bundle bundle = new Bundle();
         if(editWhat == ADDRESS_NEW_SEND || editWhat==ADDRESS_UPDATE_SEND) {
-            bundle.putInt("receiveOrSend",AddressFragment.SEND);
-            MyFragmentManager.popFragment(getClass(), AddressFragment.class, bundle, getFragmentManager());
+            MyFragmentManager.popFragment(getClass(), AddressSendFragment.class, bundle, getFragmentManager());
         }else{
-            bundle.putInt("receiveOrSend",AddressFragment.RECEIVE);
-            MyFragmentManager.popFragment(getClass(), AddressFragment.class, bundle, getFragmentManager());
+            MyFragmentManager.popFragment(getClass(), AddressReceiveFragment.class, bundle, getFragmentManager());
         }
     }
     @Override
@@ -227,10 +233,11 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
         citySpinner = (Spinner) v.findViewById(R.id.user_address_spinner_city);
         regionSpinner = (Spinner) v.findViewById(R.id.user_address_spinner_region);
 
-        nameEdit.setText(userAddress.getName());
-        telephoneEdit.setText(userAddress.getTelephone());
-        addressEdit.setText(userAddress.getAddress());
-
+        if(userAddress!=null) {
+            nameEdit.setText(userAddress.getName());
+            telephoneEdit.setText(userAddress.getTelephone());
+            addressEdit.setText(userAddress.getAddress());
+        }
         //获取省份地址信息
         getAddressModel.getProvince();
         //设置开始监听事件

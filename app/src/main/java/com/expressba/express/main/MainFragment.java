@@ -88,8 +88,7 @@ public class MainFragment extends UIFragment implements View.OnClickListener{
                 }
                 break;
             case R.id.index_top_bar_camera:
-                //startCamera();
-                cameraToSearchFragment("22222222222222");
+                startCamera();
                 break;
             case R.id.index_top_bar_message:
                 toSearchFragment();
