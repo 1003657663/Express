@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.expressba.express"
+    package="com.expressba.expressuser"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,14 +9,14 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.expressba.express.main.MyApplication"
+        android:name="com.expressba.expressuser.main.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="9ZLmmOvYVlN8FUP3PE3s92Wd55GbGEBT" />
+            android:value="l0fA7STTGFbK6q2sGkONe7p5IsEP4UVW" />
 
         <service
             android:name="com.baidu.trace.LBSTraceService"
@@ -25,7 +25,7 @@
         </service>
 
         <activity
-            android:name="com.expressba.express.main.MainActivity"
+            android:name="com.expressba.expressuser.main.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".zxing.activity.CaptureActivity"/>
+        <activity android:name="com.expressba.expressuser.zxing.activity.CaptureActivity"/>
     </application>
 
 
