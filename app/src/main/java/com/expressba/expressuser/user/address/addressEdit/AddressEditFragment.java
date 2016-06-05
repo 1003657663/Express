@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.expressba.expressuser.main.MyApplication;
 import com.expressba.expressuser.main.UIFragment;
+import com.expressba.expressuser.model.FromAndTo;
 import com.expressba.expressuser.model.UserAddress;
 import com.expressba.expressuser.model.address.City;
 import com.expressba.expressuser.model.address.Province;
@@ -60,6 +61,7 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     private Integer regionPosition = 0;
     private Boolean isdefault = true;//判断用户是否修改了地址spinner
     private View view;
+    private FromAndTo fromAndTo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,6 +85,7 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
     protected void handlerIfBundle(Bundle bundle){
         userAddress = bundle.getParcelable("useraddress");
         editWhat = bundle.getInt("editwhat");
+        fromAndTo = bundle.getParcelable("fromandto");
     }
 
     @Override
@@ -139,7 +142,10 @@ public class AddressEditFragment extends UIFragment implements View.OnClickListe
 
     @Override
     protected void onBack(){
-        Bundle bundle = new Bundle();
+        Bundle bundle = getBundle();
+        if(fromAndTo!=null){
+            bundle.putParcelable("fromandto",fromAndTo);
+        }
         if(editWhat == ADDRESS_NEW_SEND || editWhat==ADDRESS_UPDATE_SEND) {
             MyFragmentManager.popFragment(getClass(), AddressSendFragment.class, bundle, getFragmentManager());
         }else{

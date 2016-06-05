@@ -61,21 +61,26 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
     @Override
     public void startGetAllTrace(ArrayList<String> entityNames,Boolean resetData){
         //i = entityNames.size();
+
         if(entityNames!=null && entityNames.size()==0){
             return;
         }
+
         this.entityNames = entityNames;
-        if(resetData != null && resetData){
+        /*if(resetData != null && resetData){
             hasGetLastHistory = false;
         }
         if(i<entityNames.size()){//i小于size表示还没有加载完，或者entityname的尺寸发生了增加
             hasGetLastHistory = false;
-        }
-        if(hasGetLastHistory){
+        }*/
+        i=0;
+        myLatLngArrays.clear();
+        myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(0),historyInterface);
+        /*if(hasGetLastHistory){
             myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(entityNames.size()-1),historyInterface);
         }else {
             myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(0),historyInterface);
-        }
+        }*/
     }
 
     /**
@@ -147,7 +152,22 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
         historyInterface = new MyHistoryTrace.QueryHistoryInterface() {
             @Override
             public void queryHistoryCallBack(List<MyLatLng> latLngs) {
-                if(i < entityNames.size()-2){
+                /*myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i),historyInterface);
+                handlerLatLngList(myLatLngArrays,latLngs);*/
+                if(latLngs!=null){
+                    myLatLngArrays.add(latLngs);
+                }
+                if(i<entityNames.size()-1){
+                    myHistoryTrace.queryProcessedHistoryTrack(entityNames.get(i+1),historyInterface);
+                }else if(i==entityNames.size()-1){
+                    handlerLatLngList(myLatLngArrays);
+                    myBaiduMapView.getAllTraceCallBack(latLngsHistory);
+                }
+                i++;
+
+
+
+                /*if(i < entityNames.size()-2){
                     i++;
                     if(latLngs !=null && latLngs.size()>1) {
                         myLatLngArrays.add(latLngs);
@@ -164,7 +184,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
                 if(i == entityNames.size()-1){
                     handlerLatLngList(myLatLngArrays,latLngs);
                     myBaiduMapView.getAllTraceCallBack(latLngsHistory);
-                }
+                }*/
             }
 
             @Override
@@ -182,7 +202,7 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
      * 把两个列表的点，按照时间顺序排列起来。-------待测试，如果不排列有没有问题
      * @param myLatLngArrays
      */
-    private void handlerLatLngList(List<List<MyLatLng>> myLatLngArrays,List<MyLatLng> latLngs){
+    private void handlerLatLngList(List<List<MyLatLng>> myLatLngArrays/*,List<MyLatLng> latLngs*/){
         List<MyLatLng> myLatLngs;
         String firstTime = null;
         latLngsHistory.clear();
@@ -195,19 +215,19 @@ public class MyBaiduMapPresenterImpl extends VolleyHelper implements MyBaiduMapP
                         latLngsHistory.add(myLatLngs.get(r));
                     }
                 }else {
-                    if(timeCompareBig(firstTime,myLatLngs.get(0).create_time)==1){//第二个大，加在列表后边
+                    if(timeCompareBig(firstTime,myLatLngs.get(myLatLngs.size()-1).create_time)==1){//第二个大，加在列表后边
                         for(int r=0;r<myLatLngs.size();r++){
-                            latLngsHistory.add(myLatLngs.get(r));
+                            latLngsHistory.add(r,myLatLngs.get(r));
                         }
                     }else {
                         for(int r=0;r<myLatLngs.size();r++){
-                            latLngsHistory.add(r,myLatLngs.get(r));
+                            latLngsHistory.add(myLatLngs.get(r));
                         }
                     }
                 }
             }
         }
-        latLngsHistory.addAll(latLngs);
+        /*latLngsHistory.addAll(latLngs);*/
     }
 
 

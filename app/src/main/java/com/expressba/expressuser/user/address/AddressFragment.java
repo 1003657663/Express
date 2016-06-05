@@ -101,9 +101,12 @@ public abstract class AddressFragment extends UIFragment implements AddressView,
      */
     @Override
     public void toEditFragment(UserAddress userAddress, Integer receiveOrSend) {
-        Bundle bundle = new Bundle();
+        Bundle bundle = getBundle();
         bundle.putInt("editwhat",receiveOrSend);
         bundle.putParcelable("useraddress",userAddress);
+        if(fromAndTo!=null) {
+            bundle.putParcelable("fromandto", fromAndTo);
+        }
         MyFragmentManager.turnFragment(getClass(),AddressEditFragment.class,bundle,getFragmentManager());
     }
 

@@ -8,90 +8,93 @@ import android.preference.PreferenceManager;
  * create by chao
  * 用户信息model
  */
-public class UserInfo{
+public class UserInfo {
 
-	private boolean loginState = false;
+    private boolean loginState = false;
     private Integer id;
     private String password;
-	private String name;
-	private String telephone;
+    private String name;
+    private String telephone;
     private SharedPreferences spf;
     private Context context;
 
     private String token;
 
-    public UserInfo(Context context){
+    public UserInfo(Context context) {
         this.context = context;
         spf = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
 
-	
-	public void setPassword(String value) {
+    public void setPassword(String value) {
         SharedPreferences.Editor editor = spf.edit();
-        editor.putString("password",value);
+        editor.putString("password", value);
         editor.apply();
-		this.password = value;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-
-    public String getPasswordFromPreference(){
-        return spf.getString("password",password);
+        this.password = value;
     }
-	
-	public void setName(String value) {
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPasswordFromPreference() {
+        return spf.getString("password", "");
+    }
+
+    public void setName(String value) {
         SharedPreferences.Editor editor = spf.edit();
-        editor.putString("name",value);
+        editor.putString("name", value);
         editor.apply();
-		this.name = value;
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-    public String getNameFromPreference(){
-        return spf.getString("name","");
+        this.name = value;
     }
 
-	public boolean getLoginState() {
-		return loginState;
-	}
-
-    public boolean getLoginStateFromPreference(){
-        return spf.getBoolean("loginState",false);
+    public String getName() {
+        return name;
     }
 
-	public void setLoginState(boolean loginState) {
+    public String getNameFromPreference() {
+        return spf.getString("name", "");
+    }
+
+    public boolean getLoginState() {
+        return loginState;
+    }
+
+    public boolean getLoginStateFromPreference() {
+        return spf.getBoolean("loginState", false);
+    }
+
+    public void setLoginState(Boolean loginState) {
         SharedPreferences.Editor editor;
-        if(!loginState){
-            editor = spf.edit();
-            editor.putBoolean("loginState",false);
-            editor.remove("name");
-            editor.remove("telephone");
-            editor.remove("password");
-            editor.apply();
+        editor = spf.edit();
+        if(loginState!=null) {
+            if (!loginState) {
+                editor.putBoolean("loginState", loginState);
+                editor.remove("name");
+                editor.remove("telephone");
+                editor.remove("password");
+                editor.apply();
+            } else {
+                editor.putBoolean("loginState", loginState);
+            }
+            this.loginState = loginState;
         }
-		this.loginState = loginState;
-	}
-
-	public String getTelephone() {
-		return telephone;
-	}
-
-    public String getTelephoneFromPreference(){
-        return spf.getString("telephone","");
     }
 
-	public void setTelephone(String telephone) {
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getTelephoneFromPreference() {
+        return spf.getString("telephone", "");
+    }
+
+    public void setTelephone(String telephone) {
         SharedPreferences.Editor editor = spf.edit();
-        editor.putString("telephone",telephone);
+        editor.putString("telephone", telephone);
         editor.apply();
-		this.telephone = telephone;
-	}
+        this.telephone = telephone;
+    }
 
 
     public String toString(boolean idOnly) {

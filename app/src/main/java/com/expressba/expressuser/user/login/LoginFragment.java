@@ -19,8 +19,10 @@ import java.util.regex.Pattern;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
+import com.expressba.expressuser.main.MyApplication;
 import com.expressba.expressuser.main.UIFragment;
 import com.expressba.expressuser.model.FromAndTo;
+import com.expressba.expressuser.model.UserInfo;
 import com.expressba.expressuser.myelement.MyFragmentManager;
 import com.expressba.expressuser.toolbox.CheckInput;
 import com.expressba.expressuser.toolbox.CountDown;
@@ -81,6 +83,18 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
     }
 
     @Override
+    protected void onStartHandlerView(View view) {
+        super.onStartHandlerView(view);
+        UserInfo userInfo = ((MyApplication)getActivity().getApplication()).getUserInfo();
+        if(userInfo!=null){
+            //if(userInfo.getLoginStateFromPreference()){
+                telEdit.setText(userInfo.getTelephoneFromPreference());
+                passwordEdit.setText(userInfo.getPasswordFromPreference());
+            //}
+        }
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.top_bar_left_img:
@@ -90,17 +104,9 @@ public class LoginFragment extends UIFragment implements LoginFragmentView, View
             case R.id.login_button:
                 isLogin = true;
                 //----test
-                if(telEdit.getText().toString().equals("")){
-                    tel = "12345678909";
-                    password = "123456";
-                    /*tel = "11111111111";
-                    password = "111111";*/
-                    loginPresenter.startLogin(tel,password);
-                }else {
-                    if (checkInput()) {
-                        //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
-                        loginPresenter.startLogin(tel, password);
-                    }
+                if (checkInput()) {
+                    //SMSSDK.submitVerificationCode(COUNTRY_CODE,tel,verifyCode);
+                    loginPresenter.startLogin(tel, password);
                 }
                 break;
             case R.id.register_button:

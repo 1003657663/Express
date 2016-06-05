@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,7 +109,6 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
             public void onClick(View v) {
                 hasSetBound = false;
                 drawHistoryTrack(points);
-                delay(5);
             }
         });
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -138,13 +138,9 @@ public class MyBaiduMapFragment extends UIFragment implements MyBaiduMapView{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                return null;
-            }
-
-            @Override
-            protected void onProgressUpdate(Object[] values) {
                 startAsyncTask();
                 this.cancel(true);
+                return null;
             }
         };
         task.execute();

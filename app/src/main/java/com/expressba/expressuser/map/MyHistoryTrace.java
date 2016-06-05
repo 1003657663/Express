@@ -153,7 +153,7 @@ public class MyHistoryTrace {
 
         int simpleReturn = 0;//是否返回简化数据
         int isProcessed = 1;
-        int startTime = (int) (System.currentTimeMillis() / 1000 - 24 * 60 * 60);//查询最早24小时前的时间
+        int startTime = (int) (System.currentTimeMillis() / 1000 - 6 * 60 * 60);//查询最早6小时前的时间
         int endTime = (int) (System.currentTimeMillis() / 1000);//查询最后时间
         int pageSize = 1000;//分页大小
         int pageIndex = 1;//分页索引

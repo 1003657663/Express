@@ -133,7 +133,12 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
      */
     @Override
     public void onRequestSuccess(ArrayList<ExpressSearchInfo> expressSearchInfos) {
-        int size = expressSearchInfos.size();
+        int size = 0;
+        if(expressSearchInfos!=null) {
+            searchContain.removeAllViews();
+            size = expressSearchInfos.size();
+        }
+
         for(int i=size-1;i>=0;i--) {//循环读取每一条数据
             RelativeLayout relativeLayout = (RelativeLayout) LinearLayout.inflate(getActivity(), R.layout.user_express_search_item, null);
             TextView pointText = (TextView) relativeLayout.findViewById(R.id.express_address_point);
@@ -143,8 +148,10 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
             if(i==size-1){
                 nowState = expressSearchInfo.getState();
             }
+            //直接显示物流信息，不管是否签收
+            pointText.setText(expressSearchInfo.getInfo());
             //判断如果是已经签收，那么提示可以点击看签收图片
-            if(expressSearchInfo.getState() == HAS_RECEIVE){
+            /*if(expressSearchInfo.getState() == HAS_RECEIVE){
                 String text = expressSearchInfo.getInfo();
                 text = text+"点击查看签收图片";
                 SpannableString spannableString = new SpannableString(text);
@@ -157,7 +164,7 @@ public class SearchExpressFragment extends UIFragment implements View.OnClickLis
                 pointText.setText(spannableString);
             }else {
                 pointText.setText(expressSearchInfo.getInfo());
-            }
+            }*/
             timeText.setText(expressSearchInfo.getTime());
             if(i==size-1) {
                 pointText.setTextColor(getResources().getColor(R.color.black));

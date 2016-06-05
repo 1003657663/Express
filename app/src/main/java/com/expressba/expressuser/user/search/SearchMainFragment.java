@@ -1,7 +1,9 @@
 package com.expressba.expressuser.user.search;
 
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,10 +42,11 @@ public class SearchMainFragment extends UIFragment implements View.OnClickListen
     @Override
     protected void handlerEveryInit() {
         super.handlerEveryInit();
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if(expressID!=null) {
             searchTextView.setText(expressID);
         }else{
-            searchTextView.setText("42776244229381");
+            searchTextView.setText(sp.getString("expressid",""));
         }
     }
 
@@ -85,6 +88,9 @@ public class SearchMainFragment extends UIFragment implements View.OnClickListen
      */
     private void toSearchExpressFragment(){
         String searchText = searchTextView.getText().toString();
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getActivity()).edit();
+        editor.putString("expressid",searchText);
+        editor.apply();
         if(CheckInput.checkNumber(searchText)){
             Bundle bundle = new Bundle();
             bundle.putString("searchID",searchText);
